@@ -1,111 +1,48 @@
 <template>
   <div class="content">
     <el-row class="wrap-main clearfix container">
-        <el-col :span="14" class="wrap-left">
-         <div class="top-show">
+      <el-col :span="14" class="wrap-left">
+        <div class="top-show">
           <h3>工人上工情况</h3>
           <div class="jindu">
             <div class="subjindu">
-              <p>70%</p>
+              <p>{{dh}}%</p>
             </div>
           </div>
           <ul class="work-list clearfix">
             <li>
               今日
-              <span class="noml">255 ↑</span>
+              <span v-if="manWork.the_day<manWork.tom_day" class="noml">{{manWork.the_day}} ↑</span>
+              <span v-else class="danger">{{manWork.the_day}} ↓</span>
             </li>
             <li>
               昨日
-              <span>253</span>
+              <span>{{manWork.tmo_day}}</span>
             </li>
             <li>
               本月
-              <span class="down danger">3448 ↓</span>
+              <span class="down">{{manWork.the_month}}</span>
             </li>
             <li>
               今日
-              <span>4632</span>
+              <span>{{manWork.tmo_month}}</span>
             </li>
           </ul>
-         </div>
-         <div class="summarize">
+        </div>
+        <div class="summarize">
           <h3>工程概括</h3>
-          <ul>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">工程名称</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">建设单位</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">监理单位</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">施工单位</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">设计单位</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">项管单位</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">咨询单位</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">监督单位</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">勘查单位</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">项目功能</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">建筑面积</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;">
-                <span class="summarizeName">工程造价</span>
-                <span class="summarizeContent">最长十五个最长十五个最长十五个</span>
-              </a>
-            </li>
-          </ul>
-         </div>
-         <div class="plate">
+          <div id="summarize">
+            <ul>
+              <li v-for="(item, index) in summary.data" :key="index" :class="item.id">
+                <a href="javascript:;">
+                  <span class="summarizeName">{{item.type}}</span>
+                  <span class="summarizeContent">{{item.name}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="plate">
           <h3>车牌识别系统</h3>
           <div class="out_in">
             <div class="left">
@@ -119,7 +56,7 @@
           </div>
           <div class="case">
             <div class="left">进出情况</div>
-            <div class="right">
+            <div class="right" id="cardid">
               <ul>
                 <li>
                   <span>京QJY676</span>
@@ -154,9 +91,9 @@
               </ul>
             </div>
           </div>
-         </div>
-       </el-col>
-       <el-col :span="6" class="wrap-center">
+        </div>
+      </el-col>
+      <el-col :span="6" class="wrap-center">
         <div class="mainInfo">
           <span class="title">
             安全文明施工天数:
@@ -170,15 +107,17 @@
             <ul>
               <li>
                 <span class="leftName">塔吊数量：</span>
-                <span class="sub">5座</span>
+                <span class="sub">{{crash.tower_num}}座</span>
               </li>
               <li>
                 <span class="leftName">违规操作：</span>
-                <span class="sub status">无</span>
+                <span v-if="crash.err=='0'" class="sub status noml">无</span>
+                <span v-else class="sub status danger">有</span>
               </li>
               <li>
                 <span class="leftName">运行情况：</span>
-                <span class="sub noml">正常</span>
+                <span v-if="crash.status=='0'" class="sub noml">正常</span>
+                <span v-else class="sub danger">异常</span>
               </li>
             </ul>
             <div class="outer">
@@ -191,25 +130,26 @@
             <ul>
               <li>
                 <span class="leftName">升降机数量：</span>
-                <span class="sub">5座</span>
+                <span class="sub">{{lift.lifter_num}}座</span>
               </li>
               <li>
                 <span class="leftName">载重重量：</span>
-                <span class="sub danger">40</span>座
+                <span class="sub danger">{{lift.weight}}</span>吨
               </li>
               <li>
                 <span class="leftName">运行情况：</span>
-                <span class="sub noml">正常</span>
+                <span v-if="lift.status=='0'" class="sub noml">正常</span>
+                <span v-else class="sub danger">异常</span>
               </li>
             </ul>
             <div class="runtime">
               <div>已正常运行</div>
-              <div class="noml">200小时</div>
+              <div class="noml">{{lift.time}}小时</div>
             </div>
           </div>
         </div>
-       </el-col>
-       <el-col :span="6" class="wrap-right">
+      </el-col>
+      <el-col :span="6" class="wrap-right">
         <div class="code">
           <h3>下载APP</h3>
           <div class="left">
@@ -223,12 +163,17 @@
         <div class="ech">
           <h3>扬尘检测</h3>
           <div class="status">
-            <span class="good">0~75 良好</span><span class="notgood">＞75 超标</span>
+            <span class="good">0~75 良好</span>
+            <span class="notgood">＞75 超标</span>
           </div>
           <div id="dust" :style="{width: '3.8rem', height: '2.05rem'}" class="dust"></div>
           <div class="temperaturebox">
             <h3 style="margin-bottom:.1rem">温度检测</h3>
-              <div id="temperature" style="width: 3.8rem;height:2.04rem;transform: translateY(-0.18rem)" class="temperature"></div>
+            <div
+              id="temperature"
+              style="width: 3.8rem;height:2.04rem;transform: translateY(-0.18rem)"
+              class="temperature"
+            ></div>
           </div>
         </div>
         <div class="electro">
@@ -252,22 +197,46 @@
             <div class="noml">200小时</div>
           </div>
         </div>
-       </el-col>
+      </el-col>
     </el-row>
   </div>
 </template>
 <script>
+import "../../common/scroll/scroll.js";
+import "../../common/scroll/scroll(1).js";
 export default {
   data() {
     return {
-      percentage:70,
-      baifenbi:70,
+      percentage: 70,
+      baifenbi: 70,
+      dh: 0,
+      timeId: null,
+      url: "http://gd.17hr.net:8018/APP/XMPage/XmData.ashx?",
+      // 工人上工
+      manWork: {},
+      // 工人概括
+      summary: {},
+      // 车牌识别
+      cardid: {},
+      // 塔吊防碰撞
+      crash: {},
+      // 升降机
+      lift: {}
     };
   },
   mounted() {
     this.dust();
     this.temperature();
-    this.renderBaifenbi()
+    this.getScroll();
+          this.aaa()
+
+  },
+  created() {
+    this.getSummary(),
+      this.renderBaifenbi(),
+      this.getCardid(),
+      this.getCrash(),
+      this.getLift()
   },
   methods: {
     dust() {
@@ -434,11 +403,11 @@ export default {
               textStyle: {
                 color: "#fff"
               },
-              formatter: "{value} 度",
+              formatter: "{value} 度"
             },
-            axisLine:{
-              lineStyle:{
-                color:'#132e6d'
+            axisLine: {
+              lineStyle: {
+                color: "#132e6d"
               }
             },
             splitLine: {
@@ -463,21 +432,68 @@ export default {
         ]
       });
     },
-    renderBaifenbi(){
-      setInterval({
+    // 工人上工区域
+    renderBaifenbi() {
+      this.$axios.get(`${this.url}method=GetXMKq&xmid=281`).then(res => {
+        this.manWork = res.data;
+              this.timeId = setInterval(() => {
+        if (this.dh == this.baifenbi) {
+          clearInterval(this.timeId);
+        } else {
+          this.dh++;
+          $(".subjindu").css("width", this.dh + "%");
+        }
+      }, 30);
 
-        
-      },500)
+      });
+    },
+    // 工程概括区域
+    getSummary() {
+      this.$axios.get(`${this.url}method=GetXMDetail&xmid=281`).then(res => {
+        this.summary = res.data;
+      });
+    },
+    // 车牌识别
+    getCardid() {
+      // this.$axios.get(`${this.url}method=PkData&xmid=281`).then(res=>{
+      //   console.log(res.data);
+      // })
+    },
+    // 塔吊防碰撞
+    getCrash() {
+      this.$axios.get(`${this.url}method=TowerData&xmid=281`).then(res => {
+        this.crash = res.data;
+      });
+    },
+    // 升降机
+    getLift() {
+      this.$axios.get(`${this.url}method=LifterData&xmid=281`).then(res => {
+        this.lift = res.data;
+      });
+    },
+    // 初始化无限滚动
+    getScroll() {
+      $("#cardid").FontScroll({
+        time: 1500, //滚动间隔
+        num: 1 //滚动条数
+      });
+    },
+    aaa() {
+      $("#summarize").liMarquee({
+        direction: 'up',
+        scrollamount: 10
+	});
+
     }
   }
 };
 </script>
 <style lang='less' scoped>
 .content {
-  padding-top: .5rem;
+  padding-top: 0.5rem;
   height: 10.3rem;
   overflow: hidden;
-  .wrap-main{
+  .wrap-main {
     display: flex;
   }
 }
@@ -489,38 +505,38 @@ export default {
   // width: 52.36%;
   margin-left: 1.4%;
   .mainInfo {
-    margin-top: .02rem;
+    margin-top: 0.02rem;
     // width: 9.73rem;
     width: 100%;
-    height: .83rem;
+    height: 0.83rem;
     background: url("../../../static/images/c_top.png") no-repeat center center;
     background-size: 100% 100%;
     color: #fff;
     text-align: center;
-    line-height: .83rem;
+    line-height: 0.83rem;
     .title {
-      font-size: .26rem;
+      font-size: 0.26rem;
       font-weight: 600;
     }
     .day {
-      font-size: .5rem;
-      line-height: .83rem;
+      font-size: 0.5rem;
+      line-height: 0.83rem;
       font-family: "YJZT";
-      margin: 0 .1rem;
+      margin: 0 0.1rem;
       font-weight: normal;
       display: inline-block;
       vertical-align: middle;
     }
   }
   .videoInfo {
-    margin-top: .3rem;
+    margin-top: 0.3rem;
     width: 100%;
     height: 6.14rem;
     background: url("../../../static/images/c_1.png") no-repeat center center;
     background-size: 100% 100%;
   }
   .bottomInfo {
-    margin-top: .3rem;
+    margin-top: 0.3rem;
     width: 100%;
     .left {
       float: left;
@@ -532,18 +548,18 @@ export default {
         float: right;
         position: relative;
         transform: translateY(-1.52rem);
-        margin-right: .45rem;
+        margin-right: 0.45rem;
         width: 1.62rem;
         height: 1.62rem;
         border-radius: 50%;
-        border: .01rem solid #8c8d9a;
-        box-shadow: #8c8d9a 0px 0px .18rem 0px inset;
+        border: 0.01rem solid #8c8d9a;
+        box-shadow: #8c8d9a 0px 0px 0.18rem 0px inset;
         .line {
           position: absolute;
           left: 50%;
           top: 50%;
-          width: .01rem;
-          height: .8rem;
+          width: 0.01rem;
+          height: 0.8rem;
           background-color: #b7b8c7;
           animation: xuanzhuan 10s linear infinite;
           transform-origin: 0 0;
@@ -552,8 +568,8 @@ export default {
           position: absolute;
           left: 50%;
           top: 50%;
-          width: .08rem;
-          height: .08rem;
+          width: 0.08rem;
+          height: 0.08rem;
           background-color: #fff;
           border-radius: 50%;
           transform: translateX(-50%) translateY(-50%);
@@ -566,26 +582,26 @@ export default {
       height: 1.94rem;
       background: url("../../../static/images/cd_2.png") no-repeat center center;
       background-size: 100% 100%;
-      margin-left: .15rem;
+      margin-left: 0.15rem;
       .runtime {
         float: right;
-        font-size: .22rem;
+        font-size: 0.22rem;
         color: #fff;
         transform: translateX(-1rem) translateY(-1.3rem);
         text-align: center;
         div {
-          margin-bottom: .4rem;
+          margin-bottom: 0.4rem;
         }
       }
     }
     ul {
-      padding-left: .15rem;
+      padding-left: 0.15rem;
       li {
         color: #fff;
-        font-size: .18rem;
-        line-height: .4rem;
+        font-size: 0.18rem;
+        line-height: 0.4rem;
         .sub {
-          margin-left: .05rem;
+          margin-left: 0.05rem;
         }
       }
     }
@@ -612,13 +628,13 @@ export default {
   width: 22.22%;
   margin-left: 1.4%;
   .code {
-    margin-top: .02rem;
+    margin-top: 0.02rem;
     width: 4.14rem;
     height: 1.96rem;
     background: url("../../../static/images/r_2.png") no-repeat center center;
     .left {
       float: left;
-      padding: 0 .4rem;
+      padding: 0 0.4rem;
       img {
         width: 1rem;
         height: 1rem;
@@ -626,80 +642,80 @@ export default {
     }
     .right {
       color: #fff;
-      font-size: .2rem;
-      line-height: .45rem;
+      font-size: 0.2rem;
+      line-height: 0.45rem;
     }
   }
   .ech {
-    margin-top: .3rem;
+    margin-top: 0.3rem;
     width: 4.14rem;
     height: 5.01rem;
     background: url("../../../static/images/r_1.png") no-repeat center center;
-    .status{
+    .status {
       position: relative;
-      top:-0.34rem;
-      left:1.87rem;
-      .good{
+      top: -0.34rem;
+      left: 1.87rem;
+      .good {
         color: #0163ff;
-        margin-left: .15rem;
-        &::before{
-          content: '';
+        margin-left: 0.15rem;
+        &::before {
+          content: "";
           position: absolute;
           left: -0.07rem;
-          top: .05rem;
-          width: .18rem;
-          height: .12rem;
+          top: 0.05rem;
+          width: 0.18rem;
+          height: 0.12rem;
           background-color: #0163ff;
-          border-radius: .05rem;
+          border-radius: 0.05rem;
         }
       }
-      .notgood{
-        color:#dc585f;
-        margin-left: .35rem;
-         &::before{
-          content: '';
+      .notgood {
+        color: #dc585f;
+        margin-left: 0.35rem;
+        &::before {
+          content: "";
           position: absolute;
           left: 1rem;
-          top: .06rem;
-          width: .18rem;
-          height: .12rem;
+          top: 0.06rem;
+          width: 0.18rem;
+          height: 0.12rem;
           background-color: #dc585f;
-          border-radius: .05rem;
+          border-radius: 0.05rem;
         }
       }
     }
-    .dust{
-      transform: translateY(-0.24rem)
+    .dust {
+      transform: translateY(-0.24rem);
     }
   }
   .electro {
-    margin-top: .3rem;
+    margin-top: 0.3rem;
     width: 4.14rem;
     height: 1.94rem;
     background: url("../../../static/images/down_2.png") no-repeat center center;
     .runtime {
       float: right;
-      font-size: .22rem;
+      font-size: 0.22rem;
       color: #fff;
       transform: translateX(-1rem) translateY(-1.3rem);
       text-align: center;
       div {
-        margin-bottom: .4rem;
+        margin-bottom: 0.4rem;
       }
     }
   }
   ul {
-    padding-left: .15rem;
+    padding-left: 0.15rem;
     li {
       color: #fff;
-      font-size: .18rem;
-      line-height: .4rem;
+      font-size: 0.18rem;
+      line-height: 0.4rem;
       .sub {
-        margin-left: .05rem;
+        margin-left: 0.05rem;
       }
     }
   }
-  .temperaturebox{
+  .temperaturebox {
     transform: translateY(-0.2rem);
     z-index: 1;
   }
@@ -718,23 +734,22 @@ export default {
     position: relative;
     // background-color: #fff;
     width: 2.2rem;
-    height: .24rem;
+    height: 0.24rem;
     left: 43.5%;
     top: -26%;
     .subjindu {
       position: absolute;
       left: 0%;
       top: 15.6%;
-      height: .24rem;
-      width: 70%;
+      height: 0.24rem;
+      width: 0%;
       background: linear-gradient(to right, #0163ff, #00adfe);
       transform: skew(13deg);
-      transition: all 2s;
     }
     p {
       margin-left: 105%;
       color: #ffffff;
-      font-size: .12rem;
+      font-size: 0.12rem;
       transform: skew(-13deg);
     }
   }
@@ -743,23 +758,23 @@ export default {
 .work-list {
   display: flex;
   flex-wrap: wrap;
-  margin-left: .12rem;
+  margin-left: 0.12rem;
   transform: translateY(-18%);
   li {
     width: 50%;
     height: 50%;
-    font-size: .18rem;
+    font-size: 0.18rem;
     color: #6e8994;
-    line-height: .6rem;
+    line-height: 0.6rem;
     span {
-      font-size: .3rem;
+      font-size: 0.3rem;
       color: #347fea;
-      margin-left: .12rem;
+      margin-left: 0.12rem;
     }
   }
 }
 .summarize {
-  margin-top: .3rem;
+  margin-top: 0.3rem;
   height: 5.03rem;
   background: url("../../../static/images/r_1.png") no-repeat center center;
   background-size: 100% 100%;
@@ -767,26 +782,26 @@ export default {
   ul {
     margin-top: -0.1rem;
     li {
-      border-bottom: .03rem solid #0f1f53;
+      border-bottom: 0.03rem solid #0f1f53;
       line-height: 346%;
       overflow: hidden;
-      padding: 0 .35rem;
+      padding: 0 0.35rem;
       a {
         text-align: center;
-        font-size: .16rem;
+        font-size: 0.16rem;
         color: #7f9ea8;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
         .summarizeContent {
-          margin-left: .2rem;
+          margin-left: 0.2rem;
         }
       }
     }
   }
 }
 .plate {
-  margin-top: .3rem;
+  margin-top: 0.3rem;
   height: 1.94rem;
   background: url("../../../static/images/r_2.png") no-repeat center center;
   background-size: 100% 100%;
@@ -795,33 +810,33 @@ export default {
   .out_in {
     display: flex;
     color: #fff;
-    font-size: .18rem;
-    padding: 0 .15rem;
+    font-size: 0.18rem;
+    padding: 0 0.15rem;
     div {
-      margin-right: .4rem;
+      margin-right: 0.4rem;
     }
   }
   .case {
     display: flex;
-    padding: 0 .15rem;
-    margin-top: .17rem;
+    padding: 0 0.15rem;
+    margin-top: 0.17rem;
     .left {
-      width: .18rem;
-      height: .76rem;
-      font-size: .18rem;
-      line-height: .2rem;
+      width: 0.18rem;
+      height: 0.76rem;
+      font-size: 0.18rem;
+      line-height: 0.2rem;
       color: #0184ff;
     }
     .right {
       color: #7f9ea8;
       overflow: hidden;
-      margin-left: .2rem;
+      margin-left: 0.2rem;
       ul {
         transform: translateY(-0.05rem);
         li {
-          line-height: .26rem;
+          line-height: 0.26rem;
           span {
-            margin-right: .16rem;
+            margin-right: 0.16rem;
           }
         }
       }
