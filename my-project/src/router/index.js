@@ -4,16 +4,18 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import axios from 'axios'
-// axios.defaults.baseURL = "http://47.106.148.205:8899/"
+axios.defaults.baseURL = "http://gd.17hr.net:8018"
 axios.defaults.withCredentials=true //让ajax携带cookie
 Vue.prototype.$axios = axios
 
 import home from '../components/home/home.vue'
+import green from '../components/green/green.vue'
 
 const router = new VueRouter({
     routes:[
         {path:'/',redirect:'/home'},
         {path:'/home',component:home},
+        {path:'/green',component:green},
     ]
 })
 

@@ -13,6 +13,7 @@
     "element-ui": "^2.4.11",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
+    "moment": "^2.23.0",
     "vue": "^2.5.21",
     "vue-router": "^3.0.2"
   },
@@ -34,9 +35,7 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {
-      
-    },
+    "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
     }

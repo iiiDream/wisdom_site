@@ -31,17 +31,18 @@
         </div>
         <div class="summarize">
           <h3>工程概括</h3>
-          <div id="colee" style="overflow:hidden;height:5.03rem;width:4.1rem;">
-            <ul id="colee1">
-              <li v-for="(item, index) in summary.data" :key="index" :class="item.id">
+           <div id="colee" style="overflow:hidden;height:253px;width:410px;">
+      <ul id="colee1">
+         <li v-for="(item, index) in summary.data" :key="index" :class="item.id">
                 <a href="javascript:;">
                   <span class="summarizeName">{{item.type}}</span>
                   <span class="summarizeContent">{{item.name}}</span>
                 </a>
               </li>
-            </ul>
-            <ul id="colee2"></ul>
-          </div>
+      </ul>
+      <ul id="colee2"></ul>
+  </div>
+          
         </div>
         <div class="plate">
           <h3>车牌识别系统</h3>
@@ -58,8 +59,8 @@
           </div>
           <div class="case">
             <div class="left">进出情况</div>
-            <div class="right" id="cardid" style="overflow:hidden;height:1.04rem;width:4.1rem;">
-              <ul id="cardid1">
+            <div class="right" id="cardid">
+              <ul>
                 <li v-for="(item, index) in cardid.cars" :key="index">
                   <span>{{item.name}}</span>
                   <span>{{item.inout}}</span>
@@ -67,7 +68,6 @@
                   <span>{{item.cartype}}</span>
                 </li>
               </ul>
-              <ul id="cardid2"></ul>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@
           </span>
         </div>
         <div class="videoInfo">
-          <el-carousel trigger="click" height="6.14rem">
+          <el-carousel trigger="click" height="614px">
             <el-carousel-item v-for="(item,index) in centerInfo.pics" :key="index">
               <img :src="`http://gd.17hr.net:8018/`+item.url">
             </el-carousel-item>
@@ -129,7 +129,7 @@
             </ul>
             <div class="runtime">
               <div>已正常运行</div>
-              <img src="../../../static/images/shizhong.png" alt>
+              <img src="../../../static/images/shizhong.png" alt="">
               <div class="noml runtimeBg">{{lift.time}}小时</div>
             </div>
           </div>
@@ -152,12 +152,12 @@
             <span class="good">0~75 良好</span>
             <span class="notgood">＞75 超标</span>
           </div>
-          <div id="dust" :style="{width: '360px', height: '205px'}" class="dust"></div>
+          <div id="dust" :style="{width: '3.8rem', height: '2.05rem'}" class="dust"></div>
           <div class="temperaturebox">
             <h3 style="margin-bottom:.1rem">温度检测</h3>
             <div
               id="temperature"
-              style="width: 380px;height:204px;transform: translateY(-0.18rem)"
+              style="width: 3.8rem;height:2.04rem;transform: translateY(-0.18rem)"
               class="temperature"
             ></div>
           </div>
@@ -167,22 +167,20 @@
           <ul>
             <li>
               <span class="leftName">电箱数量：</span>
-              <span class="sub">{{electricity.electricity_num}}座</span>
+              <span class="sub">20座</span>
             </li>
             <li>
               <span class="leftName">电箱温度：</span>
-              <span class="sub danger">{{electricity.electricity_t}}℃</span>
+              <span class="sub danger">80℃</span>
             </li>
             <li>
               <span class="leftName">运行情况：</span>
-              <span v-if="electricity.status=='0'" class="sub noml">正常</span>
-              <span v-else class="sub danger">异常</span>
+              <span class="sub noml">正常</span>
             </li>
           </ul>
           <div class="runtime">
             <div>已正常运行</div>
-            <img src="../../../static/images/shizhong.png" alt>
-            <div class="noml runtimeBg">{{electricity.time}}小时</div>
+            <div class="noml">200小时</div>
           </div>
         </div>
       </el-col>
@@ -190,6 +188,7 @@
   </div>
 </template>
 <script>
+import '../../common/scroll/scroll.js'
 export default {
   data() {
     return {
@@ -197,7 +196,6 @@ export default {
       baifenbi: 70,
       dh: 0,
       timeId: null,
-      gundongId: null,
       // 工人上工
       manWork: {},
       // 工人概括
@@ -209,35 +207,49 @@ export default {
       // 升降机
       lift: {},
       // 轮播图
-      centerInfo: {},
-      // 用电
-      electricity:{}
+      centerInfo: {}
     };
   },
   mounted() {
     this.dust();
     this.temperature();
+    this.aaa("colee2","colee1","colee");
+    
   },
   created() {
     this.getSummary(),
       this.renderBaifenbi(),
       this.getCardid(),
       this.getCrash(),
-      this.getLift(),
-      this.getCenterInfo(),
-      this.getyongdian();
+      this.getLift();
+    this.getCenterInfo();
   },
   methods: {
-    dust() {
-      this.$axios.get('/APP/XMPage/XmData.ashx?method=EnvData&xmid=281').then(res=>{
-        let data =res.data.data;
-        let hours = [];
-        let values= [];
-        for (let i = 0; i < data.length; i++) {
-          hours.push(data[i].dayhour);
-          values.push(data[i].value);
+    aaa (a,b,c) {
+       var speed=30;
+        var colee2=document.getElementById(a);
+        var colee1=document.getElementById(b);
+        var colee=document.getElementById(c);
+        colee2.innerHTML=colee1.innerHTML; //克隆colee1为colee2
+        function Marquee1(){
+        //当滚动至colee1与colee2交界时
+        if(colee2.offsetTop-colee.scrollTop<=0){
+         colee.scrollTop-=colee1.offsetHeight; //colee跳到最顶端
+         }else{
+         colee.scrollTop++
         }
-              let mydust = this.$echarts.init(document.getElementById("dust"));
+        }
+        var MyMar1=setInterval(Marquee1,speed)//设置定时器
+        //鼠标移上时清除定时器达到滚动停止的目的
+        colee.onmouseover=function() {clearInterval(MyMar1)}
+        //鼠标移开时重设定时器
+        colee.onmouseout=function(){MyMar1=setInterval(Marquee1,speed)}
+  
+
+    },
+    dust() {
+      // 基于准备好的dom，初始化echarts实例
+      let mydust = this.$echarts.init(document.getElementById("dust"));
       mydust.setOption({
         title: { text: "" },
         grid: {
@@ -281,7 +293,16 @@ export default {
         },
         orient: "horizontal",
         yAxis: {
-          data:hours,
+          data: [
+            "2月8日",
+            "2月7日",
+            "2月6日",
+            "2月5日",
+            "2月4日",
+            "2月3日",
+            "2月2日",
+            "2月1日"
+          ], //Y轴标签
           axisLabel: {
             textStyle: {
               color: "#fff"
@@ -306,7 +327,7 @@ export default {
           {
             type: "bar",
             barWidth: 10, //柱状图宽度
-            data: values,
+            data: [30, 60, 90, 120, 150, 180, 180, 200],
             //柱状图颜色
             itemStyle: {
               normal: {
@@ -331,21 +352,9 @@ export default {
           }
         ]
       });
-
-      })
-      // 基于准备好的dom，初始化echarts实例
     },
     temperature() {
-      this.$axios.get('/APP/XMPage/XmData.ashx?method=EnvTemData&xmid=281').then(res=>{
-        let data =res.data.data;
-        let hours = [];
-        let values= [];
-        for (let i = 0; i < data.length; i++) {
-          hours.push(data[i].dayhour);
-          values.push(data[i].value);
-        }
-        hours.push("h")
-        let mytemperature = this.$echarts.init(
+      let mytemperature = this.$echarts.init(
         document.getElementById("temperature")
       );
       mytemperature.setOption({
@@ -374,15 +383,30 @@ export default {
             },
             type: "category",
             boundaryGap: false,
-            data:hours
+            data: [
+              "0",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "h"
+            ]
           }
         ],
         yAxis: [
           {
             type: "value",
-            max: 45,
-            min: -15,
-            interval: 15,
+            max: 40,
+            min: 0,
+            interval: 10,
             axisLabel: {
               textStyle: {
                 color: "#fff"
@@ -408,16 +432,13 @@ export default {
           {
             name: "温度",
             type: "line",
-            symbolSize: 3,
+            symbolSize: 4,
             smooth: 0.2,
             color: ["#f98d98"],
-            data:values
+            data: [20, 22, 14, 20, 25, 16, 19, 26, 24, 10, 12]
           }
         ]
       });
-
-      })
-
     },
     // 工人上工区域
     renderBaifenbi() {
@@ -441,10 +462,7 @@ export default {
         .get(`/APP/XMPage/XmData.ashx?method=GetXMDetail&xmid=281`)
         .then(res => {
           this.summary = res.data;
-          if (this.summary.data.length >= 10) {
-            // 调用滚动方法
-            this.scrollText();
-          }
+
         });
     },
     // 车牌识别
@@ -453,9 +471,6 @@ export default {
         .get(`/APP/XMPage/XmData.ashx?method=PkData&xmid=281`)
         .then(res => {
           this.cardid = res.data;
-          if(this.cardid.cars.length>=5){
-            this.cardScroll()
-          }
         });
     },
     // 塔吊防碰撞
@@ -480,27 +495,23 @@ export default {
         .get("/APP/XMPage/XmData.ashx?method=XMData&xmid=281")
         .then(res => {
           this.centerInfo = res.data;
+          console.log(this.centerInfo.pics);
         });
     },
     scrollText() {
       setTimeout(() => {
-        var speed = 40;
+        var speed = 30;
         var colee2 = document.getElementById("colee2");
         var colee1 = document.getElementById("colee1");
         var colee = document.getElementById("colee");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-
+        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee
+        console.log(colee2.innerHTML); //打印为空
         function Marquee1() {
           //当滚动至colee1与colee2交界时
           if (colee2.offsetTop - colee.scrollTop <= 0) {
             colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
           } else {
-            // console.log(111111);
             colee.scrollTop++;
-
-            if (colee.scrollTop == 829) {
-              colee.scrollTop = 170;
-            }
           }
         }
         var MyMar1 = setInterval(Marquee1, speed); //设置定时器
@@ -515,41 +526,15 @@ export default {
       }, 1000);
     },
     // 来自jq22的插件初始化
-    cardScroll() {
+    scroll(){
       setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("cardid2");
-        var colee1 = document.getElementById("cardid1");
-        var colee = document.getElementById("cardid");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            if (colee.scrollTop == 104) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
+       
+        console.log(33333333333)
+        $('.myscroll').myScroll({
+		      speed: 40, //数值越大，速度越慢
+		      rowHeight: 26 //li的高度
+	      });
       }, 1000);
-    },
-    getyongdian() {                           
-      this.$axios
-        .get("/APP/XMPage/XmData.ashx?method=ElectricityData&xmid=281")
-        .then(res => {
-          this.electricity = res.data;
-      });
     }
   }
 };
@@ -608,7 +593,6 @@ export default {
   .bottomInfo {
     margin-top: 0.3rem;
     width: 100%;
-    display: flex;
     .left {
       float: left;
       width: 49%;
@@ -660,15 +644,15 @@ export default {
         color: #fff;
         transform: translateX(-1rem) translateY(-1.3rem);
         text-align: center;
-        img {
-          transform: translateY(.09rem);
-          width: .83rem;
-          height: .83rem;
+        img{
+          transform: translateY(14px);
+          width: 83px;
+          height: 83px;
         }
-        .runtimeBg {
+        .runtimeBg{
           position: absolute;
-          top: 60%;
-          margin-left: .14rem;
+          top:60%;
+          margin-left: 14px;
         }
       }
     }
@@ -777,15 +761,8 @@ export default {
       color: #fff;
       transform: translateX(-1rem) translateY(-1.3rem);
       text-align: center;
-      img {
-        transform: translateY(.09rem);
-        width: .83rem;  
-        height: .83rem;
-      }
-      .runtimeBg {
-        position: absolute;
-        top: 60%;
-        margin-left: .14rem;
+      div {
+        margin-bottom: 0.4rem;
       }
     }
   }
