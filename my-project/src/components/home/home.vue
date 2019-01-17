@@ -119,7 +119,7 @@
               </li>
               <li>
                 <span class="leftName">载重重量：</span>
-                <span class="sub danger">{{lift.weight}}</span>吨
+                <span class="sub danger">{{lift.weight}}吨</span>
               </li>
               <li>
                 <span class="leftName">运行情况：</span>
@@ -313,7 +313,7 @@ export default {
                 //判断
                 color: function(params) {
                   if (params.value >= 75) {
-                    return "#dc585f";
+                    return "#c23864";
                   } else {
                     return "#0162ff";
                   }
@@ -748,7 +748,7 @@ export default {
         }
       }
       .notgood {
-        color: #dc585f;
+        color: #c23864;
         margin-left: 0.35rem;
         &::before {
           content: "";
@@ -757,7 +757,7 @@ export default {
           top: 0.06rem;
           width: 0.18rem;
           height: 0.12rem;
-          background-color: #dc585f;
+          background-color: #c23864;
           border-radius: 0.05rem;
         }
       }
@@ -806,10 +806,10 @@ export default {
   }
 }
 .danger {
-  color: #dc585f !important;
+  color: #c23864 !important;
 }
 .noml {
-  color: #3ee19a !important;
+  color: #21ff6a !important;
 }
 .wrap-left .top-show {
   height: 1.96rem;
