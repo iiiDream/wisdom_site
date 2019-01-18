@@ -822,6 +822,35 @@ export default {
         }
         this.noisePic(zsH,zsV)
       })
+      setInterval(() => {
+        this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=281').then(res=>{
+        let pmH=[];
+        let pm2=[];
+        let pm10=[];
+        for (let i = 0; i < res.data.data_pm.length; i++) {
+          pmH.push(res.data.data_pm[i].dayhour);
+          pm2.push(res.data.data_pm[i].pm2);
+          pm10.push(res.data.data_pm[i].pm10);
+        }
+        this.sixwu(pmH,pm2,pm10)
+
+        let wdH=[];
+        let wdV=[];
+        for (let i = 0; i < res.data.data_wd.length; i++) {
+          wdH.push(res.data.data_wd[i].dayhour);
+          wdV.push(res.data.data_wd[i].value);
+        }
+        this.sixwen(wdH,wdV);
+
+        let zsH=[];
+        let zsV=[];
+        for (let i = 0; i < res.data.data_zs.length; i++) {
+          zsH.push(res.data.data_zs[i].dayhour);
+          zsV.push(res.data.data_zs[i].value);
+        }
+        this.noisePic(zsH,zsV)
+      })
+      }, 360000);
     },
     // 其他数据
     getManyInfo(){
