@@ -963,16 +963,16 @@ export default {
  #labour .left-top-data li div:nth-child(2) {
      margin-left: 0.26rem;
 }
- #labour .left-top-data p {
+  #labour .left-top-data p {
      font-size: 0.18rem;
      color: #fff;
-     line-height: 31.0.05rem;
+     line-height: .315rem;
 }
  #labour .left-top-data span {
      font-size: 0.2rem;
      font-weight: bolder;
      color: #fff;
-     line-height: 31.0.05rem;
+     line-height: .315rem;
 }
  #labour .top .left-bottom .map {
      width: 100%;

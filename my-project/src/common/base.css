@@ -7,7 +7,7 @@ html {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   touch-callout: none;
-  font-size: 1rem;
+  font-size: 100px;
 }
 body {
   width: 100%;
