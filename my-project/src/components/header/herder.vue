@@ -2,9 +2,9 @@
   <div class="indexBody">
     <div class="header">
       <div class="header-main container clearfix">
-        <div class="city">
-          深圳
-          <span class="temp">22℃</span>
+        <div class="city" v-if="weather.length > 0">
+          {{weather[0].results[0].currentCity}}
+          <span class="temp" v-if="weather.length > 0">{{weather[0].results[0].weather_data[0].temperature}}</span>
         </div>
         <ul class="nav">
           <li class="Lactive">
@@ -37,7 +37,7 @@
           <h2 class="head-title">{{project}}</h2>
         </router-link>
         <div class="date-time">
-          <span class="d-date">2019-1-1</span>
+          <span class="d-date" v-if="weather.length > 0">{{weather[0].date}}</span>
           <span class="d-time">17：00</span>
         </div>
       </div>
@@ -48,11 +48,13 @@
 export default {
   data() {
     return {
-      project: ""
+      project: "",
+      weather: ""
     };
   },
   created() {
     this.getName()
+    this.getWeather()
   },
   methods: {
     getName() {
@@ -61,6 +63,12 @@ export default {
         .then(res => {
           this.project = res.data.project;
         });
+    },
+    getWeather() {
+      this.$axios.get("/APP/XMPage/XmData.ashx?method=XMData&xmid=281").then(res=>{
+        // console.log(res.data.weather)
+        this.weather = res.data.weather
+      })
     }
   }
 };
