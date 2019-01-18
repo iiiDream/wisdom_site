@@ -111,22 +111,22 @@
             <div class="box">
               <img src="../../../static/images/g_qiwen.png" style="transform: translateX(.02rem);">
               <div class="text">
-                <p>气温</p>
-                <p class="info">22 ℃</p>
+                <p  style="font-weight: bold;">气温</p>
+                <p class="info">22 &nbsp;℃</p>
               </div>
             </div>
             <div class="box">
               <img src="../../../static/images/g_wendu.png">
               <div class="text">
-                <p>湿度</p>
-                <p class="info">20 %</p>
+                <p style="font-weight: bold;">湿度</p>
+                <p class="info">20&nbsp;%</p>
               </div>
             </div>
             <div class="box">
               <img src="../../../static/images/g_fengsu.png">
-              <div class="text" style="transform: translate(.24rem);">
-                <p>风速</p>
-                <p class="info">22 m/s</p>
+              <div class="text" style="transform: translate(.2rem);">
+                <p  style="font-weight: bold;">风速</p>
+                <p class="info">22 &nbsp;m/s</p>
               </div>
             </div>
         </div>
@@ -190,7 +190,7 @@
           <span class="content">
             本月用电
             <span>21,286</span>
-            <span class="danwei">kw/h</span>
+            <span class="danwei">&nbsp;kw/h</span>
           </span>
         </div>
         <div class="imgs">
@@ -235,7 +235,7 @@
           <span class="content">
             本月用水
             <span>21,286</span>
-            <span class="danwei">m³</span>
+            <span class="danwei">&nbsp;m³</span>
           </span>
         </div>
         <div class="one">
@@ -264,8 +264,13 @@ export default {
     return {
       time: {},
       date: {},
-      zhouji: {}
+      zhouji: {},
+      weather:{},
+      currentCity:''
     };
+  },
+  created() {
+    // this.getWeather()
   },
   mounted() {
     this.noisePic(),
@@ -734,6 +739,13 @@ export default {
           }
         ]
       });
+    },
+    // 天气接口
+    getWeather(){
+      this.$axios.get('/APP/XMPage/XmData.ashx?method=XMData&xmid=281').then(res=>{
+        console.log(res.data.weather[0].results);
+        
+      })
     }
   }
 };
@@ -981,6 +993,8 @@ export default {
         left: 50%;
         transform: translateX(-50%);
         top: 1rem;
+        border-radius: 50%;
+        // background: url('../../../static/images/g_hechengtu.gif') no-repeat center center;
         .global {
           text-align: center;
           // display: flex;
@@ -1026,14 +1040,18 @@ export default {
           display: flex;
           justify-content: space-between;
           text-align: center;
+          
           img{
             transform: translateX(-.1rem);
           }
           .text{
-            font-size: 24px;
-            font-weight: bold;
+            font-size: .22rem;
             text-align: left;
-            margin-left: .1rem;
+            margin-left: .02rem;
+            .info{
+              transform: translateY(.06rem);
+              font-size: .2rem;
+            }
           }
         }
       }
