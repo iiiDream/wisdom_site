@@ -7,8 +7,18 @@
           <span class="temp">22℃</span>
         </div>
         <ul class="nav">
-          <li class="active">
-            <router-link to="/green">项目总况</router-link>
+          <li class="Lactive">
+            <!-- <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img"> -->
+            <router-link to="/home">项目总况</router-link>
+          </li>
+          <li class="Lactive">
+            <router-link to="/labour">劳务管理</router-link>
+          </li>
+          <li class="Lactive">
+            <router-link to="/green">绿色施工</router-link>
+          </li>
+          <li>
+            <a href="javascript:;">安全管理</a>
           </li>
           <li>
             <a href="javascript:;">全景监控</a>
@@ -20,20 +30,11 @@
             <a href="javascript:;">质量管理</a>
           </li>
           <li>
-            <a href="javascript:;">安全管理</a>
-          </li>
-          <li>
-            <a href="javascript:;">劳务管理</a>
-          </li>
-          <li>
-            <a href="javascript:;">绿色施工</a>
-          </li>
-          <li>
             <a href="javascript:;">工程资料</a>
           </li>
         </ul>
         <router-link to="/home">
-          <h3 class="head-title">{{project}}</h3>
+          <h2 class="head-title">{{project}}</h2>
         </router-link>
         <div class="date-time">
           <span class="d-date">2019-1-1</span>
@@ -159,7 +160,23 @@ export default {
 .header .nav li:last-child {
   background: none;
 }
-.active{
-  background-color: #3375fe;
+.header .nav li.Lactive a,
+.header .nav li.Ractive a{
+  /* background-color: #3375fe; */
+  color: #fff;
+  z-index: 10
+}
+/* .Lactive a{
+  background-image: url('../../../static/images/Lactive.png')
+} */
+/*
+.Ractive a{
+  background-image: url('../../../static/images/Ractive.png')
+} */
+.Lactive-img {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  height: .48rem;
 }
 </style>

@@ -10,12 +10,15 @@ Vue.prototype.$axios = axios
 
 import home from '../components/home/home.vue'
 import green from '../components/green/green.vue'
+import labour from '../components/labour/labour.vue'
+
 
 const router = new VueRouter({
     routes:[
         {path:'/',redirect:'/home'},
         {path:'/home',component:home},
         {path:'/green',component:green},
+        {path:'/labour',component:labour},
     ]
 })
 
