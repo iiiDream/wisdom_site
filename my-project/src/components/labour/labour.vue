@@ -974,7 +974,7 @@ export default {
  #labour .left-top-data li div:nth-child(2) {
      margin-left: 0.26rem;
 }
- #labour .left-top-data p {
+  #labour .left-top-data p {
      font-size: 0.18rem;
      color: #fff;
      line-height: .315rem;
