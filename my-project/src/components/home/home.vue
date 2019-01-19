@@ -152,12 +152,12 @@
             <span class="good">0~75 良好</span>
             <span class="notgood">＞75 超标</span>
           </div>
-          <div id="dust" :style="{width: '360px', height: '205px'}" class="dust"></div>
+          <div id="dust" :style="{width: '3.6rem', height: '2.05rem'}" class="dust"></div>
           <div class="temperaturebox">
             <h3 style="margin-bottom:.1rem">温度检测</h3>
             <div
               id="temperature"
-              style="width: 380px;height:204px;transform: translateY(-0.18rem)"
+              style="width: 3.8rem;height:2.04rem;transform: translateY(-0.18rem)"
               class="temperature"
             ></div>
           </div>
