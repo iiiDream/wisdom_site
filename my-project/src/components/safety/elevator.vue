@@ -207,6 +207,7 @@ export default {};
     height: 7.4rem;
     background: url("../../../static/images/s_bottom-box.png") no-repeat center
       center;
+      background-size: contain;
     padding: 0.3rem 0rem 0.52rem 0rem;
     .title {
       color: #fff;

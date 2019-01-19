@@ -714,6 +714,8 @@ export default {
     }
     #car {
         display: flex;
+  padding: 0.51rem 0.3rem 0.4rem 0.4rem;
+
     }
     .content {
         width: 100%;
