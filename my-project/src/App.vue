@@ -28,4 +28,10 @@ export default {
    fill: currentColor;
    overflow: hidden;
 }
+body {
+  background-image: url('../static/images/index.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 </style>
