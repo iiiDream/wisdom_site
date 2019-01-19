@@ -4,38 +4,36 @@
       <div class="leftTop">
         <div class="title">
           <h1>{{time}}</h1>
-          <div>深圳市环境检测动态显示</div>
+          <div>{{weather.currentCity}}环境检测动态显示</div>
         </div>
         <div class="content">
           <div class="one">
             <span>{{date}}</span>
             <span>{{zhouji}}</span>
-            <img src="../../../static/images/g_xue.png">
-            <div class="name">大雪</div>
-            <div class="wendu">18 ~ 26℃</div>
-            <div class="fengx">微风级</div>
+              <img v-if="weatherInfo1.includes('云')" src="../../../static/images/g_duoyun.png">
+              <img v-else-if="weatherInfo1.includes('晴')" src="../../../static/images/g_qing.png">
+              <img v-else-if="weatherInfo1.includes('雪')" src="../../../static/images/g_xue.png">
+              <img v-else-if="weatherInfo1.includes('雨')" src="../../../static/images/g_dayv.png">
+              <img v-else-if="weatherInfo1.includes('阴')" src="../../../static/images/g_yin.png">
+              <img v-else-if="weatherInfo1.includes('雷')" src="../../../static/images/g_lei.png">
+              <img v-else src="../../../static/images/g_wan.png">
+            <div class="name">{{weatherInfo1}}</div>
+            <div class="wendu">{{weatherInfo3}}</div>
+            <div class="fengx">{{weatherInfo2}}</div>
           </div>
           <div class="two">
-            <div class="sub">
-              <span>{{zhouji}}</span>
-              <img src="../../../static/images/g_xue.png">
-              <div class="name">大雪</div>
-              <div class="wendu">18 ~ 26℃</div>
-              <div class="fengx noml">微风级</div>
-            </div>
-            <div class="sub">
-              <span>{{zhouji}}</span>
-              <img src="../../../static/images/g_xue.png">
-              <div class="name">大雪</div>
-              <div class="wendu">18 ~ 26℃</div>
-              <div class="fengx noml">微风级</div>
-            </div>
-            <div class="sub">
-              <span>{{zhouji}}</span>
-              <img src="../../../static/images/g_xue.png">
-              <div class="name">大雪</div>
-              <div class="wendu">18 ~ 26℃</div>
-              <div class="fengx noml">微风级</div>
+            <div class="sub" v-for="(item, index) in ortherWeather" :key="index">
+              <span>{{item.date}}</span>
+              <img v-if="item.weather.includes('云')" src="../../../static/images/g_duoyun.png">
+              <img v-else-if="item.weather.includes('晴')" src="../../../static/images/g_qing.png">
+              <img v-else-if="item.weather.includes('雪')" src="../../../static/images/g_xue.png">
+              <img v-else-if="item.weather.includes('雨')" src="../../../static/images/g_dayv.png">
+              <img v-else-if="item.weather.includes('阴')" src="../../../static/images/g_yin.png">
+              <img v-else-if="item.weather.includes('雷')" src="../../../static/images/g_lei.png">
+              <img v-else src="../../../static/images/g_wan.png">
+              <div class="name">{{item.weather}}</div>
+              <div class="wendu">{{item.temperature}}</div>
+              <div class="fengx noml">{{item.wind}}</div>
             </div>
           </div>
         </div>
@@ -47,7 +45,7 @@
             <div class="left">
               <img src="../../../static/images/g_lv.png">
               <div>
-                <span class="num">45</span>ug/m3
+                <span class="num">{{manyInfo.pm25}}</span>ug/m3
               </div>
             </div>
             <div class="right">
@@ -62,7 +60,7 @@
             <div class="left">
               <img src="../../../static/images/g_hong.png">
               <div>
-                <span class="num danger">100</span>ug/m3
+                <span class="num danger">{{manyInfo.pm10}}</span>ug/m3
               </div>
             </div>
             <div class="right">
@@ -79,7 +77,7 @@
           <div class="title">
             <div class="subtitle">
               实时数据：
-              <span class="num noml">60</span>dB
+              <span class="num noml">{{manyInfo.zs}}</span>dB
             </div>
             <div class="mintitle">
               <span>最近12小时噪音</span>
@@ -97,11 +95,13 @@
     <div id="center">
       <div class="main">
         <h1>实时环境检测</h1>
-        <img src="../../../static/images/g_lvse.png" class="mainImg">
+        <div class="bgc">
+          <img src="../../../static/images/g_lvse.png" class="mainImg">
+        </div>
         <div class="mianInfo">
           <div class="global">
             <div class="title">PM2.5</div>
-            <div class="num">123</div>
+            <div class="num">{{manyInfo.pm25}}</div>
             <div class="yuan">
               <div class="bor">优</div>
             </div>
@@ -112,21 +112,21 @@
               <img src="../../../static/images/g_qiwen.png" style="transform: translateX(.02rem);">
               <div class="text">
                 <p  style="font-weight: bold;">气温</p>
-                <p class="info">22 &nbsp;℃</p>
+                <p class="info">{{manyInfo.wd}}℃</p>
               </div>
             </div>
             <div class="box">
               <img src="../../../static/images/g_wendu.png">
               <div class="text">
                 <p style="font-weight: bold;">湿度</p>
-                <p class="info">20&nbsp;%</p>
+                <p class="info">{{manyInfo.sd}}%</p>
               </div>
             </div>
             <div class="box">
               <img src="../../../static/images/g_fengsu.png">
               <div class="text" style="transform: translate(.2rem);">
-                <p  style="font-weight: bold;">风速</p>
-                <p class="info">22 &nbsp;m/s</p>
+                <p style="font-weight: bold;">风速</p>
+                <p class="info">22m/s</p>
               </div>
             </div>
         </div>
@@ -266,24 +266,25 @@ export default {
       date: {},
       zhouji: {},
       weather:{},
-      currentCity:''
+      weatherInfo1:'',
+      weatherInfo2:'',
+      weatherInfo3:'',
+      ortherWeather:[],
+      manyInfo:{},
     };
   },
   created() {
-    // this.getWeather()
+    this.getWeather(),
+    this.getdatays(),
+    this.gethourData(),
+    this.getManyInfo()
   },
   mounted() {
-    this.noisePic(),
-      this.getTime(),
-      this.sixwen(),
-      this.sixwu(),
-      this.sevendian(),
-      this.sevenworter(),
-      this.sixworter();
+      this.getTime()
   },
   methods: {
     //   噪音图形
-    noisePic() {
+    noisePic(zsH,zsV) {
       let mytemperature = this.$echarts.init(
         document.getElementById("noisePic")
       );
@@ -313,20 +314,21 @@ export default {
             },
             type: "category",
             boundaryGap: false,
-            data: [
-              "1",
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7",
-              "8",
-              "9",
-              "10",
-              "11",
-              "12"
-            ]
+            // data: [
+            //   "1",
+            //   "2",
+            //   "3",
+            //   "4",
+            //   "5",
+            //   "6",
+            //   "7",
+            //   "8",
+            //   "9",
+            //   "10",
+            //   "11",
+            //   "12"
+            // ]
+            data: zsH
           }
         ],
         yAxis: [
@@ -362,7 +364,8 @@ export default {
             type: "line",
             symbolSize: 4,
             color: ["#508bb8"],
-            data: [42, 32, 54, 60, 65, 56, 49, 46, 54, 50, 52]
+            // data: [42, 32, 54, 60, 65, 56, 49, 46, 54, 50, 52]
+            data: zsV
           }
         ]
       });
@@ -376,7 +379,7 @@ export default {
       }, 60000);
     },
     // 6小时温度图形
-    sixwen() {
+    sixwen(wdH,wdV) {
       let mysixwen = this.$echarts.init(document.getElementById("sixwen"));
       mysixwen.setOption({
         grid: {
@@ -403,7 +406,8 @@ export default {
             },
             type: "category",
             boundaryGap: false,
-            data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
+            // data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
+            data: wdH
           }
         ],
         yAxis: [
@@ -440,13 +444,14 @@ export default {
             symbolSize: 4,
             symbol: "none",
             color: ["#508bb8"],
-            data: [29, 19, 26, 34, 50, 25]
+            // data: [29, 19, 26, 34, 50, 25]
+            data: wdV
           }
         ]
       });
     },
     // 6小时污染度图形
-    sixwu() {
+    sixwu(pmH,pm2,pm10) {
       let mysixwu = this.$echarts.init(document.getElementById("sixwu"));
       mysixwu.setOption({
         // backgroundColor: "#FBFBFB",
@@ -474,7 +479,8 @@ export default {
             },
             type: "category",
             boundaryGap: false,
-            data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
+            // data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
+            data: pmH
           }
         ],
         yAxis: [
@@ -511,7 +517,8 @@ export default {
             symbolSize: 0,
             symbol: "none",
             color: ["#508bb8"],
-            data: [29, 19, 26, 34, 50, 25]
+            // data: [29, 19, 26, 34, 50, 25]
+            data: pm2
           },
           {
             name: "pm10",
@@ -519,13 +526,14 @@ export default {
             symbolSize: 0,
             symbol: "none",
             color: ["#21ff6a"],
-            data: [19, 9, 16, 24, 40, 15]
+            // data: [19, 9, 16, 24, 40, 15]
+            data: pm10
           }
         ]
       });
     },
     // 七天用电图形
-    sevendian() {
+    sevendian(sevendianH,sevendianV) {
       let mysevendian = this.$echarts.init(
         document.getElementById("sevendian")
       );
@@ -555,7 +563,8 @@ export default {
             },
             type: "category",
             boundaryGap: false,
-            data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
+            // data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
+            data: sevendianH
           }
         ],
         yAxis: [
@@ -591,13 +600,14 @@ export default {
             type: "line",
             symbolSize: 4,
             color: ["#508bb8"],
-            data: [67, 124, 126, 134, 90, 85]
+            // data: [67, 124, 126, 134, 90, 85]
+            data: sevendianV
           }
         ]
       });
     },
     // 七天用水图形
-    sevenworter() {
+    sevenworter(sevenshuiH,sevenshuiV) {
       let mysevenworter = this.$echarts.init(
         document.getElementById("sevenworter")
       );
@@ -627,14 +637,15 @@ export default {
             },
             type: "category",
             boundaryGap: false,
-            data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
+            // data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
+            data: sevenshuiH
           }
         ],
         yAxis: [
           {
             type: "value",
-            max: 200,
-            min: 50,
+            max: 150,
+            min: 0,
             interval: 50,
             axisLabel: {
               textStyle: {
@@ -663,13 +674,14 @@ export default {
             type: "line",
             symbolSize: 4,
             color: ["#508bb8"],
-            data: [67, 124, 126, 134, 90, 85]
+            // data: [67, 124, 126, 134, 90, 85]
+            data: sevenshuiV
           }
         ]
       });
     },
     // 六月用水图形
-    sixworter() {
+    sixworter(sixshuiH,sixshuiV) {
       let mysixworter = this.$echarts.init(
         document.getElementById("sixworter")
       );
@@ -699,14 +711,15 @@ export default {
             },
             type: "category",
             boundaryGap: false,
-            data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
+            // data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
+            data: sixshuiH
           }
         ],
         yAxis: [
           {
             type: "value",
-            max: 200,
-            min: 50,
+            max: 150,
+            min: 0,
             interval: 50,
             axisLabel: {
               textStyle: {
@@ -735,7 +748,8 @@ export default {
             type: "line",
             symbolSize: 4,
             color: ["#508bb8"],
-            data: [67, 124, 126, 134, 90, 85]
+            // data: [67, 124, 126, 134, 90, 85]
+            data: sixshuiV
           }
         ]
       });
@@ -743,8 +757,105 @@ export default {
     // 天气接口
     getWeather(){
       this.$axios.get('/APP/XMPage/XmData.ashx?method=XMData&xmid=281').then(res=>{
-        console.log(res.data.weather[0].results);
+        this.weather=res.data.weather[0].results[0];
+        this.weatherInfo1=res.data.weather[0].results[0].weather_data[0].weather;
+        this.weatherInfo2=res.data.weather[0].results[0].weather_data[0].wind;
+        this.weatherInfo3=res.data.weather[0].results[0].weather_data[0].temperature;
+        let orther=res.data.weather[0].results[0].weather_data;
+        // console.log(this.ortherWeather);
+        this.ortherWeather=orther.splice(1);
         
+      })
+    },
+    // 4小时刷新表数据
+    getdatays(){
+      this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetXMDaysRealData&xmid=281').then(res=>{
+        let sevendianH= [];
+        let sevendianV = [];
+        let sevenshuiH = [];
+        let sevenshuiV = [];
+        let sixshuiH = [];
+        let sixshuiV = [];
+        for (let i = 0; i < res.data.data_yd.length; i++) {
+          sevendianH.push(res.data.data_yd[i].dayhour);
+          sevendianV.push(res.data.data_yd[i].value);
+        }
+        for (let i = 0; i < res.data.data_ys.length; i++) {
+          sevenshuiH.push(res.data.data_yd[i].dayhour);
+          sevenshuiV.push(res.data.data_yd[i].value);
+        }
+        for (let i = 0; i < res.data.data_yd1.length; i++) {
+          sixshuiH.push(res.data.data_yd[i].dayhour);
+          sixshuiV.push(res.data.data_yd[i].value);
+        }
+         this.sevendian(sevendianH,sevendianV);
+         this.sevenworter(sevendianH,sevendianV);
+         this.sixworter(sixshuiH,sixshuiV);
+      })
+    },
+    // 1小时刷新表数据
+    gethourData(){
+      this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=281').then(res=>{
+        let pmH=[];
+        let pm2=[];
+        let pm10=[];
+        for (let i = 0; i < res.data.data_pm.length; i++) {
+          pmH.push(res.data.data_pm[i].dayhour);
+          pm2.push(res.data.data_pm[i].pm2);
+          pm10.push(res.data.data_pm[i].pm10);
+        }
+        this.sixwu(pmH,pm2,pm10)
+
+        let wdH=[];
+        let wdV=[];
+        for (let i = 0; i < res.data.data_wd.length; i++) {
+          wdH.push(res.data.data_wd[i].dayhour);
+          wdV.push(res.data.data_wd[i].value);
+        }
+        this.sixwen(wdH,wdV);
+
+        let zsH=[];
+        let zsV=[];
+        for (let i = 0; i < res.data.data_zs.length; i++) {
+          zsH.push(res.data.data_zs[i].dayhour);
+          zsV.push(res.data.data_zs[i].value);
+        }
+        this.noisePic(zsH,zsV)
+      })
+      setInterval(() => {
+        this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=281').then(res=>{
+        let pmH=[];
+        let pm2=[];
+        let pm10=[];
+        for (let i = 0; i < res.data.data_pm.length; i++) {
+          pmH.push(res.data.data_pm[i].dayhour);
+          pm2.push(res.data.data_pm[i].pm2);
+          pm10.push(res.data.data_pm[i].pm10);
+        }
+        this.sixwu(pmH,pm2,pm10)
+
+        let wdH=[];
+        let wdV=[];
+        for (let i = 0; i < res.data.data_wd.length; i++) {
+          wdH.push(res.data.data_wd[i].dayhour);
+          wdV.push(res.data.data_wd[i].value);
+        }
+        this.sixwen(wdH,wdV);
+
+        let zsH=[];
+        let zsV=[];
+        for (let i = 0; i < res.data.data_zs.length; i++) {
+          zsH.push(res.data.data_zs[i].dayhour);
+          zsV.push(res.data.data_zs[i].value);
+        }
+        this.noisePic(zsH,zsV)
+      })
+      }, 360000);
+    },
+    // 其他数据
+    getManyInfo(){
+      this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetEnvRealData&xmid=281').then(res=>{
+        this.manyInfo=res.data.EnvRealData[0];
       })
     }
   }
@@ -786,6 +897,7 @@ export default {
         justify-content: space-between;
         h1 {
           font-size: 0.3rem;
+          margin-left: .14rem;
         }
         div {
           margin-right: 0.5rem;
@@ -828,11 +940,12 @@ export default {
             margin-top: -0.05rem;
             margin-left: 0.2rem;
             background-color: #3ee19a;
-            width: 0.5rem;
+            width: .7rem;
             height: 0.2rem;
             border-radius: 0.05rem;
             text-align: center;
             line-height: 0.2rem;
+            // overflow: hidden;
           }
         }
         .two {
@@ -862,6 +975,7 @@ export default {
               border-radius: 0.05rem;
               text-align: center;
               line-height: 0.2rem;
+              overflow: hidden;
             }
           }
         }
@@ -980,11 +1094,21 @@ export default {
         transform: translateX(-50%);
         font-weight: 900;
       }
-      .mainImg {
+      .bgc{
+        width: 400px;
+        height: 400px;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        top: 1rem;
+        top: .9rem;
+        background: url('../../../static/images/g_hc.gif') no-repeat center center;
+        .mainImg {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          top: .66rem;
+          // border-radius: 50%;
+        }
       }
       .mianInfo {
         width: 2.74rem;
@@ -992,9 +1116,8 @@ export default {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        top: 1rem;
+        top: 1.6rem;
         border-radius: 50%;
-        // background: url('../../../static/images/g_hechengtu.gif') no-repeat center center;
         .global {
           text-align: center;
           // display: flex;

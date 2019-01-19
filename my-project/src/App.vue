@@ -22,7 +22,6 @@ export default {
 
 <style>
 @import url('./common/base.css');
-@import url('./common/icon/iconfont.css');
 .icon {
    width: 1em; height: 1em;
    vertical-align: -0.15em;
