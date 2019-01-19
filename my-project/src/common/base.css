@@ -1,5 +1,43 @@
 @charset "UTF-8";
 /*--公共部分--*/
+@media (min-width: 1024px) {
+  html {
+    font-size: 53.3px !important;
+  }
+}
+/*>=1024的设备*/
+@media (min-width: 1100px) {
+  html {
+    font-size: 57.3px !important;
+  }
+}
+/*>=1100的设备*/
+@media (min-width: 1280px) {
+  html {
+    font-size: 66.6px !important;
+  }
+}
+/*>=1280的设备*/
+@media (min-width: 1366px) {
+  html {
+    font-size: 71.1px !important;
+  }
+}
+@media (min-width: 1440px) {
+  html {
+    font-size: 75px !important;
+  }
+}
+@media (min-width: 1680px) {
+  html {
+    font-size: 87.5px !important;
+  }
+}
+@media (min-width: 1920px) {
+  html {
+    font-size: 100px !important;
+  }
+}
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -7,7 +45,6 @@ html {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   touch-callout: none;
-  font-size: 100px;
 }
 body {
   width: 100%;

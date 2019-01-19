@@ -11,6 +11,11 @@ Vue.prototype.$axios = axios
 import home from '../components/home/home.vue'
 import green from '../components/green/green.vue'
 import labour from '../components/labour/labour.vue'
+import safety from '../components/safety/safety.vue'
+import towerCrane from '../components/safety/towerCrane.vue'
+import elevator from '../components/safety/elevator.vue'
+import car from '../components/safety/car.vue'
+import gantryCrane from '../components/safety/gantryCrane.vue'
 
 
 const router = new VueRouter({
@@ -19,6 +24,13 @@ const router = new VueRouter({
         {path:'/home',component:home},
         {path:'/green',component:green},
         {path:'/labour',component:labour},
+        {path:'/safety',component:safety,children:[
+            {path:"",component:towerCrane},
+            {path:"towerCrane",component:towerCrane},
+            {path:"elevator",component:elevator},
+            {path:"car",component:car},
+            {path:"gantryCrane",component:gantryCrane},
+        ]},
     ]
 })
 

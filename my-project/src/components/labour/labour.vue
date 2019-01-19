@@ -1091,8 +1091,10 @@ export default {
  #labour .main .main-top {
      width: 8.65rem;
      height: 3.51rem;
-     border: 0.02rem solid #0f1f53;
+     /* border: 0.02rem solid #0f1f53; */
      background-color: #020521;
+     background-image: url('../../../static/images/l_m.png');
+     background-size: 8.61rem 3.47rem;
 }
  #labour .main .main-bottom {
      width: 100%;
@@ -1146,8 +1148,13 @@ export default {
      background-image: url('../../../static/images/l_green.png') 
 }
  .disqualification {
-     background-image: url('../../../static/images/l_red.png') 
+     background-image: url('../../../static/images/l_red.png');
+     /* background-size: 1.28rem 1.28rem;  */
 }
+  /* .disqualification:hover {
+    background-image: url('../../../static/images/s_red.gif');
+    background-position: center center;
+  } */
  .border {
      width: 1rem;
      height: 1rem;
