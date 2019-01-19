@@ -23,9 +23,19 @@
     font-size: 71.1px !important;
   }
 }
+@media (min-width: 1400px) {
+  html {
+    font-size: 73px !important;
+  }
+}
 @media (min-width: 1440px) {
   html {
     font-size: 75px !important;
+  }
+}
+@media (min-width: 1600px) {
+  html {
+    font-size: 83.4px !important;
   }
 }
 @media (min-width: 1680px) {

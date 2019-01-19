@@ -16,6 +16,7 @@ import towerCrane from '../components/safety/towerCrane.vue'
 import elevator from '../components/safety/elevator.vue'
 import car from '../components/safety/car.vue'
 import gantryCrane from '../components/safety/gantryCrane.vue'
+import unopen from '../components/unopen/unopen.vue'
 
 
 const router = new VueRouter({
@@ -25,12 +26,13 @@ const router = new VueRouter({
         {path:'/green',component:green},
         {path:'/labour',component:labour},
         {path:'/safety',component:safety,children:[
-            {path:"",component:towerCrane},
+            {path:"",component:elevator},
             {path:"towerCrane",component:towerCrane},
             {path:"elevator",component:elevator},
             {path:"car",component:car},
             {path:"gantryCrane",component:gantryCrane},
         ]},
+        {path:'/unopen',component:unopen},
     ]
 })
 

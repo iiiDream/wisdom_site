@@ -7,33 +7,64 @@
           <span class="temp" v-if="weather.length > 0">{{weather[0].results[0].weather_data[0].temperature}}</span>
         </div>
         <ul class="nav">
-          <li class="Lactive">
-            <!-- <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img"> -->
+          <li v-on:click="setActive(),active1 = true">
+            <div class="Lactive-box" v-show="active1">
+              <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
+              <span>项目总况</span>
+            </div>
             <router-link to="/home">项目总况</router-link>
           </li>
-          <li class="Lactive">
+          <li v-on:click="setActive(),active2 = true">
+            <div class="Lactive-box" v-show="active2">
+              <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
+              <span>劳务管理</span>
+            </div>
             <router-link to="/labour">劳务管理</router-link>
           </li>
-          <li class="Lactive">
+          <li  v-on:click="setActive(),active3 = true">
+            <div class="Lactive-box" v-show="active3">
+              <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
+              <span>绿色施工</span>
+            </div>
             <router-link to="/green">绿色施工</router-link>
           </li>
-          <li class="Lactive">
+          <li  v-on:click="setActive(),active4 = true">
+            <div class="Lactive-box" v-show="active4">
+              <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
+              <span>安全管理</span>
+            </div>
             <router-link to="/safety">安全管理</router-link>
           </li>
-          <li>
-            <a href="javascript:;">全景监控</a>
+          <li  v-on:click="setActive(),active5 = true">
+            <div class="Lactive-box" v-show="active5">
+              <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
+              <span>全景监控</span>
+            </div>
+            <router-link to="/unopen">全景监控</router-link>
           </li>
-          <li>
-            <a href="javascript:;">进度管理</a>
+          <li  v-on:click="setActive(),active6 = true">
+            <div class="Lactive-box" v-show="active6">
+              <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
+              <span>进度管理</span>
+            </div>
+            <router-link to="/unopen">进度管理</router-link>
           </li>
-          <li>
-            <a href="javascript:;">质量管理</a>
+          <li  v-on:click="setActive(),active7 = true">
+            <div class="Lactive-box" v-show="active7">
+              <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
+              <span>质量管理</span>
+            </div>
+            <router-link to="/unopen">质量管理</router-link>
           </li>
-          <li>
-            <a href="javascript:;">工程资料</a>
+          <li  v-on:click="setActive(),active8 = true">
+            <div class="Lactive-box" v-show="active8">
+              <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
+              <span>工程资料</span>
+            </div>
+            <router-link to="/unopen">工程资料</router-link>
           </li>
         </ul>
-        <router-link to="/home">
+        <router-link to="/home" v-on:click.native="setActive(),active1 = true">
           <h2 class="head-title">{{project}}</h2>
         </router-link>
         <div class="date-time">
@@ -54,7 +85,15 @@ export default {
       project: "",
       weather: "",
       time: {},
-      timeId: ""
+      timeId: "",
+      active1: true,
+      active2: false,
+      active3: false,
+      active4: false,
+      active5: false,
+      active6: false,
+      active7: false,
+      active8: false,
     };
   },
   created() {
@@ -81,6 +120,16 @@ export default {
         this.time = moment().format("h:mm:ss")
       },1000)
     },
+    setActive() {
+      this.active1 = false
+      this.active2 = false
+      this.active3 = false
+      this.active4 = false
+      this.active5 = false
+      this.active6 = false
+      this.active7 = false
+      this.active8 = false
+    }
   }
 };
 </script>
@@ -146,6 +195,7 @@ export default {
      background-size: 100% 100%;
 }
  .header .nav li {
+     position: relative;
      float: left;
      width: 1.32rem;
      text-align: center;
@@ -176,12 +226,12 @@ export default {
  .header .nav li:last-child {
      background: none;
 }
- .header .nav li.Lactive a, .header .nav li.Ractive a{
-    /* background-color: #3375fe;
-     */
+ /* .header .nav li.Lactive a, .header .nav li.Ractive a{
+    background-color: #3375fe;
+    
      color: #fff;
      z-index: 10 
-}
+} */
 /* .Lactive a{
      background-image: url('../../../static/images/Lactive.png') 
 }
@@ -190,11 +240,27 @@ export default {
      background-image: url('../../../static/images/Ractive.png') 
 }
  */
- .Lactive-img {
-     position: absolute;
-     z-index: 1;
-     left: 0;
-     height: .48rem;
+ /* .Lactive-img {
+    
+} */
+.Lactive-box {
+  position: absolute;
+  left: 0;
+  height: .48rem;
+  top: 0;
 }
- 
+.Lactive-box span{
+  position: absolute;
+  width: 100%;
+  height: 0.48rem;
+  line-height: 0.48rem;
+  font-size: 0.16rem;
+  font-weight: bold;
+  color: #fff;
+  left: 0;
+}
+.Lactive-box img {
+  height: .48rem;
+  width: 1.32rem;
+} 
 </style>

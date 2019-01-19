@@ -152,12 +152,12 @@
             <span class="good">0~75 良好</span>
             <span class="notgood">＞75 超标</span>
           </div>
-          <div id="dust" :style="{width: '360px', height: '205px'}" class="dust"></div>
+          <div id="dust" :style="{width: '3.6rem', height: '2.05rem'}" class="dust"></div>
           <div class="temperaturebox">
             <h3 style="margin-bottom:.1rem">温度检测</h3>
             <div
               id="temperature"
-              style="width: 380px;height:204px;transform: translateY(-0.18rem)"
+              style="width: 3.8rem;height:2.04rem;transform: translateY(-0.18rem)"
               class="temperature"
             ></div>
           </div>
@@ -713,6 +713,7 @@ export default {
     width: 4.14rem;
     height: 1.96rem;
     background: url("../../../static/images/r_2.png") no-repeat center center;
+    background-size: 100% 100%;
     .left {
       float: left;
       padding: 0 0.4rem;
@@ -732,6 +733,7 @@ export default {
     width: 4.14rem;
     height: 5.01rem;
     background: url("../../../static/images/r_1.png") no-repeat center center;
+    background-size: 100% 100%;
     .status {
       position: relative;
       top: -0.34rem;
@@ -774,6 +776,7 @@ export default {
     width: 4.14rem;
     height: 1.94rem;
     background: url("../../../static/images/down_2.png") no-repeat center center;
+    background-size: 100% 100%;
     .runtime {
       float: right;
       font-size: 0.22rem;
