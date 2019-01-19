@@ -1167,7 +1167,6 @@ export default {
   .disqualification:hover {
     background-image: url('../../../static/images/l_red.gif');
     background-position: center center;
-    /* background-size: contain; */
     background-size: 1.4rem 1.4rem; 
   }
  .border {
