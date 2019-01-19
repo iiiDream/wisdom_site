@@ -52,7 +52,7 @@
           <div class="name">
             <h3>现场工种</h3>
           </div>
-          <div class="map" id="professionMap" style="width:414px;height:180px;"></div>
+          <div class="map" id="professionMap" style="width:4.14rem;height:1.8rem;"></div>
           <div class="left-bottom-data" id="leftBottom">
             <ul id="leftBottom1">
               <li v-for="(item,index) in attendanceData.EmpPostData" :key="index">
@@ -127,7 +127,7 @@
               <div style="margin-right:.1rem">出勤</div>
             </div>
           </div>
-          <div id="attendance" style="width:865px; height:300px;"></div>
+          <div id="attendance" style="width:8.65rem; height:3rem;"></div>
         </div>
       </div>
       <!-- 右边部分 -->
@@ -137,7 +137,7 @@
           <div class="name">
             <h3>今日劳动曲线</h3>
           </div>
-          <div class="map" id="labourCurve" style="width: 414px; height: 245px;"></div>
+          <div class="map" id="labourCurve" style="width: 4.14rem; height: 2.45rem;"></div>
         </div>
         <!-- 右边下部盒子 -->
         <div class="right-bottom">
@@ -403,6 +403,11 @@ export default {
           }
         ]
       });
+      window.onresize = function(){
+        professionMap.resize();
+        attendance.resize();
+        labourCurve.resize();
+      }
     },
     attendance(aMTotal,aMZc,aMDay) {
       let attendance = this.$echarts.init(
@@ -870,7 +875,8 @@ export default {
  #labour .top .left {
      height: 100%;
      width: 4.14rem;
-     background-image: url('../../../static/images/l_1.png') 
+     background-image: url('../../../static/images/l_1.png');
+     background-size: contain; 
 }
  #labour .top .left .left-top {
      height: 3.61rem;
@@ -893,6 +899,7 @@ export default {
      height: 100%;
      width: 9.73rem;
      background-image: url('../../../static/images/l_2.png');
+     background-size: contain;
      padding: 0.5rem;
 }
  #labour .top .right {
@@ -904,25 +911,29 @@ export default {
  #labour .top .right .right-top {
      height: 2.45rem;
      width: 100%;
-     background-image: url('../../../static/images/l_3.png') 
+     background-image: url('../../../static/images/l_3.png');
+     background-size: contain; 
 }
  #labour .top .right .right-bottom {
      margin-top: 0.3rem;
      height: 4.52rem;
      width: 100%;
      background-image: url('../../../static/images/l_4.png');
+     background-size: contain;
      position: relative;
      padding: 0.02rem;
 }
  #labour .bottom .procedure, #labour .bottom .information {
      height: 100%;
      width: 4.14rem;
-     background-image: url('../../../static/images/l_5.png') 
+     background-image: url('../../../static/images/l_5.png');
+     background-size: contain; 
 }
  #labour .bottom .contract, #labour .bottom .safety {
      height: 100%;
      width: 4.75rem;
-     background-image: url('../../../static/images/l_6.png') 
+     background-image: url('../../../static/images/l_6.png');
+     background-size: contain; 
 }
 /* #labour h3 {
      line-height: 0.37rem;
@@ -1145,16 +1156,19 @@ export default {
      margin-top: -.1rem;
 }
  .qualified {
-     background-image: url('../../../static/images/l_green.png') 
+     background-image: url('../../../static/images/l_green.png');
+     background-size: contain; 
 }
  .disqualification {
      background-image: url('../../../static/images/l_red.png');
+     background-size: contain;
      /* background-size: 1.28rem 1.28rem;  */
 }
-  /* .disqualification:hover {
-    background-image: url('../../../static/images/s_red.gif');
+  .disqualification:hover {
+    background-image: url('../../../static/images/l_red.gif');
     background-position: center center;
-  } */
+    background-size: 1.4rem 1.4rem; 
+  }
  .border {
      width: 1rem;
      height: 1rem;

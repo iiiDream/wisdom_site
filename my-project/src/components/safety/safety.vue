@@ -1,9 +1,9 @@
 <template>
     <div id="safey">
         <div class="side-nav">
-            <router-link to="/safety/elevator">升降机</router-link>
+            <router-link to="/safety/elevator"  class="active">升降机</router-link>
             <i class="nav-border"></i>
-            <router-link to="/safety/towerCrane" class="active">塔吊</router-link>
+            <router-link to="/safety/towerCrane">塔吊</router-link>
             <i class="nav-border"></i>
             <router-link to="/safety/car">车辆出入</router-link>
             <i class="nav-border"></i>
@@ -40,6 +40,7 @@
     .router-box {
         flex: 1;
         display: inline-block;
+        padding: 0.51rem 0.3rem 0.4rem 0.4rem;
     }
     .side-nav a {
         display: block;

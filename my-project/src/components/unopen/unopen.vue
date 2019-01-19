@@ -5,9 +5,8 @@
 <style scoped>
     div {
         text-align: center;
-        margin: 3rem;
+        margin: 4rem;
         font-size: .5rem;
         color: #fff;
     }
 </style>
-
