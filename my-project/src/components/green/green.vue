@@ -43,7 +43,8 @@
           <h3>扬尘监测分析</h3>
           <div class="top">
             <div class="left">
-              <img src="../../../static/images/g_lv.png">
+              <img v-if="manyInfo.pm25IsA==0" src="../../../static/images/g_lv.png" style="width:1.31rem;height:1.2rem">
+              <img v-else src="../../../static/images/g_hong.png" style="width:1.31rem;height:1.2rem">
               <div>
                 <span class="num">{{manyInfo.pm25}}</span>ug/m3
               </div>
@@ -51,24 +52,29 @@
             <div class="right">
               <div class="title">PM2.5</div>
               <div class="day">本日平均浓度：</div>
-              <div class="daynum noml">45ug/m3</div>
+              <div v-if="pm25<75" class="daynum noml">{{pm25}}ug/m3</div>
+              <div v-else class="daynum danger">{{pm25}}ug/m3</div>
               <div class="month">本月平均浓度：</div>
-              <div class="monthnum noml">45ug/m3</div>
+              <div v-if="pmyd25<75" class="monthnum noml">{{pmyd25}}ug/m3</div>
+              <div v-else class="monthnum danger">{{pmyd25}}ug/m3</div>
             </div>
           </div>
           <div class="down">
             <div class="left">
-              <img src="../../../static/images/g_hong.png">
+              <img v-if="manyInfo.pm10IsA==0" src="../../../static/images/g_lv.png" style="width:1.31rem;height:1.2rem">
+              <img v-else src="../../../static/images/g_hong.png" style="width:1.31rem;height:1.2rem">
               <div>
-                <span class="num danger">{{manyInfo.pm10}}</span>ug/m3
+                <span class="num">{{manyInfo.pm10}}</span>ug/m3
               </div>
             </div>
             <div class="right">
               <div class="title">PM10</div>
               <div class="day">本日平均浓度：</div>
-              <div class="daynum danger">100ug/m3</div>
+              <div v-if="pm10<0.15" class="daynum noml">{{pm10}}ug/m3</div>
+              <div v-else class="daynum danger">{{pm10}}ug/m3</div>
               <div class="month">本月平均浓度：</div>
-              <div class="monthnum noml">45ug/m3</div>
+              <div v-if="pmyd10<0.15" class="monthnum noml">{{pmyd10}}ug/m3</div>
+              <div v-else class="monthnum danger">{{pmyd10}}ug/m3</div>
             </div>
           </div>
         </div>
@@ -77,7 +83,8 @@
           <div class="title">
             <div class="subtitle">
               实时数据：
-              <span class="num noml">{{manyInfo.zs}}</span>dB
+              <span v-if="manyInfo.zsIsA==0" class="num noml">{{manyInfo.zs}}dB</span>
+              <span v-else class="num danger">{{manyInfo.zs}}dB</span>
             </div>
             <div class="mintitle">
               <span>最近12小时噪音</span>
@@ -86,7 +93,7 @@
           </div>
           <div
             id="noisePic"
-            style="width: 380px;height:204px;transfrom:translateY(30px);"
+            style="width: 3.8rem;height:2.04rem;transfrom:translateY(0.3rem);"
             class="noisePic"
           ></div>
         </div>
@@ -96,34 +103,44 @@
       <div class="main">
         <h1>实时环境检测</h1>
         <div class="bgc">
-          <img src="../../../static/images/g_lvse.png" class="mainImg">
+          <img v-if="manyInfo.pm25<50" src="../../../static/images/g_lvse.png" class="mainImg" style="width:2.74rem;height:2.74rem">
+          <img v-else-if="manyInfo.pm25<75" src="../../../static/images/g_huang.png" class="mainImg" style="width:2.74rem;height:2.74rem">
+          <img v-else-if="manyInfo.pm25<150" src="../../../static/images/g_qingdu.png" class="mainImg" style="width:2.74rem;height:2.74rem">
+          <img v-else-if="manyInfo.pm25<250" src="../../../static/images/g_zhongdu.png" class="mainImg" style="width:2.74rem;height:2.74rem">
+          <img v-else-if="manyInfo.pm25<300" src="../../../static/images/g_zdu.png" class="mainImg" style="width:2.74rem;height:2.74rem">
+          <img v-else src="../../../static/images/g_yanzhong.png" class="mainImg" style="width:2.74rem;height:2.74rem">
         </div>
         <div class="mianInfo">
           <div class="global">
             <div class="title">PM2.5</div>
             <div class="num">{{manyInfo.pm25}}</div>
             <div class="yuan">
-              <div class="bor">优</div>
+              <div v-if="manyInfo.pm25<50" class="bor" style="background-color: #21ff6a;">优</div>
+              <div v-else-if="manyInfo.pm25<75" class="bor" style="background-color: #feb113;">良</div>
+              <div v-else-if="manyInfo.pm25<150" class="bor" style="background-color: #f06743;">轻度污染</div>
+              <div v-else-if="manyInfo.pm25<250" class="bor" style="background-color: #d0021b;">中度污染</div>
+              <div v-else-if="manyInfo.pm25<300" class="bor" style="background-color: #6c00cc;">重度污染</div>
+              <div v-else class="bor" style="background-color: #6d1e06;">严重污染</div>
             </div>
           </div>
         </div>
         <div class="leftInfo">
             <div class="box">
-              <img src="../../../static/images/g_qiwen.png" style="transform: translateX(.02rem);">
+              <img src="../../../static/images/g_qiwen.png" style="transform: translateX(.02rem);width:0.25rem;height:0.49rem">
               <div class="text">
-                <p  style="font-weight: bold;">气温</p>
+                <p style="font-weight: bold;">气温</p>
                 <p class="info">{{manyInfo.wd}}℃</p>
               </div>
             </div>
             <div class="box">
-              <img src="../../../static/images/g_wendu.png">
+              <img src="../../../static/images/g_wendu.png" style="width:0.45rem;height:0.48rem">
               <div class="text">
                 <p style="font-weight: bold;">湿度</p>
                 <p class="info">{{manyInfo.sd}}%</p>
               </div>
             </div>
             <div class="box">
-              <img src="../../../static/images/g_fengsu.png">
+              <img src="../../../static/images/g_fengsu.png" style="width:0.48rem;height:0.48rem">
               <div class="text" style="transform: translate(.2rem);">
                 <p style="font-weight: bold;">风速</p>
                 <p class="info">22m/s</p>
@@ -132,12 +149,12 @@
         </div>
         <div class="fengche">
           <div class="big">
-            <img src="../../../static/images/g_dafs.png" class="bigshang">
-            <img src="../../../static/images/g_dafx.png" class="bigxia">
+            <img src="../../../static/images/g_dafs.png" class="bigshang" style="width:0.98rem;height:1.05rem">
+            <img src="../../../static/images/g_dafx.png" class="bigxia" style="width:0.09rem;height:0.93rem">
           </div>
           <div class="small">
-            <img src="../../../static/images/g_xxfs.png" class="smallshang">
-            <img src="../../../static/images/g_xxfx.png" class="smallxia">
+            <img src="../../../static/images/g_xxfs.png" class="smallshang" style="width:0.66rem;height:.61rem">
+            <img src="../../../static/images/g_xxfx.png" class="smallxia" style="width:0.06rem;height:0.58rem">
           </div>
         </div>
         <div class="bottonInfo">
@@ -150,7 +167,7 @@
             <li>300</li>
             <li>500</li>
           </ul>
-          <img src="../../../static/images/g_wenran.png" alt="">
+          <img src="../../../static/images/g_wenran.png" style="width:5.18rem;height:0.25rem">
         </div>
         <div class="downtable">
           <div class="left">
@@ -160,7 +177,7 @@
             </div>
             <div
               id="sixwen"
-              style="width: 443px;height:244px;transfrom:translateY(40px);"
+              style="width: 4.43rem;height:2.44rem;transfrom:translateY(0.4rem);"
               class="sixwen"
             ></div>
           </div>
@@ -173,7 +190,7 @@
             </div>
             <div
               id="sixwu"
-              style="width: 443px;height:244px;transfrom:translateY(40px);"
+              style="width: 4.43rem;height:2.44rem;transfrom:translateY(0.4rem);"
               class="sixwu"
             ></div>
           </div>
@@ -189,26 +206,32 @@
           </span>
           <span class="content">
             本月用电
-            <span>21,286</span>
+            <span>{{byyd}}</span>
             <span class="danwei">&nbsp;kw/h</span>
           </span>
         </div>
         <div class="imgs">
           <div class="daydian">
             <div class="text">
-              <p>200</p>
+              <p>{{yongdianInfo.yd}}</p>
               <p>kwh</p>
             </div>
           </div>
           <div class="dianxiang">
             <div class="text">
-              <p>80</p>
+              <p>{{yongdianInfo.wd}}</p>
               <p>℃</p>
             </div>
           </div>
-          <div class="loudian">
+          <div v-if="yongdianInfo.ldIsA==0" class="loudian">
             <div class="text">
-              <p>200</p>
+              <p>{{yongdianInfo.ld}}</p>
+              <p>kwh</p>
+            </div>
+          </div>
+          <div v-else class="loudian1">
+            <div class="text">
+              <p>{{yongdianInfo.ld}}</p>
               <p>kwh</p>
             </div>
           </div>
@@ -216,14 +239,15 @@
         <div class="subtitle">
           <p class="huang">今日用电</p>
           <p class="huang">电箱温度</p>
-          <p class="danger">电箱漏电</p>
+          <p v-if="yongdianInfo.ldIsA==0" class="huang">电箱漏电</p>
+          <p v-else class="danger">电箱漏电</p>
         </div>
         <div class="biao">
           <div class="mintitle">
             <span>最近7天用电</span>
             <span>单位：KWH</span>
           </div>
-          <div id="sevendian" style="width: 360px;height:180px;" class="sevendian"></div>
+          <div id="sevendian" style="width: 3.6rem;height:1.8rem;" class="sevendian"></div>
         </div>
       </div>
       <div class="down">
@@ -234,7 +258,7 @@
           </span>
           <span class="content">
             本月用水
-            <span>21,286</span>
+            <span>{{byys}}</span>
             <span class="danwei">&nbsp;m³</span>
           </span>
         </div>
@@ -243,14 +267,14 @@
             <span>最近7天用水</span>
             <span>单位：m³</span>
           </div>
-          <div id="sevenworter" style="width: 360px;height:150px;" class="sevenworter"></div>
+          <div id="sevenworter" style="width: 3.6rem;height:1.5rem;" class="sevenworter"></div>
         </div>
         <div class="two">
           <div class="mintitle">
             <span>最近6月用水</span>
             <span>单位：m³</span>
           </div>
-          <div id="sixworter" style="width: 360px;height:150px;" class="sixworter"></div>
+          <div id="sixworter" style="width: 3.6rem;height:1.5rem;" class="sixworter"></div>
         </div>
       </div>
     </div>
@@ -271,6 +295,16 @@ export default {
       weatherInfo3:'',
       ortherWeather:[],
       manyInfo:{},
+      pm25isA:'',
+      pm10isA:'',
+      zsisA:'',
+      yongdianInfo:{},
+      byys:'',
+      byyd:'',
+      pm25:'',
+      pm10:'',
+      pmyd25:'',
+      pmyd10:''
     };
   },
   created() {
@@ -770,6 +804,9 @@ export default {
     // 4小时刷新表数据
     getdatays(){
       this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetXMDaysRealData&xmid=281').then(res=>{
+        this.byys=res.data.byys;
+        this.byyd=res.data.byyd;
+        
         let sevendianH= [];
         let sevendianV = [];
         let sevenshuiH = [];
@@ -785,8 +822,8 @@ export default {
           sevenshuiV.push(res.data.data_yd[i].value);
         }
         for (let i = 0; i < res.data.data_yd1.length; i++) {
-          sixshuiH.push(res.data.data_yd[i].dayhour);
-          sixshuiV.push(res.data.data_yd[i].value);
+          sixshuiH.push(res.data.data_yd1[i].dayhour);
+          sixshuiV.push(res.data.data_yd1[i].value);
         }
          this.sevendian(sevendianH,sevendianV);
          this.sevenworter(sevendianH,sevendianV);
@@ -796,6 +833,11 @@ export default {
     // 1小时刷新表数据
     gethourData(){
       this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=281').then(res=>{
+        this.pm25=res.data.pm25;
+        this.pm10=res.data.pm10;
+        this.pmyd25=res.data.pmyd25;
+        this.pmyd10=res.data.pmyd10;
+        
         let pmH=[];
         let pm2=[];
         let pm10=[];
@@ -824,6 +866,12 @@ export default {
       })
       setInterval(() => {
         this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=281').then(res=>{
+        this.pm25=res.data.pm25;
+        this.pm10=res.data.pm10;
+        this.pmyd25=res.data.pmyd25;
+        this.pmyd10=res.data.pmyd10;
+        
+
         let pmH=[];
         let pm2=[];
         let pm10=[];
@@ -856,6 +904,10 @@ export default {
     getManyInfo(){
       this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetEnvRealData&xmid=281').then(res=>{
         this.manyInfo=res.data.EnvRealData[0];
+        this.pm25isA=this.manyInfo.pm25IsA;
+        this.pm10isA=this.manyInfo.pm10IsA;
+        this.zsisA=this.manyInfo.zsIsA;
+        this.yongdianInfo=res.data.YDRealData[0];
       })
     }
   }
@@ -878,6 +930,7 @@ export default {
   height: 10.3rem;
   overflow: hidden;
   background: url("../../../static/images/index.jpg") no-repeat center center;
+  background-size: 100% 100%;
   h3 {
     font-weight: 900;
   }
@@ -889,6 +942,7 @@ export default {
       height: 1.96rem;
       background: url("../../../static/images/g_zuoshang.png") no-repeat center
         center;
+      background-size: 100% 100%;
       padding: 0.2rem;
       padding: 0.15rem 0.2rem 0.18rem 0.11rem;
       .title {
@@ -923,7 +977,7 @@ export default {
             right: -0.2rem;
           }
           span {
-            font-size: 12px;
+            font-size: .12rem;
             margin-left: 0.1rem;
           }
           img {
@@ -953,7 +1007,7 @@ export default {
           transform: translateX(0.14rem);
           display: flex;
           margin-left: 0.6rem;
-          font-size: 12px;
+          font-size: .12rem;
           .sub {
             width: 0.7rem;
             margin-left: 0.2rem;
@@ -986,6 +1040,7 @@ export default {
       height: 7.25rem;
       background: url("../../../static/images/g_zuoxia.png") no-repeat center
         center;
+        background-size: 100% 100%;
       margin-top: 0.3rem;
       .yangchen {
         .top,
@@ -1084,6 +1139,7 @@ export default {
       height: 9.51rem;
       background: url("../../../static/images/g_zhong.png") no-repeat center
         center;
+        background-size: 100% 100%;
       position: relative;
       color: #fff;
       padding: 0.34rem 0.4rem 0.4rem 0.45rem;
@@ -1095,13 +1151,14 @@ export default {
         font-weight: 900;
       }
       .bgc{
-        width: 400px;
-        height: 400px;
+        width: 4rem;
+        height: 4rem;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
         top: .9rem;
         background: url('../../../static/images/g_hc.gif') no-repeat center center;
+        background-size: 100% 100%;
         .mainImg {
           position: absolute;
           left: 50%;
@@ -1149,7 +1206,8 @@ export default {
               border-radius: 0.2rem;
               text-align: center;
               line-height: 0.32rem;
-              font-size: 0.22rem;
+              font-size: 0.18rem;
+              font-weight: 600;
             }
           }
         }
@@ -1303,7 +1361,7 @@ export default {
         }
         .sixwen,
         .sixwu {
-          transform: translate(-45px, 65px);
+          transform: translate(-0.45rem, .65rem);
         }
       }
     }
@@ -1318,6 +1376,7 @@ export default {
       height: 4.61rem;
       background: url("../../../static/images/g_youshang.png") no-repeat center
         center;
+        background-size: 100% 100%;
       .title {
         width: 3.72rem;
         height: 0.46rem;
@@ -1360,14 +1419,25 @@ export default {
         .daydian {
           background: url("../../../static/images/g_ydhuang.png") no-repeat
             center center;
+            background-size: 100% 100%;
         }
         .dianxiang {
           background: url("../../../static/images/g_ydhuang.png") no-repeat
             center center;
+            background-size: 100% 100%;
         }
         .loudian {
+          background: url("../../../static/images/g_ydhuang.png") no-repeat
+            center center;
+            background-size: 100% 100%;
+          .text {
+            color: #ffb70e;
+          }
+        }
+        .loudian1 {
           background: url("../../../static/images/g_ydhong.png") no-repeat
             center center;
+            background-size: 100% 100%;
           .text {
             color: #c23864;
           }
@@ -1380,7 +1450,7 @@ export default {
         padding: 0 0.35rem;
         margin-top: 0.1rem;
         p {
-          width: 84px;
+          width: .84rem;
         }
       }
       .biao {
@@ -1424,6 +1494,7 @@ export default {
       height: 4.6rem;
       background: url("../../../static/images/g_youxia.png") no-repeat center
         center;
+        background-size: 100% 100%;
       .title {
         width: 3.72rem;
         height: 0.46rem;
