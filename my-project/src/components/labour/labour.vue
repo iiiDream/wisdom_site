@@ -403,11 +403,11 @@ export default {
           }
         ]
       });
-      window.onresize = function(){
-        professionMap.resize();
-        attendance.resize();
-        labourCurve.resize();
-      }
+      // window.onresize = function(){
+      //   professionMap.resize();
+      //   attendance.resize();
+      //   labourCurve.resize();
+      // }
     },
     attendance(aMTotal,aMZc,aMDay) {
       let attendance = this.$echarts.init(
