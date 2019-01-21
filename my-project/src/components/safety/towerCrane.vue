@@ -1,37 +1,37 @@
 <template>
     <div id="towerCrane">
         <div class="content">
-            <div class="content-box">
+            <div class="content-box" v-for="(val,key,index) in towerCraneData" :key="index">
                 <div class="top-box">
                     <div class="status">
-                        <span class="anomaly">异常运行</span>
+                        <span :class="val.State==0?'normal':'anomaly'">{{val.State==0?'正常运行':'异常运行'}}</span>
                     </div>
                     <div class="employee">
                         <span class="bolder">今日工作</span>
-                        <span>某某某</span>
-                        <span class="bolder">上工时间</span>
-                        <span>07:30</span>
+                        <span>{{val.Name}}</span>
+                        <span class="bolder">上班时间</span>
+                        <span>{{val.time}}</span>
                     </div>
-                    <img src="../../../static/images/s_pic.png" alt="" class="pic">
+                    <img :src="imgUrl+val.photo" alt="" class="pic">
                 </div>
                 <div class="bottom-box">
                     <div class="name">
-                        <span class="bolder">吊塔一号机</span>
+                        <span class="bolder">{{val.DevName}}</span>
                     </div>
                     <div class="top-data">
                         <div class="top-left">
                             <p>安全起重</p>
-                            <span>--t</span>
+                            <span>{{val.cs_qz}}t</span>
                         </div>
                         <div class="middle">
                             <div class="middle-img">
-                                <span>--%</span>
+                                <span>{{val.cs_lj}}%</span>
                             </div>
                             <span>力距</span>
                         </div>
                         <div class="top-right">
                             <p>倍率</p>
-                            <span>--倍</span>
+                            <span>{{val.cs_bl}}倍</span>
                         </div>
                     </div>
                     <div class="bottom-data">
@@ -40,84 +40,84 @@
                                 <img src="../../../static/images/s_weight.png" alt="">
                                 <div>
                                     <p>重量</p>
-                                    <p>--t</p>
+                                    <p>{{val.yx_zl}}t</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_range.png" alt="">
                                 <div>
                                     <p>幅度</p>
-                                    <p>--m</p>
+                                    <p>{{val.yx_fd}}m</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_altitude.png" alt="">
                                 <div>
                                     <p>高度</p>
-                                    <p>--m</p>
+                                    <p>{{val.yx_gd}}m</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_rotation.png" alt="">
                                 <div>
                                     <p>回转</p>
-                                    <p>--°</p>
+                                    <p>{{val.yx_hz}}°</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_wind-speed.png" alt="">
                                 <div>
                                     <p>风速</p>
-                                    <p>--m</p>
+                                    <p>{{val.yx_fs}}m</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_dip-angle.png" alt="">
                                 <div>
                                     <p>倾角</p>
-                                    <p>X--°</p>
-                                    <p>Y--°</p>
+                                    <p>X{{val.yx_qjX}}°</p>
+                                    <p>Y{{val.yx_qjY}}°</p>
                                 </div>
                             </li>
                         </ul>
                     </div>
                     <div class="day">
                         <span class="bolder">检修倒计时： </span>
-                        <span class="bolder normal">90天</span>
+                        <span class="bolder" :class="val.jxdate>=10?'normal':val.jxdate>=1?'warning':'anomaly'">{{val.jxdate}}天</span>
                     </div>
                 </div>
             </div>
-            <div class="content-box">
+            <!-- <div class="content-box" v-for="(val,key,index) in towerCraneData" :key="index">
                 <div class="top-box">
                     <div class="status">
-                        <span class="normal">正常运行</span>
+                        <span :class="val.State==0?'normal':'anomaly'">{{val.State==0?'正常运行':'异常运行'}}</span>
                     </div>
                     <div class="employee">
                         <span class="bolder">今日工作</span>
-                        <span>某某某</span>
-                        <span class="bolder">上工时间</span>
-                        <span>07:30</span>
+                        <span>{{val.Name}}</span>
+                        <span class="bolder">上班时间</span>
+                        <span>{{val.time}}</span>
                     </div>
-                    <img src="../../../static/images/s_pic.png" alt="" class="pic">
+                    <img :src="imgUrl+val.photo" alt="" class="pic">
                 </div>
                 <div class="bottom-box">
                     <div class="name">
-                        <span class="bolder">吊塔二号机</span>
+                        <span class="bolder">{{val.DevName}}</span>
                     </div>
                     <div class="top-data">
                         <div class="top-left">
                             <p>安全起重</p>
-                            <span>--t</span>
+                            <span>{{val.cs_qz}}t</span>
                         </div>
                         <div class="middle">
                             <div class="middle-img">
-                                <span>--%</span>
+                                <span>{{val.cs_lj}}%</span>
                             </div>
                             <span>力距</span>
                         </div>
                         <div class="top-right">
                             <p>倍率</p>
-                            <span>--倍</span>
+                            <span>{{val.cs_bl}}倍</span>
                         </div>
                     </div>
                     <div class="bottom-data">
@@ -126,139 +126,53 @@
                                 <img src="../../../static/images/s_weight.png" alt="">
                                 <div>
                                     <p>重量</p>
-                                    <p>--t</p>
+                                    <p>{{val.yx_zl}}t</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_range.png" alt="">
                                 <div>
                                     <p>幅度</p>
-                                    <p>--m</p>
+                                    <p>{{val.yx_fd}}m</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_altitude.png" alt="">
                                 <div>
                                     <p>高度</p>
-                                    <p>--m</p>
+                                    <p>{{val.yx_gd}}m</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_rotation.png" alt="">
                                 <div>
                                     <p>回转</p>
-                                    <p>--°</p>
+                                    <p>{{val.yx_hz}}°</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_wind-speed.png" alt="">
                                 <div>
                                     <p>风速</p>
-                                    <p>--m</p>
+                                    <p>{{val.yx_fs}}m</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_dip-angle.png" alt="">
                                 <div>
                                     <p>倾角</p>
-                                    <p>X--°</p>
-                                    <p>Y--°</p>
+                                    <p>X{{val.yx_qjX}}°</p>
+                                    <p>Y{{val.yx_qjY}}°</p>
                                 </div>
                             </li>
                         </ul>
                     </div>
                     <div class="day">
                         <span class="bolder">检修倒计时： </span>
-                        <span class="bolder warning">10天</span>
+                        <span class="bolder" :class="val.jxdate>=10?'normal':val.jxdate>=1?'warning':'anomaly'">{{val.jxdate}}天</span>
                     </div>
                 </div>
-            </div>
-            <div class="content-box">
-                <div class="top-box">
-                    <div class="status">
-                        <span class="normal">正常运行</span>
-                    </div>
-                    <div class="employee">
-                        <span class="bolder">今日工作</span>
-                        <span>某某某</span>
-                        <span class="bolder">上工时间</span>
-                        <span>07:30</span>
-                    </div>
-                    <img src="../../../static/images/s_pic.png" alt="" class="pic">
-                </div>
-                <div class="bottom-box">
-                    <div class="name">
-                        <span class="bolder">吊塔三号机</span>
-                    </div>
-                    <div class="top-data">
-                        <div class="top-left">
-                            <p>安全起重</p>
-                            <span>--t</span>
-                        </div>
-                        <div class="middle">
-                            <div class="middle-img">
-                                <span>--%</span>
-                            </div>
-                            <span>力距</span>
-                        </div>
-                        <div class="top-right">
-                            <p>倍率</p>
-                            <span>--倍</span>
-                        </div>
-                    </div>
-                    <div class="bottom-data">
-                        <ul>
-                            <li>
-                                <img src="../../../static/images/s_weight.png" alt="">
-                                <div>
-                                    <p>重量</p>
-                                    <p>--t</p>
-                                </div>
-                            </li>
-                            <li>
-                                <img src="../../../static/images/s_range.png" alt="">
-                                <div>
-                                    <p>幅度</p>
-                                    <p>--m</p>
-                                </div>
-                            </li>
-                            <li>
-                                <img src="../../../static/images/s_altitude.png" alt="">
-                                <div>
-                                    <p>高度</p>
-                                    <p>--m</p>
-                                </div>
-                            </li>
-                            <li>
-                                <img src="../../../static/images/s_rotation.png" alt="">
-                                <div>
-                                    <p>回转</p>
-                                    <p>--°</p>
-                                </div>
-                            </li>
-                            <li>
-                                <img src="../../../static/images/s_wind-speed.png" alt="">
-                                <div>
-                                    <p>风速</p>
-                                    <p>--m</p>
-                                </div>
-                            </li>
-                            <li>
-                                <img src="../../../static/images/s_dip-angle.png" alt="">
-                                <div>
-                                    <p>倾角</p>
-                                    <p>X--°</p>
-                                    <p>Y--°</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="day">
-                        <span class="bolder">检修倒计时： </span>
-                        <span class="bolder anomaly">0天</span>
-                    </div>
-                </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -267,7 +181,21 @@
 export default {
     data() {
         return {
-
+            towerCraneData: '',
+            imgUrl:'http://gd.17hr.net:8018/'
+        }
+    },
+    created() {
+        this.getTowerCraneData()
+    },
+    methods: {
+        getTowerCraneData(){
+            this.$axios.get("/APP/XMPage/DeviceData.ashx?method=GetTaJiData&xmid=281").then(res=>{
+                this.towerCraneData = res.data
+                // // console.log(this.towerCraneData.TaJiOne.Name)
+                // this.towerCraneData.push(res.data)
+                // console.log(this.towerCraneData)
+            })
         }
     },
 }
@@ -287,6 +215,11 @@ export default {
         /* margin-top: .51rem; */
         display: flex;
         justify-content: space-between;
+        /* overflow-x:scroll;
+        overflow-y: hidden;
+        width: 16.63rem;
+        height: 9.41rem; */
+        flex-wrap: wrap;
     }
     .bolder {
         font-weight: bolder;
@@ -324,6 +257,8 @@ export default {
     }
     .pic {
         padding: .16rem;
+        height: 1.61rem;
+        width: 1.46rem;
     }
     .employee {
         flex: 1;
