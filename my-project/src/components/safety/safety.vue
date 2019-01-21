@@ -22,6 +22,9 @@ export default {
         index:'/safety/elevator'
     };
   },
+  created() {
+    
+  },
   methods: {
     isActive(i) {
         this.index=i;
