@@ -17,9 +17,10 @@
                 </div>
                 <div>
                   <p>项目在线人数</p>
-                  <span v-for="(item,index) in attendanceData.EmpRenShuData" :key="index">
-                    {{item.total}}
-                  </span>
+                  <span
+                    v-for="(item,index) in attendanceData.EmpRenShuData"
+                    :key="index"
+                  >{{item.total}}</span>
                 </div>
               </li>
               <li>
@@ -28,9 +29,10 @@
                 </div>
                 <div>
                   <p>现场实时人数</p>
-                  <span v-for="(item,index) in attendanceData.EmpRenShuData" :key="index">
-                    {{item.zc}}
-                  </span>
+                  <span
+                    v-for="(item,index) in attendanceData.EmpRenShuData"
+                    :key="index"
+                  >{{item.zc}}</span>
                 </div>
               </li>
               <li>
@@ -39,9 +41,10 @@
                 </div>
                 <div>
                   <p>今日出勤人数</p>
-                  <span v-for="(item,index) in attendanceData.EmpRenShuData" :key="index">
-                    {{item.jrkq}}
-                  </span>
+                  <span
+                    v-for="(item,index) in attendanceData.EmpRenShuData"
+                    :key="index"
+                  >{{item.jrkq}}</span>
                 </div>
               </li>
             </ul>
@@ -57,7 +60,7 @@
             <ul id="leftBottom1">
               <li v-for="(item,index) in attendanceData.EmpPostData" :key="index">
                 <div class="float-left">
-                  <i class="blue"></i>
+                  <i :class="'color'+(index+1)"></i>
                   <span>{{item.name}}</span>
                 </div>
                 <div class="float-right">
@@ -74,47 +77,47 @@
       <div class="main">
         <!-- 中间上部盒子 -->
         <div class="main-top">
-            <div class="squad">
-                <p class="table-title">班组动态</p>
-                <table>
-                  <tr>
-                    <th>班组</th>
-                    <th>今日在场</th>
-                    <th>总人数</th>
-                  </tr>
-                </table>
-                <div class="table-box" id="squad">
-                  <table id="squad1">
-                    <tr v-for="(item,index) in staffData.BZRealData" :key="index">
-                        <td>{{item.name}}</td>
-                        <td>{{item.zgrs}}人</td>
-                        <td>{{item.total}}人</td>
-                    </tr>
-                  </table>
-                  <table id="squad2"></table>
-                </div>
+          <div class="squad">
+            <p class="table-title">班组动态</p>
+            <table>
+              <tr>
+                <th>班组</th>
+                <th>今日在场</th>
+                <th>总人数</th>
+              </tr>
+            </table>
+            <div class="table-box" id="squad">
+              <table id="squad1">
+                <tr v-for="(item,index) in staffData.BZRealData" :key="index">
+                  <td>{{item.name}}</td>
+                  <td>{{item.zgrs}}人</td>
+                  <td>{{item.total}}人</td>
+                </tr>
+              </table>
+              <table id="squad2"></table>
             </div>
-            <div class="staff" >
-                <p class="table-title">人员动态</p>
-                <table>
-                    <tr>
-                      <th>姓名</th>
-                      <th>进出</th>
-                      <th>时间</th>
-                    </tr>
-                  </table>
-                <div class="table-box" id="staff">
-                  <table id="staff1">
-                    <tr v-for="(item,index) in staffData.EmpJLData" :key="index">
-                        <td>{{item.name}}</td>
-                        <td>{{item.jc}}</td>
-                        <td>{{item.time}}</td>
-                    </tr>
-                    <tr></tr>
-                  </table>
-                  <table id="staff2"></table>
-                </div>
+          </div>
+          <div class="staff">
+            <p class="table-title">人员动态</p>
+            <table>
+              <tr>
+                <th>姓名</th>
+                <th>进出</th>
+                <th>时间</th>
+              </tr>
+            </table>
+            <div class="table-box" id="staff">
+              <table id="staff1">
+                <tr v-for="(item,index) in staffData.EmpJLData" :key="index">
+                  <td>{{item.name}}</td>
+                  <td>{{item.jc}}</td>
+                  <td>{{item.time}}</td>
+                </tr>
+                <tr></tr>
+              </table>
+              <table id="staff2"></table>
             </div>
+          </div>
         </div>
         <!-- 中间下部盒子 -->
         <div class="main-bottom">
@@ -174,7 +177,11 @@
           <h3>进场手续签订</h3>
         </div>
         <div class="float-left">
-          <ul v-for="(item,index) in contractData.KqJinChanData" :key="index" style="margin-top:-.1rem">
+          <ul
+            v-for="(item,index) in contractData.KqJinChanData"
+            :key="index"
+            style="margin-top:-.1rem"
+          >
             <li>
               <span class="span-margin">共录入:</span>
               <span>{{item.total}}</span>
@@ -196,19 +203,30 @@
             </li>
           </ul>
         </div>
-        <div class="map float-right" :class="item.bfb==100?'qualified':'disqualification'" v-for="(item,index) in contractData.KqJinChanData" :key="index"> 
+        <div
+          class="map float-right"
+          :class="item.bfb==100?'qualified':'disqualification'"
+          v-for="(item,index) in contractData.KqJinChanData"
+          :key="index"
+        >
           <!-- qualified为合格 disqualification为不合格 -->
           <div class="border" :class="item.bfb==100?'border-green':'border-red'">
-              <div class="subBorder" id="roateBox1">
-                <div class="wrapper" style="right:0rem">
-                    <div class="circleProgress" :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"></div>
-                </div>
-                <div class="wrapper" style="left:0rem">
-                    <div class="circleProgress" :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"></div>
-                </div>
+            <div class="subBorder" id="roateBox1">
+              <div class="wrapper" style="right:0rem">
+                <div
+                  class="circleProgress"
+                  :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"
+                ></div>
               </div>
-              <span id="roateBbb1">{{Math.round(item.bfb)}}</span>
-              <span>%</span>
+              <div class="wrapper" style="left:0rem">
+                <div
+                  class="circleProgress"
+                  :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"
+                ></div>
+              </div>
+            </div>
+            <span id="roateBbb1">{{Math.round(item.bfb)}}</span>
+            <span>%</span>
           </div>
         </div>
       </div>
@@ -218,7 +236,7 @@
           <h3>劳动合同签订</h3>
         </div>
         <div class="float-left">
-          <ul   v-for="(item,index) in contractData.EmpHTData" :key="index" style="margin-top:-.1rem">
+          <ul v-for="(item,index) in contractData.EmpHTData" :key="index" style="margin-top:-.1rem">
             <li>
               <span class="span-margin">共录入:</span>
               <span>{{item.total}}</span>
@@ -240,16 +258,27 @@
             </li>
           </ul>
         </div>
-        <div class="map float-right" :class="item.bfb==100?'qualified':'disqualification'" v-for="(item,index) in contractData.EmpHTData" :key="index">
+        <div
+          class="map float-right"
+          :class="item.bfb==100?'qualified':'disqualification'"
+          v-for="(item,index) in contractData.EmpHTData"
+          :key="index"
+        >
           <div class="border" :class="item.bfb==100?'border-green':'border-red'">
             <div class="subBorder" id="roateBox2">
-                <div class="wrapper" style="right:0rem">
-                    <div class="circleProgress" :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"></div>
-                </div>
-                <div class="wrapper" style="left:0rem">
-                    <div class="circleProgress" :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"></div>
-                </div>
+              <div class="wrapper" style="right:0rem">
+                <div
+                  class="circleProgress"
+                  :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"
+                ></div>
               </div>
+              <div class="wrapper" style="left:0rem">
+                <div
+                  class="circleProgress"
+                  :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"
+                ></div>
+              </div>
+            </div>
             <span id="roateBfb2">{{Math.round(item.bfb)}}</span>
             <span>%</span>
           </div>
@@ -283,18 +312,29 @@
             </li>
           </ul>
         </div>
-        <div class="map float-right" :class="item.bfb==100?'qualified':'disqualification'" v-for="(item,index) in contractData.EmpPXData" :key="index">
+        <div
+          class="map float-right"
+          :class="item.bfb==100?'qualified':'disqualification'"
+          v-for="(item,index) in contractData.EmpPXData"
+          :key="index"
+        >
           <div class="border" :class="item.bfb==100?'border-green':'border-red'">
             <div class="subBorder" id="roateBox3">
-                <div class="wrapper" style="right:0rem">
-                    <div class="circleProgress" :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"></div>
-                </div>
-                <div class="wrapper" style="left:0rem">
-                    <div class="circleProgress" :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"></div>
-                </div>
+              <div class="wrapper" style="right:0rem">
+                <div
+                  class="circleProgress"
+                  :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"
+                ></div>
               </div>
-              <span id="roateBfb3">{{Math.round(item.bfb)}}</span>
-              <span>%</span>
+              <div class="wrapper" style="left:0rem">
+                <div
+                  class="circleProgress"
+                  :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"
+                ></div>
+              </div>
+            </div>
+            <span id="roateBfb3">{{Math.round(item.bfb)}}</span>
+            <span>%</span>
           </div>
         </div>
       </div>
@@ -304,7 +344,11 @@
           <h3>人员信息完整度</h3>
         </div>
         <div class="float-left">
-          <ul v-for="(item,index) in contractData.EmpPerfect" :key="index" style="margin-top:-.1rem">
+          <ul
+            v-for="(item,index) in contractData.EmpPerfect"
+            :key="index"
+            style="margin-top:-.1rem"
+          >
             <li>
               <span class="span-margin">共录入:</span>
               <span>{{item.total}}</span>
@@ -326,18 +370,29 @@
             </li>
           </ul>
         </div>
-        <div class="map float-right" :class="item.bfb==100?'qualified':'disqualification'"  v-for="(item,index) in contractData.EmpPerfect" :key="index">
+        <div
+          class="map float-right"
+          :class="item.bfb==100?'qualified':'disqualification'"
+          v-for="(item,index) in contractData.EmpPerfect"
+          :key="index"
+        >
           <div class="border" :class="item.bfb==100?'border-green':'border-red'">
             <div class="subBorder" id="roateBox4">
-                <div class="wrapper" style="right:0rem">
-                    <div class="circleProgress" :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"></div>
-                </div>
-                <div class="wrapper" style="left:0rem">
-                    <div class="circleProgress" :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"></div>
-                </div>
+              <div class="wrapper" style="right:0rem">
+                <div
+                  class="circleProgress"
+                  :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"
+                ></div>
+              </div>
+              <div class="wrapper" style="left:0rem">
+                <div
+                  class="circleProgress"
+                  :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"
+                ></div>
+              </div>
             </div>
-              <span id="roateBfb4">{{Math.round(item.bfb)}}</span>
-              <span>%</span>
+            <span id="roateBfb4">{{Math.round(item.bfb)}}</span>
+            <span>%</span>
           </div>
         </div>
       </div>
@@ -351,9 +406,9 @@ export default {
   data() {
     return {
       attendanceData: "",
-      contractData:"",
-      staffData:""
-    }
+      contractData: "",
+      staffData: ""
+    };
   },
   mounted() {
     // this.professionMap(),
@@ -361,9 +416,9 @@ export default {
     // this.labourCurve()
   },
   created() {
-    this.getAttendanceData()
-    this.getContractData()
-    this.getStaffData()
+    this.getAttendanceData();
+    this.getContractData();
+    this.getStaffData();
   },
   methods: {
     professionMap(pM) {
@@ -372,7 +427,7 @@ export default {
       );
       // console.log(professionMap)
       professionMap.setOption({
-        color: ["#349be6", "#fb497c", "#21ff6a", "#f38051"],
+        color: ["#349be6", "#fb497c", "#21ff6a", "#f38051","#7377f4","#ffa32d"],
         series: [
           {
             name: "访问来源",
@@ -384,7 +439,7 @@ export default {
             //   { value: 220, name: "架子工" },
             //   { value: 180, name: "其他" }
             // ],
-            data:pM,
+            data: pM,
             roseType: "angle",
             label: {
               normal: {
@@ -409,7 +464,7 @@ export default {
       //   labourCurve.resize();
       // }
     },
-    attendance(aMTotal,aMZc,aMDay) {
+    attendance(aMTotal, aMZc, aMDay) {
       let attendance = this.$echarts.init(
         document.getElementById("attendance")
       );
@@ -452,7 +507,7 @@ export default {
             //   "01-07",
             //   "01-08"
             // ]
-            data:aMDay
+            data: aMDay
           }
         ],
         yAxis: [
@@ -491,7 +546,7 @@ export default {
             color: ["#fff"],
             // data: [600, 500, 500, 500, 400, 500, 500, 400, 400, 500, 500]
             // [300, 200, 100, 500, 400, 300, 400, 300, 100, 300, 500]
-            data:aMTotal
+            data: aMTotal
           },
           {
             name: "出勤人数",
@@ -500,13 +555,13 @@ export default {
             smooth: 0.2,
             color: ["#63a6d4"],
             // data: [300, 200, 100, 500, 300, 300, 400, 300, 100, 300, 500]
-            data:aMZc
+            data: aMZc
           }
         ]
       });
     },
-    labourCurve(lMZc,lMDay) {
-        let labourCurve = this.$echarts.init(
+    labourCurve(lMZc, lMDay) {
+      let labourCurve = this.$echarts.init(
         document.getElementById("labourCurve")
       );
       labourCurve.setOption({
@@ -549,7 +604,7 @@ export default {
             //   "11",
             //   "12"
             // ]
-            data:lMDay
+            data: lMDay
           }
         ],
         yAxis: [
@@ -583,85 +638,91 @@ export default {
           {
             name: "今日劳动曲线",
             type: "line",
-            symbol:'none',
+            symbol: "none",
             symbolSize: 4,
             smooth: 0.2,
             color: ["#63a6d4"],
             // data: [120,100,100,100,100,100,90,60,50,40,30,0],
-            data:lMZc
+            data: lMZc
           }
         ]
       });
     },
     getAttendanceData() {
-      this.$axios.get("/APP/XMPage/EmpData.ashx?method=GetXMEmpData&xmid=281").then(res=>{
-        // console.log(res.data)
-        this.attendanceData = res.data;
-        // console.log(this.attendanceData)
-        let pM = []
-        let aM = []
-        let aMTotal = []
-        let aMZc = []
-        let aMDay = []
-        let lMZc = []
-        let lMDay = []
-        for (let i1 = 0; i1 < this.attendanceData.EmpPostData.length; i1++) {
-          // console.log(this.attendanceData.EmpPostData[i1])
-          pM.push({
-            value:this.attendanceData.EmpPostData[i1].zc,
-            name:this.attendanceData.EmpPostData[i1].name
-          })
-        }
-        for (let i2 = 0; i2 < this.attendanceData.KqData.length; i2++) {
-          aMTotal.push(this.attendanceData.KqData[i2].total)
-          aMZc.push(this.attendanceData.KqData[i2].zc)
-          aMDay.push(this.attendanceData.KqData[i2].day)
-        }
-        for (let i3 = 0; i3 < this.attendanceData.KqTodayData.length; i3++) {
-          lMZc.push(this.attendanceData.KqTodayData[i3].zc)
-          lMDay.push(this.attendanceData.KqTodayData[i3].day)
-        }
-        // console.log(aMZc)
-        // console.log(this.attendanceData)
+      this.$axios
+        .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpData&xmid=281")
+        .then(res => {
+          // console.log(res.data)
+          this.attendanceData = res.data;
+          // console.log(this.attendanceData)
+          let pM = [];
+          let aM = [];
+          let aMTotal = [];
+          let aMZc = [];
+          let aMDay = [];
+          let lMZc = [];
+          let lMDay = [];
+          for (let i1 = 0; i1 < this.attendanceData.EmpPostData.length; i1++) {
+            // console.log(this.attendanceData.EmpPostData[i1])
+            pM.push({
+              value: this.attendanceData.EmpPostData[i1].zc,
+              name: this.attendanceData.EmpPostData[i1].name
+            });
+          }
+          for (let i2 = 0; i2 < this.attendanceData.KqData.length; i2++) {
+            aMTotal.push(this.attendanceData.KqData[i2].total);
+            aMZc.push(this.attendanceData.KqData[i2].zc);
+            aMDay.push(this.attendanceData.KqData[i2].day);
+          }
+          for (let i3 = 0; i3 < this.attendanceData.KqTodayData.length; i3++) {
+            lMZc.push(this.attendanceData.KqTodayData[i3].zc);
+            lMDay.push(this.attendanceData.KqTodayData[i3].day);
+          }
+          // console.log(aMZc)
+          // console.log(this.attendanceData)
 
-        this.professionMap(pM)
-        this.attendance(aMTotal,aMZc,aMDay)
-        this.labourCurve(lMZc,lMDay)
-        if(this.attendanceData.EmpPostData.length>=4){
-            this.leftBottomScroll()
-        }
-        if(this.attendanceData.KqData.length>=3){
-            this.rightBottomScroll()
-        }
-        setTimeout(()=>{
-          this.setLength()
-        },500)
-      })
+          this.professionMap(pM);
+          this.attendance(aMTotal, aMZc, aMDay);
+          this.labourCurve(lMZc, lMDay);
+          if (this.attendanceData.EmpPostData.length >= 4) {
+            this.leftBottomScroll();
+          }
+          if (this.attendanceData.KqData.length >= 3) {
+            this.rightBottomScroll();
+          }
+          setTimeout(() => {
+            this.setLength();
+          }, 500);
+        });
     },
     getContractData() {
-      this.$axios.get("/APP/XMPage/EmpData.ashx?method=GetXMEmpDetail&xmid=281").then(res=>{
-        // console.log(res.data)
-        this.contractData = res.data
-        // console.log(typeof this.contractData.KqJinChanData)
-        // console.log(this.contractData)
-        setTimeout(()=>{
-          this.setRoate(1)
-          this.setRoate(2)
-          this.setRoate(3)
-          this.setRoate(4)
-          // this.boxRotate()
-        },500)
-      })
+      this.$axios
+        .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpDetail&xmid=281")
+        .then(res => {
+          // console.log(res.data)
+          this.contractData = res.data;
+          // console.log(typeof this.contractData.KqJinChanData)
+          // console.log(this.contractData)
+          setTimeout(() => {
+            this.setRoate(1);
+            this.setRoate(2);
+            this.setRoate(3);
+            this.setRoate(4);
+            // this.boxRotate()
+          }, 500);
+        });
     },
     getStaffData() {
-      this.$axios.get("/APP/XMPage/EmpData.ashx?method=GetXMEmpRealData&xmid=281").then(res=>{
-        // console.log(res.data)
-        this.staffData = res.data
-        if(this.staffData.EmpJLData.length>=6){
-            this.staffScroll()
-            this.squadScroll()
-        }
-      })
+      this.$axios
+        .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpRealData&xmid=281")
+        .then(res => {
+          // console.log(res.data)
+          this.staffData = res.data;
+          if (this.staffData.EmpJLData.length >= 6) {
+            this.staffScroll();
+            this.squadScroll();
+          }
+        });
     },
     leftBottomScroll() {
       setTimeout(() => {
@@ -785,39 +846,45 @@ export default {
     },
     setRoate(num) {
       // console.log($('#roateBfb4').text())
-      let bfb = $(`#roateBfb${num}`).text()
-      let Ldeg = -135
-      let Rdeg = -135
-      for(let i = 0; i < bfb; i++) {
-        if(Rdeg != 45) {
-          Rdeg += 3.6
-        }else {
-          Ldeg += 3.6
+      let bfb = $(`#roateBfb${num}`).text();
+      let Ldeg = -135;
+      let Rdeg = -135;
+      for (let i = 0; i < bfb; i++) {
+        if (Rdeg != 45) {
+          Rdeg += 3.6;
+        } else {
+          Ldeg += 3.6;
         }
       }
       // console.log(Rdeg)
       // console.log(Ldeg)
-      $(`#roateBox${num} .leftcircle-red`).css("transform",`rotate(${Ldeg}deg)`)
-      $(`#roateBox${num} .rightcircle-red`).css("transform",`rotate(${Rdeg}deg)`)
+      $(`#roateBox${num} .leftcircle-red`).css(
+        "transform",
+        `rotate(${Ldeg}deg)`
+      );
+      $(`#roateBox${num} .rightcircle-red`).css(
+        "transform",
+        `rotate(${Rdeg}deg)`
+      );
     },
-    setLength(){
+    setLength() {
       // console.log($('.reality .progress'))
-      let temp = $('.reality .progress')
-      temp.each(function(){
-        let bfb = $(this).data('bfb')
-        let width = 0
-        for(let i = 0; i < bfb; i++){
+      let temp = $(".reality .progress");
+      temp.each(function() {
+        let bfb = $(this).data("bfb");
+        let width = 0;
+        for (let i = 0; i < bfb; i++) {
           width += 1.4;
         }
-        $(this).css("width",`${width}rem`)
-      })
+        $(this).css("width", `${width}rem`);
+      });
     },
-    boxRotate(){
+    boxRotate() {
       var angle = 0;
-      setInterval(function(){
-        angle+=3;
-      $(".disqualification").rotate(angle);
-      },50)
+      setInterval(function() {
+        angle += 3;
+        $(".disqualification").rotate(angle);
+      }, 50);
     }
   }
 };
@@ -833,107 +900,109 @@ export default {
      height: 10.8rem;
 }
  */
- .table-box {
-   width: 100%;
-   height: 2.64rem;
-   overflow: hidden;
- }
- span {
-     color: #fff;
+.table-box {
+  width: 100%;
+  height: 2.64rem;
+  overflow: hidden;
 }
- #labour {
-     height: 10.32rem;
-     width: 100%;
-     box-sizing: border-box;
-     overflow: hidden;
+span {
+  color: #fff;
 }
- #labour .top {
-     box-sizing: border-box;
-     margin-top: 0.51rem;
-     height: 7.27rem;
-     width: 100%;
-    /* background-color: #f0f;
+#labour {
+  height: 10.32rem;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+#labour .top {
+  box-sizing: border-box;
+  margin-top: 0.51rem;
+  height: 7.27rem;
+  width: 100%;
+  /* background-color: #f0f;
      */
 }
- #labour .bottom {
-     box-sizing: border-box;
-     margin-top: 0.3rem;
-     margin-bottom: 0.3rem;
-     height: 1.94rem;
-     width: 100%;
-    /* background-color: #f0f;
+#labour .bottom {
+  box-sizing: border-box;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  height: 1.94rem;
+  width: 100%;
+  /* background-color: #f0f;
      */
 }
- #labour .top>div {
-     float: left;
-     margin-left: 0.26rem;
+#labour .top > div {
+  float: left;
+  margin-left: 0.26rem;
 }
- #labour .bottom>div {
-     float: left;
-     margin-left: 0.26rem;
+#labour .bottom > div {
+  float: left;
+  margin-left: 0.26rem;
 }
- #labour .top .left {
-     height: 100%;
-     width: 4.14rem;
-     background-image: url('../../../static/images/l_1.png');
-     background-size: contain; 
+#labour .top .left {
+  height: 100%;
+  width: 4.14rem;
+  background-image: url("../../../static/images/l_1.png");
+  background-size: contain;
 }
- #labour .top .left .left-top {
-     height: 3.61rem;
-     width: 100%;
-    /* border: 0.02rem solid #0f1f53;
+#labour .top .left .left-top {
+  height: 3.61rem;
+  width: 100%;
+  /* border: 0.02rem solid #0f1f53;
      */
-    /* background-color: #020521;
+  /* background-color: #020521;
      */
 }
- #labour .top .left-bottom {
-     height: 3.6rem;
-     width: 100%;
-    /* border-left: 0.02rem solid #0f1f53;
+#labour .top .left-bottom {
+  height: 3.6rem;
+  width: 100%;
+  /* border-left: 0.02rem solid #0f1f53;
      border-right: 0.02rem solid #0f1f53;
      border-bottom: 0.02rem solid #0f1f53;
      background-color: #020521;
      */
 }
- #labour .top .main {
-     height: 100%;
-     width: 9.73rem;
-     background-image: url('../../../static/images/l_2.png');
-     background-size: contain;
-     padding: 0.5rem;
+#labour .top .main {
+  height: 100%;
+  width: 9.73rem;
+  background-image: url("../../../static/images/l_2.png");
+  background-size: contain;
+  padding: 0.5rem;
 }
- #labour .top .right {
-     height: 100%;
-     width: 4.14rem;
-    /* background-color: red;
+#labour .top .right {
+  height: 100%;
+  width: 4.14rem;
+  /* background-color: red;
      */
 }
- #labour .top .right .right-top {
-     height: 2.45rem;
-     width: 100%;
-     background-image: url('../../../static/images/l_3.png');
-     background-size: contain; 
+#labour .top .right .right-top {
+  height: 2.45rem;
+  width: 100%;
+  background-image: url("../../../static/images/l_3.png");
+  background-size: contain;
 }
- #labour .top .right .right-bottom {
-     margin-top: 0.3rem;
-     height: 4.52rem;
-     width: 100%;
-     background-image: url('../../../static/images/l_4.png');
-     background-size: contain;
-     position: relative;
-     padding: 0.02rem;
+#labour .top .right .right-bottom {
+  margin-top: 0.3rem;
+  height: 4.52rem;
+  width: 100%;
+  background-image: url("../../../static/images/l_4.png");
+  background-size: contain;
+  position: relative;
+  padding: 0.02rem;
 }
- #labour .bottom .procedure, #labour .bottom .information {
-     height: 100%;
-     width: 4.14rem;
-     background-image: url('../../../static/images/l_5.png');
-     background-size: contain; 
+#labour .bottom .procedure,
+#labour .bottom .information {
+  height: 100%;
+  width: 4.14rem;
+  background-image: url("../../../static/images/l_5.png");
+  background-size: contain;
 }
- #labour .bottom .contract, #labour .bottom .safety {
-     height: 100%;
-     width: 4.75rem;
-     background-image: url('../../../static/images/l_6.png');
-     background-size: contain; 
+#labour .bottom .contract,
+#labour .bottom .safety {
+  height: 100%;
+  width: 4.75rem;
+  background-image: url("../../../static/images/l_6.png");
+  background-size: contain;
 }
 /* #labour h3 {
      line-height: 0.37rem;
@@ -958,334 +1027,353 @@ export default {
      color: #fff;
 }
  */
- #labour .left-top-data div {
-     float: left;
+#labour .left-top-data div {
+  float: left;
 }
- #labour .left-top-data img {
-     height: 0.63rem;
-     width: 0.63rem;
-     display: block;
-     margin-left: 0.18rem;
+#labour .left-top-data img {
+  height: 0.63rem;
+  width: 0.63rem;
+  display: block;
+  margin-left: 0.18rem;
 }
- #labour .left-top-data li {
-     margin-top: 0.35rem;
-     height: 0.63rem;
+#labour .left-top-data li {
+  margin-top: 0.35rem;
+  height: 0.63rem;
 }
- #labour .left-top-data li div:nth-child(2) {
-     margin-left: 0.26rem;
+#labour .left-top-data li div:nth-child(2) {
+  margin-left: 0.26rem;
 }
-  #labour .left-top-data p {
-     font-size: 0.18rem;
-     color: #fff;
-     line-height: .315rem;
+#labour .left-top-data p {
+  font-size: 0.18rem;
+  color: #fff;
+  line-height: 0.315rem;
 }
- #labour .left-top-data span {
-     font-size: 0.2rem;
-     font-weight: bolder;
-     color: #fff;
-     line-height: .315rem;
+#labour .left-top-data span {
+  font-size: 0.2rem;
+  font-weight: bolder;
+  color: #fff;
+  line-height: 0.315rem;
 }
- #labour .top .left-bottom .map {
-     width: 100%;
-     height: 1.8rem;
+#labour .top .left-bottom .map {
+  width: 100%;
+  height: 1.8rem;
 }
- #labour .left-bottom-data i {
-     display: inline-block;
-     width: 0.08rem;
-     height: 0.08rem;
-     border-radius: 0.10rem;
-     margin-right: .05rem;
+#labour .left-bottom-data i {
+  display: inline-block;
+  width: 0.08rem;
+  height: 0.08rem;
+  border-radius: 0.1rem;
+  margin-right: 0.05rem;
 }
- #labour .left-bottom-data {
-   height: 1.36rem;
-   overflow: hidden;
- }
- .blue {
-     background-color: #349be6;
+#labour .left-bottom-data {
+  height: 1.36rem;
+  overflow: hidden;
 }
- .red {
-     background-color: #fb497c;
-     color: #fb497c;
+.color1 {
+  background-color: #349be6;
 }
- .green {
-     background-color: #21ff6a;
+.color2 {
+  background-color: #fb497c;
 }
- .orange {
-     background-color: #f38051;
+.color3 {
+  background-color: #21ff6a;
 }
- .font-green {
-     color: #21ff6a;
+.color4 {
+  background-color: #f38051;
 }
- .font-red {
-     color: #fb497c;
+.color5 {
+  background-color: #7377f4;
 }
- .float-left {
-     float: left;
+.color6 {
+  background-color: #ffa32d;
 }
- .float-right {
-     float: right;
+.red {
+  background-color: #fb497c;
+  color: #fb497c;
 }
- #labour .left-bottom-data li {
-     height: 0.34rem;
-     padding: 0 0.3rem;
-     line-height: 0.34rem;
+.font-green {
+  color: #21ff6a;
 }
- #labour .left-bottom-data span {
-     color: #fff;
-     font-size: 0.14rem;
+.font-red {
+  color: #fb497c;
 }
- #labour .right-bottom-data li {
-     height: 1.08rem;
-     border-bottom: 0.02rem solid #0f1f53;
+.float-left {
+  float: left;
 }
- #labour .right-bottom-data {
-    height: 3.7rem;
-    overflow: hidden;
+.float-right {
+  float: right;
 }
- #labour .right-bottom-data li p {
-     font-size: 0.18rem;
-     font-weight: bolder;
-     color: #fff;
-     margin-top: 0.28rem;
-     margin-left: 0.2rem;
+#labour .left-bottom-data li {
+  height: 0.34rem;
+  padding: 0 0.3rem;
+  line-height: 0.34rem;
 }
- #labour .right-bottom-data li>div {
-     margin-left: 0.82rem;
+#labour .left-bottom-data span {
+  color: #fff;
+  font-size: 0.14rem;
 }
- #labour .right-bottom-data span {
-     font-size: 0.16rem;
-     color: #fff;
-     margin-top: 0.16rem;
+#labour .right-bottom-data li {
+  height: 1.08rem;
+  border-bottom: 0.02rem solid #0f1f53;
 }
- #labour .right-bottom-data .register .progress {
-     display: inline-block;
-     width: 1.4rem;
-     height: 0.15rem;
-     background-color: #349be6;
-     border-radius: 0.15rem;
-     margin-left: 0.12rem;
-     margin-right: 0.06rem;
+#labour .right-bottom-data {
+  height: 3.7rem;
+  overflow: hidden;
 }
- #labour .right-bottom-data .reality .progress {
-     display: inline-block;
-     width: 0rem;
-     height: 0.15rem;
-     border-radius: 0.15rem;
-     background-color: #21ff6a;
-     margin-left: 0.12rem;
-     margin-right: 0.06rem;
+#labour .right-bottom-data li p {
+  font-size: 0.18rem;
+  font-weight: bolder;
+  color: #fff;
+  margin-top: 0.28rem;
+  margin-left: 0.2rem;
 }
- #labour .top .location {
-     position: absolute;
-     bottom: -0.16rem;
-     left: 50%;
-     font-size: 0.2rem;
-     font-weight: bolder;
-     color: #fff;
-     transform: translateX(-50%);
-     display:none;
+#labour .right-bottom-data li > div {
+  margin-left: 0.82rem;
 }
- #labour .bottom div ul li {
-     height: auto;
-     margin-top: 0.1rem;
-     margin-left: 0.3rem;
+#labour .right-bottom-data span {
+  font-size: 0.16rem;
+  color: #fff;
+  margin-top: 0.16rem;
 }
- #labour .bottom div ul span {
-     font-size: 0.16rem;
+#labour .right-bottom-data .register .progress {
+  display: inline-block;
+  width: 1.4rem;
+  height: 0.15rem;
+  background-color: #349be6;
+  border-radius: 0.15rem;
+  margin-left: 0.12rem;
+  margin-right: 0.06rem;
 }
- #labour .right-top .map {
-     width: 100%;
-     height: 100%;
-    /* background: #349be6;
+#labour .right-bottom-data .reality .progress {
+  display: inline-block;
+  width: 0rem;
+  height: 0.15rem;
+  border-radius: 0.15rem;
+  background-color: #21ff6a;
+  margin-left: 0.12rem;
+  margin-right: 0.06rem;
+}
+#labour .top .location {
+  position: absolute;
+  bottom: -0.16rem;
+  left: 50%;
+  font-size: 0.2rem;
+  font-weight: bolder;
+  color: #fff;
+  transform: translateX(-50%);
+  display: none;
+}
+#labour .bottom div ul li {
+  height: auto;
+  margin-top: 0.1rem;
+  margin-left: 0.3rem;
+}
+#labour .bottom div ul span {
+  font-size: 0.16rem;
+}
+#labour .right-top .map {
+  width: 100%;
+  height: 100%;
+  /* background: #349be6;
      */
 }
- #labour .main .main-top {
-     width: 8.65rem;
-     height: 3.51rem;
-     /* border: 0.02rem solid #0f1f53; */
-     background-color: #020521;
-     background-image: url('../../../static/images/l_m.png');
-     background-size: 8.61rem 3.47rem;
+#labour .main .main-top {
+  width: 8.65rem;
+  height: 3.51rem;
+  /* border: 0.02rem solid #0f1f53; */
+  background-color: #020521;
+  background-image: url("../../../static/images/l_m.png");
+  background-size: 8.61rem 3.47rem;
 }
- #labour .main .main-bottom {
-     width: 100%;
-     height: 100%;
-     position: relative;
+#labour .main .main-bottom {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
- .attendance-title {
-   position: absolute;
-   right: 0;
-   top: 0;
-   line-height: .48rem;
- }
- .attendance-title div {
-   float: left;
-   color: #fff;
-   font-size: .12rem;
- }
- .white-box {
-   width: .2rem;
-   height: .03rem;
-   background-color: #fff;
-   margin-top: .225rem;
-   margin-right: .05rem;
- }
- .blue-box {
-   width: .2rem;
-   height: .03rem;
-   background-color: #349be6;
-   margin-top: .225rem;
-   margin-left: .18rem;
-   margin-right: .05rem;
- }
- #attendance {
-     width: 8.65rem;
-     height: 3rem;
+.attendance-title {
+  position: absolute;
+  right: 0;
+  top: 0;
+  line-height: 0.48rem;
 }
- #labour .procedure .map, #labour .contract .map, #labour .safety .map, #labour .information .map {
-     height: 1.28rem;
-     width: 1.28rem;
-     padding: 0.14rem;
+.attendance-title div {
+  float: left;
+  color: #fff;
+  font-size: 0.12rem;
 }
- #labour .procedure .map, #labour .information .map {
-     margin-right: 0.44rem;
-     margin-top: -.1rem;
+.white-box {
+  width: 0.2rem;
+  height: 0.03rem;
+  background-color: #fff;
+  margin-top: 0.225rem;
+  margin-right: 0.05rem;
 }
- #labour .safety .map, #labour .contract .map {
-     margin-right: 0.88rem;
-     margin-top: -.1rem;
+.blue-box {
+  width: 0.2rem;
+  height: 0.03rem;
+  background-color: #349be6;
+  margin-top: 0.225rem;
+  margin-left: 0.18rem;
+  margin-right: 0.05rem;
 }
- .qualified {
-     background-image: url('../../../static/images/l_green.png');
-     background-size: contain; 
+#attendance {
+  width: 8.65rem;
+  height: 3rem;
 }
- .disqualification {
-     background-image: url('../../../static/images/l_red.png');
-     background-size: contain;
-     /* background-size: 1.28rem 1.28rem;  */
+#labour .procedure .map,
+#labour .contract .map,
+#labour .safety .map,
+#labour .information .map {
+  height: 1.28rem;
+  width: 1.28rem;
+  padding: 0.14rem;
 }
-  .disqualification:hover {
-    background-image: url('../../../static/images/l_red.gif');
-    background-position: center center;
-    background-size: 1.4rem 1.4rem; 
-  }
- .border {
-     width: 1rem;
-     height: 1rem;
-     border: 0.03rem solid #fff;
-     border-radius: 1rem;
-     line-height: 0.92rem;
-     text-align: center;
-     position: relative;
+#labour .procedure .map,
+#labour .information .map {
+  margin-right: 0.44rem;
+  margin-top: -0.1rem;
 }
- .border-green {
-     border-color: #21ff6a;
+#labour .safety .map,
+#labour .contract .map {
+  margin-right: 0.88rem;
+  margin-top: -0.1rem;
 }
- .border-red {
-     border-color: #fb497c;
-     color: #fb497c;
+.qualified {
+  background-image: url("../../../static/images/l_green.png");
+  background-size: contain;
 }
- .border-green span {
-     color: #21ff6a;
-     font-size: 0.3rem;
-     font-weight: bolder;
+.qualified:hover {
+  background-image: url("../../../static/images/l_green.gif");
+  background-position: center center;
+  background-size: 1.4rem 1.4rem;
 }
- .border-red span {
-     color: #fb497c;
-     font-size: 0.3rem;
-     font-weight: bolder;
+.disqualification {
+  background-image: url("../../../static/images/l_red.png");
+  background-size: contain;
+  /* background-size: 1.28rem 1.28rem;  */
 }
- #labourCurve {
-     height: 3rem;
+.disqualification:hover {
+  background-image: url("../../../static/images/l_red.gif");
+  background-position: center center;
+  background-size: 1.4rem 1.4rem;
 }
- .squad {
-     display: inline-block;
-     height: 100%;
-     width: 50%;
-     padding: .15rem;
-     overflow: hidden;
- }
- .staff {
-     display: inline-block;
-     height: 100%;
-     width: 50%;
-     padding: .15rem;
-     overflow: hidden;
- }
- .table-title {
-     font-size: .26rem;
-     font-weight: bolder;
-     color: #fff;
-     text-align: center;
-     margin-bottom: .15rem;
- }
- table th {
-     width: 1.335rem;
-     color: #fff;
-     font-size: .2rem;
-     font-weight: normal;
- }
- table td {
-     text-align: center;
-     width: 1.335rem;
-     color: #fff;
-     font-size: .14rem;
-     line-height: .44rem;
-     overflow: hidden;
-     text-overflow: ellipsis;
-     white-space: nowrap;
- }
- .subBorder {
-    width: 1.04rem;
-    height: 1.04rem;
-    /* border: .07rem solid #fff; */
-    /* border-radius: 50%; */
-    position: absolute;
-    left: -0.04rem;
-    top: -0.04rem;
-    /* display: none; */
-  }
-  .wrapper{
-      width: .52rem;
-      height: 1.04rem;
-      position: absolute;
-      top:0;
-      overflow: hidden;
-  }
-  .circleProgress{
-      width: 1.04rem;
-      height: 1.04rem;
-      border:.07rem solid transparent;
-      border-radius: 50%;
-      position: absolute;
-      top:0;
-      /* -webkit-transform: rotate(-135deg); */
-  }
-  .rightcircle-green{
-      border-top:.07rem solid #21ff6a;
-      border-right:.07rem solid #21ff6a;
-      right:0;
-      transform: rotate(45deg)
-  }
-  .leftcircle-green{
-      border-bottom:.07rem solid #21ff6a;
-      border-left:.07rem solid #21ff6a;
-      left:0;
-      transform: rotate(45deg)
-  }
-  .rightcircle-red{
-      border-top:.07rem solid #fb497c;
-      border-right:.07rem solid #fb497c;
-      right:0;
-      transform: rotate(-135deg)
-  }
-  .leftcircle-red{
-      border-bottom:.07rem solid #fb497c;
-      border-left:.07rem solid #fb497c;
-      left:0;
-      transform: rotate(-135deg)
-  }
-  .span-margin{
-    margin-right:.15rem;
-  }
+.border {
+  width: 1rem;
+  height: 1rem;
+  border: 0.03rem solid #fff;
+  border-radius: 1rem;
+  line-height: 0.92rem;
+  text-align: center;
+  position: relative;
+}
+.border-green {
+  border-color: #21ff6a;
+}
+.border-red {
+  border-color: #fb497c;
+  color: #fb497c;
+}
+.border-green span {
+  color: #21ff6a;
+  font-size: 0.3rem;
+  font-weight: bolder;
+}
+.border-red span {
+  color: #fb497c;
+  font-size: 0.3rem;
+  font-weight: bolder;
+}
+#labourCurve {
+  height: 3rem;
+}
+.squad {
+  display: inline-block;
+  height: 100%;
+  width: 50%;
+  padding: 0.15rem;
+  overflow: hidden;
+}
+.staff {
+  display: inline-block;
+  height: 100%;
+  width: 50%;
+  padding: 0.15rem;
+  overflow: hidden;
+}
+.table-title {
+  font-size: 0.26rem;
+  font-weight: bolder;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.15rem;
+}
+table th {
+  width: 1.335rem;
+  color: #fff;
+  font-size: 0.2rem;
+  font-weight: normal;
+}
+table td {
+  text-align: center;
+  width: 1.335rem;
+  color: #fff;
+  font-size: 0.14rem;
+  line-height: 0.44rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.subBorder {
+  width: 1.04rem;
+  height: 1.04rem;
+  /* border: .07rem solid #fff; */
+  /* border-radius: 50%; */
+  position: absolute;
+  left: -0.04rem;
+  top: -0.04rem;
+  /* display: none; */
+}
+.wrapper {
+  width: 0.52rem;
+  height: 1.04rem;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+}
+.circleProgress {
+  width: 1.04rem;
+  height: 1.04rem;
+  border: 0.07rem solid transparent;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  /* -webkit-transform: rotate(-135deg); */
+}
+.rightcircle-green {
+  border-top: 0.07rem solid #21ff6a;
+  border-right: 0.07rem solid #21ff6a;
+  right: 0;
+  transform: rotate(45deg);
+}
+.leftcircle-green {
+  border-bottom: 0.07rem solid #21ff6a;
+  border-left: 0.07rem solid #21ff6a;
+  left: 0;
+  transform: rotate(45deg);
+}
+.rightcircle-red {
+  border-top: 0.07rem solid #fb497c;
+  border-right: 0.07rem solid #fb497c;
+  right: 0;
+  transform: rotate(-135deg);
+}
+.leftcircle-red {
+  border-bottom: 0.07rem solid #fb497c;
+  border-left: 0.07rem solid #fb497c;
+  left: 0;
+  transform: rotate(-135deg);
+}
+.span-margin {
+  margin-right: 0.15rem;
+}
 </style>

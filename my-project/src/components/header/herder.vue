@@ -7,29 +7,29 @@
           <span class="temp" v-if="weather.length > 0">{{weather[0].results[0].weather_data[0].temperature}}</span>
         </div>
         <ul class="nav">
-          <li v-on:click="active = 1">
-            <div class="Lactive-box" v-show="active==1">
+          <li v-on:click="active = '/home'">
+            <div class="Lactive-box" v-show="active=='/home'">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span>项目总况</span>
             </div>
             <router-link to="/home">项目总况</router-link>
           </li>
-          <li v-on:click="active = 2">
-            <div class="Lactive-box" v-show="active==2">
+          <li v-on:click="active = '/labour'">
+            <div class="Lactive-box" v-show="active=='/labour'">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span>劳务管理</span>
             </div>
             <router-link to="/labour">劳务管理</router-link>
           </li>
-          <li  v-on:click="active = 3">
-            <div class="Lactive-box" v-show="active==3">
+          <li  v-on:click="active = '/green'">
+            <div class="Lactive-box" v-show="active=='/green'">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span>绿色施工</span>
             </div>
             <router-link to="/green">绿色施工</router-link>
           </li>
-          <li  v-on:click="active = 4">
-            <div class="Lactive-box" v-show="active==4" style="left:-.04rem">
+          <li  v-on:click="active = '/safety'">
+            <div class="Lactive-box" v-show="active.indexOf('/safety')!=-1" style="left:-.04rem">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span style="padding-right:.15rem">安全管理</span>
             </div>
@@ -86,13 +86,14 @@ export default {
       weather: "",
       time: {},
       timeId: "",
-      active: 1,
+      active: "/home",
     };
   },
   created() {
     this.getName()
     this.getWeather()
     this.setTime()
+    this.setActive()
   },
   methods: {
     getName() {
@@ -113,6 +114,10 @@ export default {
         this.time = moment().format("h:mm:ss")
       },1000)
     },
+    setActive() {
+      this.active = this.$route.path
+      console.log()
+    }
   }
 };
 </script>
