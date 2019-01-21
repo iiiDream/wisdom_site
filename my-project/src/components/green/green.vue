@@ -983,6 +983,7 @@ export default {
             width: 0.54rem;
             height: 0.54rem;
             display: block;
+            padding: .05rem;
           }
           .wendu {
             margin: 0;
@@ -1014,6 +1015,7 @@ export default {
               width: 0.54rem;
               height: 0.54rem;
               display: block;
+              padding: .05rem;
             }
             .wendu {
               margin: 0;

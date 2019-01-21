@@ -17,6 +17,10 @@ import elevator from '../components/safety/elevator.vue'
 import car from '../components/safety/car.vue'
 import gantryCrane from '../components/safety/gantryCrane.vue'
 import unopen from '../components/unopen/unopen.vue'
+import engineering from '../components/engineering/engineering.vue'
+import monitoring from '../components/monitoring/monitoring.vue'
+import quality from '../components/quality/quality.vue'
+import schedule from '../components/schedule/schedule.vue'
 
 
 const router = new VueRouter({
@@ -33,6 +37,10 @@ const router = new VueRouter({
             {path:"gantryCrane",component:gantryCrane},
         ]},
         {path:'/unopen',component:unopen},
+        {path:'/engineering',component:engineering},
+        {path:'/monitoring',component:monitoring},
+        {path:'/quality',component:quality},
+        {path:'/schedule',component:schedule},
     ]
 })
 

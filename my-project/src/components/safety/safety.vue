@@ -27,10 +27,12 @@ export default {
   },
   methods: {
     isActive(i) {
-        this.index=i;
+      this.index=i;
     },
     getPath(){
       this.index=this.$route.path;
+      this.$router.push({path:'/safety/elevator'});
+      this.isActive('/safety/elevator');
     }
   },
   created() {

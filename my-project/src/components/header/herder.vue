@@ -5,63 +5,70 @@
         <div class="city" v-if="weather.length > 0">
           {{weather[0].results[0].currentCity}}
           <span class="temp" v-if="weather.length > 0">{{weather[0].results[0].weather_data[0].temperature}}</span>
+              <img v-if="nowWeather.includes('云')" src="../../../static/images/g_duoyun.png">
+              <img v-else-if="nowWeather.includes('晴')" src="../../../static/images/g_qing.png">
+              <img v-else-if="nowWeather.includes('雪')" src="../../../static/images/g_xue.png">
+              <img v-else-if="nowWeather.includes('雨')" src="../../../static/images/g_dayv.png">
+              <img v-else-if="nowWeather.includes('阴')" src="../../../static/images/g_yin.png">
+              <img v-else-if="nowWeather.includes('雷')" src="../../../static/images/g_lei.png">
+              <img v-else src="../../../static/images/g_wan.png">
         </div>
         <ul class="nav">
-          <li v-on:click="active = '/home'">
+          <li v-on:click="isActive('/home')">
             <div class="Lactive-box" v-show="active=='/home'">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span>项目总况</span>
             </div>
             <router-link to="/home">项目总况</router-link>
           </li>
-          <li v-on:click="active = '/labour'">
+          <li v-on:click="isActive('/labour')">
             <div class="Lactive-box" v-show="active=='/labour'">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span>劳务管理</span>
             </div>
             <router-link to="/labour">劳务管理</router-link>
           </li>
-          <li  v-on:click="active = '/green'">
+          <li  v-on:click="isActive('/green')">
             <div class="Lactive-box" v-show="active=='/green'">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span>绿色施工</span>
             </div>
             <router-link to="/green">绿色施工</router-link>
           </li>
-          <li  v-on:click="active = '/safety'">
+          <li  v-on:click="isActive('/safety')">
             <div class="Lactive-box" v-show="active.indexOf('/safety')!=-1" style="left:-.04rem">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span style="padding-right:.15rem">安全管理</span>
             </div>
             <router-link to="/safety">安全管理</router-link>
           </li>
-          <li  v-on:click="active = 5">
-            <div class="Lactive-box" v-show="active==5" style="left:.04rem">
+          <li  v-on:click="isActive('/monitoring')">
+            <div class="Lactive-box" v-show="active=='/monitoring'" style="left:.04rem">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
               <span style="padding-right:.23rem">全景监控</span>
             </div>
-            <router-link to="/unopen">全景监控</router-link>
+            <router-link to="/monitoring">全景监控</router-link>
           </li>
-          <li  v-on:click="active = 6">
-            <div class="Lactive-box" v-show="active==6">
+          <li  v-on:click="isActive('/schedule')">
+            <div class="Lactive-box" v-show="active=='/schedule'">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
               <span>进度管理</span>
             </div>
-            <router-link to="/unopen">进度管理</router-link>
+            <router-link to="/schedule">进度管理</router-link>
           </li>
-          <li  v-on:click="active = 7">
-            <div class="Lactive-box" v-show="active==7">
+          <li  v-on:click="isActive('/quality')">
+            <div class="Lactive-box" v-show="active=='/quality'">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
               <span>质量管理</span>
             </div>
-            <router-link to="/unopen">质量管理</router-link>
+            <router-link to="/quality">质量管理</router-link>
           </li>
-          <li  v-on:click="active = 8">
-            <div class="Lactive-box" v-show="active==8">
+          <li  v-on:click="isActive('/engineering')">
+            <div class="Lactive-box" v-show="active=='/engineering'">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
               <span>工程资料</span>
             </div>
-            <router-link to="/unopen">工程资料</router-link>
+            <router-link to="/engineering">工程资料</router-link>
           </li>
         </ul>
         <router-link to="/home" v-on:click.native="active = 1">
@@ -87,6 +94,7 @@ export default {
       time: {},
       timeId: "",
       active: "/home",
+      nowWeather:''
     };
   },
   created() {
@@ -101,6 +109,7 @@ export default {
         .get("/APP/XMPage/XmData.ashx?method=XMData&xmid=281")
         .then(res => {
           this.project = res.data.project;
+          this.nowWeather=res.data.weather[0].results[0].weather_data[0].weather
         });
     },
     getWeather() {
@@ -115,8 +124,17 @@ export default {
       },1000)
     },
     setActive() {
+      if(this.$route.path.includes('safety')){
+        this.active+'/elevator';
+      }
       this.active = this.$route.path
-      console.log()
+    },
+    isActive(path){
+      if(this.$route.path.includes('safety')){
+        this.active+'/elevator';
+        this.$router.push({path:'/safety/elevator'});
+      }
+      this.active =path;
     }
   }
 };
@@ -143,7 +161,13 @@ export default {
  .header .city span {
      font-size: 0.18rem;
      color: #3375fe;
-     padding-left: 0.18rem;
+     padding-left: 0.1rem;
+}
+.header .city img{
+  width: .2rem;
+  height: .2rem;
+  margin-left: .05rem;
+  margin-top: -0.05rem;
 }
  .header .nav {
      position: absolute;
@@ -161,7 +185,6 @@ export default {
      left: 50%;
      transform: translate(-50%, -50%);
      top: 60%;
-     /* background: url("../../../static/images/title_bg.png") no-repeat center; */
      background-size: cover;
      width: 4.4rem;
      text-align: center;
@@ -182,7 +205,6 @@ export default {
 }
  .header .nav {
      overflow: hidden;
-     /* background: url("../../../static/images/nav_bg.jpg") no-repeat center; */
      background-size: 100% 100%;
 }
  .header .nav li {
@@ -190,17 +212,7 @@ export default {
      float: left;
      width: 1.32rem;
      text-align: center;
-     /* background: url("../../../static/images/li_bg.png") no-repeat right center; */
 }
- /* .header .nav li:nth-child(5){
-     background: url("../../../static/images/xiexian.png") no-repeat right center;
-}
- .header .nav li:nth-child(6){
-     background: url("../../../static/images/xiexian.png") no-repeat right center;
-}
- .header .nav li:nth-child(7){
-     background: url("../../../static/images/xiexian.png") no-repeat right center;
-} */
  .header .nav li a {
      display: block;
      width: 100%;
@@ -217,23 +229,6 @@ export default {
  .header .nav li:last-child {
      background: none;
 }
- /* .header .nav li.Lactive a, .header .nav li.Ractive a{
-    background-color: #3375fe;
-    
-     color: #fff;
-     z-index: 10 
-} */
-/* .Lactive a{
-     background-image: url('../../../static/images/Lactive.png') 
-}
- */
-/* .Ractive a{
-     background-image: url('../../../static/images/Ractive.png') 
-}
- */
- /* .Lactive-img {
-    
-} */
 .Lactive-box {
   position: absolute;
   left: 0;
