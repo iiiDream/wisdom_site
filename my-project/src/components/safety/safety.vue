@@ -22,6 +22,9 @@ export default {
         index:'0'
     };
   },
+  created() {
+    
+  },
   methods: {
     isActive(i) {
         this.index=i;

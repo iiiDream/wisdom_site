@@ -4,10 +4,12 @@
 
 <style scoped>
     div {
-        text-align: center;
-        margin: 3rem;
-        font-size: .5rem;
+        margin: 3rem 0;
+        font-size: .36rem;
         color: #fff;
+        text-align: center;
+        width: 16.63rem;
+        height: 9.41rem;
     }
 </style>
 
