@@ -1,145 +1,87 @@
 <template>
   <div class="content">
     <div class="top">
-      <div class="top-box">
+      <div class="top-box" v-for="(item, index) in mainInfo" :key="index">
         <div class="status">
-          <span class="danger">异常运行</span>
+          <span v-if="item.State==0" class="noml">正常运行</span>
+          <span v-else class="danger">异常运行</span>
         </div>
         <div class="employee">
           <span class="bolder">今日工作</span>
-          <span>某某某</span>
-          <span class="bolder">上工时间</span>
-          <span>07:30</span>
+          <span>{{item.Name}}</span>
+          <span class="bolder">上班时间</span>
+          <span>{{item.time}}</span>
         </div>
-        <img src="../../../static/images/s_pic.png" alt class="pic">
-      </div>
-      <div class="top-box">
-        <div class="status">
-          <span class="danger">异常运行</span>
-        </div>
-        <div class="employee">
-          <span class="bolder">今日工作</span>
-          <span>某某某</span>
-          <span class="bolder">上工时间</span>
-          <span>07:30</span>
-        </div>
-        <img src="../../../static/images/s_pic.png" alt class="pic">
-      </div>
-      <div class="top-box">
-        <div class="status">
-          <span class="danger">异常运行</span>
-        </div>
-        <div class="employee">
-          <span class="bolder">今日工作</span>
-          <span>某某某</span>
-          <span class="bolder">上工时间</span>
-          <span>07:30</span>
-        </div>
-        <img src="../../../static/images/s_pic.png" alt class="pic">
+        <img :src="`${imgUrl}/${item.photo}`" alt class="pic">
       </div>
     </div>
     <div class="buttom">
-      <div class="main">
-        <div class="title">升降机一号</div>
-        <div class="info">
+      <div class="main" v-for="(item, index) in mainInfo" :key="index">
+        <div class="title">{{item.DevName}}</div>
+        <div class="info" >
           <div class="manyInfo">
-            <div class="num">
-              <p class="noml small">--t</p>
+            <div class="num" v-if="item.yx_zzIsA==0">
+              <p class="noml small">{{item.yx_zz}}t</p>
+            </div>
+            <div class="t_num" v-else>
+              <p class="danger small">{{item.yx_zz}}t</p>
             </div>
             <div class="subtitle">载重</div>
           </div>
           <div class="manyInfo">
-            <div class="num">
-              <p class="noml small">--m</p>
+            <div class="num" v-if="item.yx_gdIsA==0">
+              <p class="noml small">{{item.yx_gd}}m</p>
+            </div>
+            <div class="t_num" v-else>
+              <p class="danger small">{{item.yx_gd}}m</p>
             </div>
             <div class="subtitle">高度</div>
           </div>
           <div class="manyInfo">
-            <div class="num">
+            <div class="num" v-if="item.yx_fzIsA==0">
               <p class="noml">正常</p>
+            </div>
+            <div class="t_num" v-else>
+              <p class="danger">异常</p>
             </div>
             <div class="subtitle">防坠在位监测</div>
           </div>
           <div class="manyInfo">
-            <div class="num">
+            <div class="num" v-if="item.yx_sxIsA==0">
               <p class="noml">正常</p>
+            </div>
+            <div class="t_num" v-else>
+              <p class="danger">异常</p>
             </div>
             <div class="subtitle">上下限位监测</div>
           </div>
         </div>
         <div class="subtitle">
-          <h1>检修倒计时:&nbsp;&nbsp;90天</h1>
-        </div>
-      </div>
-      <div class="main">
-        <div class="title">升降机二号</div>
-        <div class="info">
-          <div class="manyInfo">
-            <div class="num">
-              <p class="noml small">--t</p>
-            </div>
-            <div class="subtitle">载重</div>
-          </div>
-          <div class="manyInfo">
-            <div class="num">
-              <p class="noml small">--m</p>
-            </div>
-            <div class="subtitle">高度</div>
-          </div>
-          <div class="manyInfo">
-            <div class="num">
-              <p class="noml">正常</p>
-            </div>
-            <div class="subtitle">防坠在位监测</div>
-          </div>
-          <div class="manyInfo">
-            <div class="num">
-              <p class="noml">正常</p>
-            </div>
-            <div class="subtitle">上下限位监测</div>
-          </div>
-        </div>
-        <div class="subtitle">
-          <h1>检修倒计时:&nbsp;&nbsp;90天</h1>
-        </div>
-      </div>
-      <div class="main">
-        <div class="title">升降机三号</div>
-        <div class="info">
-          <div class="manyInfo">
-            <div class="num">
-              <p class="noml small">--t</p>
-            </div>
-            <div class="subtitle">载重</div>
-          </div>
-          <div class="manyInfo">
-            <div class="num">
-              <p class="noml small">--m</p>
-            </div>
-            <div class="subtitle">高度</div>
-          </div>
-          <div class="manyInfo">
-            <div class="num">
-              <p class="noml">正常</p>
-            </div>
-            <div class="subtitle">防坠在位监测</div>
-          </div>
-          <div class="manyInfo">
-            <div class="num">
-              <p class="noml">正常</p>
-            </div>
-            <div class="subtitle">上下限位监测</div>
-          </div>
-        </div>
-        <div class="subtitle">
-          <h1>检修倒计时:&nbsp;&nbsp;90天</h1>
+          <h1>检修倒计时:&nbsp;&nbsp;{{item.jxdate}}天</h1>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data(){
+    return{
+      mainInfo:{},
+      imgUrl:'http://gd.17hr.net:8018'
+    }
+  },
+  methods: {
+    getInfo(){
+      this.$axios.get('/APP/XMPage/DeviceData.ashx?method=GetShenJianJiData&xmid=281').then(res=>{
+        this.mainInfo=res.data;
+      })
+    }
+  },
+  created() {
+    this.getInfo()
+  },
+};
 </script>
 <style lang="less" scoped>
 .content {
@@ -163,6 +105,8 @@ export default {};
     display: flex;
     .pic {
       padding: 0.16rem;
+      width: 1.46rem;
+      height: 1.61rem;
     }
     .status {
       display: inline-block;
@@ -242,6 +186,22 @@ export default {};
             font-weight: normal;
           }
         }
+        .t_num {
+          margin: 0 auto;
+          width: 1.5rem;
+          height: 1.5rem;
+          border-radius: 50%;
+          border: 10px solid #c23864;
+          p {
+            line-height: 1.3rem;
+            font-size: 0.24rem;
+            font-weight: bolder;
+          }
+          .small {
+            font-weight: normal;
+          }
+        }
+
         .subtitle {
           margin-top: 0.2rem;
           font-size: 0.22rem;

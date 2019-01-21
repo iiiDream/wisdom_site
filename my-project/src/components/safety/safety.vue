@@ -2,13 +2,13 @@
 
   <div id="safey">
     <div class="side-nav">
-      <router-link to="/safety/elevator" @click.native="isActive(0)" :class="{active:index==0}">升降机</router-link>
+      <router-link to="/safety/elevator" @click.native="isActive('/safety/elevator')" :class="{active:index=='/safety/elevator'}">升降机</router-link>
       <i class="nav-border"></i>
-      <router-link to="/safety/towerCrane"  @click.native="isActive(1)" :class="{active:index==1}">塔吊</router-link>
+      <router-link to="/safety/towerCrane"  @click.native="isActive('/safety/towerCrane')" :class="{active:index=='/safety/towerCrane'}">塔吊</router-link>
       <i class="nav-border"></i>
-      <router-link to="/safety/car" @click.native="isActive(2)" :class="{active:index==2}">车辆出入</router-link>
+      <router-link to="/safety/car" @click.native="isActive('/safety/car')" :class="{active:index=='/safety/car'}">车辆出入</router-link>
       <i class="nav-border"></i>
-      <router-link to="/safety/gantryCrane" @click.native="isActive(3)" :class="{active:index==3}">龙门吊</router-link>
+      <router-link to="/safety/gantryCrane" @click.native="isActive('/safety/gantryCrane')" :class="{active:index=='/safety/gantryCrane'}">龙门吊</router-link>
 
     </div>
     <router-view class="router-box"></router-view>
@@ -19,14 +19,20 @@
 export default {
   data() {
     return {
-        index:'0'
+        index:'/safety/elevator'
     };
   },
   methods: {
     isActive(i) {
         this.index=i;
+    },
+    getPath(){
+      this.index=this.$route.path;
     }
-  }
+  },
+  created() {
+    this.getPath();
+  },
 };
 </script>
 

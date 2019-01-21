@@ -929,8 +929,6 @@ export default {
   padding: 0.5rem 0.3rem 0 0.3rem;
   height: 10.3rem;
   overflow: hidden;
-  background: url("../../../static/images/index.jpg") no-repeat center center;
-  background-size: 100% 100%;
   h3 {
     font-weight: 900;
   }
@@ -981,7 +979,7 @@ export default {
             margin-left: 0.1rem;
           }
           img {
-            margin-left: 0.2rem;
+            margin-left: 0.25rem;
             width: 0.54rem;
             height: 0.54rem;
             display: block;
@@ -1012,7 +1010,7 @@ export default {
             width: 0.7rem;
             margin-left: 0.2rem;
             img {
-              margin-left: 0.05rem;
+              margin-left: 0.08rem;
               width: 0.54rem;
               height: 0.54rem;
               display: block;
@@ -1215,7 +1213,7 @@ export default {
       .leftInfo{
         position: absolute;
         right: .64rem;
-        top: .9rem;
+        top: 1.4rem;
         .box{
           margin-top:.4rem;
           display: flex;
@@ -1243,15 +1241,15 @@ export default {
         .big{
           .bigshang{
             transform: rotate(-88deg);
+            margin-top: .06rem;
           }
           .bigxia{
             position: absolute;
             left: .42rem;
-            top: .67rem;
+            top: .74rem;
           }
         }
         .small{
-          
           .smallshang{
             position: absolute;
             left: .66rem;
