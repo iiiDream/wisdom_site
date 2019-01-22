@@ -38,14 +38,14 @@
           <li  v-on:click="isActive('/safety')">
             <div class="Lactive-box" v-show="active.indexOf('/safety')!=-1" style="left:-.04rem">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
-              <span style="padding-right:.15rem">安全管理</span>
+              <span style="padding-left:.04rem">安全管理</span>
             </div>
             <router-link to="/safety">安全管理</router-link>
           </li>
           <li  v-on:click="isActive('/monitoring')">
             <div class="Lactive-box" v-show="active=='/monitoring'" style="left:.04rem">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span style="padding-right:.23rem">全景监控</span>
+              <span style="padding-left:.04rem">全景监控</span>
             </div>
             <router-link to="/monitoring">全景监控</router-link>
           </li>
@@ -218,6 +218,7 @@ export default {
      font-size: 0.16rem;
      font-weight: bold;
      color: #3375fe;
+     padding-left: .19rem;
 }
  .header .nav li:nth-child(4) {
      margin-right: 4.02rem;
@@ -241,11 +242,11 @@ export default {
   font-weight: bold;
   color: #fff;
   left: 0;
-  padding-right: .19rem;
+  /* padding-right: .19rem; */
 }
 .Lactive-box img {
   height: .44rem;
   width: 1.51rem;
-  vertical-align: top;
+  vertical-align: top;  
 } 
 </style>
