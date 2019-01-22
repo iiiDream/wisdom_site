@@ -9,11 +9,11 @@
                     {{val.State==0?'正常运行':'异常运行'}}
                 </div>
                 <div class="top-data">
-                    <div class="amount border-green">
+                    <div class="amount border-blue">
                         {{val.InOutData}}
                         <p>今日进出</p>
                     </div>
-                    <div class="truck-space" :class="val.Remaining>=1?'border-green':'border-red'">
+                    <div class="truck-space" :class="val.Remaining>=1?'border-blue':'border-red'">
                         {{val.Remaining}}
                         <p>剩余车位</p>
                     </div>
@@ -80,8 +80,6 @@ export default {
                 colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
               } else {
                 colee.scrollTop++;
-                // console.log(colee.scrollTop)
-                console.log(colee1.offsetHeight)
                 if (colee.scrollTop == colee1.offsetHeight) {
                   colee.scrollTop = 0;
                 }
@@ -133,7 +131,6 @@ export default {
     .content-box {
         height: 9.41rem;
         width: 5.3rem;
-        /* border: .02rem solid #0f1f53; */
         background-image: url('../../../static/images/s_big-box.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -176,7 +173,7 @@ export default {
     .top-data p {
         margin-top: -0.16rem;
     }
-    .border-green {
+    .border-blue {
         border-color: #3375fe;
         color: #fff;
     }

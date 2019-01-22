@@ -401,7 +401,6 @@
 </template>
 
 <script>
-// import "../../common/jquery-rotate/jqueryRotate.js"
 export default {
   data() {
     return {
@@ -409,11 +408,6 @@ export default {
       contractData: "", //合同签订数据
       staffData: "", //班组与人员数据
     };
-  },
-  mounted() {
-    // this.professionMap(),
-    // this.attendance(),
-    // this.labourCurve()
   },
   created() {
     //发送请求
@@ -427,7 +421,6 @@ export default {
       let professionMap = this.$echarts.init(
         document.getElementById("professionMap")
       );
-      // console.log(professionMap)
       professionMap.setOption({
         color: ["#349be6", "#fb497c", "#21ff6a", "#f38051","#7377f4","#ffa32d"],
         series: [
@@ -657,9 +650,7 @@ export default {
       this.$axios
         .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpData&xmid=281")
         .then(res => {
-          // console.log(res.data)
           this.attendanceData = res.data;
-          // console.log(this.attendanceData)
           let pM = [];
           let aM = [];
           let aMTotal = [];
@@ -669,7 +660,6 @@ export default {
           let lMDay = [];
           // 将对象遍历成数组 ECharts的data只支持数组类型的数据
           for (let i1 = 0; i1 < this.attendanceData.EmpPostData.length; i1++) {
-            // console.log(this.attendanceData.EmpPostData[i1])
             pM.push({
               value: this.attendanceData.EmpPostData[i1].zc,
               name: this.attendanceData.EmpPostData[i1].name
@@ -684,8 +674,6 @@ export default {
             lMZc.push(this.attendanceData.KqTodayData[i3].zc);
             lMDay.push(this.attendanceData.KqTodayData[i3].day);
           }
-          // console.log(aMZc)
-          // console.log(this.attendanceData)
 
           // 数据成功返回并且转换成数组以后 调用ECharts的渲染函数 将Echarts图渲染到页面中
           this.professionMap(pM);
@@ -709,17 +697,13 @@ export default {
       this.$axios
         .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpDetail&xmid=281")
         .then(res => {
-          // console.log(res.data)
           this.contractData = res.data;
-          // console.log(typeof this.contractData.KqJinChanData)
-          // console.log(this.contractData)
           // 数据渲染完成时 再调用圆形进度条渲染函数
           setTimeout(() => {
             this.setRoate(1);
             this.setRoate(2);
             this.setRoate(3);
             this.setRoate(4);
-            // this.boxRotate()
           }, 300);
         });
     },
@@ -728,7 +712,6 @@ export default {
       this.$axios
         .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpRealData&xmid=281")
         .then(res => {
-          // console.log(res.data)
           this.staffData = res.data;
           // 数据条数大于一定值时 才调用滚动初始化
           if (this.staffData.EmpJLData.length >= 6) {
@@ -741,7 +724,6 @@ export default {
     },
     // 根据百分比设置圆形进度条长度
     setRoate(num) {
-      // console.log($('#roateBfb4').text())
       let bfb = $(`#roateBfb${num}`).text();
       let Ldeg = -135;
       let Rdeg = -135;
@@ -752,8 +734,6 @@ export default {
           Ldeg += 3.6;
         }
       }
-      // console.log(Rdeg)
-      // console.log(Ldeg)
       $(`#roateBox${num} .leftcircle-red`).css(
         "transform",
         `rotate(${Ldeg}deg)`
@@ -765,7 +745,6 @@ export default {
     },
     // 根据百分比设置柱状进度条长度
     setLength() {
-      // console.log($('.reality .progress'))
       let temp = $(".reality .progress");
       temp.each(function() {
         let bfb = $(this).data("bfb");
@@ -790,8 +769,6 @@ export default {
             colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
           } else {
             colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            // console.log(colee1.offsetHeight)
             if (colee.scrollTop == colee1.offsetHeight) {
               colee.scrollTop = 0;
             }
@@ -813,15 +790,6 @@ export default {
 </script>
 
 <style scoped>
-/* html {
-     box-sizing: border-box;
-     height: 10.8rem;
-}
- body {
-     box-sizing: border-box;
-     height: 10.8rem;
-}
- */
 .table-box {
   width: 100%;
   height: 2.64rem;
@@ -841,8 +809,6 @@ span {
   margin-top: 0.51rem;
   height: 7.27rem;
   width: 100%;
-  /* background-color: #f0f;
-     */
 }
 #labour .bottom {
   box-sizing: border-box;
@@ -850,8 +816,6 @@ span {
   margin-bottom: 0.3rem;
   height: 1.94rem;
   width: 100%;
-  /* background-color: #f0f;
-     */
 }
 #labour .top > div {
   float: left;
@@ -870,19 +834,10 @@ span {
 #labour .top .left .left-top {
   height: 3.61rem;
   width: 100%;
-  /* border: 0.02rem solid #0f1f53;
-     */
-  /* background-color: #020521;
-     */
 }
 #labour .top .left-bottom {
   height: 3.6rem;
   width: 100%;
-  /* border-left: 0.02rem solid #0f1f53;
-     border-right: 0.02rem solid #0f1f53;
-     border-bottom: 0.02rem solid #0f1f53;
-     background-color: #020521;
-     */
 }
 #labour .top .main {
   height: 100%;
@@ -894,8 +849,6 @@ span {
 #labour .top .right {
   height: 100%;
   width: 4.14rem;
-  /* background-color: red;
-     */
 }
 #labour .top .right .right-top {
   height: 2.45rem;
@@ -926,29 +879,6 @@ span {
   background-image: url("../../../static/images/l_6.png");
   background-size: contain;
 }
-/* #labour h3 {
-     line-height: 0.37rem;
-     height: 0.37rem;
-}
- */
-/* #labour .name {
-     height: 0.37rem;
-     width: 100%;
-     margin-left: 0.1rem;
-     padding-top: 0.17rem;
-}
- #labour .name img {
-     float: left;
-     margin-top: 2.0.05rem;
-}
- #labour .name p {
-     float: left;
-     line-height: 0.2rem;
-     font-size: 0.2rem;
-     font-weight: bolder;
-     color: #fff;
-}
- */
 #labour .left-top-data div {
   float: left;
 }
@@ -1096,13 +1026,10 @@ span {
 #labour .right-top .map {
   width: 100%;
   height: 100%;
-  /* background: #349be6;
-     */
 }
 #labour .main .main-top {
   width: 8.65rem;
   height: 3.51rem;
-  /* border: 0.02rem solid #0f1f53; */
   background-color: #020521;
   background-image: url("../../../static/images/l_m.png");
   background-size: 8.61rem 3.47rem;
@@ -1172,7 +1099,6 @@ span {
 .disqualification {
   background-image: url("../../../static/images/l_red.png");
   background-size: contain;
-  /* background-size: 1.28rem 1.28rem;  */
 }
 .disqualification:hover {
   background-image: url("../../../static/images/l_red.gif");
@@ -1248,12 +1174,9 @@ table td {
 .subBorder {
   width: 1.04rem;
   height: 1.04rem;
-  /* border: .07rem solid #fff; */
-  /* border-radius: 50%; */
   position: absolute;
   left: -0.04rem;
   top: -0.04rem;
-  /* display: none; */
 }
 .wrapper {
   width: 0.52rem;
@@ -1269,7 +1192,6 @@ table td {
   border-radius: 50%;
   position: absolute;
   top: 0;
-  /* -webkit-transform: rotate(-135deg); */
 }
 .rightcircle-green {
   border-top: 0.07rem solid #21ff6a;

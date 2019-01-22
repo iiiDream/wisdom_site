@@ -77,7 +77,6 @@
         <div class="date-time">
           <span class="d-date" v-if="weather.length > 0">{{weather[0].date}}</span>
           <span class="d-time">{{time}}</span>
-          <!-- {{moment().forat('h:mm:ss')}} -->
         </div>
       </div>
     </div>
@@ -114,7 +113,6 @@ export default {
     },
     getWeather() {
       this.$axios.get("/APP/XMPage/XmData.ashx?method=XMData&xmid=281").then(res=>{
-        // console.log(res.data.weather)
         this.weather = res.data.weather
       })
     },
@@ -142,7 +140,6 @@ export default {
 
 <style scoped>
 .indexBody {
-     /* background: url("../../../static/images/index.jpg") no-repeat center center; */
      position: relative;
      top: 0;
 }
@@ -155,18 +152,18 @@ export default {
 }
  .header .city {
      float: left;
-     font-size: 0.18rem;
+     font-size: 0.14rem;
      color: #3375fe;
 }
  .header .city span {
-     font-size: 0.18rem;
+     font-size: 0.14rem;
      color: #3375fe;
      padding-left: 0.1rem;
 }
 .header .city img{
   width: .2rem;
   height: .2rem;
-  margin-left: .05rem;
+  margin-left: .2rem;
   margin-top: -0.05rem;
 }
  .header .nav {
@@ -189,7 +186,7 @@ export default {
      width: 4.4rem;
      text-align: center;
      height: 0.56rem;
-     line-height: 0.48rem;
+     line-height: 0.4rem;
      font-size: 0.3rem;
      color: #ffffff;
      font-weight: bold;

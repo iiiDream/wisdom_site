@@ -48,6 +48,19 @@
     font-size: 100px !important;
   }
 }
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+li {
+  font-family: 'Microsoft YaHei';
+}
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -58,6 +71,7 @@ html {
 }
 body {
   width: 100%;
+  overflow-x: hidden;
 }
 body,
 form,

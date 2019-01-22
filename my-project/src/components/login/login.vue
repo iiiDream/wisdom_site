@@ -2,8 +2,8 @@
   <div class="content">
       <div class="kuang">
           <h1>欢迎使用</h1>
-            <input type="text" class="name" v-model="user_name">
-            <input type="password" class="name pwd" v-model="pwd">
+            <input type="text" class="name" v-model="user_name" @keyup.enter="logined">
+            <input type="password" class="name pwd" v-model="pwd" @keyup.enter="logined">
             <a class="btn" @click="logined"></a>
             <div class="logo">
                 <img src="../../../static/images/d_hlogo.png" alt="">
