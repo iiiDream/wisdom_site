@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 头部 -->
-    <baseHeader></baseHeader>
+    <baseHeader v-show="isLogin"></baseHeader>
 
     <!-- 主题其他模块 -->
     <router-view></router-view>
@@ -16,7 +16,27 @@ export default {
   name: 'app',
   components: {
     baseHeader
-  }
+  },
+  data(){
+    return{
+      isLogin:true
+    }
+  },
+  methods: {
+    noHeader(){
+      if(this.$route.path=='/login'){
+        this.isLogin=false;
+      }else{
+        this.isLogin=true;
+      }
+    }
+  },
+  created() {
+    this.noHeader()
+  },
+  updated() {
+    this.noHeader()
+  },
 }
 </script>
 

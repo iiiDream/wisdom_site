@@ -21,12 +21,14 @@ import engineering from '../components/engineering/engineering.vue'
 import monitoring from '../components/monitoring/monitoring.vue'
 import quality from '../components/quality/quality.vue'
 import schedule from '../components/schedule/schedule.vue'
+import login from '../components/login/login.vue'
 
 
 const router = new VueRouter({
     routes:[
         {path:'/',redirect:'/home'},
         {path:'/home',component:home},
+        {path:'/login',component:login},
         {path:'/green',component:green},
         {path:'/labour',component:labour},
         {path:'/safety',component:safety,children:[
@@ -43,5 +45,6 @@ const router = new VueRouter({
         {path:'/schedule',component:schedule},
     ]
 })
+
 
 export default router
