@@ -26,24 +26,37 @@ import login from '../components/login/login.vue'
 
 const router = new VueRouter({
     routes:[
-        {path:'/',redirect:'/home'},
-        {path:'/home',component:home},
         {path:'/login',component:login},
-        {path:'/green',component:green},
-        {path:'/labour',component:labour},
-        {path:'/safety',component:safety,children:[
-            {path:"",component:elevator},
-            {path:"towerCrane",component:towerCrane},
-            {path:"elevator",component:elevator},
-            {path:"car",component:car},
-            {path:"gantryCrane",component:gantryCrane},
+        {path:'/',redirect:'/home'},
+        {path:'/home',meta:{needLogin:true},component:home},
+        {path:'/green',meta:{needLogin:true},component:green},
+        {path:'/labour',meta:{needLogin:true},component:labour},
+        {path:'/safety',meta:{needLogin:true},component:safety,children:[
+            {path:"",meta:{needLogin:true},component:elevator},
+            {path:"towerCrane",meta:{needLogin:true},component:towerCrane},
+            {path:"elevator",meta:{needLogin:true},component:elevator},
+            {path:"car",meta:{needLogin:true},component:car},
+            {path:"gantryCrane",meta:{needLogin:true},component:gantryCrane},
         ]},
-        {path:'/unopen',component:unopen},
-        {path:'/engineering',component:engineering},
-        {path:'/monitoring',component:monitoring},
-        {path:'/quality',component:quality},
-        {path:'/schedule',component:schedule},
+        {path:'/unopen',meta:{needLogin:true},component:unopen},
+        {path:'/engineering',meta:{needLogin:true},component:engineering},
+        {path:'/monitoring',meta:{needLogin:true},component:monitoring},
+        {path:'/quality',meta:{needLogin:true},component:quality},
+        {path:'/schedule',meta:{needLogin:true},component:schedule},
     ]
+})
+
+router.beforeEach((to,from,next)=>{
+    if (to.meta.needLogin) {
+        const islogin = localStorage.getItem('islogin')
+        if (islogin) {
+            next()
+        }else{
+            next('/login')
+        }
+    }else{
+        next()
+    }
 })
 
 

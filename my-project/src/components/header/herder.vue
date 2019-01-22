@@ -15,7 +15,7 @@
         </div>
         <ul class="nav">
           <li v-on:click="isActive('/home')">
-            <div class="Lactive-box" v-show="active=='/home'">
+            <div class="Lactive-box" v-show="active=='/home'||active=='/login'">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span>项目总况</span>
             </div>
