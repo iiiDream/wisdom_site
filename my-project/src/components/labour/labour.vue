@@ -405,9 +405,9 @@
 export default {
   data() {
     return {
-      attendanceData: "",
-      contractData: "",
-      staffData: ""
+      attendanceData: "", //出勤数据
+      contractData: "", //合同签订数据
+      staffData: "", //班组与人员数据
     };
   },
   mounted() {
@@ -416,11 +416,13 @@ export default {
     // this.labourCurve()
   },
   created() {
+    //发送请求
     this.getAttendanceData();
     this.getContractData();
     this.getStaffData();
   },
   methods: {
+    // 现场工种模块：ECharts图渲染
     professionMap(pM) {
       let professionMap = this.$echarts.init(
         document.getElementById("professionMap")
@@ -430,7 +432,7 @@ export default {
         color: ["#349be6", "#fb497c", "#21ff6a", "#f38051","#7377f4","#ffa32d"],
         series: [
           {
-            name: "访问来源",
+            name: "现场工种",
             type: "pie",
             radius: "80%",
             // data: [
@@ -464,6 +466,38 @@ export default {
       //   labourCurve.resize();
       // }
     },
+    // 现场工种模块：滚动初始化
+    leftBottomScroll() {
+      setTimeout(() => {
+        var speed = 45;
+        var colee2 = document.getElementById("leftBottom2");
+        var colee1 = document.getElementById("leftBottom1");
+        var colee = document.getElementById("leftBottom");
+        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
+        function Marquee1() {
+          //当滚动至colee1与colee2交界时
+          if (colee2.offsetTop - colee.scrollTop <= 0) {
+            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
+          } else {
+            colee.scrollTop++;
+            // console.log(colee.scrollTop)
+            if (colee.scrollTop == 204) {
+              colee.scrollTop = 0;
+            }
+          }
+        }
+        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
+        //鼠标移上时清除定时器达到滚动停止的目的
+        colee.onmouseover = function() {
+          clearInterval(MyMar1);
+        };
+        //鼠标移开时重设定时器
+        colee.onmouseout = function() {
+          MyMar1 = setInterval(Marquee1, speed);
+        };
+      }, 1000);
+    },
+    // 项目出勤统计模块：ECharts图渲染
     attendance(aMTotal, aMZc, aMDay) {
       let attendance = this.$echarts.init(
         document.getElementById("attendance")
@@ -560,6 +594,7 @@ export default {
         ]
       });
     },
+    // 今日劳动曲线模块： ECharts图渲染
     labourCurve(lMZc, lMDay) {
       let labourCurve = this.$echarts.init(
         document.getElementById("labourCurve")
@@ -648,6 +683,7 @@ export default {
         ]
       });
     },
+    // 获取出勤数据
     getAttendanceData() {
       this.$axios
         .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpData&xmid=281")
@@ -662,6 +698,7 @@ export default {
           let aMDay = [];
           let lMZc = [];
           let lMDay = [];
+          // 将对象遍历成数组 ECharts的data只支持数组类型的数据
           for (let i1 = 0; i1 < this.attendanceData.EmpPostData.length; i1++) {
             // console.log(this.attendanceData.EmpPostData[i1])
             pM.push({
@@ -681,20 +718,24 @@ export default {
           // console.log(aMZc)
           // console.log(this.attendanceData)
 
+          // 数据成功返回并且转换成数组以后 调用ECharts的渲染函数 将Echarts图渲染到页面中
           this.professionMap(pM);
           this.attendance(aMTotal, aMZc, aMDay);
           this.labourCurve(lMZc, lMDay);
+          // 数据条数大于一定值时 才调用初始化滚动函数
           if (this.attendanceData.EmpPostData.length >= 4) {
             this.leftBottomScroll();
           }
           if (this.attendanceData.KqData.length >= 3) {
             this.rightBottomScroll();
           }
+          // 数据渲染完成时 再调用柱状进度条渲染函数
           setTimeout(() => {
             this.setLength();
-          }, 500);
+          }, 300);
         });
     },
+    // 获取合同签订数据
     getContractData() {
       this.$axios
         .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpDetail&xmid=281")
@@ -703,57 +744,31 @@ export default {
           this.contractData = res.data;
           // console.log(typeof this.contractData.KqJinChanData)
           // console.log(this.contractData)
+          // 数据渲染完成时 再调用圆形进度条渲染函数
           setTimeout(() => {
             this.setRoate(1);
             this.setRoate(2);
             this.setRoate(3);
             this.setRoate(4);
             // this.boxRotate()
-          }, 500);
+          }, 300);
         });
     },
+    // 获取班组与人员数据
     getStaffData() {
       this.$axios
         .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpRealData&xmid=281")
         .then(res => {
           // console.log(res.data)
           this.staffData = res.data;
+          // 数据条数大于一定值时 才调用滚动初始化
           if (this.staffData.EmpJLData.length >= 6) {
             this.staffScroll();
             this.squadScroll();
           }
         });
     },
-    leftBottomScroll() {
-      setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("leftBottom2");
-        var colee1 = document.getElementById("leftBottom1");
-        var colee = document.getElementById("leftBottom");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            if (colee.scrollTop == 204) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
-      }, 1000);
-    },
+    // 人员动态模块： 滚动初始化
     staffScroll() {
       setTimeout(() => {
         var speed = 45;
@@ -784,36 +799,7 @@ export default {
         };
       }, 1000);
     },
-    rightBottomScroll() {
-      setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("rightBottom2");
-        var colee1 = document.getElementById("rightBottom1");
-        var colee = document.getElementById("rightBottom");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            if (colee.scrollTop == 1080) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
-      }, 1000);
-    },
+    // 班组动态模块： 滚动初始化
     squadScroll() {
       setTimeout(() => {
         var speed = 45;
@@ -844,6 +830,38 @@ export default {
         };
       }, 1000);
     },
+    // 分包单位模块： 滚动初始化
+    rightBottomScroll() {
+      setTimeout(() => {
+        var speed = 45;
+        var colee2 = document.getElementById("rightBottom2");
+        var colee1 = document.getElementById("rightBottom1");
+        var colee = document.getElementById("rightBottom");
+        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
+        function Marquee1() {
+          //当滚动至colee1与colee2交界时
+          if (colee2.offsetTop - colee.scrollTop <= 0) {
+            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
+          } else {
+            colee.scrollTop++;
+            // console.log(colee.scrollTop)
+            if (colee.scrollTop == 1080) {
+              colee.scrollTop = 0;
+            }
+          }
+        }
+        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
+        //鼠标移上时清除定时器达到滚动停止的目的
+        colee.onmouseover = function() {
+          clearInterval(MyMar1);
+        };
+        //鼠标移开时重设定时器
+        colee.onmouseout = function() {
+          MyMar1 = setInterval(Marquee1, speed);
+        };
+      }, 1000);
+    },
+    // 根据百分比设置圆形进度条长度
     setRoate(num) {
       // console.log($('#roateBfb4').text())
       let bfb = $(`#roateBfb${num}`).text();
@@ -867,6 +885,7 @@ export default {
         `rotate(${Rdeg}deg)`
       );
     },
+    // 根据百分比设置柱状进度条长度
     setLength() {
       // console.log($('.reality .progress'))
       let temp = $(".reality .progress");
@@ -879,13 +898,13 @@ export default {
         $(this).css("width", `${width}rem`);
       });
     },
-    boxRotate() {
-      var angle = 0;
-      setInterval(function() {
-        angle += 3;
-        $(".disqualification").rotate(angle);
-      }, 50);
-    }
+    // boxRotate() {
+    //   var angle = 0;
+    //   setInterval(function() {
+    //     angle += 3;
+    //     $(".disqualification").rotate(angle);
+    //   }, 50);
+    // }
   }
 };
 </script>

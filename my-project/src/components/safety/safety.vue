@@ -1,6 +1,7 @@
 <template>
 
   <div id="safey">
+    <!-- 侧导航栏 -->
     <div class="side-nav">
       <router-link to="/safety/elevator" @click.native="isActive('/safety/elevator')" :class="{active:index=='/safety/elevator'}">升降机</router-link>
       <i class="nav-border"></i>
@@ -9,8 +10,8 @@
       <router-link to="/safety/car" @click.native="isActive('/safety/car')" :class="{active:index=='/safety/car'}">车辆出入</router-link>
       <i class="nav-border"></i>
       <router-link to="/safety/gantryCrane" @click.native="isActive('/safety/gantryCrane')" :class="{active:index=='/safety/gantryCrane'}">龙门吊</router-link>
-
     </div>
+    <!-- 子路由页面显示区域 -->
     <router-view class="router-box"></router-view>
   </div>
 </template>
@@ -19,16 +20,18 @@
 export default {
   data() {
     return {
-        index:'/safety/elevator'
+        index:'/safety/elevator', // 当前页面的路由地址，根据此地址来判断当前处于哪个页面
     };
   },
   created() {
     
   },
   methods: {
+    // 设置路由地址
     isActive(i) {
       this.index=i;
     },
+    // 页面刷新或重新渲染时将当前页面的路由地址赋值给 index
     getPath(){
       this.index=this.$route.path;
       this.$router.push({path:'/safety/elevator'});
