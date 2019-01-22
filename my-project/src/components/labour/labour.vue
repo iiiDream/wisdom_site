@@ -466,37 +466,6 @@ export default {
       //   labourCurve.resize();
       // }
     },
-    // 现场工种模块：滚动初始化
-    leftBottomScroll() {
-      setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("leftBottom2");
-        var colee1 = document.getElementById("leftBottom1");
-        var colee = document.getElementById("leftBottom");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            if (colee.scrollTop == 204) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
-      }, 1000);
-    },
     // 项目出勤统计模块：ECharts图渲染
     attendance(aMTotal, aMZc, aMDay) {
       let attendance = this.$echarts.init(
@@ -724,10 +693,10 @@ export default {
           this.labourCurve(lMZc, lMDay);
           // 数据条数大于一定值时 才调用初始化滚动函数
           if (this.attendanceData.EmpPostData.length >= 4) {
-            this.leftBottomScroll();
+            this.scrollStart('leftBottom','leftBottom1','leftBottom2');
           }
           if (this.attendanceData.KqData.length >= 3) {
-            this.rightBottomScroll();
+            this.scrollStart('rightBottom','rightBottom1','rightBottom2');
           }
           // 数据渲染完成时 再调用柱状进度条渲染函数
           setTimeout(() => {
@@ -763,103 +732,12 @@ export default {
           this.staffData = res.data;
           // 数据条数大于一定值时 才调用滚动初始化
           if (this.staffData.EmpJLData.length >= 6) {
-            this.staffScroll();
-            this.squadScroll();
+            this.scrollStart('squad','squad1','squad2');
+          }
+          if (this.staffData.BZRealData.length >= 6) {
+            this.scrollStart('staff','staff1','staff2')
           }
         });
-    },
-    // 人员动态模块： 滚动初始化
-    staffScroll() {
-      setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("staff2");
-        var colee1 = document.getElementById("staff1");
-        var colee = document.getElementById("staff");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            if (colee.scrollTop == 17160) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
-      }, 1000);
-    },
-    // 班组动态模块： 滚动初始化
-    squadScroll() {
-      setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("squad2");
-        var colee1 = document.getElementById("squad1");
-        var colee = document.getElementById("squad");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            if (colee.scrollTop == 1848) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
-      }, 1000);
-    },
-    // 分包单位模块： 滚动初始化
-    rightBottomScroll() {
-      setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("rightBottom2");
-        var colee1 = document.getElementById("rightBottom1");
-        var colee = document.getElementById("rightBottom");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            if (colee.scrollTop == 1080) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
-      }, 1000);
     },
     // 根据百分比设置圆形进度条长度
     setRoate(num) {
@@ -898,13 +776,38 @@ export default {
         $(this).css("width", `${width}rem`);
       });
     },
-    // boxRotate() {
-    //   var angle = 0;
-    //   setInterval(function() {
-    //     angle += 3;
-    //     $(".disqualification").rotate(angle);
-    //   }, 50);
-    // }
+    // 滚动启动函数
+    scrollStart(id,id1,id2) {
+      setTimeout(() => {
+        var speed = 45;
+        var colee2 = document.getElementById(id2);
+        var colee1 = document.getElementById(id1);
+        var colee = document.getElementById(id);
+        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
+        function Marquee1() {
+          //当滚动至colee1与colee2交界时
+          if (colee2.offsetTop - colee.scrollTop <= 0) {
+            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
+          } else {
+            colee.scrollTop++;
+            // console.log(colee.scrollTop)
+            // console.log(colee1.offsetHeight)
+            if (colee.scrollTop == colee1.offsetHeight) {
+              colee.scrollTop = 0;
+            }
+          }
+        }
+        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
+        //鼠标移上时清除定时器达到滚动停止的目的
+        colee.onmouseover = function() {
+          clearInterval(MyMar1);
+        };
+        //鼠标移开时重设定时器
+        colee.onmouseout = function() {
+          MyMar1 = setInterval(Marquee1, speed);
+        };
+      }, 1000);
+    },
   }
 };
 </script>
