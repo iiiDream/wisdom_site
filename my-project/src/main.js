@@ -10,7 +10,9 @@ import {
   Carousel,
   Row,
   Col,
-  CarouselItem
+  CarouselItem,
+  Collapse,
+  CollapseItem
 } from 'element-ui'
 
 Vue.prototype.$echarts = echarts
@@ -18,6 +20,8 @@ Vue.use(Carousel);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(CarouselItem);
+Vue.use(Collapse);
+Vue.use(CollapseItem);
 
 Vue.config.productionTip = false
 

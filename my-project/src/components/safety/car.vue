@@ -120,13 +120,15 @@ export default {
     }
     #car {
         display: flex;
-  padding: 0.51rem 0.3rem 0.4rem 0.4rem;
+        padding: 0.51rem 0.3rem 0.4rem 0.4rem;
 
     }
     .content {
         width: 100%;
         display: flex;
         justify-content: space-between;
+        /* width: 16.63rem;
+        height: 9.41rem; */
     }
     .content-box {
         height: 9.41rem;

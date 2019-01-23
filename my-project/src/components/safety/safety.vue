@@ -61,7 +61,9 @@ export default {
 .router-box {
   flex: 1;
   display: inline-block;
-    padding: 0.51rem 0.3rem 0.4rem 0.4rem;
+  padding: 0.51rem 0.3rem 0.4rem 0.4rem;
+  width: 16.63rem;
+  height: 9.41rem;
 }
 .side-nav a {
   display: block;
