@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     noHeader(){
-      if(this.$route.path=='/unopen'){
+      if(this.$route.path=='/unopen' || this.$route.path=='/login'){
         this.isLogin=false;
       }else{
         this.isLogin=true;

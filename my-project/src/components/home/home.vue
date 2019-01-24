@@ -24,7 +24,7 @@
               <span class="down">{{manWork.the_month}}</span>
             </li>
             <li>
-              今日
+              上月
               <span>{{manWork.tmo_month}}</span>
             </li>
           </ul>
