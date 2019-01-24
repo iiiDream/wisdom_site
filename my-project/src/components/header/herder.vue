@@ -38,9 +38,9 @@
           <li  v-on:click="isActive('/safety')">
             <div class="Lactive-box" v-show="active.indexOf('/safety')!=-1" style="left:-.04rem">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
-              <span style="padding-left:.04rem">安全管理</span>
+              <span style="padding-left:.04rem">安全施工</span>
             </div>
-            <router-link to="/safety">安全管理</router-link>
+            <router-link to="/safety">安全施工</router-link>
           </li>
           <li  v-on:click="isActive('/monitoring')">
             <div class="Lactive-box" v-show="active=='/monitoring'" style="left:.04rem">
@@ -93,7 +93,8 @@ export default {
       time: {},
       timeId: "",
       active: "/home",
-      nowWeather:''
+      nowWeather:'',
+      xmid:'',
     };
   },
   created() {
@@ -104,16 +105,26 @@ export default {
   },
   methods: {
     getName() {
+      this.xmid = this.getQueryString('xmid')
       this.$axios
-        .get("/APP/XMPage/XmData.ashx?method=XMData&xmid=281")
+        .get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`)
         .then(res => {
-          this.project = res.data.project;
-          this.nowWeather=res.data.weather[0].results[0].weather_data[0].weather
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.project = res.data.project;
+            this.nowWeather=res.data.weather[0].results[0].weather_data[0].weather
+          }
         });
     },
     getWeather() {
-      this.$axios.get("/APP/XMPage/XmData.ashx?method=XMData&xmid=281").then(res=>{
-        this.weather = res.data.weather
+      this.xmid = this.getQueryString('xmid')
+      this.$axios.get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`).then(res=>{
+        if(res.data.success == 1){
+          this.$router.push('unopen')
+        }else{
+          this.weather = res.data.weather
+        }
       })
     },
     setTime() {
@@ -133,7 +144,15 @@ export default {
         this.$router.push({path:'/safety/elevator'});
       }
       this.active =path;
-    }
+    },
+    getQueryString(name) {
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return unescape(r[2]);
+      }
+      return null;
+    },
   }
 };
 </script>

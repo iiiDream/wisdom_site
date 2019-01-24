@@ -9,13 +9,13 @@
                     {{val.State==0?'正常运行':'异常运行'}}
                 </div>
                 <div class="top-data">
-                    <div class="amount border-blue">
+                    <div class="amount border-blue" style="font-size:.24rem" :class="val.State==0?'border-blue normal':'border-red anomaly'">
                         {{val.InOutData}}
-                        <p>今日进出</p>
+                        <p style="font-size:.18rem">今日进出</p>
                     </div>
-                    <div class="truck-space" :class="val.Remaining>=1?'border-blue':'border-red'">
+                    <div class="truck-space" :class="val.Remaining>=1&&val.State==0?'border-blue normal':'border-red anomaly'" style="font-size:.24rem">
                         {{val.Remaining}}
-                        <p>剩余车位</p>
+                        <p style="font-size:.18rem">剩余车位</p>
                     </div>
                 </div>
                 <div class="bottom-data">
@@ -42,6 +42,7 @@ export default {
     data() {
         return {
             carData:'', // 车辆出入数据
+            xmid:'',
         }
     },
     created() {
@@ -51,18 +52,23 @@ export default {
     methods: {
         // 请求车辆出入数据
         getCarData() {
-            this.$axios.get('/APP/XMPage/DeviceData.ashx?method=GetPkData&xmid=281').then(res=>{
-                // console.log(res.data)
-                this.carData = res.data;
+            this.xmid = this.getQueryString('xmid')
+            this.$axios.get(`/APP/XMPage/DeviceData.ashx?method=GetPkData&xmid=${this.xmid}`).then(res=>{
+                if(res.data.success == 1){
+                    this.$router.push('unopen')
+                }else{
+                    // console.log(res.data)
+                    this.carData = res.data;
 
-                if (res.data.InOutOne.Data.length >=15) {
-                    this.scrollStart('InOutOne','InOutOne1','InOutOne2')
-                }
-                if (res.data.InOutTwo.Data.length >=15) {
-                    this.scrollStart('InOutTwo','InOutTwo1','InOutTwo2')
-                }
-                if (res.data.InOutThree.Data.length >=15) {
-                    this.scrollStart('InOutThree','InOutThree1','InOutThree2')
+                    if (res.data.InOutOne.Data.length >=15) {
+                        this.scrollStart('InOutOne','InOutOne1','InOutOne2')
+                    }
+                    if (res.data.InOutTwo.Data.length >=15) {
+                        this.scrollStart('InOutTwo','InOutTwo1','InOutTwo2')
+                    }
+                    if (res.data.InOutThree.Data.length >=15) {
+                        this.scrollStart('InOutThree','InOutThree1','InOutThree2')
+                    }
                 }
             })
         },
@@ -96,6 +102,14 @@ export default {
             };
           }, 1000);
         },
+        getQueryString(name) {
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+          var r = window.location.search.substr(1).match(reg);
+          if (r != null) {
+            return unescape(r[2]);
+          }
+          return null;
+        },
     },
 }
 </script>
@@ -108,10 +122,10 @@ export default {
         color: #c23864;
     }
     .normal {
-        color: #21ff6a;
+        color: #24e974;
     }
     .warning {
-        color: #feb113;
+        color: #ff731c;
     }
     span,
     p,
@@ -157,12 +171,12 @@ export default {
     .truck-space {
         height: 1.17rem;
         width: 1.17rem;
-        border: .12rem solid;
-        border-radius: 50%;
-        line-height: .93rem;
+        /* border: .12rem solid;
+        border-radius: 50%; */
+        line-height: 1.17rem;
         text-align: center;
         font-size: .18rem;
-        margin-top: .38rem;
+        margin-top: .35rem;
     }
     .amount {
         margin-right: .87rem;
@@ -173,15 +187,19 @@ export default {
         height: 1.93rem;
     }
     .top-data p {
-        margin-top: -0.16rem;
+        margin-top: -0.4rem;
     }
     .border-blue {
-        border-color: #3375fe;
-        color: #fff;
+        /* border-color: #3375fe;
+        color: #fff; */
+        background-image: url('../../../static/images/s_c-green.png');
+        background-size: cover;
     }
     .border-red {
-        border-color: #c23864;
-        color: #c23864;
+        /* border-color: #c23864;
+        color: #c23864; */
+        background-image: url('../../../static/images/s_c-red.png');
+        background-size: cover;
     }
     .bottom-data>p {
         text-align: center;

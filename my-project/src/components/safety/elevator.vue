@@ -3,7 +3,7 @@
     <div class="top">
       <div class="top-box" v-for="(item, index) in mainInfo" :key="index">
         <div class="status">
-          <span v-if="item.State==0" class="noml">正常运行</span>
+          <span v-if="item.State==0" class="green">正常运行</span>
           <span v-else class="danger">异常运行</span>
         </div>
         <div class="employee">
@@ -21,43 +21,44 @@
         <div class="info" >
           <div class="manyInfo">
             <div class="num" v-if="item.yx_zzIsA==0">
-              <p class="noml small">{{item.yx_zz}}t</p>
+              <p class="noml small noml-border">{{item.yx_zz}}t</p>
             </div>
             <div class="t_num" v-else>
-              <p class="danger small">{{item.yx_zz}}t</p>
+              <p class="danger small danger-border">{{item.yx_zz}}t</p>
             </div>
             <div class="subtitle">载重</div>
           </div>
           <div class="manyInfo">
             <div class="num" v-if="item.yx_gdIsA==0">
-              <p class="noml small">{{item.yx_gd}}m</p>
+              <p class="noml small noml-border">{{item.yx_gd}}m</p>
             </div>
             <div class="t_num" v-else>
-              <p class="danger small">{{item.yx_gd}}m</p>
+              <p class="danger small danger-border">{{item.yx_gd}}m</p>
             </div>
             <div class="subtitle">高度</div>
           </div>
           <div class="manyInfo">
             <div class="num" v-if="item.yx_fzIsA==0">
-              <p class="noml">正常</p>
+              <p class="noml noml-border">正常</p>
             </div>
             <div class="t_num" v-else>
-              <p class="danger">异常</p>
+              <p class="danger danger-border">异常</p>
             </div>
             <div class="subtitle">防坠在位监测</div>
           </div>
           <div class="manyInfo">
             <div class="num" v-if="item.yx_sxIsA==0">
-              <p class="noml">正常</p>
+              <p class="noml noml-border">正常</p>
             </div>
             <div class="t_num" v-else>
-              <p class="danger">异常</p>
+              <p class="danger danger-border">异常</p>
             </div>
             <div class="subtitle">上下限位监测</div>
           </div>
         </div>
         <div class="subtitle">
-          <h1>检修倒计时:&nbsp;&nbsp;{{item.jxdate}}天</h1>
+          <h1 style="display:inline-block">检修倒计时:</h1>
+          <h1 :class="item.jxdate>=10?'normal':item.jxdate>=1?'warning':'anomaly'" style="display:inline-block">&nbsp;&nbsp;{{item.jxdate}}天</h1>
         </div>
       </div>
     </div>
@@ -68,15 +69,29 @@ export default {
   data(){
     return{
       mainInfo:{},
-      imgUrl:'http://gd.17hr.net:8018'
+      imgUrl:'http://gd.17hr.net:8018',
+      xmid:'',
     }
   },
   methods: {
     getInfo(){
-      this.$axios.get('/APP/XMPage/DeviceData.ashx?method=GetShenJianJiData&xmid=281').then(res=>{
-        this.mainInfo=res.data;
+      this.xmid = this.getQueryString('xmid')
+      this.$axios.get(`/APP/XMPage/DeviceData.ashx?method=GetShenJianJiData&xmid=${this.xmid}`).then(res=>{
+        if(res.data.success == 1){
+          this.$router.push('unopen')
+        }else{
+          this.mainInfo=res.data;
+        }
       })
-    }
+    },
+    getQueryString(name) {
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return unescape(r[2]);
+      }
+      return null;
+    },
   },
   created() {
     this.getInfo()
@@ -91,7 +106,10 @@ export default {
   color: #c23864 !important;
 }
 .noml {
-  color: #21ff6a !important;
+  color: #ff731c !important;
+}
+.green {
+  color: #24e974 !important;
 }
 
 .top {
@@ -175,11 +193,10 @@ export default {
           margin: 0 auto;
           width: 1.5rem;
           height: 1.5rem;
-          border-radius: 50%;
-          border: 10px solid #21ff6a;
+          // border-radius: 50%;
           p {
-            line-height: 1.3rem;
-            font-size: 0.24rem;
+            line-height: 1.5rem;
+            font-size: 0.3rem;
             font-weight: bolder;
           }
           .small {
@@ -190,11 +207,10 @@ export default {
           margin: 0 auto;
           width: 1.5rem;
           height: 1.5rem;
-          border-radius: 50%;
-          border: 10px solid #c23864;
+          // border-radius: 50%;
           p {
-            line-height: 1.3rem;
-            font-size: 0.24rem;
+            line-height: 1.5rem;
+            font-size: 0.3rem;
             font-weight: bolder;
           }
           .small {
@@ -217,5 +233,22 @@ export default {
       }
     }
   }
+}
+.noml-border {
+  background-image: url('../../../static/images/s_e-orange.png');
+  background-size: cover;
+}
+.danger-border {
+  background-image: url('../../../static/images/s_e-red.png');
+  background-size: cover;
+}
+.anomaly {
+    color: #c23864;
+}
+.normal {
+    color: #24e974;
+}
+.warning {
+    color: #ff731c;
 }
 </style>

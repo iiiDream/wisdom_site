@@ -20,17 +20,17 @@
                     </div>
                     <div class="top-data">
                         <div class="top-left">
-                            <p>安全起重</p>
+                            <p class="warning">安全起重</p>
                             <span>{{val.cs_qz}}t</span>
                         </div>
                         <div class="middle">
                             <div class="middle-img">
-                                <span>{{val.cs_lj}}%</span>
+                                <span style="font-size:.24rem">{{val.cs_lj}}%</span>
                             </div>
                             <span>力距</span>
                         </div>
                         <div class="top-right">
-                            <p>倍率</p>
+                            <p class="warning">倍率</p>
                             <span>{{val.cs_bl}}倍</span>
                         </div>
                     </div>
@@ -39,42 +39,42 @@
                             <li>
                                 <img src="../../../static/images/s_weight.png" alt="">
                                 <div>
-                                    <p>重量</p>
+                                    <p class="warning">重量</p>
                                     <p>{{val.yx_zl}}t</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_range.png" alt="">
                                 <div>
-                                    <p>幅度</p>
+                                    <p class="warning">幅度</p>
                                     <p>{{val.yx_fd}}m</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_altitude.png" alt="">
                                 <div>
-                                    <p>高度</p>
+                                    <p class="warning">高度</p>
                                     <p>{{val.yx_gd}}m</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_rotation.png" alt="">
                                 <div>
-                                    <p>回转</p>
+                                    <p class="warning">回转</p>
                                     <p>{{val.yx_hz}}°</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_wind-speed.png" alt="">
                                 <div>
-                                    <p>风速</p>
+                                    <p class="warning">风速</p>
                                     <p>{{val.yx_fs}}m</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="../../../static/images/s_dip-angle.png" alt="">
                                 <div>
-                                    <p>倾角</p>
+                                    <p class="warning">倾角</p>
                                     <p>X{{val.yx_qjX}}°</p>
                                     <p>Y{{val.yx_qjY}}°</p>
                                 </div>
@@ -97,6 +97,7 @@ export default {
         return {
             towerCraneData: '', //塔吊数据
             imgUrl:'http://gd.17hr.net:8018/', //图片地址
+            xmid:'',
         }
     },
     created() {
@@ -106,13 +107,26 @@ export default {
     methods: {
         // 请求塔吊数据
         getTowerCraneData(){
-            this.$axios.get("/APP/XMPage/DeviceData.ashx?method=GetTaJiData&xmid=281").then(res=>{
-                this.towerCraneData = res.data
-                // // console.log(this.towerCraneData.TaJiOne.Name)
-                // this.towerCraneData.push(res.data)
-                // console.log(this.towerCraneData)
+            this.xmid = this.getQueryString('xmid')
+            this.$axios.get(`/APP/XMPage/DeviceData.ashx?method=GetTaJiData&xmid=${this.xmid}`).then(res=>{
+                if(res.data.success == 1){
+                    this.$router.push('unopen')
+                }else{
+                    this.towerCraneData = res.data
+                    // // console.log(this.towerCraneData.TaJiOne.Name)
+                    // this.towerCraneData.push(res.data)
+                    // console.log(this.towerCraneData)
+                }
             })
-        }
+        },
+        getQueryString(name) {
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+          var r = window.location.search.substr(1).match(reg);
+          if (r != null) {
+            return unescape(r[2]);
+          }
+          return null;
+        },
     },
 }
 </script>
@@ -144,10 +158,10 @@ export default {
         color: #c23864;
     }
     .normal {
-        color: #21ff6a;
+        color: #24e974;
     }
     .warning {
-        color: #feb113;
+        color: #ff731c;
     }
     /* 上部盒子样式 */
     .top-box {
@@ -256,7 +270,7 @@ export default {
     }
     .bottom-box .bottom-data li p {
         font-size: .18rem;
-        line-height: .34rem;
+        line-height: .3rem;
     }
     .bottom-box .day{
         height: 1.27rem;

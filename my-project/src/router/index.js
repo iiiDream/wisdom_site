@@ -5,6 +5,7 @@ Vue.use(VueRouter)
 
 import axios from 'axios'
 axios.defaults.baseURL = "http://gd.17hr.net:8018"
+// axios.defaults.baseURL = "http://192.168.1.225:808"
 axios.defaults.withCredentials=true //让ajax携带cookie
 Vue.prototype.$axios = axios
 
@@ -25,24 +26,45 @@ import login from '../components/login/login.vue'
 
 
 const router = new VueRouter({
+    // 需要路由拦截
+    // routes:[
+    //     {path:'/login',component:login},
+    //     {path:'/',redirect:'/home'},
+    //     {path:'/home',meta:{needLogin:true},component:home},
+    //     {path:'/green',meta:{needLogin:true},component:green},
+    //     {path:'/labour',meta:{needLogin:true},component:labour},
+    //     {path:'/safety',meta:{needLogin:true},component:safety,children:[
+    //         {path:"",meta:{needLogin:true},component:elevator},
+    //         {path:"towerCrane",meta:{needLogin:true},component:towerCrane},
+    //         {path:"elevator",meta:{needLogin:true},component:elevator},
+    //         {path:"car",meta:{needLogin:true},component:car},
+    //         {path:"gantryCrane",meta:{needLogin:true},component:gantryCrane},
+    //     ]},
+    //     {path:'/unopen',meta:{needLogin:true},component:unopen},
+    //     {path:'/engineering',meta:{needLogin:true},component:engineering},
+    //     {path:'/monitoring',meta:{needLogin:true},component:monitoring},
+    //     {path:'/quality',meta:{needLogin:true},component:quality},
+    //     {path:'/schedule',meta:{needLogin:true},component:schedule},
+    // ]
+    // 不需要路由拦截
     routes:[
         {path:'/login',component:login},
         {path:'/',redirect:'/home'},
-        {path:'/home',meta:{needLogin:true},component:home},
-        {path:'/green',meta:{needLogin:true},component:green},
-        {path:'/labour',meta:{needLogin:true},component:labour},
-        {path:'/safety',meta:{needLogin:true},component:safety,children:[
-            {path:"",meta:{needLogin:true},component:elevator},
-            {path:"towerCrane",meta:{needLogin:true},component:towerCrane},
-            {path:"elevator",meta:{needLogin:true},component:elevator},
-            {path:"car",meta:{needLogin:true},component:car},
-            {path:"gantryCrane",meta:{needLogin:true},component:gantryCrane},
+        {path:'/home',component:home},
+        {path:'/green',component:green},
+        {path:'/labour',component:labour},
+        {path:'/safety',component:safety,children:[
+            {path:"",component:elevator},
+            {path:"towerCrane",component:towerCrane},
+            {path:"elevator",component:elevator},
+            {path:"car",component:car},
+            {path:"gantryCrane",component:gantryCrane},
         ]},
-        {path:'/unopen',meta:{needLogin:true},component:unopen},
-        {path:'/engineering',meta:{needLogin:true},component:engineering},
-        {path:'/monitoring',meta:{needLogin:true},component:monitoring},
-        {path:'/quality',meta:{needLogin:true},component:quality},
-        {path:'/schedule',meta:{needLogin:true},component:schedule},
+        {path:'/unopen',component:unopen},
+        {path:'/engineering',component:engineering},
+        {path:'/monitoring',component:monitoring},
+        {path:'/quality',component:quality},
+        {path:'/schedule',component:schedule},
     ]
 })
 

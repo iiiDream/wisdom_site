@@ -407,6 +407,7 @@ export default {
       attendanceData: "", //出勤数据
       contractData: "", //合同签订数据
       staffData: "", //班组与人员数据
+      xmid:'',
     };
   },
   created() {
@@ -422,7 +423,7 @@ export default {
         document.getElementById("professionMap")
       );
       professionMap.setOption({
-        color: ["#349be6", "#fb497c", "#21ff6a", "#f38051","#7377f4","#ffa32d"],
+        color: ["#349be6", "#fb497c", "#24e974", "#f38051","#7377f4","#ffa32d"],
         series: [
           {
             name: "现场工种",
@@ -647,78 +648,93 @@ export default {
     },
     // 获取出勤数据
     getAttendanceData() {
+      this.xmid = this.getQueryString('xmid')
       this.$axios
-        .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpData&xmid=281")
+        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpData&xmid=${this.xmid}`)
         .then(res => {
-          this.attendanceData = res.data;
-          let pM = [];
-          let aM = [];
-          let aMTotal = [];
-          let aMZc = [];
-          let aMDay = [];
-          let lMZc = [];
-          let lMDay = [];
-          // 将对象遍历成数组 ECharts的data只支持数组类型的数据
-          for (let i1 = 0; i1 < this.attendanceData.EmpPostData.length; i1++) {
-            pM.push({
-              value: this.attendanceData.EmpPostData[i1].zc,
-              name: this.attendanceData.EmpPostData[i1].name
-            });
-          }
-          for (let i2 = 0; i2 < this.attendanceData.KqData.length; i2++) {
-            aMTotal.push(this.attendanceData.KqData[i2].total);
-            aMZc.push(this.attendanceData.KqData[i2].zc);
-            aMDay.push(this.attendanceData.KqData[i2].day);
-          }
-          for (let i3 = 0; i3 < this.attendanceData.KqTodayData.length; i3++) {
-            lMZc.push(this.attendanceData.KqTodayData[i3].zc);
-            lMDay.push(this.attendanceData.KqTodayData[i3].day);
-          }
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.attendanceData = res.data;
+            let pM = [];
+            let aM = [];
+            let aMTotal = [];
+            let aMZc = [];
+            let aMDay = [];
+            let lMZc = [];
+            let lMDay = [];
+            // 将对象遍历成数组 ECharts的data只支持数组类型的数据
+            for (let i1 = 0; i1 < this.attendanceData.EmpPostData.length; i1++) {
+              pM.push({
+                value: this.attendanceData.EmpPostData[i1].zc,
+                name: this.attendanceData.EmpPostData[i1].name
+              });
+            }
+            for (let i2 = 0; i2 < this.attendanceData.KqData.length; i2++) {
+              aMTotal.push(this.attendanceData.KqData[i2].total);
+              aMZc.push(this.attendanceData.KqData[i2].zc);
+              aMDay.push(this.attendanceData.KqData[i2].day);
+            }
+            for (let i3 = 0; i3 < this.attendanceData.KqTodayData.length; i3++) {
+              lMZc.push(this.attendanceData.KqTodayData[i3].zc);
+              lMDay.push(this.attendanceData.KqTodayData[i3].day);
+            }
 
-          // 数据成功返回并且转换成数组以后 调用ECharts的渲染函数 将Echarts图渲染到页面中
-          this.professionMap(pM);
-          this.attendance(aMTotal, aMZc, aMDay);
-          this.labourCurve(lMZc, lMDay);
-          // 数据条数大于一定值时 才调用初始化滚动函数
-          if (this.attendanceData.EmpPostData.length >= 4) {
-            this.scrollStart('leftBottom','leftBottom1','leftBottom2');
+            // 数据成功返回并且转换成数组以后 调用ECharts的渲染函数 将Echarts图渲染到页面中
+            this.professionMap(pM);
+            this.attendance(aMTotal, aMZc, aMDay);
+            this.labourCurve(lMZc, lMDay);
+            // 数据条数大于一定值时 才调用初始化滚动函数
+            if (this.attendanceData.EmpPostData.length >= 4) {
+              this.scrollStart('leftBottom','leftBottom1','leftBottom2');
+            }
+            if (this.attendanceData.KqData.length >= 3) {
+              this.scrollStart('rightBottom','rightBottom1','rightBottom2');
+            }
+            // 数据渲染完成时 再调用柱状进度条渲染函数
+            setTimeout(() => {
+              this.setLength();
+            }, 300);
           }
-          if (this.attendanceData.KqData.length >= 3) {
-            this.scrollStart('rightBottom','rightBottom1','rightBottom2');
-          }
-          // 数据渲染完成时 再调用柱状进度条渲染函数
-          setTimeout(() => {
-            this.setLength();
-          }, 300);
         });
     },
     // 获取合同签订数据
     getContractData() {
+      this.xmid = this.getQueryString('xmid')
       this.$axios
-        .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpDetail&xmid=281")
+        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpDetail&xmid=${this.xmid}`)
         .then(res => {
-          this.contractData = res.data;
-          // 数据渲染完成时 再调用圆形进度条渲染函数
-          setTimeout(() => {
-            this.setRoate(1);
-            this.setRoate(2);
-            this.setRoate(3);
-            this.setRoate(4);
-          }, 300);
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.contractData = res.data;
+            // 数据渲染完成时 再调用圆形进度条渲染函数
+            setTimeout(() => {
+              this.setRoate(1);
+              this.setRoate(2);
+              this.setRoate(3);
+              this.setRoate(4);
+            }, 300);
+          }
         });
     },
     // 获取班组与人员数据
     getStaffData() {
+      this.xmid = this.getQueryString('xmid')
       this.$axios
-        .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpRealData&xmid=281")
+        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpRealData&xmid=${this.xmid}`)
         .then(res => {
-          this.staffData = res.data;
-          // 数据条数大于一定值时 才调用滚动初始化
-          if (this.staffData.EmpJLData.length >= 6) {
-            this.scrollStart('squad','squad1','squad2');
-          }
-          if (this.staffData.BZRealData.length >= 6) {
-            this.scrollStart('staff','staff1','staff2')
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.staffData = res.data;
+            // 数据条数大于一定值时 才调用滚动初始化
+            if (this.staffData.EmpJLData.length >= 6) {
+              this.scrollStart('squad','squad1','squad2');
+            }
+            if (this.staffData.BZRealData.length >= 6) {
+              this.scrollStart('staff','staff1','staff2')
+            }
           }
         });
     },
@@ -784,6 +800,14 @@ export default {
           MyMar1 = setInterval(Marquee1, speed);
         };
       }, 1000);
+    },
+    getQueryString(name) {
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return unescape(r[2]);
+      }
+      return null;
     },
   }
 };
@@ -928,7 +952,7 @@ span {
   background-color: #fb497c;
 }
 .color3 {
-  background-color: #21ff6a;
+  background-color: #24e974;
 }
 .color4 {
   background-color: #f38051;
@@ -944,7 +968,7 @@ span {
   color: #fb497c;
 }
 .font-green {
-  color: #21ff6a;
+  color: #24e974;
 }
 .font-red {
   color: #fb497c;
@@ -1001,7 +1025,7 @@ span {
   width: 0rem;
   height: 0.15rem;
   border-radius: 0.15rem;
-  background-color: #21ff6a;
+  background-color: #24e974;
   margin-left: 0.12rem;
   margin-right: 0.06rem;
 }
@@ -1115,14 +1139,14 @@ span {
   position: relative;
 }
 .border-green {
-  border-color: #21ff6a;
+  border-color: #24e974;
 }
 .border-red {
   border-color: #fb497c;
   color: #fb497c;
 }
 .border-green span {
-  color: #21ff6a;
+  color: #24e974;
   font-size: 0.3rem;
   font-weight: bolder;
 }
@@ -1194,14 +1218,14 @@ table td {
   top: 0;
 }
 .rightcircle-green {
-  border-top: 0.07rem solid #21ff6a;
-  border-right: 0.07rem solid #21ff6a;
+  border-top: 0.07rem solid #24e974;
+  border-right: 0.07rem solid #24e974;
   right: 0;
   transform: rotate(45deg);
 }
 .leftcircle-green {
-  border-bottom: 0.07rem solid #21ff6a;
-  border-left: 0.07rem solid #21ff6a;
+  border-bottom: 0.07rem solid #24e974;
+  border-left: 0.07rem solid #24e974;
   left: 0;
   transform: rotate(45deg);
 }
