@@ -8,10 +8,15 @@
         <div class="left-top">
           <div class="name">
             <h3>现场人员</h3>
+            <div class="la-jindu">
+              <div class="la-subjindu">
+                <p>{{dh}}%</p>
+              </div>
+            </div>
           </div>
           <div class="left-top-data">
             <ul>
-              <li style="margin-top:0.19rem">
+              <li style="margin-top:0">
                 <div>
                   <img src="../../../static/images/l_total.png" alt>
                 </div>
@@ -40,11 +45,20 @@
                   <img src="../../../static/images/l_jrkq.png" alt>
                 </div>
                 <div>
-                  <p>今日出勤人数</p>
+                  <p>今日工人出勤人数</p>
                   <span
                     v-for="(item,index) in attendanceData.EmpRenShuData"
                     :key="index"
                   >{{item.jrkq}}</span>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <img src="../../../static/images/l_gl.png" alt>
+                </div>
+                <div>
+                  <p>今日管理出勤人数</p>
+                  <span>5</span>
                 </div>
               </li>
             </ul>
@@ -127,7 +141,9 @@
               <div class="white-box"></div>
               <div>总人数</div>
               <div class="blue-box"></div>
-              <div style="margin-right:.1rem">出勤</div>
+              <div style="margin-right:.1rem">工人出勤</div>
+              <div class="brilliant-box"></div>
+              <div style="margin-right:.1rem">管理人员出勤</div>
             </div>
           </div>
           <div id="attendance" style="width:8.65rem; height:3rem;"></div>
@@ -162,8 +178,8 @@
                   <span>{{item.zc}}</span>
                 </div>
               </li>
-              <ul id="rightBottom2"></ul>
             </ul>
+            <ul id="rightBottom2"></ul>
           </div>
           <div class="location">进退场</div>
         </div>
@@ -188,17 +204,17 @@
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">共培训:</span>
+              <span class="span-margin">共签订:</span>
               <span>{{item.jc}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">未培训:</span>
+              <span class="span-margin">未签订:</span>
               <span>{{item.wq}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">是否合规:</span>
+              <span class="span-margin">是否合格:</span>
               <span class="font-red">{{item.hg}}</span>
             </li>
           </ul>
@@ -243,17 +259,17 @@
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">共培训:</span>
+              <span class="span-margin">共签订:</span>
               <span>{{item.ht}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">未培训:</span>
+              <span class="span-margin">未签订:</span>
               <span>{{item.wq}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">是否合规:</span>
+              <span class="span-margin">是否合格:</span>
               <span class="font-red">{{item.hg}}</span>
             </li>
           </ul>
@@ -307,7 +323,7 @@
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">是否合规:</span>
+              <span class="span-margin">是否合格:</span>
               <span class="font-red">{{item.hg}}</span>
             </li>
           </ul>
@@ -355,17 +371,17 @@
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">共培训:</span>
+              <span class="span-margin">已完善:</span>
               <span>{{item.pc}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">未培训:</span>
+              <span class="span-margin">未完善:</span>
               <span>{{item.wq}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">是否合规:</span>
+              <span class="span-margin">是否合格:</span>
               <span class="font-red">{{item.hg}}</span>
             </li>
           </ul>
@@ -408,6 +424,8 @@ export default {
       contractData: "", //合同签订数据
       staffData: "", //班组与人员数据
       xmid:'',
+      dh: 0,
+      timeId: null,
     };
   },
   created() {
@@ -546,13 +564,21 @@ export default {
             data: aMTotal
           },
           {
-            name: "出勤人数",
+            name: "工人出勤人数",
             type: "line",
             symbolSize: 4,
             smooth: 0.2,
             color: ["#63a6d4"],
             // data: [300, 200, 100, 500, 300, 300, 400, 300, 100, 300, 500]
             data: aMZc
+          },
+          {
+            name: "管理人员出勤人数",
+            type: "line",
+            symbolSize: 4,
+            smooth: 0.2,
+            color: ["#33577c"],
+            data: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
           }
         ]
       });
@@ -695,6 +721,14 @@ export default {
             setTimeout(() => {
               this.setLength();
             }, 300);
+            this.timeId = setInterval(() => {
+              if (this.dh == 33) {
+                clearInterval(this.timeId);
+              } else {
+                this.dh++;
+                $(".la-subjindu").css("width", this.dh + "%");
+              }
+            }, 30);
           }
         });
     },
@@ -856,11 +890,37 @@ span {
   background-size: contain;
 }
 #labour .top .left .left-top {
-  height: 3.61rem;
+  height: 3.82rem;
   width: 100%;
 }
+#labour .top .left .left-top .name {
+  position: relative;
+}
+#labour .top .left .left-top .la-jindu {
+    position: absolute;
+    /*background-color: #fff; */
+    width: 2.16rem;
+    height: 0.24rem;
+    left: 1.8rem;
+    top: .01rem;
+}
+#labour .top .left .left-top .la-subjindu {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 0.24rem;
+      width: 0%;
+      background: linear-gradient(to right, #0163ff, #00adfe);
+      transform: skew(13deg);
+}
+#labour .top .left .left-top .la-subjindu p {
+      margin-left: 105%;
+      color: #ffffff;
+      font-size: 0.12rem;
+      transform: skew(-13deg);
+}
 #labour .top .left-bottom {
-  height: 3.6rem;
+  height: 3.39rem;
   width: 100%;
 }
 #labour .top .main {
@@ -913,7 +973,7 @@ span {
   margin-left: 0.18rem;
 }
 #labour .left-top-data li {
-  margin-top: 0.35rem;
+  margin-top: 0.2rem;
   height: 0.63rem;
 }
 #labour .left-top-data li div:nth-child(2) {
@@ -942,7 +1002,7 @@ span {
   margin-right: 0.05rem;
 }
 #labour .left-bottom-data {
-  height: 1.36rem;
+  height: 1.1rem;
   overflow: hidden;
 }
 .color1 {
@@ -1085,6 +1145,14 @@ span {
   width: 0.2rem;
   height: 0.03rem;
   background-color: #349be6;
+  margin-top: 0.225rem;
+  margin-left: 0.18rem;
+  margin-right: 0.05rem;
+}
+.brilliant-box {
+  width: 0.2rem;
+  height: 0.03rem;
+  background-color: #33577c;
   margin-top: 0.225rem;
   margin-left: 0.18rem;
   margin-right: 0.05rem;

@@ -56,12 +56,15 @@
                 <div class="frames">
                     <ul>
                         <li>
+                            <div class="temp1"></div>
                             <span>画面2</span>
                         </li>
                         <li>
+                            <div class="temp2"></div>
                             <span>画面3</span>
                         </li>
                         <li>
+                            <div class="temp3"></div>
                             <span>画面4</span>
                         </li>
                         <li>
@@ -349,5 +352,29 @@ export default {
          background-image: url('../../../static/images/m_set.png');
         background-size: contain;
         margin-right: .3rem;
+    }
+    .temp1 {
+        width: 3.1rem;
+        height: 3.09rem;
+        margin-left: .02rem;
+        margin-top: .02rem;
+        background-image: url('../../../static/images/temp1.jpg');
+        background-size: cover;
+    }
+    .temp2 {
+        width: 3.1rem;
+        height: 3.09rem;
+        margin-left: .02rem;
+        margin-top: .02rem;
+        background-image: url('../../../static/images/temp2.jpg');
+        background-size: cover;
+    }
+    .temp3 {
+        width: 3.1rem;
+        height: 3.09rem;
+        margin-left: .02rem;
+        margin-top: .02rem;
+        background-image: url('../../../static/images/temp3.jpg');
+        background-size: cover;
     }
 </style>

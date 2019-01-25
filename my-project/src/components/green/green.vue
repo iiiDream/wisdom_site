@@ -1318,7 +1318,7 @@ export default {
               background-color: #24e974;
               border-radius: 0.2rem;
               text-align: center;
-              line-height: 0.32rem;
+              line-height: 0.3rem;
               font-size: 0.18rem;
               font-weight: 600;
             }
