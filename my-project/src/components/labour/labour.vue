@@ -58,7 +58,10 @@
                 </div>
                 <div>
                   <p>今日管理出勤人数</p>
-                  <span>5</span>
+                  <span
+                  v-for="(item,index) in attendanceData.EmpRenShuData"
+                    :key="index"
+                    >{{item.glykq}}</span>
                 </div>
               </li>
             </ul>
@@ -479,7 +482,7 @@ export default {
       // }
     },
     // 项目出勤统计模块：ECharts图渲染
-    attendance(aMTotal, aMZc, aMDay) {
+    attendance(aMTotal, aMZc, aMDay, aMZcGly) {
       let attendance = this.$echarts.init(
         document.getElementById("attendance")
       );
@@ -577,7 +580,8 @@ export default {
             symbolSize: 4,
             smooth: 0.2,
             color: ["#33577c"],
-            data: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+            // data: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+            data: aMZcGly
           }
         ]
       });
@@ -686,6 +690,7 @@ export default {
             let aMTotal = [];
             let aMZc = [];
             let aMDay = [];
+            let aMZcGly = [];
             let lMZc = [];
             let lMDay = [];
             // 将对象遍历成数组 ECharts的data只支持数组类型的数据
@@ -699,6 +704,7 @@ export default {
               aMTotal.push(this.attendanceData.KqData[i2].total);
               aMZc.push(this.attendanceData.KqData[i2].zc);
               aMDay.push(this.attendanceData.KqData[i2].day);
+              aMZcGly.push(this.attendanceData.KqData[i2].zcgly);
             }
             for (let i3 = 0; i3 < this.attendanceData.KqTodayData.length; i3++) {
               lMZc.push(this.attendanceData.KqTodayData[i3].zc);
@@ -707,7 +713,7 @@ export default {
 
             // 数据成功返回并且转换成数组以后 调用ECharts的渲染函数 将Echarts图渲染到页面中
             this.professionMap(pM);
-            this.attendance(aMTotal, aMZc, aMDay);
+            this.attendance(aMTotal, aMZc, aMDay, aMZcGly);
             this.labourCurve(lMZc, lMDay);
             // 数据条数大于一定值时 才调用初始化滚动函数
             if (this.attendanceData.EmpPostData.length >= 4) {
@@ -721,7 +727,7 @@ export default {
               this.setLength();
             }, 300);
             this.timeId = setInterval(() => {
-              if (this.dh == 33) {
+              if (this.dh == this.attendanceData.EmpRenShuData[0].bfb) {
                 clearInterval(this.timeId);
               } else {
                 this.dh++;
