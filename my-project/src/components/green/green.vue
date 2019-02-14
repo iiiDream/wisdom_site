@@ -10,13 +10,13 @@
           <div class="one">
             <span>{{date}}</span>
             <span>{{zhouji}}</span>
-              <img v-if="weatherInfo1.includes('云')" src="../../../static/images/g_duoyun.png">
-              <img v-else-if="weatherInfo1.includes('晴')" src="../../../static/images/g_qing.png">
-              <img v-else-if="weatherInfo1.includes('雪')" src="../../../static/images/g_xue.png">
-              <img v-else-if="weatherInfo1.includes('雨')" src="../../../static/images/g_dayv.png">
-              <img v-else-if="weatherInfo1.includes('阴')" src="../../../static/images/g_yin.png">
-              <img v-else-if="weatherInfo1.includes('雷')" src="../../../static/images/g_lei.png">
-              <img v-else src="../../../static/images/g_wan.png">
+            <img v-if="weatherInfo1.includes('云')" src="../../../static/images/g_duoyun.png">
+            <img v-else-if="weatherInfo1.includes('晴')" src="../../../static/images/g_qing.png">
+            <img v-else-if="weatherInfo1.includes('雪')" src="../../../static/images/g_xue.png">
+            <img v-else-if="weatherInfo1.includes('雨')" src="../../../static/images/g_dayv.png">
+            <img v-else-if="weatherInfo1.includes('阴')" src="../../../static/images/g_yin.png">
+            <img v-else-if="weatherInfo1.includes('雷')" src="../../../static/images/g_lei.png">
+            <img v-else src="../../../static/images/g_wan.png">
             <div class="name">{{weatherInfo1}}</div>
             <div class="wendu">{{weatherInfo3}}</div>
             <div class="fengx">{{weatherInfo2}}</div>
@@ -43,10 +43,20 @@
           <h3>扬尘监测分析</h3>
           <div class="top">
             <div class="left">
-              <img v-if="manyInfo.pm25IsA==0" src="../../../static/images/g_lv.png" style="width:1.31rem;height:1.2rem">
-              <img v-else src="../../../static/images/g_hong.png" style="width:1.31rem;height:1.2rem">
+              <img
+                v-if="manyInfo.pm25IsA==0"
+                src="../../../static/images/g_lv.png"
+                style="width:1.31rem;height:1.2rem"
+              >
+              <img
+                v-else
+                src="../../../static/images/g_hong.png"
+                style="width:1.31rem;height:1.2rem"
+              >
               <div>
-                <span class="num">{{manyInfo.pm25}}</span>ug/m3
+                <p class="num" style="font-weight:bolder">{{manyInfo.pm25}}</p>
+                <!-- <p class="num" style="font-weight:bolder">45</p> -->
+                ug/m3
               </div>
             </div>
             <div class="right">
@@ -61,10 +71,20 @@
           </div>
           <div class="down">
             <div class="left">
-              <img v-if="manyInfo.pm10IsA==0" src="../../../static/images/g_lv.png" style="width:1.31rem;height:1.2rem">
-              <img v-else src="../../../static/images/g_hong.png" style="width:1.31rem;height:1.2rem">
+              <img
+                v-if="manyInfo.pm10IsA==0"
+                src="../../../static/images/g_lv.png"
+                style="width:1.31rem;height:1.2rem"
+              >
+              <img
+                v-else
+                src="../../../static/images/g_hong.png"
+                style="width:1.31rem;height:1.2rem"
+              >
               <div>
-                <span class="num">{{manyInfo.pm10}}</span>ug/m3
+                <p class="num" style="font-weight:bolder">{{manyInfo.pm10}}</p>
+                <!-- <p class="num" style="font-weight:bolder">45</p> -->
+                ug/m3
               </div>
             </div>
             <div class="right">
@@ -103,19 +123,49 @@
       <div class="main">
         <h1>实时环境检测</h1>
         <div class="bgc">
-          <img v-if="manyInfo.pm25<50" src="../../../static/images/g_lvse.png" class="mainImg" style="width:2.74rem;height:2.74rem">
-          <img v-else-if="manyInfo.pm25<75" src="../../../static/images/g_huang.png" class="mainImg" style="width:2.74rem;height:2.74rem">
-          <img v-else-if="manyInfo.pm25<150" src="../../../static/images/g_qingdu.png" class="mainImg" style="width:2.74rem;height:2.74rem">
-          <img v-else-if="manyInfo.pm25<250" src="../../../static/images/g_zhongdu.png" class="mainImg" style="width:2.74rem;height:2.74rem">
-          <img v-else-if="manyInfo.pm25<300" src="../../../static/images/g_zdu.png" class="mainImg" style="width:2.74rem;height:2.74rem">
-          <img v-else src="../../../static/images/g_yanzhong.png" class="mainImg" style="width:2.74rem;height:2.74rem">
+          <img
+            v-if="manyInfo.pm25<50"
+            src="../../../static/images/g_lvse.png"
+            class="mainImg"
+            style="width:2.74rem;height:2.74rem"
+          >
+          <img
+            v-else-if="manyInfo.pm25<75"
+            src="../../../static/images/g_huang.png"
+            class="mainImg"
+            style="width:2.74rem;height:2.74rem"
+          >
+          <img
+            v-else-if="manyInfo.pm25<150"
+            src="../../../static/images/g_qingdu.png"
+            class="mainImg"
+            style="width:2.74rem;height:2.74rem"
+          >
+          <img
+            v-else-if="manyInfo.pm25<250"
+            src="../../../static/images/g_zhongdu.png"
+            class="mainImg"
+            style="width:2.74rem;height:2.74rem"
+          >
+          <img
+            v-else-if="manyInfo.pm25<300"
+            src="../../../static/images/g_zdu.png"
+            class="mainImg"
+            style="width:2.74rem;height:2.74rem"
+          >
+          <img
+            v-else
+            src="../../../static/images/g_yanzhong.png"
+            class="mainImg"
+            style="width:2.74rem;height:2.74rem"
+          >
         </div>
         <div class="mianInfo">
           <div class="global">
             <div class="title">PM2.5</div>
             <div class="num">{{manyInfo.pm25}}</div>
             <div class="yuan">
-              <div v-if="manyInfo.pm25<50" class="bor" style="background-color: #21ff6a;">优</div>
+              <div v-if="manyInfo.pm25<50" class="bor" style="background-color: #24e974;">优</div>
               <div v-else-if="manyInfo.pm25<75" class="bor" style="background-color: #feb113;">良</div>
               <div v-else-if="manyInfo.pm25<150" class="bor" style="background-color: #f06743;">轻度污染</div>
               <div v-else-if="manyInfo.pm25<250" class="bor" style="background-color: #d0021b;">中度污染</div>
@@ -125,36 +175,55 @@
           </div>
         </div>
         <div class="leftInfo">
-            <div class="box">
-              <img src="../../../static/images/g_qiwen.png" style="transform: translateX(.02rem);width:0.25rem;height:0.49rem">
-              <div class="text">
-                <p style="font-weight: bold;">气温</p>
-                <p class="info">{{manyInfo.wd}}℃</p>
-              </div>
+          <div class="box">
+            <img
+              src="../../../static/images/g_qiwen.png"
+              style="transform: translateX(.02rem);width:0.25rem;height:0.49rem"
+            >
+            <div class="text">
+              <p style="font-weight: bold;">气温</p>
+              <p class="info">{{manyInfo.wd}}℃</p>
             </div>
-            <div class="box">
-              <img src="../../../static/images/g_wendu.png" style="width:0.45rem;height:0.48rem">
-              <div class="text">
-                <p style="font-weight: bold;">湿度</p>
-                <p class="info">{{manyInfo.sd}}%</p>
-              </div>
+          </div>
+          <div class="box">
+            <img src="../../../static/images/g_wendu.png" style="width:0.45rem;height:0.48rem">
+            <div class="text">
+              <p style="font-weight: bold;">湿度</p>
+              <p class="info">{{manyInfo.sd}}%</p>
             </div>
-            <div class="box">
-              <img src="../../../static/images/g_fengsu.png" style="width:0.48rem;height:0.48rem">
-              <div class="text" style="transform: translate(.2rem);">
-                <p style="font-weight: bold;">风速</p>
-                <p class="info">22m/s</p>
-              </div>
+          </div>
+          <div class="box">
+            <img src="../../../static/images/g_fengsu.png" style="width:0.48rem;height:0.48rem">
+            <div class="text" style="transform: translate(.2rem);">
+              <p style="font-weight: bold;">风速</p>
+              <p class="info">22m/s</p>
             </div>
+          </div>
         </div>
         <div class="fengche">
           <div class="big">
-            <img src="../../../static/images/g_dafs.png" class="bigshang" style="width:0.98rem;height:1.05rem">
-            <img src="../../../static/images/g_dafx.png" class="bigxia" style="width:0.09rem;height:0.93rem">
+            <img
+              src="../../../static/images/g_dafs.png"
+              class="bigshang"
+              style="width:0.98rem;height:1.05rem"
+            >
+            <img
+              src="../../../static/images/g_dafx.png"
+              class="bigxia"
+              style="width:0.09rem;height:0.93rem"
+            >
           </div>
           <div class="small">
-            <img src="../../../static/images/g_xxfs.png" class="smallshang" style="width:0.66rem;height:.61rem">
-            <img src="../../../static/images/g_xxfx.png" class="smallxia" style="width:0.06rem;height:0.58rem">
+            <img
+              src="../../../static/images/g_xxfs.png"
+              class="smallshang"
+              style="width:0.66rem;height:.61rem"
+            >
+            <img
+              src="../../../static/images/g_xxfx.png"
+              class="smallxia"
+              style="width:0.06rem;height:0.58rem"
+            >
           </div>
         </div>
         <div class="bottonInfo">
@@ -289,36 +358,34 @@ export default {
       time: {},
       date: {},
       zhouji: {},
-      weather:{},
-      weatherInfo1:'',
-      weatherInfo2:'',
-      weatherInfo3:'',
-      ortherWeather:[],
-      manyInfo:{},
-      pm25isA:'',
-      pm10isA:'',
-      zsisA:'',
-      yongdianInfo:{},
-      byys:'',
-      byyd:'',
-      pm25:'',
-      pm10:'',
-      pmyd25:'',
-      pmyd10:''
+      weather: {},
+      weatherInfo1: "",
+      weatherInfo2: "",
+      weatherInfo3: "",
+      ortherWeather: [],
+      manyInfo: {},
+      pm25isA: "",
+      pm10isA: "",
+      zsisA: "",
+      yongdianInfo: {},
+      byys: "",
+      byyd: "",
+      pm25: "",
+      pm10: "",
+      pmyd25: "",
+      pmyd10: "",
+      xmid: ""
     };
   },
   created() {
-    this.getWeather(),
-    this.getdatays(),
-    this.gethourData(),
-    this.getManyInfo()
+    this.getWeather(), this.getdatays(), this.gethourData(), this.getManyInfo();
   },
   mounted() {
-      this.getTime()
+    this.getTime();
   },
   methods: {
     //   噪音图形
-    noisePic(zsH,zsV) {
+    noisePic(zsH, zsV) {
       let mytemperature = this.$echarts.init(
         document.getElementById("noisePic")
       );
@@ -413,7 +480,7 @@ export default {
       }, 60000);
     },
     // 6小时温度图形
-    sixwen(wdH,wdV) {
+    sixwen(wdH, wdV) {
       let mysixwen = this.$echarts.init(document.getElementById("sixwen"));
       mysixwen.setOption({
         grid: {
@@ -485,7 +552,7 @@ export default {
       });
     },
     // 6小时污染度图形
-    sixwu(pmH,pm2,pm10) {
+    sixwu(pmH, pm2, pm10) {
       let mysixwu = this.$echarts.init(document.getElementById("sixwu"));
       mysixwu.setOption({
         // backgroundColor: "#FBFBFB",
@@ -559,7 +626,7 @@ export default {
             type: "line",
             symbolSize: 0,
             symbol: "none",
-            color: ["#21ff6a"],
+            color: ["#24e974"],
             // data: [19, 9, 16, 24, 40, 15]
             data: pm10
           }
@@ -567,7 +634,7 @@ export default {
       });
     },
     // 七天用电图形
-    sevendian(sevendianH,sevendianV) {
+    sevendian(sevendianH, sevendianV) {
       let mysevendian = this.$echarts.init(
         document.getElementById("sevendian")
       );
@@ -641,7 +708,7 @@ export default {
       });
     },
     // 七天用水图形
-    sevenworter(sevenshuiH,sevenshuiV) {
+    sevenworter(sevenshuiH, sevenshuiV) {
       let mysevenworter = this.$echarts.init(
         document.getElementById("sevenworter")
       );
@@ -715,7 +782,7 @@ export default {
       });
     },
     // 六月用水图形
-    sixworter(sixshuiH,sixshuiV) {
+    sixworter(sixshuiH, sixshuiV) {
       let mysixworter = this.$echarts.init(
         document.getElementById("sixworter")
       );
@@ -789,126 +856,169 @@ export default {
       });
     },
     // 天气接口
-    getWeather(){
-      this.$axios.get('/APP/XMPage/XmData.ashx?method=XMData&xmid=281').then(res=>{
-        this.weather=res.data.weather[0].results[0];
-        this.weatherInfo1=res.data.weather[0].results[0].weather_data[0].weather;
-        this.weatherInfo2=res.data.weather[0].results[0].weather_data[0].wind;
-        this.weatherInfo3=res.data.weather[0].results[0].weather_data[0].temperature;
-        let orther=res.data.weather[0].results[0].weather_data;
-        // console.log(this.ortherWeather);
-        this.ortherWeather=orther.splice(1);
-        
-      })
+    getWeather() {
+      this.xmid = this.getQueryString("xmid");
+      this.$axios
+        .get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`)
+        .then(res => {
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.weather = res.data.weather[0].results[0];
+            this.weatherInfo1 =
+              res.data.weather[0].results[0].weather_data[0].weather;
+            this.weatherInfo2 =
+              res.data.weather[0].results[0].weather_data[0].wind;
+            this.weatherInfo3 =
+              res.data.weather[0].results[0].weather_data[0].temperature;
+            let orther = res.data.weather[0].results[0].weather_data;
+            // console.log(this.ortherWeather);
+            this.ortherWeather = orther.splice(1);
+          }
+        });
     },
     // 4小时刷新表数据
-    getdatays(){
-      this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetXMDaysRealData&xmid=281').then(res=>{
-        this.byys=res.data.byys;
-        this.byyd=res.data.byyd;
-        
-        let sevendianH= [];
-        let sevendianV = [];
-        let sevenshuiH = [];
-        let sevenshuiV = [];
-        let sixshuiH = [];
-        let sixshuiV = [];
-        for (let i = 0; i < res.data.data_yd.length; i++) {
-          sevendianH.push(res.data.data_yd[i].dayhour);
-          sevendianV.push(res.data.data_yd[i].value);
-        }
-        for (let i = 0; i < res.data.data_ys.length; i++) {
-          sevenshuiH.push(res.data.data_yd[i].dayhour);
-          sevenshuiV.push(res.data.data_yd[i].value);
-        }
-        for (let i = 0; i < res.data.data_yd1.length; i++) {
-          sixshuiH.push(res.data.data_yd1[i].dayhour);
-          sixshuiV.push(res.data.data_yd1[i].value);
-        }
-         this.sevendian(sevendianH,sevendianV);
-         this.sevenworter(sevendianH,sevendianV);
-         this.sixworter(sixshuiH,sixshuiV);
-      })
+    getdatays() {
+      this.xmid = this.getQueryString("xmid");
+      this.$axios
+        .get(
+          `/APP/XMPage/EnvData.ashx?method=GetXMDaysRealData&xmid=${this.xmid}`
+        )
+        .then(res => {
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.byys = res.data.byys;
+            this.byyd = res.data.byyd;
+
+            let sevendianH = [];
+            let sevendianV = [];
+            let sevenshuiH = [];
+            let sevenshuiV = [];
+            let sixshuiH = [];
+            let sixshuiV = [];
+            for (let i = 0; i < res.data.data_yd.length; i++) {
+              sevendianH.push(res.data.data_yd[i].dayhour);
+              sevendianV.push(res.data.data_yd[i].value);
+            }
+            for (let i = 0; i < res.data.data_ys.length; i++) {
+              sevenshuiH.push(res.data.data_yd[i].dayhour);
+              sevenshuiV.push(res.data.data_yd[i].value);
+            }
+            for (let i = 0; i < res.data.data_yd1.length; i++) {
+              sixshuiH.push(res.data.data_yd1[i].dayhour);
+              sixshuiV.push(res.data.data_yd1[i].value);
+            }
+            this.sevendian(sevendianH, sevendianV);
+            this.sevenworter(sevendianH, sevendianV);
+            this.sixworter(sixshuiH, sixshuiV);
+          }
+        });
     },
     // 1小时刷新表数据
-    gethourData(){
-      this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=281').then(res=>{
-        this.pm25=res.data.pm25;
-        this.pm10=res.data.pm10;
-        this.pmyd25=res.data.pmyd25;
-        this.pmyd10=res.data.pmyd10;
-        
-        let pmH=[];
-        let pm2=[];
-        let pm10=[];
-        for (let i = 0; i < res.data.data_pm.length; i++) {
-          pmH.push(res.data.data_pm[i].dayhour);
-          pm2.push(res.data.data_pm[i].pm2);
-          pm10.push(res.data.data_pm[i].pm10);
-        }
-        this.sixwu(pmH,pm2,pm10)
+    gethourData() {
+      this.xmid = this.getQueryString("xmid");
+      this.$axios
+        .get(
+          `/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=${this.xmid}`
+        )
+        .then(res => {
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.pm25 = res.data.pm25;
+            this.pm10 = res.data.pm10;
+            this.pmyd25 = res.data.pmyd25;
+            this.pmyd10 = res.data.pmyd10;
 
-        let wdH=[];
-        let wdV=[];
-        for (let i = 0; i < res.data.data_wd.length; i++) {
-          wdH.push(res.data.data_wd[i].dayhour);
-          wdV.push(res.data.data_wd[i].value);
-        }
-        this.sixwen(wdH,wdV);
+            let pmH = [];
+            let pm2 = [];
+            let pm10 = [];
+            for (let i = 0; i < res.data.data_pm.length; i++) {
+              pmH.push(res.data.data_pm[i].dayhour);
+              pm2.push(res.data.data_pm[i].pm2);
+              pm10.push(res.data.data_pm[i].pm10);
+            }
+            this.sixwu(pmH, pm2, pm10);
 
-        let zsH=[];
-        let zsV=[];
-        for (let i = 0; i < res.data.data_zs.length; i++) {
-          zsH.push(res.data.data_zs[i].dayhour);
-          zsV.push(res.data.data_zs[i].value);
-        }
-        this.noisePic(zsH,zsV)
-      })
+            let wdH = [];
+            let wdV = [];
+            for (let i = 0; i < res.data.data_wd.length; i++) {
+              wdH.push(res.data.data_wd[i].dayhour);
+              wdV.push(res.data.data_wd[i].value);
+            }
+            this.sixwen(wdH, wdV);
+
+            let zsH = [];
+            let zsV = [];
+            for (let i = 0; i < res.data.data_zs.length; i++) {
+              zsH.push(res.data.data_zs[i].dayhour);
+              zsV.push(res.data.data_zs[i].value);
+            }
+            this.noisePic(zsH, zsV);
+          }
+        });
       setInterval(() => {
-        this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=281').then(res=>{
-        this.pm25=res.data.pm25;
-        this.pm10=res.data.pm10;
-        this.pmyd25=res.data.pmyd25;
-        this.pmyd10=res.data.pmyd10;
-        
+        this.$axios
+          .get("/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=281")
+          .then(res => {
+            this.pm25 = res.data.pm25;
+            this.pm10 = res.data.pm10;
+            this.pmyd25 = res.data.pmyd25;
+            this.pmyd10 = res.data.pmyd10;
 
-        let pmH=[];
-        let pm2=[];
-        let pm10=[];
-        for (let i = 0; i < res.data.data_pm.length; i++) {
-          pmH.push(res.data.data_pm[i].dayhour);
-          pm2.push(res.data.data_pm[i].pm2);
-          pm10.push(res.data.data_pm[i].pm10);
-        }
-        this.sixwu(pmH,pm2,pm10)
+            let pmH = [];
+            let pm2 = [];
+            let pm10 = [];
+            for (let i = 0; i < res.data.data_pm.length; i++) {
+              pmH.push(res.data.data_pm[i].dayhour);
+              pm2.push(res.data.data_pm[i].pm2);
+              pm10.push(res.data.data_pm[i].pm10);
+            }
+            this.sixwu(pmH, pm2, pm10);
 
-        let wdH=[];
-        let wdV=[];
-        for (let i = 0; i < res.data.data_wd.length; i++) {
-          wdH.push(res.data.data_wd[i].dayhour);
-          wdV.push(res.data.data_wd[i].value);
-        }
-        this.sixwen(wdH,wdV);
+            let wdH = [];
+            let wdV = [];
+            for (let i = 0; i < res.data.data_wd.length; i++) {
+              wdH.push(res.data.data_wd[i].dayhour);
+              wdV.push(res.data.data_wd[i].value);
+            }
+            this.sixwen(wdH, wdV);
 
-        let zsH=[];
-        let zsV=[];
-        for (let i = 0; i < res.data.data_zs.length; i++) {
-          zsH.push(res.data.data_zs[i].dayhour);
-          zsV.push(res.data.data_zs[i].value);
-        }
-        this.noisePic(zsH,zsV)
-      })
+            let zsH = [];
+            let zsV = [];
+            for (let i = 0; i < res.data.data_zs.length; i++) {
+              zsH.push(res.data.data_zs[i].dayhour);
+              zsV.push(res.data.data_zs[i].value);
+            }
+            this.noisePic(zsH, zsV);
+          });
       }, 360000);
     },
     // 其他数据
-    getManyInfo(){
-      this.$axios.get('/APP/XMPage/EnvData.ashx?method=GetEnvRealData&xmid=281').then(res=>{
-        this.manyInfo=res.data.EnvRealData[0];
-        this.pm25isA=this.manyInfo.pm25IsA;
-        this.pm10isA=this.manyInfo.pm10IsA;
-        this.zsisA=this.manyInfo.zsIsA;
-        this.yongdianInfo=res.data.YDRealData[0];
-      })
+    getManyInfo() {
+      this.xmid = this.getQueryString("xmid");
+      this.$axios
+        .get(`/APP/XMPage/EnvData.ashx?method=GetEnvRealData&xmid=${this.xmid}`)
+        .then(res => {
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.manyInfo = res.data.EnvRealData[0];
+            this.pm25isA = this.manyInfo.pm25IsA;
+            this.pm10isA = this.manyInfo.pm10IsA;
+            this.zsisA = this.manyInfo.zsIsA;
+            this.yongdianInfo = res.data.YDRealData[0];
+          }
+        });
+    },
+    getQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return unescape(r[2]);
+      }
+      return null;
     }
   }
 };
@@ -918,7 +1028,7 @@ export default {
   color: #c23864 !important;
 }
 .noml {
-  color: #21ff6a !important;
+  color: #24e974 !important;
 }
 .huang {
   color: #ffb70e !important;
@@ -949,7 +1059,7 @@ export default {
         justify-content: space-between;
         h1 {
           font-size: 0.3rem;
-          margin-left: .14rem;
+          margin-left: 0.14rem;
         }
         div {
           margin-right: 0.5rem;
@@ -975,7 +1085,7 @@ export default {
             right: -0.2rem;
           }
           span {
-            font-size: .12rem;
+            font-size: 0.12rem;
             margin-left: 0.1rem;
           }
           img {
@@ -983,7 +1093,7 @@ export default {
             width: 0.54rem;
             height: 0.54rem;
             display: block;
-            padding: .05rem;
+            padding: 0.05rem;
           }
           .wendu {
             margin: 0;
@@ -993,7 +1103,7 @@ export default {
             margin-top: -0.05rem;
             margin-left: 0.2rem;
             background-color: #3ee19a;
-            width: .7rem;
+            width: 0.7rem;
             height: 0.2rem;
             border-radius: 0.05rem;
             text-align: center;
@@ -1006,7 +1116,7 @@ export default {
           transform: translateX(0.14rem);
           display: flex;
           margin-left: 0.6rem;
-          font-size: .12rem;
+          font-size: 0.12rem;
           .sub {
             width: 0.7rem;
             margin-left: 0.2rem;
@@ -1015,7 +1125,7 @@ export default {
               width: 0.54rem;
               height: 0.54rem;
               display: block;
-              padding: .05rem;
+              padding: 0.05rem;
             }
             .wendu {
               margin: 0;
@@ -1040,7 +1150,7 @@ export default {
       height: 7.25rem;
       background: url("../../../static/images/g_zuoxia.png") no-repeat center
         center;
-        background-size: 100% 100%;
+      background-size: 100% 100%;
       margin-top: 0.3rem;
       .yangchen {
         .top,
@@ -1058,6 +1168,8 @@ export default {
               top: 52%;
               transform: translateY(-50%);
               color: #cbccce;
+              text-align: center;
+              margin-left: 12px;
               .num {
                 font-size: 0.18rem;
                 color: #fff;
@@ -1139,7 +1251,7 @@ export default {
       height: 9.51rem;
       background: url("../../../static/images/g_zhong.png") no-repeat center
         center;
-        background-size: 100% 100%;
+      background-size: 100% 100%;
       position: relative;
       color: #fff;
       padding: 0.34rem 0.4rem 0.4rem 0.45rem;
@@ -1150,20 +1262,21 @@ export default {
         transform: translateX(-50%);
         font-weight: 900;
       }
-      .bgc{
+      .bgc {
         width: 4rem;
         height: 4rem;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        top: .9rem;
-        background: url('../../../static/images/g_hc.gif') no-repeat center center;
+        top: 0.9rem;
+        background: url("../../../static/images/g_hc.gif") no-repeat center
+          center;
         background-size: 100% 100%;
         .mainImg {
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          top: .66rem;
+          top: 0.66rem;
           // border-radius: 50%;
         }
       }
@@ -1202,74 +1315,74 @@ export default {
             .bor {
               width: 100%;
               height: 100%;
-              background-color: #21ff6a;
+              background-color: #24e974;
               border-radius: 0.2rem;
               text-align: center;
-              line-height: 0.32rem;
+              line-height: 0.3rem;
               font-size: 0.18rem;
               font-weight: 600;
             }
           }
         }
       }
-      .leftInfo{
+      .leftInfo {
         position: absolute;
-        right: .64rem;
+        right: 0.64rem;
         top: 1.4rem;
-        .box{
-          margin-top:.4rem;
+        .box {
+          margin-top: 0.4rem;
           display: flex;
           justify-content: space-between;
           text-align: center;
-          
-          img{
-            transform: translateX(-.1rem);
+
+          img {
+            transform: translateX(-0.1rem);
           }
-          .text{
-            font-size: .22rem;
+          .text {
+            font-size: 0.22rem;
             text-align: left;
-            margin-left: .02rem;
-            .info{
-              transform: translateY(.06rem);
-              font-size: .2rem;
+            margin-left: 0.02rem;
+            .info {
+              transform: translateY(0.06rem);
+              font-size: 0.2rem;
             }
           }
         }
       }
-      .fengche{
+      .fengche {
         position: absolute;
         bottom: 5.5rem;
-        left: .7rem;
-        .big{
-          .bigshang{
+        left: 0.7rem;
+        .big {
+          .bigshang {
             transform: rotate(-88deg);
-            margin-top: .06rem;
+            margin-top: 0.06rem;
           }
-          .bigxia{
+          .bigxia {
             position: absolute;
-            left: .42rem;
-            top: .74rem;
+            left: 0.42rem;
+            top: 0.74rem;
           }
         }
-        .small{
-          .smallshang{
+        .small {
+          .smallshang {
             position: absolute;
-            left: .66rem;
-            top: .68rem;
+            left: 0.66rem;
+            top: 0.68rem;
           }
-          .smallxia{
+          .smallxia {
             position: absolute;
-            left: .94rem;
+            left: 0.94rem;
             top: 1.09rem;
           }
         }
       }
-      .bottonInfo{
+      .bottonInfo {
         position: absolute;
         bottom: 3.8rem;
-        left:50%;
+        left: 50%;
         transform: translateX(-50%);
-        ul{
+        ul {
           display: flex;
           justify-content: space-between;
         }
@@ -1346,7 +1459,7 @@ export default {
                   width: 0.05rem;
                   height: 0.05rem;
                   border-radius: 50%;
-                  background-color: #21ff6a;
+                  background-color: #24e974;
                   right: 1.18rem;
                   top: 0.1rem;
                 }
@@ -1361,7 +1474,7 @@ export default {
         }
         .sixwen,
         .sixwu {
-          transform: translate(-0.45rem, .65rem);
+          transform: translate(-0.45rem, 0.65rem);
         }
       }
     }
@@ -1376,7 +1489,7 @@ export default {
       height: 4.61rem;
       background: url("../../../static/images/g_youshang.png") no-repeat center
         center;
-        background-size: 100% 100%;
+      background-size: 100% 100%;
       .title {
         width: 3.72rem;
         height: 0.46rem;
@@ -1419,17 +1532,17 @@ export default {
         .daydian {
           background: url("../../../static/images/g_ydhuang.png") no-repeat
             center center;
-            background-size: 100% 100%;
+          background-size: 100% 100%;
         }
         .dianxiang {
           background: url("../../../static/images/g_ydhuang.png") no-repeat
             center center;
-            background-size: 100% 100%;
+          background-size: 100% 100%;
         }
         .loudian {
           background: url("../../../static/images/g_ydhuang.png") no-repeat
             center center;
-            background-size: 100% 100%;
+          background-size: 100% 100%;
           .text {
             color: #ffb70e;
           }
@@ -1437,7 +1550,7 @@ export default {
         .loudian1 {
           background: url("../../../static/images/g_ydhong.png") no-repeat
             center center;
-            background-size: 100% 100%;
+          background-size: 100% 100%;
           .text {
             color: #c23864;
           }
@@ -1450,7 +1563,7 @@ export default {
         padding: 0 0.35rem;
         margin-top: 0.1rem;
         p {
-          width: .84rem;
+          width: 0.84rem;
         }
       }
       .biao {
@@ -1494,7 +1607,7 @@ export default {
       height: 4.6rem;
       background: url("../../../static/images/g_youxia.png") no-repeat center
         center;
-        background-size: 100% 100%;
+      background-size: 100% 100%;
       .title {
         width: 3.72rem;
         height: 0.46rem;

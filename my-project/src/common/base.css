@@ -35,7 +35,7 @@
 }
 @media (min-width: 1600px) {
   html {
-    font-size: 83.4px !important;
+    font-size: 83.3px !important;
   }
 }
 @media (min-width: 1680px) {
@@ -48,6 +48,20 @@
     font-size: 100px !important;
   }
 }
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+li,
+div {
+  font-family: 'Microsoft YaHei';
+}
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -58,6 +72,7 @@ html {
 }
 body {
   width: 100%;
+  overflow-x: hidden;
 }
 body,
 form,
@@ -107,6 +122,7 @@ h3 {
   background: url("../../static/images/icon.png") no-repeat 0.12rem center;
   font-size: .18rem;
   color: #ffffff;
+  font-weight: bolder;
 }
 ul,
 li {

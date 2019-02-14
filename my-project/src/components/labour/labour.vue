@@ -8,10 +8,15 @@
         <div class="left-top">
           <div class="name">
             <h3>现场人员</h3>
+            <div class="la-jindu">
+              <div class="la-subjindu">
+                <p>{{dh}}%</p>
+              </div>
+            </div>
           </div>
           <div class="left-top-data">
             <ul>
-              <li style="margin-top:0.19rem">
+              <li style="margin-top:0">
                 <div>
                   <img src="../../../static/images/l_total.png" alt>
                 </div>
@@ -40,11 +45,23 @@
                   <img src="../../../static/images/l_jrkq.png" alt>
                 </div>
                 <div>
-                  <p>今日出勤人数</p>
+                  <p>今日工人出勤人数</p>
                   <span
                     v-for="(item,index) in attendanceData.EmpRenShuData"
                     :key="index"
                   >{{item.jrkq}}</span>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <img src="../../../static/images/l_gl.png" alt>
+                </div>
+                <div>
+                  <p>今日管理出勤人数</p>
+                  <span
+                  v-for="(item,index) in attendanceData.EmpRenShuData"
+                    :key="index"
+                    >{{item.glykq}}</span>
                 </div>
               </li>
             </ul>
@@ -127,7 +144,9 @@
               <div class="white-box"></div>
               <div>总人数</div>
               <div class="blue-box"></div>
-              <div style="margin-right:.1rem">出勤</div>
+              <div style="margin-right:.1rem">工人出勤</div>
+              <div class="brilliant-box"></div>
+              <div style="margin-right:.1rem">管理人员出勤</div>
             </div>
           </div>
           <div id="attendance" style="width:8.65rem; height:3rem;"></div>
@@ -162,8 +181,8 @@
                   <span>{{item.zc}}</span>
                 </div>
               </li>
-              <ul id="rightBottom2"></ul>
             </ul>
+            <ul id="rightBottom2"></ul>
           </div>
           <div class="location">进退场</div>
         </div>
@@ -188,17 +207,17 @@
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">共培训:</span>
+              <span class="span-margin">共签订:</span>
               <span>{{item.jc}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">未培训:</span>
+              <span class="span-margin">未签订:</span>
               <span>{{item.wq}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">是否合规:</span>
+              <span class="span-margin">是否合格:</span>
               <span class="font-red">{{item.hg}}</span>
             </li>
           </ul>
@@ -243,17 +262,17 @@
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">共培训:</span>
+              <span class="span-margin">共签订:</span>
               <span>{{item.ht}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">未培训:</span>
+              <span class="span-margin">未签订:</span>
               <span>{{item.wq}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">是否合规:</span>
+              <span class="span-margin">是否合格:</span>
               <span class="font-red">{{item.hg}}</span>
             </li>
           </ul>
@@ -307,7 +326,7 @@
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">是否合规:</span>
+              <span class="span-margin">是否合格:</span>
               <span class="font-red">{{item.hg}}</span>
             </li>
           </ul>
@@ -355,17 +374,17 @@
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">共培训:</span>
+              <span class="span-margin">已完善:</span>
               <span>{{item.pc}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">未培训:</span>
+              <span class="span-margin">未完善:</span>
               <span>{{item.wq}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">是否合规:</span>
+              <span class="span-margin">是否合格:</span>
               <span class="font-red">{{item.hg}}</span>
             </li>
           </ul>
@@ -401,36 +420,34 @@
 </template>
 
 <script>
-// import "../../common/jquery-rotate/jqueryRotate.js"
 export default {
   data() {
     return {
-      attendanceData: "",
-      contractData: "",
-      staffData: ""
+      attendanceData: "", //出勤数据
+      contractData: "", //合同签订数据
+      staffData: "", //班组与人员数据
+      xmid:'',
+      dh: 0,
+      timeId: null,
     };
   },
-  mounted() {
-    // this.professionMap(),
-    // this.attendance(),
-    // this.labourCurve()
-  },
   created() {
+    //发送请求
     this.getAttendanceData();
     this.getContractData();
     this.getStaffData();
   },
   methods: {
+    // 现场工种模块：ECharts图渲染
     professionMap(pM) {
       let professionMap = this.$echarts.init(
         document.getElementById("professionMap")
       );
-      // console.log(professionMap)
       professionMap.setOption({
-        color: ["#349be6", "#fb497c", "#21ff6a", "#f38051","#7377f4","#ffa32d"],
+        color: ["#349be6", "#fb497c", "#24e974", "#f38051","#7377f4","#ffa32d"],
         series: [
           {
-            name: "访问来源",
+            name: "现场工种",
             type: "pie",
             radius: "80%",
             // data: [
@@ -464,7 +481,8 @@ export default {
       //   labourCurve.resize();
       // }
     },
-    attendance(aMTotal, aMZc, aMDay) {
+    // 项目出勤统计模块：ECharts图渲染
+    attendance(aMTotal, aMZc, aMDay, aMZcGly) {
       let attendance = this.$echarts.init(
         document.getElementById("attendance")
       );
@@ -545,21 +563,30 @@ export default {
             smooth: 0.2,
             color: ["#fff"],
             // data: [600, 500, 500, 500, 400, 500, 500, 400, 400, 500, 500]
-            // [300, 200, 100, 500, 400, 300, 400, 300, 100, 300, 500]
             data: aMTotal
           },
           {
-            name: "出勤人数",
+            name: "工人出勤人数",
             type: "line",
             symbolSize: 4,
             smooth: 0.2,
             color: ["#63a6d4"],
             // data: [300, 200, 100, 500, 300, 300, 400, 300, 100, 300, 500]
             data: aMZc
+          },
+          {
+            name: "管理人员出勤人数",
+            type: "line",
+            symbolSize: 4,
+            smooth: 0.2,
+            color: ["#33577c"],
+            // data: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+            data: aMZcGly
           }
         ]
       });
     },
+    // 今日劳动曲线模块： ECharts图渲染
     labourCurve(lMZc, lMDay) {
       let labourCurve = this.$echarts.init(
         document.getElementById("labourCurve")
@@ -648,204 +675,110 @@ export default {
         ]
       });
     },
+    // 获取出勤数据
     getAttendanceData() {
+      this.xmid = this.getQueryString('xmid')
       this.$axios
-        .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpData&xmid=281")
+        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpData&xmid=${this.xmid}`)
         .then(res => {
-          // console.log(res.data)
-          this.attendanceData = res.data;
-          // console.log(this.attendanceData)
-          let pM = [];
-          let aM = [];
-          let aMTotal = [];
-          let aMZc = [];
-          let aMDay = [];
-          let lMZc = [];
-          let lMDay = [];
-          for (let i1 = 0; i1 < this.attendanceData.EmpPostData.length; i1++) {
-            // console.log(this.attendanceData.EmpPostData[i1])
-            pM.push({
-              value: this.attendanceData.EmpPostData[i1].zc,
-              name: this.attendanceData.EmpPostData[i1].name
-            });
-          }
-          for (let i2 = 0; i2 < this.attendanceData.KqData.length; i2++) {
-            aMTotal.push(this.attendanceData.KqData[i2].total);
-            aMZc.push(this.attendanceData.KqData[i2].zc);
-            aMDay.push(this.attendanceData.KqData[i2].day);
-          }
-          for (let i3 = 0; i3 < this.attendanceData.KqTodayData.length; i3++) {
-            lMZc.push(this.attendanceData.KqTodayData[i3].zc);
-            lMDay.push(this.attendanceData.KqTodayData[i3].day);
-          }
-          // console.log(aMZc)
-          // console.log(this.attendanceData)
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.attendanceData = res.data;
+            let pM = [];
+            let aM = [];
+            let aMTotal = [];
+            let aMZc = [];
+            let aMDay = [];
+            let aMZcGly = [];
+            let lMZc = [];
+            let lMDay = [];
+            // 将对象遍历成数组 ECharts的data只支持数组类型的数据
+            for (let i1 = 0; i1 < this.attendanceData.EmpPostData.length; i1++) {
+              pM.push({
+                value: this.attendanceData.EmpPostData[i1].zc,
+                name: this.attendanceData.EmpPostData[i1].name
+              });
+            }
+            for (let i2 = 0; i2 < this.attendanceData.KqData.length; i2++) {
+              aMTotal.push(this.attendanceData.KqData[i2].total);
+              aMZc.push(this.attendanceData.KqData[i2].zc);
+              aMDay.push(this.attendanceData.KqData[i2].day);
+              aMZcGly.push(this.attendanceData.KqData[i2].zcgly);
+            }
+            for (let i3 = 0; i3 < this.attendanceData.KqTodayData.length; i3++) {
+              lMZc.push(this.attendanceData.KqTodayData[i3].zc);
+              lMDay.push(this.attendanceData.KqTodayData[i3].day);
+            }
 
-          this.professionMap(pM);
-          this.attendance(aMTotal, aMZc, aMDay);
-          this.labourCurve(lMZc, lMDay);
-          if (this.attendanceData.EmpPostData.length >= 4) {
-            this.leftBottomScroll();
+            // 数据成功返回并且转换成数组以后 调用ECharts的渲染函数 将Echarts图渲染到页面中
+            this.professionMap(pM);
+            this.attendance(aMTotal, aMZc, aMDay, aMZcGly);
+            this.labourCurve(lMZc, lMDay);
+            // 数据条数大于一定值时 才调用初始化滚动函数
+            if (this.attendanceData.EmpPostData.length >= 4) {
+              this.scrollStart('leftBottom','leftBottom1','leftBottom2');
+            }
+            if (this.attendanceData.KqData.length >= 3) {
+              this.scrollStart('rightBottom','rightBottom1','rightBottom2');
+            }
+            // 数据渲染完成时 再调用柱状进度条渲染函数
+            setTimeout(() => {
+              this.setLength();
+            }, 300);
+            this.timeId = setInterval(() => {
+              if (this.dh == this.attendanceData.EmpRenShuData[0].bfb) {
+                clearInterval(this.timeId);
+              } else {
+                this.dh++;
+                $(".la-subjindu").css("width", this.dh + "%");
+              }
+            }, 30);
           }
-          if (this.attendanceData.KqData.length >= 3) {
-            this.rightBottomScroll();
-          }
-          setTimeout(() => {
-            this.setLength();
-          }, 500);
         });
     },
+    // 获取合同签订数据
     getContractData() {
+      this.xmid = this.getQueryString('xmid')
       this.$axios
-        .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpDetail&xmid=281")
+        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpDetail&xmid=${this.xmid}`)
         .then(res => {
-          // console.log(res.data)
-          this.contractData = res.data;
-          // console.log(typeof this.contractData.KqJinChanData)
-          // console.log(this.contractData)
-          setTimeout(() => {
-            this.setRoate(1);
-            this.setRoate(2);
-            this.setRoate(3);
-            this.setRoate(4);
-            // this.boxRotate()
-          }, 500);
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.contractData = res.data;
+            // 数据渲染完成时 再调用圆形进度条渲染函数
+            setTimeout(() => {
+              this.setRoate(1);
+              this.setRoate(2);
+              this.setRoate(3);
+              this.setRoate(4);
+            }, 300);
+          }
         });
     },
+    // 获取班组与人员数据
     getStaffData() {
+      this.xmid = this.getQueryString('xmid')
       this.$axios
-        .get("/APP/XMPage/EmpData.ashx?method=GetXMEmpRealData&xmid=281")
+        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpRealData&xmid=${this.xmid}`)
         .then(res => {
-          // console.log(res.data)
-          this.staffData = res.data;
-          if (this.staffData.EmpJLData.length >= 6) {
-            this.staffScroll();
-            this.squadScroll();
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.staffData = res.data;
+            // 数据条数大于一定值时 才调用滚动初始化
+            if (this.staffData.EmpJLData.length >= 6) {
+              this.scrollStart('squad','squad1','squad2');
+            }
+            if (this.staffData.BZRealData.length >= 6) {
+              this.scrollStart('staff','staff1','staff2')
+            }
           }
         });
     },
-    leftBottomScroll() {
-      setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("leftBottom2");
-        var colee1 = document.getElementById("leftBottom1");
-        var colee = document.getElementById("leftBottom");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            if (colee.scrollTop == 204) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
-      }, 1000);
-    },
-    staffScroll() {
-      setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("staff2");
-        var colee1 = document.getElementById("staff1");
-        var colee = document.getElementById("staff");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            if (colee.scrollTop == 17160) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
-      }, 1000);
-    },
-    rightBottomScroll() {
-      setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("rightBottom2");
-        var colee1 = document.getElementById("rightBottom1");
-        var colee = document.getElementById("rightBottom");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            if (colee.scrollTop == 1080) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
-      }, 1000);
-    },
-    squadScroll() {
-      setTimeout(() => {
-        var speed = 45;
-        var colee2 = document.getElementById("squad2");
-        var colee1 = document.getElementById("squad1");
-        var colee = document.getElementById("squad");
-        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1() {
-          //当滚动至colee1与colee2交界时
-          if (colee2.offsetTop - colee.scrollTop <= 0) {
-            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-          } else {
-            colee.scrollTop++;
-            // console.log(colee.scrollTop)
-            if (colee.scrollTop == 1848) {
-              colee.scrollTop = 0;
-            }
-          }
-        }
-        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover = function() {
-          clearInterval(MyMar1);
-        };
-        //鼠标移开时重设定时器
-        colee.onmouseout = function() {
-          MyMar1 = setInterval(Marquee1, speed);
-        };
-      }, 1000);
-    },
+    // 根据百分比设置圆形进度条长度
     setRoate(num) {
-      // console.log($('#roateBfb4').text())
       let bfb = $(`#roateBfb${num}`).text();
       let Ldeg = -135;
       let Rdeg = -135;
@@ -856,8 +789,6 @@ export default {
           Ldeg += 3.6;
         }
       }
-      // console.log(Rdeg)
-      // console.log(Ldeg)
       $(`#roateBox${num} .leftcircle-red`).css(
         "transform",
         `rotate(${Ldeg}deg)`
@@ -867,8 +798,8 @@ export default {
         `rotate(${Rdeg}deg)`
       );
     },
+    // 根据百分比设置柱状进度条长度
     setLength() {
-      // console.log($('.reality .progress'))
       let temp = $(".reality .progress");
       temp.each(function() {
         let bfb = $(this).data("bfb");
@@ -879,27 +810,49 @@ export default {
         $(this).css("width", `${width}rem`);
       });
     },
-    boxRotate() {
-      var angle = 0;
-      setInterval(function() {
-        angle += 3;
-        $(".disqualification").rotate(angle);
-      }, 50);
-    }
+    // 滚动启动函数
+    scrollStart(id,id1,id2) {
+      setTimeout(() => {
+        var speed = 45;
+        var colee2 = document.getElementById(id2);
+        var colee1 = document.getElementById(id1);
+        var colee = document.getElementById(id);
+        colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
+        function Marquee1() {
+          //当滚动至colee1与colee2交界时
+          if (colee2.offsetTop - colee.scrollTop <= 0) {
+            colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
+          } else {
+            colee.scrollTop++;
+            if (colee.scrollTop == colee1.offsetHeight) {
+              colee.scrollTop = 0;
+            }
+          }
+        }
+        var MyMar1 = setInterval(Marquee1, speed); //设置定时器
+        //鼠标移上时清除定时器达到滚动停止的目的
+        colee.onmouseover = function() {
+          clearInterval(MyMar1);
+        };
+        //鼠标移开时重设定时器
+        colee.onmouseout = function() {
+          MyMar1 = setInterval(Marquee1, speed);
+        };
+      }, 1000);
+    },
+    getQueryString(name) {
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return unescape(r[2]);
+      }
+      return null;
+    },
   }
 };
 </script>
 
 <style scoped>
-/* html {
-     box-sizing: border-box;
-     height: 10.8rem;
-}
- body {
-     box-sizing: border-box;
-     height: 10.8rem;
-}
- */
 .table-box {
   width: 100%;
   height: 2.64rem;
@@ -919,8 +872,6 @@ span {
   margin-top: 0.51rem;
   height: 7.27rem;
   width: 100%;
-  /* background-color: #f0f;
-     */
 }
 #labour .bottom {
   box-sizing: border-box;
@@ -928,8 +879,6 @@ span {
   margin-bottom: 0.3rem;
   height: 1.94rem;
   width: 100%;
-  /* background-color: #f0f;
-     */
 }
 #labour .top > div {
   float: left;
@@ -946,21 +895,38 @@ span {
   background-size: contain;
 }
 #labour .top .left .left-top {
-  height: 3.61rem;
+  height: 3.82rem;
   width: 100%;
-  /* border: 0.02rem solid #0f1f53;
-     */
-  /* background-color: #020521;
-     */
+}
+#labour .top .left .left-top .name {
+  position: relative;
+}
+#labour .top .left .left-top .la-jindu {
+    position: absolute;
+    /*background-color: #fff; */
+    width: 2.16rem;
+    height: 0.24rem;
+    left: 1.8rem;
+    top: .01rem;
+}
+#labour .top .left .left-top .la-subjindu {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 0.24rem;
+      width: 0%;
+      background: linear-gradient(to right, #0163ff, #00adfe);
+      transform: skew(13deg);
+}
+#labour .top .left .left-top .la-subjindu p {
+      margin-left: 105%;
+      color: #ffffff;
+      font-size: 0.12rem;
+      transform: skew(-13deg);
 }
 #labour .top .left-bottom {
-  height: 3.6rem;
+  height: 3.39rem;
   width: 100%;
-  /* border-left: 0.02rem solid #0f1f53;
-     border-right: 0.02rem solid #0f1f53;
-     border-bottom: 0.02rem solid #0f1f53;
-     background-color: #020521;
-     */
 }
 #labour .top .main {
   height: 100%;
@@ -972,8 +938,6 @@ span {
 #labour .top .right {
   height: 100%;
   width: 4.14rem;
-  /* background-color: red;
-     */
 }
 #labour .top .right .right-top {
   height: 2.45rem;
@@ -1004,29 +968,6 @@ span {
   background-image: url("../../../static/images/l_6.png");
   background-size: contain;
 }
-/* #labour h3 {
-     line-height: 0.37rem;
-     height: 0.37rem;
-}
- */
-/* #labour .name {
-     height: 0.37rem;
-     width: 100%;
-     margin-left: 0.1rem;
-     padding-top: 0.17rem;
-}
- #labour .name img {
-     float: left;
-     margin-top: 2.0.05rem;
-}
- #labour .name p {
-     float: left;
-     line-height: 0.2rem;
-     font-size: 0.2rem;
-     font-weight: bolder;
-     color: #fff;
-}
- */
 #labour .left-top-data div {
   float: left;
 }
@@ -1037,7 +978,7 @@ span {
   margin-left: 0.18rem;
 }
 #labour .left-top-data li {
-  margin-top: 0.35rem;
+  margin-top: 0.2rem;
   height: 0.63rem;
 }
 #labour .left-top-data li div:nth-child(2) {
@@ -1066,7 +1007,7 @@ span {
   margin-right: 0.05rem;
 }
 #labour .left-bottom-data {
-  height: 1.36rem;
+  height: 1.1rem;
   overflow: hidden;
 }
 .color1 {
@@ -1076,7 +1017,7 @@ span {
   background-color: #fb497c;
 }
 .color3 {
-  background-color: #21ff6a;
+  background-color: #24e974;
 }
 .color4 {
   background-color: #f38051;
@@ -1092,7 +1033,7 @@ span {
   color: #fb497c;
 }
 .font-green {
-  color: #21ff6a;
+  color: #24e974;
 }
 .font-red {
   color: #fb497c;
@@ -1149,7 +1090,7 @@ span {
   width: 0rem;
   height: 0.15rem;
   border-radius: 0.15rem;
-  background-color: #21ff6a;
+  background-color: #24e974;
   margin-left: 0.12rem;
   margin-right: 0.06rem;
 }
@@ -1174,13 +1115,10 @@ span {
 #labour .right-top .map {
   width: 100%;
   height: 100%;
-  /* background: #349be6;
-     */
 }
 #labour .main .main-top {
   width: 8.65rem;
   height: 3.51rem;
-  /* border: 0.02rem solid #0f1f53; */
   background-color: #020521;
   background-image: url("../../../static/images/l_m.png");
   background-size: 8.61rem 3.47rem;
@@ -1212,6 +1150,14 @@ span {
   width: 0.2rem;
   height: 0.03rem;
   background-color: #349be6;
+  margin-top: 0.225rem;
+  margin-left: 0.18rem;
+  margin-right: 0.05rem;
+}
+.brilliant-box {
+  width: 0.2rem;
+  height: 0.03rem;
+  background-color: #33577c;
   margin-top: 0.225rem;
   margin-left: 0.18rem;
   margin-right: 0.05rem;
@@ -1250,7 +1196,6 @@ span {
 .disqualification {
   background-image: url("../../../static/images/l_red.png");
   background-size: contain;
-  /* background-size: 1.28rem 1.28rem;  */
 }
 .disqualification:hover {
   background-image: url("../../../static/images/l_red.gif");
@@ -1267,14 +1212,14 @@ span {
   position: relative;
 }
 .border-green {
-  border-color: #21ff6a;
+  border-color: #24e974;
 }
 .border-red {
   border-color: #fb497c;
   color: #fb497c;
 }
 .border-green span {
-  color: #21ff6a;
+  color: #24e974;
   font-size: 0.3rem;
   font-weight: bolder;
 }
@@ -1326,12 +1271,9 @@ table td {
 .subBorder {
   width: 1.04rem;
   height: 1.04rem;
-  /* border: .07rem solid #fff; */
-  /* border-radius: 50%; */
   position: absolute;
   left: -0.04rem;
   top: -0.04rem;
-  /* display: none; */
 }
 .wrapper {
   width: 0.52rem;
@@ -1347,17 +1289,16 @@ table td {
   border-radius: 50%;
   position: absolute;
   top: 0;
-  /* -webkit-transform: rotate(-135deg); */
 }
 .rightcircle-green {
-  border-top: 0.07rem solid #21ff6a;
-  border-right: 0.07rem solid #21ff6a;
+  border-top: 0.07rem solid #24e974;
+  border-right: 0.07rem solid #24e974;
   right: 0;
   transform: rotate(45deg);
 }
 .leftcircle-green {
-  border-bottom: 0.07rem solid #21ff6a;
-  border-left: 0.07rem solid #21ff6a;
+  border-bottom: 0.07rem solid #24e974;
+  border-left: 0.07rem solid #24e974;
   left: 0;
   transform: rotate(45deg);
 }

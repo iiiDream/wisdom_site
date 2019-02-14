@@ -15,7 +15,7 @@
         </div>
         <ul class="nav">
           <li v-on:click="isActive('/home')">
-            <div class="Lactive-box" v-show="active=='/home'">
+            <div class="Lactive-box" v-show="active=='/home'||active=='/login'">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span>项目总况</span>
             </div>
@@ -38,14 +38,14 @@
           <li  v-on:click="isActive('/safety')">
             <div class="Lactive-box" v-show="active.indexOf('/safety')!=-1" style="left:-.04rem">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
-              <span style="padding-right:.15rem">安全管理</span>
+              <span style="padding-left:.04rem">安全施工</span>
             </div>
-            <router-link to="/safety">安全管理</router-link>
+            <router-link to="/safety">安全施工</router-link>
           </li>
           <li  v-on:click="isActive('/monitoring')">
             <div class="Lactive-box" v-show="active=='/monitoring'" style="left:.04rem">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span style="padding-right:.23rem">全景监控</span>
+              <span style="padding-left:.04rem">全景监控</span>
             </div>
             <router-link to="/monitoring">全景监控</router-link>
           </li>
@@ -77,7 +77,6 @@
         <div class="date-time">
           <span class="d-date" v-if="weather.length > 0">{{weather[0].date}}</span>
           <span class="d-time">{{time}}</span>
-          <!-- {{moment().forat('h:mm:ss')}} -->
         </div>
       </div>
     </div>
@@ -94,7 +93,8 @@ export default {
       time: {},
       timeId: "",
       active: "/home",
-      nowWeather:''
+      nowWeather:'',
+      xmid:'',
     };
   },
   created() {
@@ -105,17 +105,26 @@ export default {
   },
   methods: {
     getName() {
+      this.xmid = this.getQueryString('xmid')
       this.$axios
-        .get("/APP/XMPage/XmData.ashx?method=XMData&xmid=281")
+        .get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`)
         .then(res => {
-          this.project = res.data.project;
-          this.nowWeather=res.data.weather[0].results[0].weather_data[0].weather
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.project = res.data.project;
+            this.nowWeather=res.data.weather[0].results[0].weather_data[0].weather
+          }
         });
     },
     getWeather() {
-      this.$axios.get("/APP/XMPage/XmData.ashx?method=XMData&xmid=281").then(res=>{
-        // console.log(res.data.weather)
-        this.weather = res.data.weather
+      this.xmid = this.getQueryString('xmid')
+      this.$axios.get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`).then(res=>{
+        if(res.data.success == 1){
+          this.$router.push('unopen')
+        }else{
+          this.weather = res.data.weather
+        }
       })
     },
     setTime() {
@@ -135,14 +144,21 @@ export default {
         this.$router.push({path:'/safety/elevator'});
       }
       this.active =path;
-    }
+    },
+    getQueryString(name) {
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return unescape(r[2]);
+      }
+      return null;
+    },
   }
 };
 </script>
 
 <style scoped>
 .indexBody {
-     /* background: url("../../../static/images/index.jpg") no-repeat center center; */
      position: relative;
      top: 0;
 }
@@ -155,18 +171,18 @@ export default {
 }
  .header .city {
      float: left;
-     font-size: 0.18rem;
+     font-size: 0.14rem;
      color: #3375fe;
 }
  .header .city span {
-     font-size: 0.18rem;
+     font-size: 0.14rem;
      color: #3375fe;
      padding-left: 0.1rem;
 }
 .header .city img{
   width: .2rem;
   height: .2rem;
-  margin-left: .05rem;
+  margin-left: .2rem;
   margin-top: -0.05rem;
 }
  .header .nav {
@@ -189,7 +205,7 @@ export default {
      width: 4.4rem;
      text-align: center;
      height: 0.56rem;
-     line-height: 0.48rem;
+     line-height: 0.4rem;
      font-size: 0.3rem;
      color: #ffffff;
      font-weight: bold;
@@ -221,6 +237,7 @@ export default {
      font-size: 0.16rem;
      font-weight: bold;
      color: #3375fe;
+     padding-left: .19rem;
 }
  .header .nav li:nth-child(4) {
      margin-right: 4.02rem;
@@ -244,11 +261,11 @@ export default {
   font-weight: bold;
   color: #fff;
   left: 0;
-  padding-right: .19rem;
+  /* padding-right: .19rem; */
 }
 .Lactive-box img {
   height: .44rem;
   width: 1.51rem;
-  vertical-align: top;
+  vertical-align: top;  
 } 
 </style>

@@ -9,19 +9,19 @@
                     {{val.State==0?'正常运行':'异常运行'}}
                 </div>
                 <div class="top-data">
-                    <div class="amount border-green">
+                    <div class="amount border-blue" style="font-size:.24rem" :class="val.State==0?'border-blue normal':'border-red anomaly'">
                         {{val.InOutData}}
-                        <p>今日进出</p>
+                        <p style="font-size:.18rem">今日进出</p>
                     </div>
-                    <div class="truck-space" :class="val.Remaining>=1?'border-green':'border-red'">
+                    <div class="truck-space" :class="val.Remaining>=1&&val.State==0?'border-blue normal':'border-red anomaly'" style="font-size:.24rem">
                         {{val.Remaining}}
-                        <p>剩余车位</p>
+                        <p style="font-size:.18rem">剩余车位</p>
                     </div>
                 </div>
                 <div class="bottom-data">
                     <p class="bolder">实时进出</p>
-                    <div class="licence" id="one">
-                        <ul id="one1">
+                    <div class="licence" :id="key">
+                        <ul :id="key+1">
                             <li v-for="(item,index) in val.Data" :key="index">
                                 <span>{{item.Plate}}</span>
                                 <span>{{item.Inout}}</span>
@@ -29,398 +29,10 @@
                                 <span>{{item.CarType}}</span>
                             </li>
                         </ul>
-                        <ul id="one2"></ul>
+                        <ul :id="key+2"></ul>
                     </div>
                 </div>
             </div>
-            <!-- <div class="content-box">
-                <div class="title bolder">
-                    车辆出入二出入口
-                </div>
-                <div class="status bolder normal">
-                    正常运行
-                </div>
-                <div class="top-data">
-                    <div class="amount border-green">
-                        200
-                        <p>今日进出</p>
-                    </div>
-                    <div class="truck-space border-red">
-                        0
-                        <p>剩余车位</p>
-                    </div>
-                </div>
-                <div class="bottom-data">
-                    <p class="bolder">实时进出</p>
-                    <div class="licence" id="two">
-                        <ul id="two1">
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                        </ul>
-                        <ul id="two2"></ul>
-                    </div>
-                </div>
-            </div>
-            <div class="content-box">
-                <div class="title bolder">
-                    车辆出入三出入口
-                </div>
-                <div class="status bolder normal">
-                    正常运行
-                </div>
-                <div class="top-data">
-                    <div class="amount border-green">
-                        200
-                        <p>今日进出</p>
-                    </div>
-                    <div class="truck-space border-red">
-                        0
-                        <p>剩余车位</p>
-                    </div>
-                </div>
-                <div class="bottom-data">
-                    <p class="bolder">实时进出</p>
-                    <div class="licence" id="three">
-                        <ul id="three1">
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京AF0236</span>
-                                <span>出</span>
-                                <span>12:30:20</span>
-                                <span>泥头车</span>
-                            </li>
-                            <li>
-                                <span>京QJY676</span>
-                                <span>进</span>
-                                <span>12:30:30</span>
-                                <span>临时车</span>
-                            </li>
-                        </ul>
-                        <ul id="three2"></ul>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 </template>
@@ -429,118 +41,75 @@
 export default {
     data() {
         return {
-            carData:'',
+            carData:'', // 车辆出入数据
+            xmid:'',
         }
     },
     created() {
+        // 发送请求
         this.getCarData()
     },
     methods: {
-        oneScroll() {
-            setTimeout(() => {
-              var speed = 45;
-              var colee2 = document.getElementById("one2");
-              var colee1 = document.getElementById("one1");
-              var colee = document.getElementById("one");
-              colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-              function Marquee1() {
-                //当滚动至colee1与colee2交界时
-                if (colee2.offsetTop - colee.scrollTop <= 0) {
-                  colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-                } else {
-                  colee.scrollTop++;
-                  // console.log(colee.scrollTop)
-                  if (colee.scrollTop == 1008) {
-                    colee.scrollTop = 0;
-                  }
-                }
-              }
-              var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-              //鼠标移上时清除定时器达到滚动停止的目的
-              colee.onmouseover = function() {
-                clearInterval(MyMar1);
-              };
-              //鼠标移开时重设定时器
-              colee.onmouseout = function() {
-                MyMar1 = setInterval(Marquee1, speed);
-              };
-            }, 1000);
-        },
-        twoScroll() {
-            setTimeout(() => {
-              var speed = 45;
-              var colee2 = document.getElementById("two2");
-              var colee1 = document.getElementById("two1");
-              var colee = document.getElementById("two");
-              colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-              function Marquee1() {
-                //当滚动至colee1与colee2交界时
-                if (colee2.offsetTop - colee.scrollTop <= 0) {
-                  colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-                } else {
-                  colee.scrollTop++;
-                  // console.log(colee.scrollTop)
-                  if (colee.scrollTop == 1008) {
-                    colee.scrollTop = 0;
-                  }
-                }
-              }
-              var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-              //鼠标移上时清除定时器达到滚动停止的目的
-              colee.onmouseover = function() {
-                clearInterval(MyMar1);
-              };
-              //鼠标移开时重设定时器
-              colee.onmouseout = function() {
-                MyMar1 = setInterval(Marquee1, speed);
-              };
-            }, 1000);
-        },
-        threeScroll() {
-            setTimeout(() => {
-              var speed = 45;
-              var colee2 = document.getElementById("three2");
-              var colee1 = document.getElementById("three1");
-              var colee = document.getElementById("three");
-              colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
-              function Marquee1() {
-                //当滚动至colee1与colee2交界时
-                if (colee2.offsetTop - colee.scrollTop <= 0) {
-                  colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
-                } else {
-                  colee.scrollTop++;
-                  // console.log(colee.scrollTop)
-                  if (colee.scrollTop == 1008) {
-                    colee.scrollTop = 0;
-                  }
-                }
-              }
-              var MyMar1 = setInterval(Marquee1, speed); //设置定时器
-              //鼠标移上时清除定时器达到滚动停止的目的
-              colee.onmouseover = function() {
-                clearInterval(MyMar1);
-              };
-              //鼠标移开时重设定时器
-              colee.onmouseout = function() {
-                MyMar1 = setInterval(Marquee1, speed);
-              };
-            }, 1000);
-        },
+        // 请求车辆出入数据
         getCarData() {
-            this.$axios.get('/APP/XMPage/DeviceData.ashx?method=GetPkData&xmid=281').then(res=>{
-                // console.log(res.data)
-                this.carData = res.data;
-                if (res.data.InOutOne.Data >=15) {
-                    this.oneScroll()
-                }
-                if (res.data.InOutTwo.Data >=15) {
-                    this.twoScroll()
-                }
-                if (res.data.InOutThree.Data >=15) {
-                    this.threeScroll()
+            this.xmid = this.getQueryString('xmid')
+            this.$axios.get(`/APP/XMPage/DeviceData.ashx?method=GetPkData&xmid=${this.xmid}`).then(res=>{
+                if(res.data.success == 1){
+                    this.$router.push('unopen')
+                }else{
+                    // console.log(res.data)
+                    this.carData = res.data;
+
+                    if (res.data.InOutOne.Data.length >=15) {
+                        this.scrollStart('InOutOne','InOutOne1','InOutOne2')
+                    }
+                    if (res.data.InOutTwo.Data.length >=15) {
+                        this.scrollStart('InOutTwo','InOutTwo1','InOutTwo2')
+                    }
+                    if (res.data.InOutThree.Data.length >=15) {
+                        this.scrollStart('InOutThree','InOutThree1','InOutThree2')
+                    }
                 }
             })
-        }
+        },
+        // 滚动启动函数
+        scrollStart(id,id1,id2) {
+          setTimeout(() => {
+            var speed = 45;
+            var colee2 = document.getElementById(id2);
+            var colee1 = document.getElementById(id1);
+            var colee = document.getElementById(id);
+            colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
+            function Marquee1() {
+              //当滚动至colee1与colee2交界时
+              if (colee2.offsetTop - colee.scrollTop <= 0) {
+                colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
+              } else {
+                colee.scrollTop++;
+                if (colee.scrollTop == colee1.offsetHeight) {
+                  colee.scrollTop = 0;
+                }
+              }
+            }
+            var MyMar1 = setInterval(Marquee1, speed); //设置定时器
+            //鼠标移上时清除定时器达到滚动停止的目的
+            colee.onmouseover = function() {
+              clearInterval(MyMar1);
+            };
+            //鼠标移开时重设定时器
+            colee.onmouseout = function() {
+              MyMar1 = setInterval(Marquee1, speed);
+            };
+          }, 1000);
+        },
+        getQueryString(name) {
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+          var r = window.location.search.substr(1).match(reg);
+          if (r != null) {
+            return unescape(r[2]);
+          }
+          return null;
+        },
     },
 }
 </script>
@@ -553,10 +122,10 @@ export default {
         color: #c23864;
     }
     .normal {
-        color: #21ff6a;
+        color: #24e974;
     }
     .warning {
-        color: #feb113;
+        color: #ff731c;
     }
     span,
     p,
@@ -565,18 +134,19 @@ export default {
     }
     #car {
         display: flex;
-  padding: 0.51rem 0.3rem 0.4rem 0.4rem;
+        padding: 0.51rem 0.3rem 0.4rem 0.4rem;
 
     }
     .content {
         width: 100%;
         display: flex;
         justify-content: space-between;
+        /* width: 16.63rem;
+        height: 9.41rem; */
     }
     .content-box {
         height: 9.41rem;
         width: 5.3rem;
-        /* border: .02rem solid #0f1f53; */
         background-image: url('../../../static/images/s_big-box.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -601,12 +171,12 @@ export default {
     .truck-space {
         height: 1.17rem;
         width: 1.17rem;
-        border: .12rem solid;
-        border-radius: 50%;
-        line-height: .93rem;
+        /* border: .12rem solid;
+        border-radius: 50%; */
+        line-height: 1.17rem;
         text-align: center;
         font-size: .18rem;
-        margin-top: .38rem;
+        margin-top: .35rem;
     }
     .amount {
         margin-right: .87rem;
@@ -617,15 +187,19 @@ export default {
         height: 1.93rem;
     }
     .top-data p {
-        margin-top: -0.16rem;
+        margin-top: -0.4rem;
     }
-    .border-green {
-        border-color: #21ff6a;
-        color: #21ff6a;
+    .border-blue {
+        /* border-color: #3375fe;
+        color: #fff; */
+        background-image: url('../../../static/images/s_c-green.png');
+        background-size: cover;
     }
     .border-red {
-        border-color: #c23864;
-        color: #c23864;
+        /* border-color: #c23864;
+        color: #c23864; */
+        background-image: url('../../../static/images/s_c-red.png');
+        background-size: cover;
     }
     .bottom-data>p {
         text-align: center;

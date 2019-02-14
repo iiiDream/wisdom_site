@@ -13,7 +13,8 @@
             <li>
               今日
               <span v-if="manWork.the_day<manWork.tom_day" class="noml">{{manWork.the_day}} ↑</span>
-              <span v-else class="danger">{{manWork.the_day}} ↓</span>
+              <span v-else-if="manWork.the_day>manWork.tom_day" class="danger">{{manWork.the_day}} ↓</span>
+              <span v-else>{{manWork.the_day}}</span>
             </li>
             <li>
               昨日
@@ -24,7 +25,7 @@
               <span class="down">{{manWork.the_month}}</span>
             </li>
             <li>
-              今日
+              上月
               <span>{{manWork.tmo_month}}</span>
             </li>
           </ul>
@@ -139,7 +140,7 @@
         <div class="code">
           <h3>下载APP</h3>
           <div class="left">
-            <img src="../../../static/images/hj.png">
+            <div></div>
           </div>
           <div class="right">
             <p>APP下载</p>
@@ -211,14 +212,14 @@ export default {
       // 轮播图
       centerInfo: {},
       // 用电
-      electricity:{}
+      electricity: {},
+      xmid: "281"
     };
   },
-  mounted() {
+  mounted() {},
+  created() {
     this.dust();
     this.temperature();
-  },
-  created() {
     this.getSummary(),
       this.renderBaifenbi(),
       this.getCardid(),
@@ -229,257 +230,298 @@ export default {
   },
   methods: {
     dust() {
-      this.$axios.get('/APP/XMPage/XmData.ashx?method=EnvData&xmid=281').then(res=>{
-        let data =res.data.data;
-        let hours = [];
-        let values= [];
-        for (let i = 0; i < data.length; i++) {
-          hours.push(data[i].dayhour);
-          values.push(data[i].value);
-        }
-              let mydust = this.$echarts.init(document.getElementById("dust"));
-      mydust.setOption({
-        title: { text: "" },
-        grid: {
-          x: 70,
-          y: 0,
-          x2: 14,
-          y2: 20
-        },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
-          }
-        },
-        xAxis: {
-          max: 200, //最大值
-          min: 0, //最小值
-          interval: 25, //间隔
-          //字体样式
-          axisLabel: {
-            textStyle: {
-              color: "#fff"
+      this.xmid = this.getQueryString("xmid");
+      this.$axios
+        .get(`/APP/XMPage/XmData.ashx?method=EnvData&xmid=${this.xmid}`)
+        .then(res => {
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            let data = res.data.data;
+            let hours = [];
+            let values = [];
+            for (let i = 0; i < data.length; i++) {
+              hours.push(data[i].dayhour);
+              values.push(data[i].value);
             }
-          },
-          //坐标轴样式
-          axisLine: {
-            lineStyle: {
-              color: "#132e6d",
-              width: 2
-            }
-          },
-          //网格样式
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "#132e6d",
-              width: 1
-            }
-          }
-        },
-        orient: "horizontal",
-        yAxis: {
-          data:hours,
-          axisLabel: {
-            textStyle: {
-              color: "#fff"
-            }
-          },
-          axisLine: {
-            lineStyle: {
-              color: "#132e6d",
-              width: 2
-            }
-          },
-          //网格样式
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "#132e6d",
-              width: 0
-            }
-          }
-        },
-        series: [
-          {
-            type: "bar",
-            barWidth: 10, //柱状图宽度
-            data: values,
-            //柱状图颜色
-            itemStyle: {
-              normal: {
-                //判断
-                color: function(params) {
-                  if (params.value >= 75) {
-                    return "#c23864";
-                  } else {
-                    return "#0162ff";
+            let mydust = this.$echarts.init(document.getElementById("dust"));
+            mydust.setOption({
+              title: { text: "" },
+              grid: {
+                x: 70,
+                y: 0,
+                x2: 14,
+                y2: 20
+              },
+              tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                  // 坐标轴指示器，坐标轴触发有效
+                  type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+                }
+              },
+              xAxis: {
+                max: 200, //最大值
+                min: 0, //最小值
+                interval: 25, //间隔
+                //字体样式
+                axisLabel: {
+                  textStyle: {
+                    color: "#fff"
+                  }
+                },
+                //坐标轴样式
+                axisLine: {
+                  lineStyle: {
+                    color: "#132e6d",
+                    width: 2
+                  }
+                },
+                //网格样式
+                splitLine: {
+                  show: true,
+                  lineStyle: {
+                    color: "#132e6d",
+                    width: 1
                   }
                 }
-                //渐变
-                // color: new this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-                //       offset: 0,
-                //       color: "#0162ff" // 0% 处的颜色
-                //     }, {
-                //       offset: 1,
-                //       color: "#00a7fe" // 100% 处的颜色
-                // }], false)
-              }
-            }
+              },
+              orient: "horizontal",
+              yAxis: {
+                data: hours,
+                axisLabel: {
+                  textStyle: {
+                    color: "#fff"
+                  }
+                },
+                axisLine: {
+                  lineStyle: {
+                    color: "#132e6d",
+                    width: 2
+                  }
+                },
+                //网格样式
+                splitLine: {
+                  show: true,
+                  lineStyle: {
+                    color: "#132e6d",
+                    width: 0
+                  }
+                }
+              },
+              series: [
+                {
+                  type: "bar",
+                  barWidth: 10, //柱状图宽度
+                  data: values,
+                  //柱状图颜色
+                  itemStyle: {
+                    normal: {
+                      //判断
+                      color: function(params) {
+                        if (params.value >= 75) {
+                          return "#c23864";
+                        } else {
+                          return "#0162ff";
+                        }
+                      }
+                      //渐变
+                      // color: new this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                      //       offset: 0,
+                      //       color: "#0162ff" // 0% 处的颜色
+                      //     }, {
+                      //       offset: 1,
+                      //       color: "#00a7fe" // 100% 处的颜色
+                      // }], false)
+                    }
+                  }
+                }
+              ]
+            });
           }
-        ]
-      });
-
-      })
+        });
       // 基于准备好的dom，初始化echarts实例
     },
     temperature() {
-      this.$axios.get('/APP/XMPage/XmData.ashx?method=EnvTemData&xmid=281').then(res=>{
-        let data =res.data.data;
-        let hours = [];
-        let values= [];
-        for (let i = 0; i < data.length; i++) {
-          hours.push(data[i].dayhour);
-          values.push(data[i].value);
-        }
-        hours.push("h")
-        let mytemperature = this.$echarts.init(
-        document.getElementById("temperature")
-      );
-      mytemperature.setOption({
-        // backgroundColor: "#FBFBFB",
-        grid: {
-          x: 50,
-          y: 20,
-          x2: 10,
-          y2: 40
-        },
-        tooltip: {
-          trigger: "axis"
-        },
-        calculable: true,
-        xAxis: [
-          {
-            axisLabel: {
-              rotate: 0,
-              interval: 0,
-              color: "#fff"
-            },
-            axisLine: {
-              lineStyle: {
-                color: "#132e6d"
-              }
-            },
-            type: "category",
-            boundaryGap: false,
-            data:hours
-          }
-        ],
-        yAxis: [
-          {
-            type: "value",
-            max: 45,
-            min: -15,
-            interval: 15,
-            axisLabel: {
-              textStyle: {
-                color: "#fff"
-              },
-              formatter: "{value} 度"
-            },
-            axisLine: {
-              lineStyle: {
-                color: "#132e6d"
-              }
-            },
-            splitLine: {
-              show: true,
-              lineStyle: {
-                color: ["#132e6d"],
-                width: 1,
-                type: "dashed"
-              }
+      this.xmid = this.getQueryString("xmid");
+      this.$axios
+        .get(`/APP/XMPage/XmData.ashx?method=EnvTemData&xmid=${this.xmid}`)
+        .then(res => {
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            let data = res.data.data;
+            let hours = [];
+            let values = [];
+            for (let i = 0; i < data.length; i++) {
+              hours.push(data[i].dayhour);
+              values.push(data[i].value);
             }
+            hours.push("h");
+            let mytemperature = this.$echarts.init(
+              document.getElementById("temperature")
+            );
+            mytemperature.setOption({
+              // backgroundColor: "#FBFBFB",
+              grid: {
+                x: 50,
+                y: 20,
+                x2: 10,
+                y2: 40
+              },
+              tooltip: {
+                trigger: "axis"
+              },
+              calculable: true,
+              xAxis: [
+                {
+                  axisLabel: {
+                    rotate: 0,
+                    interval: 0,
+                    color: "#fff"
+                  },
+                  axisLine: {
+                    lineStyle: {
+                      color: "#132e6d"
+                    }
+                  },
+                  type: "category",
+                  boundaryGap: false,
+                  data: hours
+                }
+              ],
+              yAxis: [
+                {
+                  type: "value",
+                  max: 45,
+                  min: -15,
+                  interval: 15,
+                  axisLabel: {
+                    textStyle: {
+                      color: "#fff"
+                    },
+                    formatter: "{value} 度"
+                  },
+                  axisLine: {
+                    lineStyle: {
+                      color: "#132e6d"
+                    }
+                  },
+                  splitLine: {
+                    show: true,
+                    lineStyle: {
+                      color: ["#132e6d"],
+                      width: 1,
+                      type: "dashed"
+                    }
+                  }
+                }
+              ],
+              series: [
+                {
+                  name: "温度",
+                  type: "line",
+                  symbolSize: 3,
+                  smooth: 0.2,
+                  color: ["#f98d98"],
+                  data: values
+                }
+              ]
+            });
           }
-        ],
-        series: [
-          {
-            name: "温度",
-            type: "line",
-            symbolSize: 3,
-            smooth: 0.2,
-            color: ["#f98d98"],
-            data:values
-          }
-        ]
-      });
-
-      })
-
+        });
     },
     // 工人上工区域
     renderBaifenbi() {
+      this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=GetXMKq&xmid=281`)
+        .get(`/APP/XMPage/XmData.ashx?method=GetXMKq&xmid=${this.xmid}`)
         .then(res => {
-          this.manWork = res.data;
-          this.timeId = setInterval(() => {
-            if (this.dh == this.baifenbi) {
-              clearInterval(this.timeId);
-            } else {
-              this.dh++;
-              $(".subjindu").css("width", this.dh + "%");
-            }
-          }, 30);
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.manWork = res.data
+            this.timeId = setInterval(() => {
+              if (this.dh == this.manWork.ratio) {
+                clearInterval(this.timeId);
+              } else {
+                this.dh++;
+                $(".subjindu").css("width", this.dh + "%");
+              }
+            }, 30);
+          }
         });
     },
     // 工程概括区域
     getSummary() {
+      this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=GetXMDetail&xmid=281`)
+        .get(`/APP/XMPage/XmData.ashx?method=GetXMDetail&xmid=${this.xmid}`)
         .then(res => {
-          this.summary = res.data;
-          if (this.summary.data.length >= 10) {
-            // 调用滚动方法
-            this.scrollText();
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.summary = res.data;
+            if (this.summary.data.length >= 10) {
+              // 调用滚动方法
+              this.scrollText();
+            }
           }
         });
     },
     // 车牌识别
     getCardid() {
+      this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=PkData&xmid=281`)
+        .get(`/APP/XMPage/XmData.ashx?method=PkData&xmid=${this.xmid}`)
         .then(res => {
-          this.cardid = res.data;
-          if(this.cardid.cars.length>=5){
-            this.cardScroll()
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.cardid = res.data;
+            if (this.cardid.cars.length >= 5) {
+              this.cardScroll();
+            }
           }
         });
     },
     // 塔吊防碰撞
     getCrash() {
+      this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=TowerData&xmid=281`)
+        .get(`/APP/XMPage/XmData.ashx?method=TowerData&xmid=${this.xmid}`)
         .then(res => {
-          this.crash = res.data;
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.crash = res.data;
+          }
         });
     },
     // 升降机
     getLift() {
+      this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=LifterData&xmid=281`)
+        .get(`/APP/XMPage/XmData.ashx?method=LifterData&xmid=${this.xmid}`)
         .then(res => {
-          this.lift = res.data;
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.lift = res.data;
+          }
         });
     },
     // 中间主图
     getCenterInfo() {
+      this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get("/APP/XMPage/XmData.ashx?method=XMData&xmid=281")
+        .get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`)
         .then(res => {
-          this.centerInfo = res.data;
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.centerInfo = res.data;
+          }
         });
     },
     scrollText() {
@@ -544,12 +586,21 @@ export default {
         };
       }, 1000);
     },
-    getyongdian() {                           
+    getyongdian() {
+      this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get("/APP/XMPage/XmData.ashx?method=ElectricityData&xmid=281")
+        .get(`/APP/XMPage/XmData.ashx?method=ElectricityData&xmid=${this.xmid}`)
         .then(res => {
           this.electricity = res.data;
-      });
+        });
+    },
+    getQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return unescape(r[2]);
+      }
+      return null;
     }
   }
 };
@@ -661,14 +712,14 @@ export default {
         transform: translateX(-1rem) translateY(-1.3rem);
         text-align: center;
         img {
-          transform: translateY(.09rem);
-          width: .83rem;
-          height: .83rem;
+          transform: translateY(0.09rem);
+          width: 0.83rem;
+          height: 0.83rem;
         }
         .runtimeBg {
           position: absolute;
           top: 60%;
-          margin-left: .14rem;
+          margin-left: 0.14rem;
         }
       }
     }
@@ -684,9 +735,6 @@ export default {
       }
     }
   }
-}
-.a{
-  
 }
 @-webkit-keyframes xuanzhuan {
   0% {
@@ -717,9 +765,11 @@ export default {
     .left {
       float: left;
       padding: 0 0.4rem;
-      img {
+      div {
         width: 1rem;
         height: 1rem;
+        background-image: url(http://gd.17hr.net:8018/APP/DownLoad/barcode.png);
+        background-size: cover;
       }
     }
     .right {
@@ -784,14 +834,14 @@ export default {
       transform: translateX(-1rem) translateY(-1.3rem);
       text-align: center;
       img {
-        transform: translateY(.09rem);
-        width: .83rem;  
-        height: .83rem;
+        transform: translateY(0.09rem);
+        width: 0.83rem;
+        height: 0.83rem;
       }
       .runtimeBg {
         position: absolute;
         top: 60%;
-        margin-left: .14rem;
+        margin-left: 0.14rem;
       }
     }
   }
@@ -815,7 +865,7 @@ export default {
   color: #c23864 !important;
 }
 .noml {
-  color: #21ff6a !important;
+  color: #24e974 !important;
 }
 .wrap-left .top-show {
   height: 1.96rem;

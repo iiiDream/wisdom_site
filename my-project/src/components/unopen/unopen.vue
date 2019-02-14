@@ -1,12 +1,16 @@
 <template>
-    <div>该功能暂未开放</div>
+    <div>项目校验失败，无权限查看</div>
 </template>
 
 <style scoped>
     div {
+        height: 10.8rem;
+        width: 100%;
         text-align: center;
-        margin: 4rem;
         font-size: .5rem;
         color: #fff;
+        background-image: url('../../../static/images/upopen-bg.png');
+        background-size: cover;
+        line-height: 10rem;
     }
 </style>
