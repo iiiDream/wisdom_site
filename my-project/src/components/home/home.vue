@@ -12,8 +12,8 @@
           <ul class="work-list clearfix">
             <li>
               今日
-              <span v-if="manWork.the_day<manWork.tmo_day" class="danger">{{manWork.the_day}} ↑</span>
-              <span v-else-if="manWork.the_day>manWork.tmo_day" class="noml">{{manWork.the_day}} ↓</span>
+              <span v-if="manWork.the_day<manWork.tmo_day" class="danger">{{manWork.the_day}} ↓</span>
+              <span v-else-if="manWork.the_day>manWork.tmo_day" class="noml">{{manWork.the_day}} ↑</span>
               <span v-else>{{manWork.the_day}}</span>
             </li>
             <li>
