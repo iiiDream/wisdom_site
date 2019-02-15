@@ -1108,7 +1108,7 @@ export default {
             border-radius: 0.05rem;
             text-align: center;
             line-height: 0.2rem;
-            // overflow: hidden;
+            overflow: hidden;
           }
         }
         .two {

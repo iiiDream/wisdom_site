@@ -12,8 +12,8 @@
           <ul class="work-list clearfix">
             <li>
               今日
-              <span v-if="manWork.the_day<manWork.tom_day" class="noml">{{manWork.the_day}} ↑</span>
-              <span v-else-if="manWork.the_day>manWork.tom_day" class="danger">{{manWork.the_day}} ↓</span>
+              <span v-if="manWork.the_day<manWork.tmo_day" class="danger">{{manWork.the_day}} ↑</span>
+              <span v-else-if="manWork.the_day>manWork.tmo_day" class="noml">{{manWork.the_day}} ↓</span>
               <span v-else>{{manWork.the_day}}</span>
             </li>
             <li>
@@ -440,7 +440,7 @@ export default {
           if(res.data.success == 1){
             this.$router.push('unopen')
           }else{
-            this.manWork = res.data
+            this.manWork = res.data;
             this.timeId = setInterval(() => {
               if (this.dh == this.manWork.ratio) {
                 clearInterval(this.timeId);
@@ -556,7 +556,7 @@ export default {
         };
       }, 1000);
     },
-    // 来自jq22的插件初始化
+
     cardScroll() {
       setTimeout(() => {
         var speed = 45;
@@ -683,7 +683,7 @@ export default {
           width: 0.01rem;
           height: 0.8rem;
           background-color: #b7b8c7;
-          animation: xuanzhuan 10s linear infinite;
+          -webkit-animation: xuanzhuan 10s linear infinite;
           transform-origin: 0 0;
         }
         .dian {
