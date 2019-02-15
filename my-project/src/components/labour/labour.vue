@@ -719,7 +719,7 @@ export default {
             if (this.attendanceData.EmpPostData.length >= 4) {
               this.scrollStart('leftBottom','leftBottom1','leftBottom2');
             }
-            if (this.attendanceData.KqData.length >= 3) {
+            if (this.attendanceData.KqDWData.length >= 3) {
               this.scrollStart('rightBottom','rightBottom1','rightBottom2');
             }
             // 数据渲染完成时 再调用柱状进度条渲染函数
@@ -768,11 +768,11 @@ export default {
           }else{
             this.staffData = res.data;
             // 数据条数大于一定值时 才调用滚动初始化
-            if (this.staffData.EmpJLData.length >= 6) {
-              this.scrollStart('squad','squad1','squad2');
-            }
-            if (this.staffData.BZRealData.length >= 6) {
+            if (this.staffData.EmpJLData.length >= 7) {
               this.scrollStart('staff','staff1','staff2')
+            }
+            if (this.staffData.BZRealData.length >= 7) {
+              this.scrollStart('squad','squad1','squad2')
             }
           }
         });
@@ -805,7 +805,7 @@ export default {
         let bfb = $(this).data("bfb");
         let width = 0;
         for (let i = 0; i < bfb; i++) {
-          width += 1.4;
+          width += 0.014;
         }
         $(this).css("width", `${width}rem`);
       });
@@ -819,6 +819,7 @@ export default {
         var colee = document.getElementById(id);
         colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
         function Marquee1() {
+          // console.log(colee1.offsetHeight)
           //当滚动至colee1与colee2交界时
           if (colee2.offsetTop - colee.scrollTop <= 0) {
             colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
@@ -840,6 +841,7 @@ export default {
         };
       }, 1000);
     },
+    //获取url中的项目id
     getQueryString(name) {
       var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
       var r = window.location.search.substr(1).match(reg);
