@@ -51,7 +51,7 @@
             <div class="main-top">
             </div>
             <div class="main-bottom">
-                <div class="left-button">
+                <div class="left-button" @click="leftMove">
                 </div>
                 <div class="frames">
                     <ul>
@@ -75,7 +75,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="right-button">
+                <div class="right-button" @click="rightMove">
                 </div>
             </div>
         </div>
@@ -130,7 +130,28 @@ export default {
         return {
             activeName: '0',
         }
-    }
+    },
+    methods: {
+        leftMove() {
+            let temp = $('.frames ul').position().left
+            temp = temp+324
+            // console.log(temp)
+            if (!(temp > 0)) {
+                $('.frames ul').css('left',temp/100+'rem')
+            }
+        },
+        rightMove() {
+            let temp = $('.frames ul').position().left
+            let child = $('.frames ul li')
+            let childQuantity = child.length-3
+            let min = childQuantity*-324
+            temp = temp-324
+            // console.log(min)
+            if (!(temp < min)) {
+                $('.frames ul').css('left',temp/100+'rem')
+            }
+        }
+    },
 }
 </script>
 
@@ -257,11 +278,13 @@ export default {
         width: 9.62rem;
         height: 100%;
         overflow: hidden;
+        position: relative;
     }
     #montoring .main-bottom .frames ul {
         display: inline-block;
         width: 17rem;
         height: 100%;
+        position: relative;
     }
     #montoring .main-bottom .frames li {
         float: left;
