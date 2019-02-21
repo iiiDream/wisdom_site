@@ -180,23 +180,23 @@
               src="../../../static/images/g_qiwen.png"
               style="transform: translateX(.02rem);width:0.25rem;height:0.49rem"
             >
-            <div class="text">
+            <div class="text" style="transform: translate(.12rem);">
               <p style="font-weight: bold;">气温</p>
               <p class="info">{{manyInfo.wd}}℃</p>
             </div>
           </div>
           <div class="box">
             <img src="../../../static/images/g_wendu.png" style="width:0.45rem;height:0.48rem">
-            <div class="text">
+            <div class="text"  style="transform: translate(.17rem);">
               <p style="font-weight: bold;">湿度</p>
               <p class="info">{{manyInfo.sd}}%</p>
             </div>
           </div>
           <div class="box">
             <img src="../../../static/images/g_fengsu.png" style="width:0.48rem;height:0.48rem">
-            <div class="text" style="transform: translate(.2rem);">
+            <div class="text"  style="transform: translate(.2rem);">
               <p style="font-weight: bold;">风速</p>
-              <p class="info">22m/s</p>
+              <p class="info">{{manyInfo.fs}}m/s</p>
             </div>
           </div>
         </div>
@@ -858,7 +858,7 @@ export default {
     // 天气接口
     getWeather() {
       this.xmid = this.getQueryString("xmid");
-      this.$axios
+            this.$axios
         .get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`)
         .then(res => {
           if(res.data.success == 1){
@@ -876,6 +876,28 @@ export default {
             this.ortherWeather = orther.splice(1);
           }
         });
+
+      setInterval(() => {
+              this.$axios
+        .get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`)
+        .then(res => {
+          if(res.data.success == 1){
+            this.$router.push('unopen')
+          }else{
+            this.weather = res.data.weather[0].results[0];
+            this.weatherInfo1 =
+              res.data.weather[0].results[0].weather_data[0].weather;
+            this.weatherInfo2 =
+              res.data.weather[0].results[0].weather_data[0].wind;
+            this.weatherInfo3 =
+              res.data.weather[0].results[0].weather_data[0].temperature;
+            let orther = res.data.weather[0].results[0].weather_data;
+            // console.log(this.ortherWeather);
+            this.ortherWeather = orther.splice(1);
+          }
+        });
+
+      }, 60000);
     },
     // 4小时刷新表数据
     getdatays() {
@@ -998,6 +1020,7 @@ export default {
     // 其他数据
     getManyInfo() {
       this.xmid = this.getQueryString("xmid");
+      setInterval(() => {
       this.$axios
         .get(`/APP/XMPage/EnvData.ashx?method=GetEnvRealData&xmid=${this.xmid}`)
         .then(res => {
@@ -1011,6 +1034,7 @@ export default {
             this.yongdianInfo = res.data.YDRealData[0];
           }
         });
+      }, 1000);
     },
     getQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -1329,12 +1353,12 @@ export default {
         position: absolute;
         right: 0.64rem;
         top: 1.4rem;
+        width: 1.6rem;
         .box {
           margin-top: 0.4rem;
           display: flex;
           justify-content: space-between;
-          text-align: center;
-
+          // text-align: center;
           img {
             transform: translateX(-0.1rem);
           }
@@ -1342,7 +1366,9 @@ export default {
             font-size: 0.22rem;
             text-align: left;
             margin-left: 0.02rem;
+            width: .8rem;
             .info {
+              text-align: left;
               transform: translateY(0.06rem);
               font-size: 0.2rem;
             }
