@@ -1,11 +1,11 @@
-# my-project
+# 虎匠智慧工地
 
-## Project setup
+## 快速装包建议使用淘宝镜像
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 开发模式开启服务
 ```
 npm run serve
 ```
