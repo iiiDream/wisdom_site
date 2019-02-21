@@ -10,7 +10,7 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 快速打包项目在dist
 ```
 npm run build
 ```
