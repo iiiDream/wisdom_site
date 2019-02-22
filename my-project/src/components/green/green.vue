@@ -1013,7 +1013,7 @@ export default {
             }
             this.noisePic(zsH, zsV);
           });
-      }, 360000);
+      }, 60000);
     },
     // 其他数据
     getManyInfo() {
