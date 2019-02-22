@@ -866,13 +866,12 @@ export default {
           }else{
             this.weather = res.data.weather[0].results[0];
             this.weatherInfo1 =
-              res.data.weather[0].results[0].weather_data[0].weather;
+              res.data.weather[0].results[0].weather_data[1].weather;
             this.weatherInfo2 =
-              res.data.weather[0].results[0].weather_data[0].wind;
+              res.data.weather[0].results[0].weather_data[1].wind;
             this.weatherInfo3 =
-              res.data.weather[0].results[0].weather_data[0].temperature;
+              res.data.weather[0].results[0].weather_data[1].temperature;
             let orther = res.data.weather[0].results[0].weather_data;
-            // console.log(this.ortherWeather);
             this.ortherWeather = orther.splice(1);
           }
         });
@@ -886,13 +885,12 @@ export default {
           }else{
             this.weather = res.data.weather[0].results[0];
             this.weatherInfo1 =
-              res.data.weather[0].results[0].weather_data[0].weather;
+              res.data.weather[0].results[0].weather_data[1].weather;
             this.weatherInfo2 =
-              res.data.weather[0].results[0].weather_data[0].wind;
+              res.data.weather[0].results[0].weather_data[1].wind;
             this.weatherInfo3 =
-              res.data.weather[0].results[0].weather_data[0].temperature;
+              res.data.weather[0].results[0].weather_data[1].temperature;
             let orther = res.data.weather[0].results[0].weather_data;
-            // console.log(this.ortherWeather);
             this.ortherWeather = orther.splice(1);
           }
         });
