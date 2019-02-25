@@ -16,6 +16,7 @@
     "less-loader": "^4.1.0",
     "moment": "^2.23.0",
     "vue": "^2.5.21",
+    "vue-amap": "^0.5.8",
     "vue-router": "^3.0.2"
   },
   "devDependencies": {

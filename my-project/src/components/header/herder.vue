@@ -24,9 +24,9 @@
           <li v-on:click="isActive('/labour')">
             <div class="Lactive-box" v-show="active=='/labour'">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
-              <span>劳务管理</span>
+              <span>两制管理</span>
             </div>
-            <router-link to="/labour">劳务管理</router-link>
+            <router-link to="/labour">两制管理</router-link>
           </li>
           <li  v-on:click="isActive('/green')">
             <div class="Lactive-box" v-show="active=='/green'">
@@ -102,6 +102,7 @@ export default {
     this.getWeather()
     this.setTime()
     this.setActive()
+    // this.getliuyong()
   },
   methods: {
     getName() {
@@ -153,6 +154,12 @@ export default {
       }
       return null;
     },
+    // 测试
+    // getliuyong() {
+    //   this.$axios.get('http://192.168.0.139:8888/smart/top').then(res=>{
+    //     console.log(res.data)
+    //   })
+    // }
   }
 };
 </script>

@@ -22,14 +22,20 @@ import engineering from '../components/engineering/engineering.vue'
 import monitoring from '../components/monitoring/monitoring.vue'
 import quality from '../components/quality/quality.vue'
 import schedule from '../components/schedule/schedule.vue'
+import loginOld from '../components/login/loginOld.vue'
 import login from '../components/login/login.vue'
+import homePage from '../components/homePage/homePage.vue'
+import projectManagement from '../components/projectManagement/projectManagement.vue'
 
 
 const router = new VueRouter({
     // 需要路由拦截
     routes:[
         {path:'/login',component:login},
-        {path:'/',redirect:'/home'},
+        {path:'/loginOld',component:loginOld},
+        {path:'/',redirect:'/login'},
+        {path:'/projectManagement',meta:{needLogin:true},component:projectManagement},
+        {path:'/homePage',meta:{needLogin:true},component:homePage},
         {path:'/home',meta:{needLogin:true},component:home},
         {path:'/green',meta:{needLogin:true},component:green},
         {path:'/labour',meta:{needLogin:true},component:labour},
