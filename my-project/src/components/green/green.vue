@@ -872,7 +872,6 @@ export default {
             this.weatherInfo3 =
               res.data.weather[0].results[0].weather_data[0].temperature;
             let orther = res.data.weather[0].results[0].weather_data;
-            // console.log(this.ortherWeather);
             this.ortherWeather = orther.splice(1);
           }
         });
@@ -892,7 +891,6 @@ export default {
             this.weatherInfo3 =
               res.data.weather[0].results[0].weather_data[0].temperature;
             let orther = res.data.weather[0].results[0].weather_data;
-            // console.log(this.ortherWeather);
             this.ortherWeather = orther.splice(1);
           }
         });
@@ -1015,7 +1013,7 @@ export default {
             }
             this.noisePic(zsH, zsV);
           });
-      }, 360000);
+      }, 60000);
     },
     // 其他数据
     getManyInfo() {

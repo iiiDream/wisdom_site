@@ -213,6 +213,7 @@ export default {
       centerInfo: {},
       // 用电
       electricity: {},
+      // 项目id
       xmid: "281"
     };
   },
@@ -717,9 +718,10 @@ export default {
           height: 0.83rem;
         }
         .runtimeBg {
-          position: absolute;
-          top: 60%;
-          margin-left: 0.14rem;
+          // position: absolute;
+          // top: 60%;
+          // margin-left: 0.14rem;
+          transform: translateY(-.45rem)
         }
       }
     }
@@ -839,9 +841,10 @@ export default {
         height: 0.83rem;
       }
       .runtimeBg {
-        position: absolute;
-        top: 60%;
-        margin-left: 0.14rem;
+        // position: absolute;
+        // top: 60%;
+        // margin-left: 0.14rem;
+        transform: translateY(-.45rem);
       }
     }
   }
