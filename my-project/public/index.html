@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,14 +15,16 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
     <script>
-    getSize()
-    function getSize() {
-        var StandardWidth = 1920;
-        var StandardFontSize = 100;
-        var nowWidth = document.documentElement.offsetWidth;
-        var nowFontSize = nowWidth / StandardWidth * StandardFontSize;
-        document.documentElement.style.fontSize = nowFontSize + 'px';
-    }
+
+      setNowFontSize();
+      function setNowFontSize() {
+          var StandardWidth = 1920;
+          var StandardFontSize = 100;
+          var nowWidth = document.documentElement.offsetWidth;
+          var nowFontSize = nowWidth / StandardWidth * StandardFontSize;
+          document.documentElement.style.fontSize = nowFontSize + 'px';
+      }
+
     </script>
   </body>
 </html>

@@ -22,11 +22,41 @@ import engineering from '../components/engineering/engineering.vue'
 import monitoring from '../components/monitoring/monitoring.vue'
 import quality from '../components/quality/quality.vue'
 import schedule from '../components/schedule/schedule.vue'
+import loginOld from '../components/login/loginOld.vue'
 import login from '../components/login/login.vue'
+import homePage from '../components/homePage/homePage.vue'
+import projectManagement from '../components/projectManagement/projectManagement.vue'
 
 
 const router = new VueRouter({
+
+    // 需要路由拦截
+    routes:[
+        {path:'/login',component:login},
+        {path:'/loginOld',component:loginOld},
+        {path:'/',redirect:'/login'},
+        {path:'/projectManagement',meta:{needLogin:true},component:projectManagement},
+        {path:'/homePage',meta:{needLogin:true},component:homePage},
+        {path:'/home',meta:{needLogin:true},component:home},
+        {path:'/green',meta:{needLogin:true},component:green},
+        {path:'/labour',meta:{needLogin:true},component:labour},
+        {path:'/safety',meta:{needLogin:true},component:safety,children:[
+            {path:"",meta:{needLogin:true},component:elevator},
+            {path:"towerCrane",meta:{needLogin:true},component:towerCrane},
+            {path:"elevator",meta:{needLogin:true},component:elevator},
+            {path:"car",meta:{needLogin:true},component:car},
+            {path:"gantryCrane",meta:{needLogin:true},component:gantryCrane},
+        ]},
+        {path:'/unopen',meta:{needLogin:true},component:unopen},
+        {path:'/engineering',meta:{needLogin:true},component:engineering},
+        {path:'/monitoring',meta:{needLogin:true},component:monitoring},
+        {path:'/quality',meta:{needLogin:true},component:quality},
+        {path:'/schedule',meta:{needLogin:true},component:schedule},
+    ]
+    // 不需要路由拦截
+
     // // 需要路由拦截
+
     // routes:[
     //     {path:'/login',component:login},
     //     {path:'/',redirect:'/home'},

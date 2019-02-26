@@ -26,10 +26,12 @@
           </li>
           <li v-on:click="isActive('/labour')">
             <div class="Lactive-box" v-show="active=='/labour'">
-              <img src="../../../static/images/Lactive.png" alt class="Lactive-img">
-              <span>劳务管理</span>
+
+              <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
+              <span>两制管理</span>
+
             </div>
-            <router-link to="/labour">劳务管理</router-link>
+            <router-link to="/labour">两制管理</router-link>
           </li>
           <li v-on:click="isActive('/green')">
             <div class="Lactive-box" v-show="active=='/green'">
@@ -101,10 +103,12 @@ export default {
     };
   },
   created() {
+
     this.getName();
     this.getWeather();
     this.setTime();
     this.setActive();
+
   },
   methods: {
     getName() {
@@ -170,7 +174,6 @@ export default {
         return unescape(r[2]);
       }
       return null;
-    }
   }
 };
 </script>
