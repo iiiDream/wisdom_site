@@ -980,7 +980,7 @@ export default {
         });
       setInterval(() => {
         this.$axios
-          .get("/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=281")
+          .get(`/APP/XMPage/EnvData.ashx?method=GetEnvHoursData&xmid=${this.xmid}`)
           .then(res => {
             this.pm25 = res.data.pm25;
             this.pm10 = res.data.pm10;
@@ -1013,7 +1013,7 @@ export default {
             }
             this.noisePic(zsH, zsV);
           });
-      }, 60000);
+      }, 3600000);
     },
     // 其他数据
     getManyInfo() {

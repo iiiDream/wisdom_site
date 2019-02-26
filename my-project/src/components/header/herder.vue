@@ -71,7 +71,7 @@
             <router-link to="/engineering">工程资料</router-link>
           </li>
         </ul>
-        <router-link to="/home" v-on:click.native="active = 1">
+        <router-link to="/homePage" v-on:click="isActive('/home')">
           <h2 class="head-title">{{project}}</h2>
         </router-link>
         <div class="date-time">
