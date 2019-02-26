@@ -20,6 +20,8 @@ import {
   DropdownItem,
   Select,
   Option,
+  Pagination,
+  Button,
 } from 'element-ui'
 
 Vue.prototype.$echarts = echarts
@@ -34,12 +36,15 @@ Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.use(Select);
 Vue.use(Option);
+Vue.use(Pagination);
+Vue.use(Button);
 
 Vue.use(VueAMap);
 Vue.config.productionTip = false;
-VueAMap .initAMapApiLoader({
+VueAMap.initAMapApiLoader({
   key: 'b50968a4395c3e6e81326b99c217100a',
-  plugin: ['AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType',],
+  plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
+  v: '1.4.4'
 });
 
 

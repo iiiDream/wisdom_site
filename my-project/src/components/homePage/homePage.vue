@@ -35,7 +35,7 @@
         <div class="main">
             <!-- 地图 -->
             <div class="amap-page-container">
-                <el-amap ref="map" vid="amapDemo" :amap-manager="AMapManager" :center="center" :zoom="zoom" :plugin="plugin" :events="events" class="amap-demo">
+                <el-amap ref="map" vid="amapDemo" :amap-manager="amapManager" :center="center" :zoom="zoom" :plugin="plugin" :events="events" class="amap-demo">
                 </el-amap>
             </div>
             <!-- 搜索框 -->
@@ -100,22 +100,22 @@
 </template>
 
 <script>
-import { AMapManager } from 'vue-amap';
+import { amapManager } from 'vue-amap';
 export default {
     data() {
         return {
             // 地图配置项
-            AMapManager,
-            // amapManager,
+            // AMapManager,
+            amapManager,
             zoom: 12,
             center: [114.083372,22.544146],
             events: {
               init: (o) => {
                     console.log(o.getCenter())
                     console.log(this.$refs.map.$$getInstance())
-                    o.getCity(result => {
-                        console.log(result)
-                    })
+                    // o.getCity(result => {
+                    //     console.log(result)
+                    // })
               },
               'moveend': () => {
               },
@@ -127,7 +127,7 @@ export default {
             },
             // plugin: ['ToolBar', {
             //     pName: 'MapType',
-            //     defaultType: 0,
+            //     // defaultType: 0,
             //     events: {
             //         init(o) {
             //             console.log(o);
@@ -136,10 +136,11 @@ export default {
             // }],
             plugin: [{
                 pName: 'ToolBar',
+                direction: false,
                 events: {
                     init(instance) {
                         console.log(instance);
-                    }
+                    },
                 }
             }],
 
@@ -265,7 +266,7 @@ export default {
         background-image: url('../../../static/images/homePage-inputBg.png');
         background-size: contain;
         top: .15rem;
-        left: .1rem;
+        left: .6rem;
         padding-left: .17rem;
     }
     .main .search-bar input {
