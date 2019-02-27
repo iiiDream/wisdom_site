@@ -52,16 +52,16 @@
           <li  v-on:click="isActive('/schedule')">
             <div class="Lactive-box" v-show="active=='/schedule'">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span>进度管理</span>
+              <span>质量管理</span>
             </div>
-            <router-link to="/schedule">进度管理</router-link>
+            <router-link to="/schedule">质量管理</router-link>
           </li>
           <li  v-on:click="isActive('/quality')">
             <div class="Lactive-box" v-show="active=='/quality'">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span>质量管理</span>
+              <span>进度管理</span>
             </div>
-            <router-link to="/quality">质量管理</router-link>
+            <router-link to="/quality">进度管理</router-link>
           </li>
           <li  v-on:click="isActive('/engineering')">
             <div class="Lactive-box" v-show="active=='/engineering'">
