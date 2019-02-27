@@ -26,6 +26,7 @@ import loginOld from '../components/login/loginOld.vue'
 import login from '../components/login/login.vue'
 import homePage from '../components/homePage/homePage.vue'
 import projectManagement from '../components/projectManagement/projectManagement.vue'
+import mapDemo from '../components/mapDemo/mapDemo.vue'
 
 
 const router = new VueRouter({
@@ -35,6 +36,7 @@ const router = new VueRouter({
         {path:'/login',component:login},
         {path:'/loginOld',component:loginOld},
         {path:'/',redirect:'/login'},
+        {path:'/md',meta:{needLogin:true},component:mapDemo},
         {path:'/projectManagement',meta:{needLogin:true},component:projectManagement},
         {path:'/homePage',meta:{needLogin:true},component:homePage},
         {path:'/home',meta:{needLogin:true},component:home},

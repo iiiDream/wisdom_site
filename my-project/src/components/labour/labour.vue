@@ -719,7 +719,7 @@ export default {
             if (this.attendanceData.EmpPostData.length >= 4) {
               this.scrollStart('leftBottom','leftBottom1','leftBottom2');
             }
-            if (this.attendanceData.KqDWData.length >= 3) {
+            if (this.attendanceData.KqDWData.length >= 4) {
               this.scrollStart('rightBottom','rightBottom1','rightBottom2');
             }
             // 数据渲染完成时 再调用柱状进度条渲染函数

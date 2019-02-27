@@ -47,7 +47,7 @@
             <div class="main-box">
                 <div class="main-title">
                     总共
-                    <span>1</span>
+                    <span>6</span>
                     个智慧工地项目
                 </div>
                 <ul>

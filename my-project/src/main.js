@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueAMap from 'vue-amap';
 import App from './App.vue'
 import router from './router'
 import './common/font/font.css'
@@ -7,7 +8,6 @@ import echarts from 'echarts'
 // import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'babel-polyfill';
-import VueAMap from 'vue-amap';
 import {
   Carousel,
   Row,
@@ -40,15 +40,12 @@ Vue.use(Pagination);
 Vue.use(Button);
 
 Vue.use(VueAMap);
-Vue.config.productionTip = false;
+// Vue.config.productionTip = false;
 VueAMap.initAMapApiLoader({
   key: 'b50968a4395c3e6e81326b99c217100a',
   plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
   v: '1.4.4'
 });
-
-
-Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
