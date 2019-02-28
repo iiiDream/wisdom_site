@@ -257,6 +257,8 @@ export default {
         width: 50%;
     }
     .bottom-box .bottom-data li img {
+        height: .46rem;
+        width: .46rem;
         display: inline-block;
         line-height: 1.22rem;
         margin-left: .92rem;
