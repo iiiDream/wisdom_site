@@ -723,11 +723,15 @@ export default {
               this.scrollStart('rightBottom','rightBottom1','rightBottom2');
             }
             // 数据渲染完成时 再调用柱状进度条渲染函数
-            setTimeout(() => {
-              this.setLength();
-            }, 300);
+            // setTimeout(() => {
+            //   this.setLength();
+            // }, 300);
             this.timeId = setInterval(() => {
-              if (this.dh == this.attendanceData.EmpRenShuData[0].bfb) {
+              // console.log(this.attendanceData.EmpRenShuData[0].bfb)
+              if (this.dh >= this.attendanceData.EmpRenShuData[0].bfb || this.dh > 100) {
+                if (this.dh > 100) {
+                  this.dh = 100
+                }
                 clearInterval(this.timeId);
               } else {
                 this.dh++;

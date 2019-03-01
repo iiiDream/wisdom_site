@@ -58,7 +58,7 @@ const router = new VueRouter({
 
     // 不需要路由拦截
     // routes:[
-    //     {path:'/login',component:login},
+    //     {path:'/login',component:loginOld},
     //     {path:'/',redirect:'/home'},
     //     {path:'/home',component:home},
     //     {path:'/green',component:green},

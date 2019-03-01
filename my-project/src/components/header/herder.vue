@@ -52,9 +52,9 @@
           <li  v-on:click="isActive('/schedule')">
             <div class="Lactive-box" v-show="active=='/schedule'">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span>质量管理</span>
+              <span>人员定位</span>
             </div>
-            <router-link to="/schedule">质量管理</router-link>
+            <router-link to="/schedule">人员定位</router-link>
           </li>
           <li  v-on:click="isActive('/quality')">
             <div class="Lactive-box" v-show="active=='/quality'">
@@ -66,12 +66,12 @@
           <li  v-on:click="isActive('/engineering')">
             <div class="Lactive-box" v-show="active=='/engineering'">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span>工程资料</span>
+              <span>质量管理</span>
             </div>
-            <router-link to="/engineering">工程资料</router-link>
+            <router-link to="/engineering">质量管理</router-link>
           </li>
         </ul>
-        <router-link to="/homePage" v-on:click="isActive('/home')">
+        <router-link to="/home" v-on:click="isActive('/home')">
           <h2 class="head-title">{{project}}</h2>
         </router-link>
         <div class="date-time">
@@ -155,11 +155,11 @@ export default {
       return null;
     },
     // 测试
-    // getliuyong() {
-    //   this.$axios.get('http://192.168.0.139:8888/smart/top').then(res=>{
-    //     console.log(res.data)
-    //   })
-    // }
+    getliuyong() {
+      this.$axios.post('http://192.168.0.193:7878/admin/admins/signIn',{userName:'admin',password:'admin'}).then(res=>{
+        console.log(res.data)
+      })
+    }
   }
 };
 </script>

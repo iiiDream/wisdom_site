@@ -443,7 +443,10 @@ export default {
           }else{
             this.manWork = res.data;
             this.timeId = setInterval(() => {
-              if (this.dh == this.manWork.ratio) {
+              if (this.dh >= this.manWork.ratio || this.dh > 100) {
+                if (this.dh > 100) {
+                  this.dh = 100
+                }
                 clearInterval(this.timeId);
               } else {
                 this.dh++;
