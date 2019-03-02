@@ -27,7 +27,8 @@ import login from '../components/login/login.vue'
 import homePage from '../components/homePage/homePage.vue'
 import projectManagement from '../components/projectManagement/projectManagement.vue'
 import mapDemo from '../components/mapDemo/mapDemo.vue'
-
+import location from '../components/location/location.vue'
+import l_homePage from '../components/location/l_homePage.vue'
 
 const router = new VueRouter({
 
@@ -41,7 +42,12 @@ const router = new VueRouter({
         {path:'/homePage',meta:{needLogin:true},component:homePage},
         {path:'/home',meta:{needLogin:true},component:home},
         {path:'/green',meta:{needLogin:true},component:green},
-        {path:'/labour',meta:{needLogin:true},component:labour},
+        {path:'/labour',meta:{needLogin:true},component:labour},        
+        {path:'/unopen',meta:{needLogin:true},component:unopen},
+        {path:'/engineering',meta:{needLogin:true},component:engineering},
+        {path:'/monitoring',meta:{needLogin:true},component:monitoring},
+        {path:'/quality',meta:{needLogin:true},component:quality},
+        {path:'/schedule',meta:{needLogin:true},component:schedule},
         {path:'/safety',meta:{needLogin:true},component:safety,children:[
             {path:"",meta:{needLogin:true},component:elevator},
             {path:"towerCrane",meta:{needLogin:true},component:towerCrane},
@@ -49,11 +55,10 @@ const router = new VueRouter({
             {path:"car",meta:{needLogin:true},component:car},
             {path:"gantryCrane",meta:{needLogin:true},component:gantryCrane},
         ]},
-        {path:'/unopen',meta:{needLogin:true},component:unopen},
-        {path:'/engineering',meta:{needLogin:true},component:engineering},
-        {path:'/monitoring',meta:{needLogin:true},component:monitoring},
-        {path:'/quality',meta:{needLogin:true},component:quality},
-        {path:'/schedule',meta:{needLogin:true},component:schedule},
+        {path:'/location',meta:{needLogin:true},component:location,children:[
+            {path:"",meta:{needLogin:true},component:l_homePage},
+            {path:"l_homePage",meta:{needLogin:true},component:l_homePage},
+        ]},
     ]
 
     // 不需要路由拦截

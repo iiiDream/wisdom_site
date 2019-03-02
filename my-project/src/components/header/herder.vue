@@ -49,12 +49,12 @@
             </div>
             <router-link to="/monitoring">全景监控</router-link>
           </li>
-          <li  v-on:click="isActive('/schedule')">
-            <div class="Lactive-box" v-show="active=='/schedule'">
+          <li  v-on:click="isActive('/location')">
+            <div class="Lactive-box" v-show="active=='/location'">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
               <span>人员定位</span>
             </div>
-            <router-link to="/schedule">人员定位</router-link>
+            <router-link to="/location">人员定位</router-link>
           </li>
           <li  v-on:click="isActive('/quality')">
             <div class="Lactive-box" v-show="active=='/quality'">
@@ -71,7 +71,7 @@
             <router-link to="/engineering">质量管理</router-link>
           </li>
         </ul>
-        <router-link to="/home" v-on:click="isActive('/home')">
+        <router-link to="/homePage" v-on:click="isActive('/home')">
           <h2 class="head-title">{{project}}</h2>
         </router-link>
         <div class="date-time">

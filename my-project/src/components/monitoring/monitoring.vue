@@ -9,7 +9,8 @@
                             <div class="stair2"></div>
                           <el-collapse-item title="一层监控" name="1-1" class="tier">
                               <div class="detail">
-                                    <a href="#">一层西侧</a>
+
+                                    <a href="#" class="active">一层西侧</a>
                               </div>
                               <div class="detail">
                                     <a href="#">一层东侧</a>
@@ -214,7 +215,6 @@ export default {
         padding: 0;
     }
     #montoring .el-collapse-item__content>.detail {
-        padding-left: .64rem;
         background-color: #020521;
         border-bottom: 0;
         height: .56rem;
@@ -224,11 +224,20 @@ export default {
         background-position: center .54rem;
     }
     #montoring .el-collapse-item__content>.detail a {
+        padding-left: .64rem;
         display: block;
         width: 100%;
         height: 100%;
         font-size: .16rem;
         color: #3375fe;
+    }
+    #montoring .active {
+        width: 2.94rem;
+        height: .56rem;
+        background-image: url('../../../static/images/location-active.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 2.94rem .56rem;
     }
     #montoring .el-collapse {
         border: 0;
