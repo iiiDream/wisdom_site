@@ -3,17 +3,23 @@
         <!-- 侧导航栏 -->
         <div class="select">
             <ul>
-                <li>
-                    <router-link to="l-homePage" class="active">
+                <li @click="active=1">
+                    <router-link to="/location/l_homePage" :class="active==1?'active':''">
                         <i class="homePage"></i>
                         首页
                     </router-link>
                 </li>
-                <li>
-                    <a href="#">
+                <li @click="active=2">
+                    <router-link to="/location/l_monitoring" :class="active==2?'active':''">
                         <i class="location"></i>
                         实时监控
-                    </a>
+                    </router-link>
+                </li>
+                <li @click="active=3">
+                    <router-link to="/location/l_search" :class="active==3?'active':''">
+                        <i class="search"></i>
+                        搜索查询
+                    </router-link>
                 </li>
                 <li>
                     <a href="#">
@@ -91,6 +97,9 @@
                         .system {
                             background-image: url('../../../static/images/location-system.png');
                         }
+                        .search {
+                            background-image: url('../../../static/images/location-search.png');
+                        }
                     }
                     .active {
                         background-image: url('../../../static/images/location-active.png');
@@ -110,8 +119,8 @@
 export default {
     data() {
         return {
-
+            active: 1,
         }
-    }
+    },
 }
 </script>

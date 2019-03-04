@@ -22,6 +22,8 @@ import {
   Option,
   Pagination,
   Button,
+  Input,
+  DatePicker,
 } from 'element-ui'
 
 Vue.prototype.$echarts = echarts
@@ -38,6 +40,8 @@ Vue.use(Select);
 Vue.use(Option);
 Vue.use(Pagination);
 Vue.use(Button);
+Vue.use(Input);
+Vue.use(DatePicker);
 
 Vue.use(VueAMap);
 // Vue.config.productionTip = false;
