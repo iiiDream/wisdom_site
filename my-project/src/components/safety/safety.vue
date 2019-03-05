@@ -10,6 +10,8 @@
       <router-link to="/safety/car" @click.native="isActive('/safety/car')" :class="{active:index=='/safety/car'}">车辆出入</router-link>
       <i class="nav-border"></i>
       <router-link to="/safety/gantryCrane" @click.native="isActive('/safety/gantryCrane')" :class="{active:index=='/safety/gantryCrane'}">龙门吊</router-link>
+      <i class="nav-border"></i>
+      <router-link to="/safety/gas" @click.native="isActive('/safety/gas')" :class="{active:index=='/safety/gas'}">气体检测</router-link>
     </div>
     <!-- 子路由页面显示区域 -->
     <router-view class="router-box"></router-view>
@@ -33,9 +35,11 @@ export default {
     },
     // 页面刷新或重新渲染时将当前页面的路由地址赋值给 index
     getPath(){
-      this.index=this.$route.path;
-      this.$router.push({path:'/safety/elevator'});
-      this.isActive('/safety/elevator');
+      if (this.$route.path != '/safety') {
+        this.index=this.$route.path;
+      }
+    // this.$router.push({path:'/safety/elevator'});
+    // this.isActive('/safety/elevator');
     }
   },
   created() {

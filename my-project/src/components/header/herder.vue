@@ -36,7 +36,7 @@
             <router-link to="/green">绿色施工</router-link>
           </li>
           <li  v-on:click="isActive('/safety')">
-            <div class="Lactive-box" v-show="active.indexOf('/safety')!=-1" style="left:-.04rem">
+            <div class="Lactive-box" v-show="active.includes('/safety')" style="left:-.04rem">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span style="padding-left:.04rem">安全施工</span>
             </div>
@@ -50,7 +50,7 @@
             <router-link to="/monitoring">全景监控</router-link>
           </li>
           <li  v-on:click="isActive('/location')">
-            <div class="Lactive-box" v-show="active=='/location'">
+            <div class="Lactive-box" v-show="active.includes('/location')">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
               <span>人员定位</span>
             </div>
@@ -134,16 +134,9 @@ export default {
       },1000)
     },
     setActive() {
-      if(this.$route.path.includes('safety')){
-        this.active+'/elevator';
-      }
       this.active = this.$route.path
     },
     isActive(path){
-      if(this.$route.path.includes('safety')){
-        this.active+'/elevator';
-        this.$router.push({path:'/safety/elevator'});
-      }
       this.active =path;
     },
     getQueryString(name) {

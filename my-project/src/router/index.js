@@ -31,6 +31,10 @@ import location from '../components/location/location.vue'
 import l_homePage from '../components/location/l_homePage.vue'
 import l_monitoring from '../components/location/l_monitoring.vue'
 import l_search from '../components/location/l_search.vue'
+import l_history from '../components/location////l_history.vue'
+import l_set from '../components/location/l_set.vue'
+import l_rail from '../components/location/l_rail.vue'
+import gas from '../components/safety/gas.vue'
 
 const router = new VueRouter({
 
@@ -56,12 +60,16 @@ const router = new VueRouter({
             {path:"elevator",meta:{needLogin:true},component:elevator},
             {path:"car",meta:{needLogin:true},component:car},
             {path:"gantryCrane",meta:{needLogin:true},component:gantryCrane},
+            {path:"gas",meta:{needLogin:true},component:gas},
         ]},
         {path:'/location',meta:{needLogin:true},component:location,children:[
             {path:"",meta:{needLogin:true},component:l_homePage},
             {path:"l_homePage",meta:{needLogin:true},component:l_homePage},
             {path:"l_monitoring",meta:{needLogin:true},component:l_monitoring},
-            {path:"l_search",meta:{needLOgin:true},component:l_search},
+            {path:"l_search",meta:{needLogin:true},component:l_search},
+            {path:"l_history",meta:{needLogin:true},component:l_history},
+            {path:"l_set",meta:{needLogin:true},component:l_set},
+            {path:"l_rail",meta:{needLogin:true},component:l_rail},
         ]},
     ]
 

@@ -1,9 +1,14 @@
 <template>
-    <div id="l_search">
+    <div id="l_history">
         <div class="content-box">
             <div class="message">
                 <div class="inquire">
                     <el-input v-model="input" placeholder="姓名或设备编号或电话"></el-input>
+                    <el-date-picker
+                        v-model="value1"
+                        type="date"
+                        placeholder="选择日期">
+                    </el-date-picker>
                     <button>查询</button>
                 </div>
                 <div class="message-box">
@@ -18,16 +23,31 @@
                             所属公司：<span>创新劳务有限公司</span>
                         </li>
                         <li>
-                            设备编号：<span>11111111</span>
+                            设备编号：<span>1111111</span>
+                        </li>
+                        <li class="enter">
+                            进
                         </li>
                         <li>
-                            设备电量：<span>79%</span>
+                            设备电量：<span>11%</span>
                         </li>
                         <li>
-                            定位时间：<span>2019-01-01 09</span>
+                            时间：<span>2018-11-11 11:11:11</span>
                         </li>
                         <li>
-                            定位地址：<span>广东省深圳市宝安区西乡街道兴业路宝源二区（兴业路）</span>
+                            位置：<span>深圳广隆大厦</span>
+                        </li>
+                        <li class="come">
+                            出
+                        </li>
+                        <li>
+                            设备电量：<span>11%</span>
+                        </li>
+                        <li>
+                            时间：<span>2018-11-11 11:11:11</span>
+                        </li>
+                        <li>
+                            位置：<span>深圳广隆大厦</span>
                         </li>
                     </ul>
                 </div>
@@ -41,11 +61,11 @@
 </template>
 
 <style lang="less">
-    #l_search {
+    #l_history {
         .content-box {
             width: 15rem;
             height: 9.39rem;
-            padding: .07rem .07rem .07rem .2rem;
+            padding: .07rem .07rem .07rem .28rem;
             background-image: url('../../../static/images/location-bigBorder.png');
             background-position: center center;
             background-repeat: no-repeat;
@@ -53,8 +73,8 @@
             display: flex;
             .message {
                 width: 2.55rem;
+                height: 1.41rem;
                 .inquire {
-                    height: .72rem;
                     transform: translateY(.18rem);
                     .el-input {
                         width: 2rem;
@@ -75,8 +95,6 @@
                         }
                     }
                     button {
-                        // float: right;
-                        // margin-right: .18rem;
                         font-size: .12rem;
                         min-width: .4rem;
                         height: .3rem;
@@ -91,7 +109,27 @@
                     color: #fff;
                     font-size: .14rem;
                     width: 2.5rem;
-                    transform: translateY(.4rem);
+                    transform: translateY(.55rem);
+                    .enter {
+                        width: .3rem;
+                        height: .3rem;
+                        font-size: .16rem;
+                        line-height: .3rem;
+                        text-align: center;
+                        margin-top: .15rem;
+                        border-radius: .3rem;
+                        background-color: #3ee09a;
+                    }
+                    .come {
+                        width: .3rem;
+                        height: .3rem;
+                        font-size: .16rem;
+                        line-height: .3rem;
+                        text-align: center;
+                        margin-top: .15rem;
+                        border-radius: .3rem;
+                        background-color: #c23864;
+                    }
                 }
             }
             .map {
@@ -107,9 +145,7 @@ export default {
     data() {
         return {
             input: '',
-            polygon: '',
-            text: '',
-            marker: '',
+            value1: '',
             amapManager,
             zoom: 15,
             center: [114.003378,22.571492],

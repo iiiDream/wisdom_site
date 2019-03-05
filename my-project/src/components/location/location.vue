@@ -3,41 +3,41 @@
         <!-- 侧导航栏 -->
         <div class="select">
             <ul>
-                <li @click="active=1">
-                    <router-link to="/location/l_homePage" :class="active==1?'active':''">
+                <li @click="isActive='/location/l_homePage'">
+                    <router-link to="/location/l_homePage" :class="isActive=='/location/l_homePage'?'active':''">
                         <i class="homePage"></i>
                         首页
                     </router-link>
                 </li>
-                <li @click="active=2">
-                    <router-link to="/location/l_monitoring" :class="active==2?'active':''">
+                <li @click="isActive='/location/l_monitoring'">
+                    <router-link to="/location/l_monitoring" :class="isActive=='/location/l_monitoring'?'active':''">
                         <i class="location"></i>
                         实时监控
                     </router-link>
                 </li>
-                <li @click="active=3">
-                    <router-link to="/location/l_search" :class="active==3?'active':''">
+                <li @click="isActive='/location/l_search'">
+                    <router-link to="/location/l_search" :class="isActive=='/location/l_search'?'active':''">
                         <i class="search"></i>
                         搜索查询
                     </router-link>
                 </li>
-                <li>
-                    <a href="#">
+                <li @click="isActive='/location/l_rail'">
+                    <router-link to="/location/l_rail" :class="isActive=='/location/l_rail'?'active':''">
                         <i class="rail"></i>
                         电子围栏
-                    </a>
+                    </router-link>
                 </li>
-                <li>
-                    <a href="#">
+                <li @click="isActive='/location/l_history'">
+                    <router-link to="/location/l_history" :class="isActive=='/location/l_history'?'active':''">
                         <i class="statisti"></i>
-                        统计分析
-                    </a>
+                        历史轨迹
+                    </router-link>
                 </li>
-                <li>
-                    <a href="#">
+                <li @click="isActive='/location/l_set'">
+                    <router-link to="/location/l_set" :class="isActive=='/location/l_set'?'active':''">
                         <i class="system"></i>
                         系统设置
-                    </a>
+                    </router-link>
                 </li>
             </ul>
         </div>
@@ -119,8 +119,21 @@
 export default {
     data() {
         return {
-            active: 1,
+            isActive: '/location/l_homePage',
         }
+    },
+    methods: {
+        getRouter() {
+            if (this.$route.path != '/location') {
+                this.isActive = this.$route.path
+            }
+        }
+    },
+    created() {
+        this.getRouter()
+    },
+    updated() {
+        this.getRouter()
     },
 }
 </script>
