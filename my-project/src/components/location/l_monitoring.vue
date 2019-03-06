@@ -3,20 +3,11 @@
         <div class="content-box">
             <div class="nav">
                 <el-collapse accordion>
-                    <el-collapse-item title="龙华大浪项目" name="1">
+                    <el-collapse-item title="虎匠罗芳项目" name="1">
                         <el-collapse @change="handleChange" accordion>
                             <el-collapse-item title="隆创工业园" name="1-1">
                                 <div>
-                                    <a href="#">某某某</a>
-                                </div>
-                                <div>
-                                    <router-link to="/location/l_search" style="color:#fff">某某某</router-link>
-                                </div>
-                                <div>
-                                    <a href="#">某某某</a>
-                                </div>
-                                <div>
-                                    <a href="#">某某某</a>
+                                    <router-link to="/location/l_search" style="color:#fff">段裕德</router-link>
                                 </div>
                             </el-collapse-item>
                         </el-collapse>

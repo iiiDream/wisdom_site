@@ -3,18 +3,9 @@
         <div class="content-box">
             <div class="nav">
                 <el-collapse accordion>
-                    <el-collapse-item title="龙华大浪项目" name="1">
-                        <div>
-                            <a href="#">隆创工业园</a>
-                        </div>
+                    <el-collapse-item title="虎匠罗芳项目" name="1">
                         <div>
                             <a href="#" style="color:#fff" @click="handleChange">隆创工业园</a>
-                        </div>
-                        <div>
-                            <a href="#">隆创工业园</a>
-                        </div>
-                        <div>
-                            <a href="#">隆创工业园</a>
                         </div>
                     </el-collapse-item>
                 </el-collapse>
