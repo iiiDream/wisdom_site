@@ -1197,7 +1197,7 @@ span {
 .qualified:hover {
   background-image: url("../../../static/images/l_green.gif");
   background-position: center center;
-  background-size: 1.4rem 1.4rem;
+  background-size: 1.28rem 1.28rem;
 }
 .disqualification {
   background-image: url("../../../static/images/l_red.png");
@@ -1206,7 +1206,7 @@ span {
 .disqualification:hover {
   background-image: url("../../../static/images/l_red.gif");
   background-position: center center;
-  background-size: 1.4rem 1.4rem;
+  background-size: 1.28rem 1.28rem;
 }
 .border {
   width: 1rem;

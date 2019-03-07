@@ -50,6 +50,10 @@
         <!-- 监控显示模块 -->
         <div class="main">
             <div class="main-top">
+                <video id="myPlayer" poster="" controls playsInline webkit-playsinline autoplay>
+                    <source :src="rtmp_url" type="" />
+                    <source :src="http_url" type="application/x-mpegURL" />
+                </video>
             </div>
             <div class="main-bottom">
                 <div class="left-button" @click="leftMove">
@@ -125,12 +129,19 @@
 </template>
 
 <script>
-
+// var player = new EZUIPlayer('myPlayer')
 export default {
     data() {
         return {
             activeName: '0',
+            player:"",
+            rtmp_url:"",
+            http_url:"",
+            message:'加载中...',
         }
+    },
+    mounted() {
+        this.GetLiveUrl();
     },
     methods: {
         leftMove() {
@@ -151,8 +162,20 @@ export default {
             if (!(temp < min)) {
                 $('.frames ul').css('left',temp/100+'rem')
             }
+        },
+        GetLiveUrl(){
+            setInterval(() => {
+                this.rtmp_url = "http://hls.open.ys7.com/openlive/a37272d002f041e3a4da84f218ee63ac.m3u8"
+                this.http_url = "http://hls.open.ys7.com/openlive/a37272d002f041e3a4da84f218ee63ac.m3u8"
+            },100)
         }
     },
+    updated() {
+        if(this.rtmp_url!=""){
+            //如果在mounted中声明，直播地址还未取到，导致视频不显示。所以放在了这里
+            this.player = new EZUIPlayer('myPlayer'); 
+        }
+    }
 }
 </script>
 
@@ -251,8 +274,12 @@ export default {
         margin: 0 auto;
         width: 10.17rem;
         height: 5.72rem;
-        background-image: url('../../../static/images/m_main.png');
-        background-size: contain;
+        /* background-image: url('../../../static/images/m_main.png');
+        background-size: contain; */
+    }
+    #montoring .main-top video {
+        width: 10.17rem;
+        height: 5.72rem;
     }
     #montoring .main-top div {
         color: #fff;
