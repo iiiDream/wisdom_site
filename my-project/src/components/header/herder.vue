@@ -56,19 +56,19 @@
             </div>
             <router-link to="/location">人员定位</router-link>
           </li>
-          <li  v-on:click="isActive('/quality')">
-            <div class="Lactive-box" v-show="active=='/quality'">
-              <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span>进度管理</span>
-            </div>
-            <router-link to="/quality">进度管理</router-link>
-          </li>
           <li  v-on:click="isActive('/engineering')">
             <div class="Lactive-box" v-show="active=='/engineering'">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
               <span>质量管理</span>
             </div>
             <router-link to="/engineering">质量管理</router-link>
+          </li>
+          <li  v-on:click="isActive('/quality')">
+            <div class="Lactive-box" v-show="active=='/quality'">
+              <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
+              <span>进度管理</span>
+            </div>
+            <router-link to="/quality">进度管理</router-link>
           </li>
         </ul>
         <router-link to="/homePage" v-on:click="isActive('/home')">

@@ -277,7 +277,7 @@ export default {
         background-image: url('../../../static/images/homePage-inputBg.png');
         background-size: contain;
         top: .15rem;
-        left: .6rem;
+        left: .7rem;
         padding-left: .17rem;
     }
     .main .search-bar input {

@@ -35,6 +35,7 @@ import l_history from '../components/location////l_history.vue'
 import l_set from '../components/location/l_set.vue'
 import l_rail from '../components/location/l_rail.vue'
 import gas from '../components/safety/gas.vue'
+import m_statistics from '../components/monitoring/m_statistics.vue'
 
 const router = new VueRouter({
 
@@ -50,7 +51,6 @@ const router = new VueRouter({
         {path:'/green',meta:{needLogin:true},component:green},
         {path:'/labour',meta:{needLogin:true},component:labour},        
         {path:'/unopen',meta:{needLogin:true},component:unopen},
-        {path:'/engineering',meta:{needLogin:true},component:engineering},
         {path:'/monitoring',meta:{needLogin:true},component:monitoring},
         {path:'/quality',meta:{needLogin:true},component:quality},
         {path:'/schedule',meta:{needLogin:true},component:schedule},
@@ -70,6 +70,10 @@ const router = new VueRouter({
             {path:"l_history",meta:{needLogin:true},component:l_history},
             {path:"l_set",meta:{needLogin:true},component:l_set},
             {path:"l_rail",meta:{needLogin:true},component:l_rail},
+        ]},
+        {path:'/engineering',meta:{needLogin:true},component:engineering,children:[
+            {path:"",meta:{needLogin:true},component:m_statistics},
+            {path:"m_statistics",meta:{needLogin:true},component:m_statistics},
         ]},
     ]
 

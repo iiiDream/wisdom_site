@@ -49,13 +49,31 @@
         </div>
         <!-- 监控显示模块 -->
         <div class="main">
-            <div class="main-top">
-                <video id="myPlayer" poster="" controls playsInline webkit-playsinline autoplay>
+            <div class="main-box">
+                <video id="player1" poster="" controls playsInline webkit-playsinline autoplay>
                     <source :src="rtmp_url" type="" />
                     <source :src="http_url" type="application/x-mpegURL" />
                 </video>
             </div>
-            <div class="main-bottom">
+            <div class="main-box">
+                <video id="player2" poster="" controls playsInline webkit-playsinline autoplay>
+                    <source :src="rtmp_url2" type="" />
+                    <source :src="http_url2" type="application/x-mpegURL" />
+                </video>
+            </div>
+            <div class="main-box">
+                <video id="player3" poster="" controls playsInline webkit-playsinline autoplay>
+                    <source :src="rtmp_url2" type="" />
+                    <source :src="http_url2" type="application/x-mpegURL" />
+                </video>
+            </div>
+            <div class="main-box">
+                <video id="player4" poster="" controls playsInline webkit-playsinline autoplay>
+                    <source :src="rtmp_url2" type="" />
+                    <source :src="http_url2" type="application/x-mpegURL" />
+                </video>
+            </div>
+            <!-- <div class="main-bottom">
                 <div class="left-button" @click="leftMove">
                 </div>
                 <div class="frames">
@@ -82,10 +100,10 @@
                 </div>
                 <div class="right-button" @click="rightMove">
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- 监控功能模块 -->
-        <div class="control">
+        <!-- <div class="control">
             <div class="control-box">
                 <div class="btn">
                     <div class="btn-box">
@@ -124,7 +142,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -134,9 +152,14 @@ export default {
     data() {
         return {
             activeName: '0',
-            player:"",
+            player1:"",
+            player2:"",
+            player3:"",
+            player4:"",
             rtmp_url:"",
             http_url:"",
+            rtmp_url2:"",
+            http_url2:"",
             message:'加载中...',
         }
     },
@@ -167,13 +190,18 @@ export default {
             setInterval(() => {
                 this.rtmp_url = "http://hls.open.ys7.com/openlive/a37272d002f041e3a4da84f218ee63ac.m3u8"
                 this.http_url = "http://hls.open.ys7.com/openlive/a37272d002f041e3a4da84f218ee63ac.m3u8"
+                this.rtmp_url2 = "http://hls.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.m3u8"
+                this.http_url2 = "http://hls.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.m3u8"
             },100)
         }
     },
     updated() {
         if(this.rtmp_url!=""){
             //如果在mounted中声明，直播地址还未取到，导致视频不显示。所以放在了这里
-            this.player = new EZUIPlayer('myPlayer'); 
+            this.player1 = new EZUIPlayer('player1'); 
+            this.player2 = new EZUIPlayer('player2'); 
+            this.player3 = new EZUIPlayer('player3'); 
+            this.player4 = new EZUIPlayer('player4'); 
         }
     }
 }
@@ -267,21 +295,26 @@ export default {
     }
     /* 显示模块样式 */
     #montoring .main {
-        width: 10.97rem;
+        flex: 1;
         height: 9.37rem;
+        margin-left: .25rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
-    #montoring .main-top {
-        margin: 0 auto;
-        width: 10.17rem;
-        height: 5.72rem;
+    #montoring .main-box {
+        /* margin: 0 auto; */
+        width: 49%;
+        height: 4.6rem;
         /* background-image: url('../../../static/images/m_main.png');
         background-size: contain; */
     }
-    #montoring .main-top video {
-        width: 10.17rem;
-        height: 5.72rem;
+    #montoring .main-box video {
+        width: 100%;
+        height: 100%;
+        /* height: 5.72rem; */
     }
-    #montoring .main-top div {
+    #montoring .main-box div {
         color: #fff;
         text-align: center;
         line-height: 5.72rem;
