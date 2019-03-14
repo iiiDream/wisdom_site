@@ -445,7 +445,7 @@ export default {
         background-size: contain;
         margin-right: .3rem;
     }
-    .temp1 {
+    /* .temp1 {
         width: 3.1rem;
         height: 3.09rem;
         margin-left: .02rem;
@@ -468,5 +468,5 @@ export default {
         margin-top: .02rem;
         background-image: url('../../../static/images/temp3.jpg');
         background-size: cover;
-    }
+    } */
 </style>

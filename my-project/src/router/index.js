@@ -18,7 +18,7 @@ import elevator from '../components/safety/elevator.vue'
 import car from '../components/safety/car.vue'
 import gantryCrane from '../components/safety/gantryCrane.vue'
 import unopen from '../components/unopen/unopen.vue'
-import engineering from '../components/engineering/engineering.vue'
+// import engineering from '../components/engineering/engineering.vue'
 import monitoring from '../components/monitoring/monitoring.vue'
 import quality from '../components/quality/quality.vue'
 import schedule from '../components/schedule/schedule.vue'
@@ -35,7 +35,8 @@ import l_history from '../components/location////l_history.vue'
 import l_set from '../components/location/l_set.vue'
 import l_rail from '../components/location/l_rail.vue'
 import gas from '../components/safety/gas.vue'
-import m_statistics from '../components/monitoring/m_statistics.vue'
+import q_statistics from '../components/quality/q_statistics.vue'
+import q_set from '../components/quality/q_set.vue'
 
 const router = new VueRouter({
 
@@ -52,7 +53,7 @@ const router = new VueRouter({
         {path:'/labour',meta:{needLogin:true},component:labour},        
         {path:'/unopen',meta:{needLogin:true},component:unopen},
         {path:'/monitoring',meta:{needLogin:true},component:monitoring},
-        {path:'/quality',meta:{needLogin:true},component:quality},
+        // {path:'/quality',meta:{needLogin:true},component:quality},
         {path:'/schedule',meta:{needLogin:true},component:schedule},
         {path:'/safety',meta:{needLogin:true},component:safety,children:[
             {path:"",meta:{needLogin:true},component:elevator},
@@ -71,9 +72,10 @@ const router = new VueRouter({
             {path:"l_set",meta:{needLogin:true},component:l_set},
             {path:"l_rail",meta:{needLogin:true},component:l_rail},
         ]},
-        {path:'/engineering',meta:{needLogin:true},component:engineering,children:[
-            {path:"",meta:{needLogin:true},component:m_statistics},
-            {path:"m_statistics",meta:{needLogin:true},component:m_statistics},
+        {path:'/quality',meta:{needLogin:true},component:quality,children:[
+            {path:"",meta:{needLogin:true},component:q_statistics},
+            {path:"q_statistics",meta:{needLogin:true},component:q_statistics},
+            {path:"q_set",meta:{needLogin:true},component:q_set},
         ]},
     ]
 
