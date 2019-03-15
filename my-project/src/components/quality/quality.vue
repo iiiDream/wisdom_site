@@ -4,25 +4,25 @@
         <div class="select">
             <ul>
                 <li @click="isActive='/quality/q_statistics'">
-                    <router-link to="/quality/q_statistics" class="active">
+                    <router-link to="/quality/q_statistics" :class="isActive=='/quality/q_statistics'?'active':''">
                         <i class="statisti"></i>
                         数据统计
                     </router-link>
                 </li>
-                <li>
-                    <a>
+                <li @click="isActive='/quality/q_record'">
+                    <router-link to="/quality/q_record" :class="isActive=='/quality/q_record'?'active':''">
                         <i class="search"></i>
                         检查记录
-                    </a>
+                    </router-link>
                 </li>
                 <li>
                     <a>
-                        <i class="rail"></i>
+                        <i class="form"></i>
                         整改单管理
                     </a>
                 </li>
                 <li @click="isActive='/quality/q_set'">
-                    <router-link to="/quality/q_set">
+                    <router-link to="/quality/q_set" :class="isActive=='/quality/q_set'?'active':''">
                         <i class="system"></i>
                         安全隐患库
                     </router-link>
@@ -70,8 +70,8 @@
                             top: 50%;
                             transform: translateY(-50%);
                         }
-                        .rail {
-                            background-image: url('../../../static/images/location-rail.png');
+                        .form {
+                            background-image: url('../../../static/images/quality-form.png');
                         }
                         .statisti {
                             background-image: url('../../../static/images/location-statisti.png');
@@ -100,13 +100,22 @@
   export default {
     data() {
         return {
-            activeNames: ['']
+            activeNames: [''],
+            isActive: '/quality/q_statistics',
         };
     },
     methods: {
         handleChange(val) {
             console.log(val);
+        },
+        getRouter() {
+            if (this.$route.path != '/quality') {
+                this.isActive = this.$route.path
+            }
         }
-    }
+    },
+    created() {
+        this.getRouter()
+    },
   }
 </script>

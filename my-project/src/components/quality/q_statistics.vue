@@ -42,7 +42,37 @@
                     <a>自定义</a>
                 </div>
                 <div class="time-box">
-
+                    <!-- 按周选择 -->
+                    <el-date-picker
+                        style="display:none;"
+                        v-model="value3"
+                        type="week"
+                        format="yyyy-MM-dd"
+                        placeholder="选择周">
+                    </el-date-picker>
+                    <!-- 按月选择 -->
+                    <el-date-picker
+                        style="display:none;"
+                        v-model="value4"
+                        type="month"
+                        placeholder="选择月">
+                    </el-date-picker>
+                    <!-- 按年选择 -->
+                    <el-date-picker
+                        style="display:none;"
+                        v-model="value5"
+                        type="year"
+                        placeholder="选择年">
+                    </el-date-picker>
+                    <!-- 自定义选择 -->
+                    <el-date-picker
+                        style="display:none;"
+                        v-model="value6"
+                        type="daterange"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
+                    </el-date-picker>
                 </div>
             </div>
             <div class="generalize">
@@ -93,7 +123,7 @@
     </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
     #q_statistics {
         .top-box {
             display: flex;
@@ -144,10 +174,12 @@
             background-repeat: no-repeat;
             background-size: contain;
             .time {
-                padding-bottom: .2rem;
+                // padding-bottom: .2rem;
+                height: .44rem;
                 border-bottom: .01rem solid #142a6a;
                 .button-box {
                     width: 2.66rem;
+                    float: left;
                     display: flex;
                     justify-content: space-between;
                     a {
@@ -157,6 +189,9 @@
                     .bolder {
                         font-weight: bolder;
                     }
+                }
+                .tiem-box {
+                    // float: left;
                 }
             }
             .generalize {
@@ -222,13 +257,17 @@
 export default {
     data() {
         return {
-
+            value3: '',
+            value4: '',
+            value5: '',
+            value6: ''
         }
     },
     mounted() {
         this.temp()
     },
     methods: {
+        // 柱状图初始化
         temp() {
             let myChart = this.$echarts.init(document.getElementById('histogram'));
             myChart.setOption({

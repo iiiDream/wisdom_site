@@ -37,6 +37,7 @@ import l_rail from '../components/location/l_rail.vue'
 import gas from '../components/safety/gas.vue'
 import q_statistics from '../components/quality/q_statistics.vue'
 import q_set from '../components/quality/q_set.vue'
+import q_record from '../components/quality/q_record.vue'
 
 const router = new VueRouter({
 
@@ -76,6 +77,7 @@ const router = new VueRouter({
             {path:"",meta:{needLogin:true},component:q_statistics},
             {path:"q_statistics",meta:{needLogin:true},component:q_statistics},
             {path:"q_set",meta:{needLogin:true},component:q_set},
+            {path:"q_record",meta:{needLogin:true},component:q_record},
         ]},
     ]
 
