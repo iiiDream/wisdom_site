@@ -24,6 +24,8 @@ import {
   Button,
   Input,
   DatePicker,
+  Timeline,
+  TimelineItem,
 } from 'element-ui'
 
 Vue.prototype.$echarts = echarts
@@ -42,6 +44,8 @@ Vue.use(Pagination);
 Vue.use(Button);
 Vue.use(Input);
 Vue.use(DatePicker);
+Vue.use(Timeline);
+Vue.use(TimelineItem);
 
 Vue.use(VueAMap);
 // Vue.config.productionTip = false;

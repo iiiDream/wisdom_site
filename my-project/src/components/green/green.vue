@@ -1140,10 +1140,10 @@ export default {
           margin-left: 0.6rem;
           font-size: 0.12rem;
           .sub {
-            width: 0.7rem;
-            margin-left: 0.2rem;
+            width: 0.8rem;
+            margin-left: 0.1rem;
             img {
-              margin-left: 0.08rem;
+              margin-left: 0.13rem;
               width: 0.54rem;
               height: 0.54rem;
               display: block;
@@ -1155,7 +1155,7 @@ export default {
             }
             .fengx {
               margin-top: -0.05rem;
-              margin-left: 0.1rem;
+              margin-left: 0.15rem;
               width: 0.5rem;
               height: 0.2rem;
               border-radius: 0.05rem;

@@ -93,6 +93,10 @@
                         .el-input__prefix {
                             display: none;
                         }
+                        .el-input__icon {
+                            height: .3rem;
+                            line-height: .3rem;
+                        }
                     }
                     button {
                         font-size: .12rem;

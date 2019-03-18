@@ -13,9 +13,9 @@
             <div class="map">
                 <el-amap ref="map" vid="amapDemo" :amap-manager="amapManager" :center="center" :zoom="zoom" :plugin="plugin" :events="events" class="amap-demo">
                 </el-amap>
-                <a>添加围栏</a>
-                <a>编辑围栏</a>
-                <a>删除围栏</a>
+                <a class="button">添加围栏</a>
+                <a class="button">编辑围栏</a>
+                <a class="button">删除围栏</a>
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
             .map {
                 flex: 1;
                 position: relative;
-                a {
+                .button {
                     color: #fff;
                     width: .95rem;
                     height: .39rem;

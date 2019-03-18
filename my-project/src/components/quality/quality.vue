@@ -15,11 +15,11 @@
                         检查记录
                     </router-link>
                 </li>
-                <li>
-                    <a>
+                <li @click="isActive='/quality/q_infopath'">
+                    <router-link to="/quality/q_infopath" :class="isActive=='/quality/q_infopath'?'active':''">
                         <i class="form"></i>
                         整改单管理
-                    </a>
+                    </router-link>
                 </li>
                 <li @click="isActive='/quality/q_set'">
                     <router-link to="/quality/q_set" :class="isActive=='/quality/q_set'?'active':''">

@@ -57,7 +57,7 @@
             <router-link to="/location">人员定位</router-link>
           </li>
           <li  v-on:click="isActive('/quality')">
-            <div class="Lactive-box" v-show="active=='/quality'">
+            <div class="Lactive-box" v-show="active.includes('/quality')">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
               <span>质量管理</span>
             </div>

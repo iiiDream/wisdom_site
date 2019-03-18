@@ -38,6 +38,8 @@ import gas from '../components/safety/gas.vue'
 import q_statistics from '../components/quality/q_statistics.vue'
 import q_set from '../components/quality/q_set.vue'
 import q_record from '../components/quality/q_record.vue'
+import q_particulars from '../components/quality/q_particulars.vue'
+import q_infopath from '../components/quality/q_infopath.vue'
 
 const router = new VueRouter({
 
@@ -78,7 +80,9 @@ const router = new VueRouter({
             {path:"q_statistics",meta:{needLogin:true},component:q_statistics},
             {path:"q_set",meta:{needLogin:true},component:q_set},
             {path:"q_record",meta:{needLogin:true},component:q_record},
+            {path:"q_infopath",meta:{needLogin:true},component:q_infopath},
         ]},
+        {path:'/q_particulars',meta:{needLogin:true},component:q_particulars}
     ]
 
     // 不需要路由拦截
