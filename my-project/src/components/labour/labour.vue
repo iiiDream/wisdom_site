@@ -426,6 +426,7 @@ export default {
       attendanceData: "", //出勤数据
       contractData: "", //合同签订数据
       staffData: "", //班组与人员数据
+      attendanceMax: 600, //项目出勤统计最大人数
       xmid:'',
       dh: 0,
       timeId: null,
@@ -531,7 +532,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            max: 600,
+            max: this.attendanceMax,
             min: 0,
             interval: 100,
             axisLabel: {
@@ -711,6 +712,15 @@ export default {
               lMDay.push(this.attendanceData.KqTodayData[i3].day);
             }
 
+            // 判断项目出勤统计表Y轴的最大值
+            for (let i4 = 0; i4 < aMZc.length; i4++) {
+              for (let i5 = 0; i5 < aMZc.length; i5++) {
+                if (aMZc[i4]>this.attendanceMax || aMZcGly[i4]>this.attendanceMax || aMTotal[i4]>this.attendanceMax) {
+                  this.attendanceMax += 100
+                }
+              }
+            }
+
             // 数据成功返回并且转换成数组以后 调用ECharts的渲染函数 将Echarts图渲染到页面中
             this.professionMap(pM);
             this.attendance(aMTotal, aMZc, aMDay, aMZcGly);
@@ -750,6 +760,7 @@ export default {
           if(res.data.success == 1){
             this.$router.push('unopen')
           }else{
+            console.log(res.data)
             this.contractData = res.data;
             // 数据渲染完成时 再调用圆形进度条渲染函数
             setTimeout(() => {
