@@ -24,7 +24,11 @@
                             设备电量：<span>{{localtionListData.localtionList[0].bat}}%</span>
                         </li>
                         <li>
+<<<<<<< HEAD
                             定位时间：<span>{{localtionListData.localtionList[0].createDate}}</span>
+=======
+                            定位时间：<span>2019-01-01 09：00</span>
+>>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
                         </li>
                         <li>
                             定位地址：<span>{{localtionListData.localtionList[0].address}}</span>

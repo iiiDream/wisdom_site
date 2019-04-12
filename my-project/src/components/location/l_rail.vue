@@ -13,6 +13,7 @@
             <div class="map">
                 <el-amap ref="map" vid="amapDemo" :amap-manager="amapManager" :center="center" :zoom="zoom" :plugin="plugin" :events="events" class="amap-demo">
                 </el-amap>
+<<<<<<< HEAD
                 <a v-show="gid != ''" class="button" @click="importShow = true">编辑围栏</a>
                 <!-- <el-button type="number" @click="open3" class="button">编辑围栏</el-button> -->
                 <div class="import-box" v-show="importShow">
@@ -23,6 +24,11 @@
                         <a class="cancel" @click="cancelClick">取消</a>
                     </div>
                 </div>
+=======
+                <a class="button">添加围栏</a>
+                <a class="button">编辑围栏</a>
+                <a class="button">删除围栏</a>
+>>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
             </div>
         </div>
     </div>

@@ -474,14 +474,22 @@ export default {
     methods: {
         particulars() {
             // window.open('http://localhost:8080/?xmid=DV2mxBGL1Ao%3D#/q_particulars', '_blank');
+<<<<<<< HEAD
             // console.log('hello world')
             this.$router.push({ path: 'q_infoParticulars' })
+=======
+            console.log('hello world')
+>>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
         },
         aClick(event) {
             // 阻止事件冒泡
             event.stopPropagation()
             console.log('I am a')
+<<<<<<< HEAD
         },
+=======
+        }
+>>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
     },
 }
 </script>

@@ -45,11 +45,15 @@ import q_statistics from '../components/quality/q_statistics.vue'
 import q_set from '../components/quality/q_set.vue'
 import q_record from '../components/quality/q_record.vue'
 import q_particulars from '../components/quality/q_particulars.vue'
+<<<<<<< HEAD
 import q_infoParticulars from '../components/quality/q_infoParticulars.vue'
 import q_infopath from '../components/quality/q_infopath.vue'
 import g_particulars from '../components/green/g_particulars.vue'
 import g_electricity from '../components/green/g_electricity.vue'
 import information from '../components/information/information.vue'
+=======
+import q_infopath from '../components/quality/q_infopath.vue'
+>>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
 
 const router = new VueRouter({
 
@@ -94,9 +98,14 @@ const router = new VueRouter({
             {path:"q_set",meta:{needLogin:true},component:q_set},
             {path:"q_record",meta:{needLogin:true},component:q_record},
             {path:"q_infopath",meta:{needLogin:true},component:q_infopath},
+<<<<<<< HEAD
             {path:'q_infoParticulars',meta:{needLogin:true},component:q_infoParticulars},
         ]},
         {path:'/q_particulars',meta:{needLogin:true},component:q_particulars},
+=======
+        ]},
+        {path:'/q_particulars',meta:{needLogin:true},component:q_particulars}
+>>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
     ]
 
     // 不需要路由拦截
