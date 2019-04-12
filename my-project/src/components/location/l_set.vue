@@ -1,10 +1,16 @@
 <template>
     <div id="l_set">
+        <div class="button-box">
+            <a @click="areaShow" :class="show?'active':''">工区</a>
+            <a @click="staffShow" :class="show?'':'active'">人员</a>
+            <a v-show="show" class="right-button">添加工区</a>
+            <a v-show="!show" class="right-button">添加工人</a>
+        </div>
         <div class="table-box">
-            <ul>
+            <ul class="area" v-show="show">
                 <li>
                     <span>序号</span>
-                    <span>公司名称</span>
+                    <span>工区名称</span>
                     <span>定位方式</span>
                     <span>自动定位上报时间间隔</span>
                     <span>定位数据连接超时时间</span>
@@ -121,13 +127,65 @@
                     </span>
                 </li>
             </ul>
+            <ul class="staff" v-show="!show">
+                <li>
+                    <span>序号</span>
+                    <span>名字</span>
+                    <span>所在工区</span>
+                    <span>所属劳务</span>
+                    <span>设备编号</span>
+                    <span>操作</span>
+                </li>
+                <li>
+                    <span>1</span>
+                    <span>韩子昂</span>
+                    <span>
+                        科创工业园
+                    </span>
+                    <span>
+                        科创劳务有限公司
+                    </span>
+                    <span>
+                        0001
+                    </span>
+                    <span>
+                        <a href="#">保存</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="#">删除</a>
+                    </span>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
 
 <style lang="less">
     #l_set {
+        .button-box {
+            height: .4rem;
+            padding-top: .1rem;
+            a {
+                color: #fff;
+                width: .66rem;
+                height: .3rem;
+                font-size: .16rem;
+                line-height: .3rem;
+                text-align: center;
+                display: inline-block;
+                border-radius: .03rem;
+                overflow: hidden;
+            }
+            .right-button {
+                width: 1.1rem;
+                float: right;
+                background-color: #3375fe;
+            }
+            .active {
+                background-color: #3375fe;
+            }
+        }
         .table-box {
+            margin-top: .18rem;
             ul {
                 width: 100%;
                 border: .02rem solid #142a6a;
@@ -179,7 +237,16 @@ export default {
             second3: 8,
             second4: 8,
             second5: 8,
+            show: true,
         }
-    }
+    },
+    methods: {
+        areaShow() {
+            this.show = true;
+        },
+        staffShow() {
+            this.show = false;
+        },
+    },
 }
 </script>

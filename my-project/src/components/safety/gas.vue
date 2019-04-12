@@ -170,10 +170,10 @@
                         }
                     }
                     .normal {
-                        color: #21ff6a;
+                        color: #24e974;
                     }
                     .warning {
-                        color: #c23864;
+                        color: #fb497c;
                     }
                 }
                 .bottom-box {
@@ -213,26 +213,26 @@
                             }
                         }
                         .normal {
-                            color: #21ff6a;
+                            color: #24e974;
                             background-image: url('../../../static/images/s_g-green.png');
                         }
                         .warning {
-                            color: #c23864;
+                            color: #fb497c;
                             background-image: url('../../../static/images/s_g-red.png');
                         }
                     }
                     .history {
                         height: .9rem;
-                        margin-top: 1rem;
+                        margin-top: .9rem;
                         text-align: center;
-                        padding-top: .6rem;
+                        padding-top: .38rem;
                         background-image: url('../../../static/images/s_history.png');
                         background-position: top center;
                         background-repeat: no-repeat;
-                        background-size: .5rem .5rem;
+                        background-size: .3rem .3rem;
                         a {
                             color: #fff;
-                            font-size: .18rem;
+                            font-size: .16rem;
                         }
                     }
                 }

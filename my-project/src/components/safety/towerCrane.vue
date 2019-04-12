@@ -7,12 +7,13 @@
                         <span :class="val.State==0?'normal':'anomaly'">{{val.State==0?'正常运行':'异常运行'}}</span>
                     </div>
                     <div class="employee">
-                        <span class="bolder">今日工作</span>
+                        <span class="bolder">操作员</span>
                         <span>{{val.Name}}</span>
                         <span class="bolder">上班时间</span>
                         <span>{{val.time}}</span>
                     </div>
-                    <img :src="imgUrl+val.photo" alt="" class="pic">
+                    <!-- <img :src="imgUrl+val.photo" alt="" class="pic"> -->
+                    <img src="../../../static/images/s_pic.png" alt="" class="pic">
                 </div>
                 <div class="bottom-box">
                     <div class="name">
@@ -108,7 +109,7 @@ export default {
         // 请求塔吊数据
         getTowerCraneData(){
             this.xmid = this.getQueryString('xmid')
-            this.$axios.get(`/APP/XMPage/DeviceData.ashx?method=GetTaJiData&xmid=${this.xmid}`).then(res=>{
+            this.$axios.get(`http://gd.17hr.net:8018/APP/XMPage/DeviceData.ashx?method=GetTaJiData&xmid=${this.xmid}`).then(res=>{
                 if(res.data.success == 1){
                     this.$router.push('unopen')
                 }else{
@@ -203,6 +204,9 @@ export default {
         color: #fff;
         font-size: .2rem;
         line-height: .5rem;
+    }
+    .employee .bolder {
+        text-align: right;
     }
     /* 下部盒子样式 */
     .bottom-box {

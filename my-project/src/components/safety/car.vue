@@ -53,7 +53,7 @@ export default {
         // 请求车辆出入数据
         getCarData() {
             this.xmid = this.getQueryString('xmid')
-            this.$axios.get(`/APP/XMPage/DeviceData.ashx?method=GetPkData&xmid=${this.xmid}`).then(res=>{
+            this.$axios.get(`http://gd.17hr.net:8018/APP/XMPage/DeviceData.ashx?method=GetPkData&xmid=${this.xmid}`).then(res=>{
                 if(res.data.success == 1){
                     this.$router.push('unopen')
                 }else{
@@ -119,7 +119,7 @@ export default {
         font-weight: bolder;
     }
     .anomaly {
-        color: #c23864;
+        color: #fb497c;
     }
     .normal {
         color: #24e974;
@@ -196,8 +196,8 @@ export default {
         background-size: cover;
     }
     .border-red {
-        /* border-color: #c23864;
-        color: #c23864; */
+        /* border-color: #fb497c;
+        color: #fb497c; */
         background-image: url('../../../static/images/s_c-red.png');
         background-size: cover;
     }

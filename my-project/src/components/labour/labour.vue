@@ -21,11 +21,11 @@
                   <img src="../../../static/images/l_total.png" alt>
                 </div>
                 <div>
-                  <p>项目在线人数</p>
+                  <p>项目在场人数</p>
                   <span
-                    v-for="(item,index) in attendanceData.EmpRenShuData"
+                    v-for="(item,index) in KQCountData"
                     :key="index"
-                  >{{item.total}}</span>
+                  >{{item.sum}}</span>
                 </div>
               </li>
               <li>
@@ -33,11 +33,11 @@
                   <img src="../../../static/images/l_zc.png" alt>
                 </div>
                 <div>
-                  <p>现场实时人数</p>
+                  <p>今日考勤总人数</p>
                   <span
-                    v-for="(item,index) in attendanceData.EmpRenShuData"
+                    v-for="(item,index) in KQCountData"
                     :key="index"
-                  >{{item.zc}}</span>
+                  >{{item.kq}}</span>
                 </div>
               </li>
               <li>
@@ -47,9 +47,9 @@
                 <div>
                   <p>今日工人出勤人数</p>
                   <span
-                    v-for="(item,index) in attendanceData.EmpRenShuData"
+                    v-for="(item,index) in KQCountData"
                     :key="index"
-                  >{{item.jrkq}}</span>
+                  >{{item.workerCheck}}</span>
                 </div>
               </li>
               <li>
@@ -59,9 +59,9 @@
                 <div>
                   <p>今日管理出勤人数</p>
                   <span
-                  v-for="(item,index) in attendanceData.EmpRenShuData"
+                  v-for="(item,index) in KQCountData"
                     :key="index"
-                    >{{item.glykq}}</span>
+                    >{{item.managerCheck}}</span>
                 </div>
               </li>
             </ul>
@@ -75,13 +75,13 @@
           <div class="map" id="professionMap" style="width:4.14rem;height:1.8rem;"></div>
           <div class="left-bottom-data" id="leftBottom">
             <ul id="leftBottom1">
-              <li v-for="(item,index) in attendanceData.EmpPostData" :key="index">
+              <li v-for="(item,key,index) in WorkTypeData" :key="index">
                 <div class="float-left">
                   <i :class="'color'+(index+1)"></i>
-                  <span>{{item.name}}</span>
+                  <span>{{key}}</span>
                 </div>
                 <div class="float-right">
-                  <span>{{item.zc}}</span>
+                  <span>{{item}}</span>
                   <span>人</span>
                 </div>
               </li>
@@ -99,16 +99,16 @@
             <table>
               <tr>
                 <th>班组</th>
-                <th>今日在场</th>
-                <th>总人数</th>
+                <th>今日考勤</th>
+                <th>在场人数</th>
               </tr>
             </table>
             <div class="table-box" id="squad">
               <table id="squad1">
-                <tr v-for="(item,index) in staffData.BZRealData" :key="index">
-                  <td>{{item.name}}</td>
-                  <td>{{item.zgrs}}人</td>
-                  <td>{{item.total}}人</td>
+                <tr v-for="(item,index) in staffData.team" :key="index">
+                  <td>{{item.title}}</td>
+                  <td>{{item.kq}}人</td>
+                  <td>{{item.sum}}人</td>
                 </tr>
               </table>
               <table id="squad2"></table>
@@ -125,10 +125,10 @@
             </table>
             <div class="table-box" id="staff">
               <table id="staff1">
-                <tr v-for="(item,index) in staffData.EmpJLData" :key="index">
-                  <td>{{item.name}}</td>
-                  <td>{{item.jc}}</td>
-                  <td>{{item.time}}</td>
+                <tr v-for="(item,index) in staffData.list" :key="index">
+                  <td>{{item.title}}</td>
+                  <td>{{item.inOut_id=='in'?'进':'出'}}</td>
+                  <td>{{item.createTime}}</td>
                 </tr>
                 <tr></tr>
               </table>
@@ -168,17 +168,17 @@
           </div>
           <div class="right-bottom-data" id="rightBottom">
             <ul id="rightBottom1">
-              <li v-for="(item,index) in attendanceData.KqDWData" :key="index">
+              <li v-for="(item,index) in buildcompanyData" :key="index">
                 <p>{{item.name}}</p>
                 <div class="register">
                   <span>进场登记人数</span>
                   <span class="progress"></span>
-                  <span>{{item.total}}</span>
+                  <span>{{item.zc}}</span>
                 </div>
-                <div class="reality">
+                <div class="reality" id="reality">
                   <span>现场实时人数</span>
                   <span class="progress" :data-bfb="item.bfb"></span>
-                  <span>{{item.zc}}</span>
+                  <span>{{item.kq || 0}}</span>
                 </div>
               </li>
             </ul>
@@ -197,220 +197,220 @@
         </div>
         <div class="float-left">
           <ul
-            v-for="(item,index) in contractData.KqJinChanData"
+            v-for="(item,index) in contractData"
             :key="index"
             style="margin-top:-.1rem"
           >
             <li>
               <span class="span-margin">共录入:</span>
-              <span>{{item.total}}</span>
+              <span>{{item.entrance.total}}</span>
               <span>人</span>
             </li>
             <li>
               <span class="span-margin">共签订:</span>
-              <span>{{item.jc}}</span>
+              <span>{{item.entrance.ht}}</span>
               <span>人</span>
             </li>
             <li>
               <span class="span-margin">未签订:</span>
-              <span>{{item.wq}}</span>
+              <span>{{item.entrance.wq}}</span>
               <span>人</span>
             </li>
             <li>
               <span class="span-margin">是否合格:</span>
-              <span class="font-red">{{item.hg}}</span>
+              <span :class="item.exit_pdf.bfb==100?'font-green':'font-red'">{{item.entrance.hg}}</span>
             </li>
           </ul>
         </div>
         <div
           class="map float-right"
-          :class="item.bfb==100?'qualified':'disqualification'"
-          v-for="(item,index) in contractData.KqJinChanData"
+          :class="item.entrance.bfb==100?'qualified':'disqualification'"
+          v-for="(item,index) in contractData"
           :key="index"
         >
           <!-- qualified为合格 disqualification为不合格 -->
-          <div class="border" :class="item.bfb==100?'border-green':'border-red'">
+          <div class="border" :class="item.entrance.bfb==100?'border-green':'border-red'">
             <div class="subBorder" id="roateBox1">
               <div class="wrapper" style="right:0rem">
                 <div
                   class="circleProgress"
-                  :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"
+                  :class="item.entrance.bfb==100?'rightcircle-green':'rightcircle-red'"
                 ></div>
               </div>
               <div class="wrapper" style="left:0rem">
                 <div
                   class="circleProgress"
-                  :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"
+                  :class="item.entrance.bfb==100?'leftcircle-green':'leftcircle-red'"
                 ></div>
               </div>
             </div>
-            <span id="roateBbb1">{{Math.round(item.bfb)}}</span>
+            <span id="roateBfb1">{{Math.round(item.entrance.bfb)}}</span>
+            <span>%</span>
+          </div>
+        </div>
+      </div>
+      <!-- 退场手续签订 -->
+      <div class="contract">
+        <div class="name">
+          <h3>退场手续签订</h3>
+        </div>
+        <div class="float-left">
+          <ul v-for="(item,index) in contractData" :key="index" style="margin-top:-.1rem">
+            <li>
+              <span class="span-margin">共录入:</span>
+              <span>{{item.exit_pdf.total}}</span>
+              <span>人</span>
+            </li>
+            <li>
+              <span class="span-margin">共签订:</span>
+              <span>{{item.exit_pdf.ht}}</span>
+              <span>人</span>
+            </li>
+            <li>
+              <span class="span-margin">未签订:</span>
+              <span>{{item.exit_pdf.wq}}</span>
+              <span>人</span>
+            </li>
+            <li>
+              <span class="span-margin">是否合格:</span>
+              <span :class="item.exit_pdf.bfb==100?'font-green':'font-red'">{{item.exit_pdf.hg}}</span>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="map float-right"
+          :class="item.exit_pdf.bfb==100?'qualified':'disqualification'"
+          v-for="(item,index) in contractData"
+          :key="index"
+        >
+          <div class="border" :class="item.exit_pdf.bfb==100?'border-green':'border-red'">
+            <div class="subBorder" id="roateBox2">
+              <div class="wrapper" style="right:0rem">
+                <div
+                  class="circleProgress"
+                  :class="item.exit_pdf.bfb==100?'rightcircle-green':'rightcircle-red'"
+                ></div>
+              </div>
+              <div class="wrapper" style="left:0rem">
+                <div
+                  class="circleProgress"
+                  :class="item.exit_pdf.bfb==100?'leftcircle-green':'leftcircle-red'"
+                ></div>
+              </div>
+            </div>
+            <span id="roateBfb2">{{Math.round(item.exit_pdf.bfb)}}</span>
             <span>%</span>
           </div>
         </div>
       </div>
       <!-- 劳动合同签订 -->
-      <div class="contract">
+      <div class="safety">
         <div class="name">
           <h3>劳动合同签订</h3>
         </div>
         <div class="float-left">
-          <ul v-for="(item,index) in contractData.EmpHTData" :key="index" style="margin-top:-.1rem">
+          <ul v-for="(item,index) in contractData" :key="index" style="margin-top:-.1rem">
             <li>
               <span class="span-margin">共录入:</span>
-              <span>{{item.total}}</span>
+              <span>{{item.contract.total}}</span>
               <span>人</span>
             </li>
             <li>
               <span class="span-margin">共签订:</span>
-              <span>{{item.ht}}</span>
+              <span>{{item.contract.ht}}</span>
               <span>人</span>
             </li>
             <li>
               <span class="span-margin">未签订:</span>
-              <span>{{item.wq}}</span>
+              <span>{{item.contract.wq}}</span>
               <span>人</span>
             </li>
             <li>
               <span class="span-margin">是否合格:</span>
-              <span class="font-red">{{item.hg}}</span>
+              <span :class="item.exit_pdf.bfb==100?'font-green':'font-red'">{{item.contract.hg}}</span>
             </li>
           </ul>
         </div>
         <div
           class="map float-right"
-          :class="item.bfb==100?'qualified':'disqualification'"
-          v-for="(item,index) in contractData.EmpHTData"
+          :class="item.contract.bfb==100?'qualified':'disqualification'"
+          v-for="(item,index) in contractData"
           :key="index"
         >
-          <div class="border" :class="item.bfb==100?'border-green':'border-red'">
-            <div class="subBorder" id="roateBox2">
-              <div class="wrapper" style="right:0rem">
-                <div
-                  class="circleProgress"
-                  :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"
-                ></div>
-              </div>
-              <div class="wrapper" style="left:0rem">
-                <div
-                  class="circleProgress"
-                  :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"
-                ></div>
-              </div>
-            </div>
-            <span id="roateBfb2">{{Math.round(item.bfb)}}</span>
-            <span>%</span>
-          </div>
-        </div>
-      </div>
-      <!-- 安全培训 -->
-      <div class="safety">
-        <div class="name">
-          <h3>安全培训</h3>
-        </div>
-        <div class="float-left">
-          <ul v-for="(item,index) in contractData.EmpPXData" :key="index" style="margin-top:-.1rem">
-            <li>
-              <span class="span-margin">共录入:</span>
-              <span>{{item.total}}</span>
-              <span>人</span>
-            </li>
-            <li>
-              <span class="span-margin">共培训:</span>
-              <span>{{item.px}}</span>
-              <span>人</span>
-            </li>
-            <li>
-              <span class="span-margin">未培训:</span>
-              <span>{{item.wq}}</span>
-              <span>人</span>
-            </li>
-            <li>
-              <span class="span-margin">是否合格:</span>
-              <span class="font-red">{{item.hg}}</span>
-            </li>
-          </ul>
-        </div>
-        <div
-          class="map float-right"
-          :class="item.bfb==100?'qualified':'disqualification'"
-          v-for="(item,index) in contractData.EmpPXData"
-          :key="index"
-        >
-          <div class="border" :class="item.bfb==100?'border-green':'border-red'">
+          <div class="border" :class="item.contract.bfb==100?'border-green':'border-red'">
             <div class="subBorder" id="roateBox3">
               <div class="wrapper" style="right:0rem">
                 <div
                   class="circleProgress"
-                  :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"
+                  :class="item.contract.bfb==100?'rightcircle-green':'rightcircle-red'"
                 ></div>
               </div>
               <div class="wrapper" style="left:0rem">
                 <div
                   class="circleProgress"
-                  :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"
+                  :class="item.contract.bfb==100?'leftcircle-green':'leftcircle-red'"
                 ></div>
               </div>
             </div>
-            <span id="roateBfb3">{{Math.round(item.bfb)}}</span>
+            <span id="roateBfb3">{{Math.round(item.contract.bfb)}}</span>
             <span>%</span>
           </div>
         </div>
       </div>
-      <!-- 人员信息完整度 -->
+      <!-- 两制确认书签订 -->
       <div class="information">
         <div class="name">
-          <h3>人员信息完整度</h3>
+          <h3>两制确认书签订</h3>
         </div>
         <div class="float-left">
           <ul
-            v-for="(item,index) in contractData.EmpPerfect"
+            v-for="(item,index) in contractData"
             :key="index"
             style="margin-top:-.1rem"
           >
             <li>
               <span class="span-margin">共录入:</span>
-              <span>{{item.total}}</span>
+              <span>{{item.workConfirm.total}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">已完善:</span>
-              <span>{{item.pc}}</span>
+              <span class="span-margin">共签订:</span>
+              <span>{{item.workConfirm.ht}}</span>
               <span>人</span>
             </li>
             <li>
-              <span class="span-margin">未完善:</span>
-              <span>{{item.wq}}</span>
+              <span class="span-margin">未签订:</span>
+              <span>{{item.workConfirm.wq}}</span>
               <span>人</span>
             </li>
             <li>
               <span class="span-margin">是否合格:</span>
-              <span class="font-red">{{item.hg}}</span>
+              <span :class="item.exit_pdf.bfb==100?'font-green':'font-red'">{{item.workConfirm.hg}}</span>
             </li>
           </ul>
         </div>
         <div
           class="map float-right"
-          :class="item.bfb==100?'qualified':'disqualification'"
-          v-for="(item,index) in contractData.EmpPerfect"
+          :class="item.workConfirm.bfb==100?'qualified':'disqualification'"
+          v-for="(item,index) in contractData"
           :key="index"
         >
-          <div class="border" :class="item.bfb==100?'border-green':'border-red'">
+          <div class="border" :class="item.workConfirm.bfb==100?'border-green':'border-red'">
             <div class="subBorder" id="roateBox4">
               <div class="wrapper" style="right:0rem">
                 <div
                   class="circleProgress"
-                  :class="item.bfb==100?'rightcircle-green':'rightcircle-red'"
+                  :class="item.workConfirm.bfb==100?'rightcircle-green':'rightcircle-red'"
                 ></div>
               </div>
               <div class="wrapper" style="left:0rem">
                 <div
                   class="circleProgress"
-                  :class="item.bfb==100?'leftcircle-green':'leftcircle-red'"
+                  :class="item.workConfirm.bfb==100?'leftcircle-green':'leftcircle-red'"
                 ></div>
               </div>
             </div>
-            <span id="roateBfb4">{{Math.round(item.bfb)}}</span>
+            <span id="roateBfb4">{{Math.round(item.workConfirm.bfb)}}</span>
             <span>%</span>
           </div>
         </div>
@@ -423,19 +423,29 @@
 export default {
   data() {
     return {
-      attendanceData: "", //出勤数据
-      contractData: "", //合同签订数据
-      staffData: "", //班组与人员数据
-      xmid:'',
-      dh: 0,
+      attendanceData: "", // 出勤数据
+      attendanceMax: 600, // 项目出勤统计最大人数
+      curveMax: 120, // 今日劳动曲线最大值
+      pid: 0, // 项目id
+      contractData: [], // 合同签订数据
+      KQCountData: [], // 现场人员考勤数据
+      WorkTypeData: '', // 现场工种数据
+      staffData: "", // 班组与人员数据
+      buildcompanyData: "", // 分包单位考勤情况
+      dh: 0, // 百分比
       timeId: null,
     };
   },
   created() {
+    this.getPid()
     //发送请求
-    this.getAttendanceData();
-    this.getContractData();
-    this.getStaffData();
+    this.getDataCount()
+    this.getKQCountData()
+    this.getWorkTypeData()
+    this.getTeamCountData()
+    this.getNearlyEightDaysData()
+    this.getXSData()
+    this.getBuildcompanyData()
   },
   methods: {
     // 现场工种模块：ECharts图渲染
@@ -481,6 +491,7 @@ export default {
       //   labourCurve.resize();
       // }
     },
+
     // 项目出勤统计模块：ECharts图渲染
     attendance(aMTotal, aMZc, aMDay, aMZcGly) {
       let attendance = this.$echarts.init(
@@ -531,7 +542,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            max: 600,
+            max: this.attendanceMax,
             min: 0,
             interval: 100,
             axisLabel: {
@@ -586,6 +597,7 @@ export default {
         ]
       });
     },
+
     // 今日劳动曲线模块： ECharts图渲染
     labourCurve(lMZc, lMDay) {
       let labourCurve = this.$echarts.init(
@@ -637,7 +649,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            max: 120,
+            max: this.curveMax,
             min: 0,
             interval: 30,
             axisLabel: {
@@ -675,112 +687,7 @@ export default {
         ]
       });
     },
-    // 获取出勤数据
-    getAttendanceData() {
-      this.xmid = this.getQueryString('xmid')
-      this.$axios
-        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpData&xmid=${this.xmid}`)
-        .then(res => {
-          if(res.data.success == 1){
-            this.$router.push('unopen')
-          }else{
-            this.attendanceData = res.data;
-            let pM = [];
-            let aM = [];
-            let aMTotal = [];
-            let aMZc = [];
-            let aMDay = [];
-            let aMZcGly = [];
-            let lMZc = [];
-            let lMDay = [];
-            // 将对象遍历成数组 ECharts的data只支持数组类型的数据
-            for (let i1 = 0; i1 < this.attendanceData.EmpPostData.length; i1++) {
-              pM.push({
-                value: this.attendanceData.EmpPostData[i1].zc,
-                name: this.attendanceData.EmpPostData[i1].name
-              });
-            }
-            for (let i2 = 0; i2 < this.attendanceData.KqData.length; i2++) {
-              aMTotal.push(this.attendanceData.KqData[i2].total);
-              aMZc.push(this.attendanceData.KqData[i2].zc);
-              aMDay.push(this.attendanceData.KqData[i2].day);
-              aMZcGly.push(this.attendanceData.KqData[i2].zcgly);
-            }
-            for (let i3 = 0; i3 < this.attendanceData.KqTodayData.length; i3++) {
-              lMZc.push(this.attendanceData.KqTodayData[i3].zc);
-              lMDay.push(this.attendanceData.KqTodayData[i3].day);
-            }
 
-            // 数据成功返回并且转换成数组以后 调用ECharts的渲染函数 将Echarts图渲染到页面中
-            this.professionMap(pM);
-            this.attendance(aMTotal, aMZc, aMDay, aMZcGly);
-            this.labourCurve(lMZc, lMDay);
-            // 数据条数大于一定值时 才调用初始化滚动函数
-            if (this.attendanceData.EmpPostData.length >= 4) {
-              this.scrollStart('leftBottom','leftBottom1','leftBottom2');
-            }
-            if (this.attendanceData.KqDWData.length >= 4) {
-              this.scrollStart('rightBottom','rightBottom1','rightBottom2');
-            }
-            // 数据渲染完成时 再调用柱状进度条渲染函数
-            // setTimeout(() => {
-            //   this.setLength();
-            // }, 300);
-            this.timeId = setInterval(() => {
-              // console.log(this.attendanceData.EmpRenShuData[0].bfb)
-              if (this.dh >= this.attendanceData.EmpRenShuData[0].bfb || this.dh > 100) {
-                if (this.dh > 100) {
-                  this.dh = 100
-                }
-                clearInterval(this.timeId);
-              } else {
-                this.dh++;
-                $(".la-subjindu").css("width", this.dh + "%");
-              }
-            }, 30);
-          }
-        });
-    },
-    // 获取合同签订数据
-    getContractData() {
-      this.xmid = this.getQueryString('xmid')
-      this.$axios
-        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpDetail&xmid=${this.xmid}`)
-        .then(res => {
-          if(res.data.success == 1){
-            this.$router.push('unopen')
-          }else{
-            this.contractData = res.data;
-            // 数据渲染完成时 再调用圆形进度条渲染函数
-            setTimeout(() => {
-              this.setRoate(1);
-              this.setRoate(2);
-              this.setRoate(3);
-              this.setRoate(4);
-            }, 300);
-          }
-        });
-    },
-    // 获取班组与人员数据
-    getStaffData() {
-      this.xmid = this.getQueryString('xmid')
-      this.$axios
-        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpRealData&xmid=${this.xmid}`)
-        .then(res => {
-          if(res.data.success == 1){
-            this.$router.push('unopen')
-          }else{
-            this.staffData = res.data;
-            // 数据条数大于一定值时 才调用滚动初始化
-            if (this.staffData.EmpJLData.length >= 7) {
-              this.scrollStart('staff','staff1','staff2')
-            }
-            if (this.staffData.BZRealData.length >= 7) {
-              this.scrollStart('squad','squad1','squad2')
-            }
-          }
-        });
-    },
     // 根据百分比设置圆形进度条长度
     setRoate(num) {
       let bfb = $(`#roateBfb${num}`).text();
@@ -802,18 +709,20 @@ export default {
         `rotate(${Rdeg}deg)`
       );
     },
+
     // 根据百分比设置柱状进度条长度
     setLength() {
-      let temp = $(".reality .progress");
+      let temp = $('.reality .progress')
       temp.each(function() {
         let bfb = $(this).data("bfb");
-        let width = 0;
+        let width = 0
         for (let i = 0; i < bfb; i++) {
-          width += 0.014;
+          width += 0.014
         }
         $(this).css("width", `${width}rem`);
-      });
+      })
     },
+
     // 滚动启动函数
     scrollStart(id,id1,id2) {
       setTimeout(() => {
@@ -845,6 +754,7 @@ export default {
         };
       }, 1000);
     },
+
     //获取url中的项目id
     getQueryString(name) {
       var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
@@ -854,6 +764,168 @@ export default {
       }
       return null;
     },
+
+    // 获取合同签订数据
+    getDataCount() {
+      this.$axios.get(`/lz/get/getDataCount?pid=${this.pid}`)
+      .then(res => {
+        this.contractData[0] = res.data
+        // console.log(this.contractData)
+        // 数据渲染完成时 再调用圆形进度条渲染函数
+          setTimeout(() => {
+            this.setRoate(1);
+            this.setRoate(2);
+            this.setRoate(3);
+            this.setRoate(4);
+          }, 300)
+      })
+    },
+
+    // 获取现场人员出勤数据
+    getKQCountData() {
+      this.$axios.get(`/lz/get/getKQCount?pid=${this.pid}`).then(
+        res => {
+          // console.log(res.data)
+          this.KQCountData[0] = res.data
+          // 数据渲染完成时 再调用柱状进度条渲染函数
+          // setTimeout(() => {
+          //   this.setLength();
+          // }, 300);
+          this.timeId = setInterval(() => {
+            // console.log(this.attendanceData.EmpRenShuData[0].bfb)
+            if (this.dh >= this.KQCountData[0].bfb || this.dh > 100) {
+              if (this.dh > 100) {
+                this.dh = 100
+              }
+              clearInterval(this.timeId);
+            } else {
+              this.dh++;
+              $(".la-subjindu").css("width", this.dh + "%");
+            }
+          }, 30)
+        }
+      )
+    },
+
+    // 获取现场工种人数
+    getWorkTypeData() {
+      this.$axios.get(`/lz/get/getWorkType?pid=${this.pid}`).then(
+        res => {
+          this.WorkTypeData = res.data
+          let pM = []
+          // console.log(res.data)
+          // 数据处理
+          for (const key in res.data) {
+            // console.log(key+':'+res.data[key])
+            pM.push({
+              value: res.data[key],
+              name: key
+            })
+          }
+          // 调用现场工种模块ECharts图渲染
+          this.professionMap(pM)
+          // 初始化现场工种模块滚动函数
+          if (pM.length >= 4) {
+            this.scrollStart('leftBottom','leftBottom1','leftBottom2')
+          }
+        }
+      )
+    },
+
+    // 获取班组与人员考勤数据
+    getTeamCountData() {
+      this.$axios.get(`/lz/get/getTeamCount?pid=${this.pid}`).then(
+        res => {
+          // console.log(res.data)
+          this.staffData = res.data
+
+          // 数据条数大于一定值时 才调用滚动初始化
+          if (this.staffData.team.length >= 7) {
+            this.scrollStart('squad','squad1','squad2')
+          }
+          if (this.staffData.list.length >= 7) {
+            this.scrollStart('staff','staff1','staff2')
+          }
+        }
+      )
+    },
+
+    // 获取项目出勤统计数据
+    getNearlyEightDaysData() {
+      this.$axios.get(`/lz/get/getNearlyEightDays?pid=${this.pid}`).then(res => {
+        // console.log(res.data)
+        let aMTotal = []
+        let aMZc = []
+        let aMDay = []
+        let aMZcGly = []
+        for (let i = 0; i < res.data.list.length; i++) {
+          aMTotal.push(res.data.list[i].sum)
+          aMZc.push(res.data.list[i].workerCheck)
+          aMDay.push(res.data.list[i].date)
+          aMZcGly.push(res.data.list[i].managerCheck)
+        }
+        // 判断项目出勤统计表Y轴的最大值
+        for (let i2 = 0; i2 < aMZc.length; i2++) {
+          for (let i3 = 0; i3 < aMZc.length; i3++) {
+            if (aMZc[i2]>this.attendanceMax || aMZcGly[i2]>this.attendanceMax || aMTotal[i2]>this.attendanceMax) {
+              this.attendanceMax += 100
+            }
+          }
+        }
+        // 初始化项目出勤统计表
+        this.attendance(aMTotal, aMZc, aMDay, aMZcGly)
+      })
+    },
+
+    // 获取今日劳动曲线数据
+    getXSData() {
+      this.$axios.get(`/lz/get/getXS?pid=${this.pid}`).then(
+        res => {
+          // console.log(res.data)
+          let lMZc = []
+          let lMDay = []
+          for (let i = 0; i < res.data.length; i++) {
+            for (const key in res.data[res.data.length-i]) {
+              lMZc.push(res.data[res.data.length-i][key])
+              lMDay.push(key)
+            }
+            // console.log(key)
+            // console.log(lMZc)
+            // 判断今日劳动曲线折线图Y轴的最大值
+            for (let i2 = 0; i2 < lMZc.length; i2++) {
+              for (let i3 = 0; i3 < lMZc.length; i3++) {
+                if (lMZc[i2]>this.curveMax) {
+                  this.curveMax += 30
+                }
+              }
+            }
+          }
+          // 初始化今日劳动曲线图
+          this.labourCurve(lMZc, lMDay)
+      })
+    },
+
+    // 获取分包单位考勤情况数据
+    getBuildcompanyData() {
+      this.$axios.get(`/lz/get/getBuildcompanyData?pid=${this.pid}`).then(
+        res => {
+          // console.log(res.data.buildcompany)
+          this.buildcompanyData = res.data.buildcompany
+          setTimeout(() => {
+            this.setLength()
+          }, 300)
+          if (this.buildcompanyData.length > 3) {
+            this.scrollStart('rightBottom','rightBottom1','rightBottom2')
+          }
+        }
+      )
+    },
+
+    // 获取项目id
+    getPid() {
+      this.pid = localStorage.getItem('pid')
+    }
+
   }
 };
 </script>
@@ -1086,7 +1158,7 @@ span {
   display: inline-block;
   width: 1.4rem;
   height: 0.15rem;
-  background-color: #349be6;
+  background-color: #3375fe;
   border-radius: 0.15rem;
   margin-left: 0.12rem;
   margin-right: 0.06rem;

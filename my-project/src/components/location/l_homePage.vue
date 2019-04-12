@@ -3,14 +3,14 @@
         <div class="top-box">
             <div class="headcount">
                 <div class="left-box">
-                    <p>0</p>
+                    <p>{{KQCountData.sum}}</p>
                     <span>应出勤人数</span>
                 </div>
                 <div class="img-box"></div>
             </div>
             <div class="attendance">
                 <div class="left-box">
-                    <p>0</p>
+                    <p>{{KQCountData.kq}}</p>
                     <span>实际出勤人数</span>
                 </div>
                 <div class="img-box"></div>
@@ -84,35 +84,37 @@ let amapManager = new VueAMap.AMapManager();
 export default {
     data() {
         return {
+            KQCountData: '', //今日考勤数据
+            pid: 0, //项目id
             amapManager,
             zoom: 12,
             center: [114.083372,22.544146],
             events: {
-              init: (o) => {
-                console.log(o.getCenter())
-                console.log(this.$refs.map.$$getInstance())
-                // o.getCity(result => {
-                //     console.log(result)
-                // })
-                let marker = new AMap.Marker({
-                    // icon: "https://webapi.amap.com/ui/1.0/ui/misc/PositionPicker/assets/position-picker.png?v=1.0.11&key=608d75903d29ad471362f8c58c550daf",
-                    position: [113.997471,22.564146],
-                    title: '虎匠罗芳工地',
-                    label: {
+                init: (o) => {
+                    console.log(o.getCenter())
+                    console.log(this.$refs.map.$$getInstance())
+                    // o.getCity(result => {
+                    //     console.log(result)
+                    // })
+                    let marker = new AMap.Marker({
+                        // icon: "https://webapi.amap.com/ui/1.0/ui/misc/PositionPicker/assets/position-picker.png?v=1.0.11&key=608d75903d29ad471362f8c58c550daf",
+                        position: [113.997471,22.564146],
+                        title: '虎匠罗芳工地',
+                        label: {
                             content: '虎匠罗芳工地',
                             offset: new AMap.Pixel(-30, -24),
-                            },
-                    // content: ' ',
-                });
-                marker.setMap(o);
-              },
-              'moveend': () => {
-              },
-              'zoomchange': () => {
-              },
-              'click': (e) => {
-                alert('map clicked');
-              }
+                        },
+                        // content: ' ',
+                    });
+                    // marker.setMap(o);
+                },
+                'moveend': () => {
+                },
+                'zoomchange': () => {
+                },
+                'click': (e) => {
+                //   alert('map clicked')
+                }
             },
             plugin: [{
                 pName: 'ToolBar',
@@ -123,6 +125,26 @@ export default {
                     },
                 }
             }],
+        }
+    },
+    created() {
+        this.getPid()
+        this.getKQCountData()
+    },
+    methods: {
+        // 获取
+        getKQCountData() {
+            this.$axios.get(`/lz/get/getKQCount?pid=${this.pid}`).then(
+                res => {
+                    console.log(res.data)
+                    this.KQCountData = res.data
+                }
+            )
+        },
+        
+        // 获取项目id
+        getPid() {
+          this.pid = localStorage.getItem('pid')
         }
     }
 }

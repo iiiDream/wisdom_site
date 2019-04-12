@@ -5,39 +5,59 @@
         <div class="top-show">
           <h3>工人上工情况</h3>
           <div class="jindu">
-            <div class="subjindu">
+            <div class="subjindu" v-for="(item,index) in projectData.grsg" :key="index" v-if="index==1">
               <p>{{dh}}%</p>
             </div>
           </div>
           <ul class="work-list clearfix">
-            <li>
+            <li v-for="(item,index) in projectData.grsg" :key="index+1" v-if="index<1">
               今日
-              <span v-if="manWork.the_day<manWork.tmo_day" class="danger">{{manWork.the_day}} ↓</span>
-              <span v-else-if="manWork.the_day>manWork.tmo_day" class="noml">{{manWork.the_day}} ↑</span>
-              <span v-else>{{manWork.the_day}}</span>
+              <!-- <span v-for="(item2,index2) in projectData.grsg" :key="index2" v-if="item<item2" class="danger">{{item.JR}} ↓</span>
+              <span v-for="(item2,index2) in projectData.grsg" :key="index2+1" v-else-if="item>item2" class="noml">{{item.JR}} ↑</span> -->
+              <span>{{item.JR}}</span>
             </li>
-            <li>
+            <li v-for="(item,index) in projectData.grsg" :key="index+2" v-if="index==2">
               昨日
-              <span>{{manWork.tmo_day}}</span>
+              <span>{{item.ZR}}</span>
             </li>
-            <li>
+            <li v-for="(item,index) in projectData.grsg" :key="index+3" v-if="index==3">
               本月
-              <span class="down">{{manWork.the_month}}</span>
+              <span class="down">{{item.BY}}</span>
             </li>
-            <li>
+            <li v-for="(item,index) in projectData.grsg" :key="index+4" v-if="index==4">
               上月
-              <span>{{manWork.tmo_month}}</span>
+              <span>{{item.SY}}</span>
             </li>
           </ul>
         </div>
         <div class="summarize">
           <h3>工程概括</h3>
-          <div id="colee" style="overflow:hidden;height:5.03rem;width:4.1rem;">
+          <ul>
+            <li v-for="(item,index) in projectData.gcgk" :key="item.title">
+              <a href="javascript:;">
+                <span class="summarizeName">{{item.type}}：</span>
+                <span class="summarizeContent">{{item.title}}</span>
+              </a>
+            </li>
+          </ul>
+          <div id="colee" style="overflow:hidden;height:3.12rem;width:4.1rem;">
             <ul id="colee1">
-              <li v-for="(item, index) in summary.data" :key="index" :class="item.id">
+              <!-- <li>
                 <a href="javascript:;">
-                  <span class="summarizeName">{{item.type}}</span>
-                  <span class="summarizeContent">{{item.name}}</span>
+                  <span class="summarizeName">项目名称：</span>
+                  <span class="summarizeContent">龙岗深圳河项目布吉片区</span>
+                </a>
+              </li> -->
+              <!-- <li v-for="(item,index) in projectData.gcgk" :key="item.title">
+                <a href="javascript:;">
+                  <span class="summarizeName">{{item.type}}：</span>
+                  <span class="summarizeContent">{{item.title}}</span>
+                </a>
+              </li> -->
+              <li v-for="item in projectData.cjaw" :key="item.title">
+                <a href="javascript:;">
+                  <span class="summarizeName">{{item.type=='建设单位'?'分包单位':item.type}}：</span>
+                  <span class="summarizeContent">{{item.title}}</span>
                 </a>
               </li>
             </ul>
@@ -77,7 +97,7 @@
         <div class="mainInfo">
           <span class="title">
             安全文明施工天数:
-            <span class="day">{{centerInfo.global_day}}</span>天
+            <span class="day">636</span>天
           </span>
         </div>
         <div class="videoInfo">
@@ -138,13 +158,13 @@
       </el-col>
       <el-col :span="6" class="wrap-right">
         <div class="code">
-          <h3>下载APP</h3>
+          <h3>虎匠客服</h3>
           <div class="left">
             <div></div>
           </div>
           <div class="right">
-            <p>APP下载</p>
-            <p>扫描二维码下载</p>
+            <p>客服电话</p>
+            <p>0755-21017743</p>
           </div>
         </div>
         <div class="ech">
@@ -214,230 +234,202 @@ export default {
       // 用电
       electricity: {},
       // 项目id
-      xmid: "281"
+      xmid: "281",
+      pid: 0, //项目id
+      projectData: '', //项目总况页面数据
     };
   },
   mounted() {},
   created() {
-    this.dust();
-    this.temperature();
-    this.getSummary(),
-      this.renderBaifenbi(),
-      this.getCardid(),
-      this.getCrash(),
-      this.getLift(),
-      this.getCenterInfo(),
-      this.getyongdian();
+    this.getPid(),
+    // this.dust(),
+    // this.temperature(),
+    // this.getSummary(),
+    // this.renderBaifenbi(),
+    this.getCardid(),
+    this.getCrash(),
+    this.getLift(),
+    this.getCenterInfo(),
+    this.getyongdian(),
+    this.getProjectData()
   },
   methods: {
-    dust() {
-      this.xmid = this.getQueryString("xmid");
-      this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=EnvData&xmid=${this.xmid}`)
-        .then(res => {
-          if(res.data.success == 1){
-            this.$router.push('unopen')
-          }else{
-            let data = res.data.data;
-            let hours = [];
-            let values = [];
-            for (let i = 0; i < data.length; i++) {
-              hours.push(data[i].dayhour);
-              values.push(data[i].value);
-            }
-            let mydust = this.$echarts.init(document.getElementById("dust"));
-            mydust.setOption({
-              title: { text: "" },
-              grid: {
-                x: 70,
-                y: 0,
-                x2: 14,
-                y2: 20
-              },
-              tooltip: {
-                trigger: "axis",
-                axisPointer: {
-                  // 坐标轴指示器，坐标轴触发有效
-                  type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
-                }
-              },
-              xAxis: {
-                max: 200, //最大值
-                min: 0, //最小值
-                interval: 25, //间隔
-                //字体样式
-                axisLabel: {
-                  textStyle: {
-                    color: "#fff"
-                  }
-                },
-                //坐标轴样式
-                axisLine: {
-                  lineStyle: {
-                    color: "#132e6d",
-                    width: 2
-                  }
-                },
-                //网格样式
-                splitLine: {
-                  show: true,
-                  lineStyle: {
-                    color: "#132e6d",
-                    width: 1
-                  }
-                }
-              },
-              orient: "horizontal",
-              yAxis: {
-                data: hours,
-                axisLabel: {
-                  textStyle: {
-                    color: "#fff"
-                  }
-                },
-                axisLine: {
-                  lineStyle: {
-                    color: "#132e6d",
-                    width: 2
-                  }
-                },
-                //网格样式
-                splitLine: {
-                  show: true,
-                  lineStyle: {
-                    color: "#132e6d",
-                    width: 0
-                  }
-                }
-              },
-              series: [
-                {
-                  type: "bar",
-                  barWidth: 10, //柱状图宽度
-                  data: values,
-                  //柱状图颜色
-                  itemStyle: {
-                    normal: {
-                      //判断
-                      color: function(params) {
-                        if (params.value >= 75) {
-                          return "#c23864";
-                        } else {
-                          return "#0162ff";
-                        }
-                      }
-                      //渐变
-                      // color: new this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-                      //       offset: 0,
-                      //       color: "#0162ff" // 0% 处的颜色
-                      //     }, {
-                      //       offset: 1,
-                      //       color: "#00a7fe" // 100% 处的颜色
-                      // }], false)
-                    }
-                  }
-                }
-              ]
-            });
-            console.log(values)
+    // 初始化扬尘检测数据图
+    dustPic(dPH,dPV) {
+      let mydust = this.$echarts.init(document.getElementById("dust"));
+      mydust.setOption({
+        title: { text: "" },
+        grid: {
+          x: 70,
+          y: 0,
+          x2: 14,
+          y2: 20
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
           }
-        });
-      // 基于准备好的dom，初始化echarts实例
+        },
+        xAxis: {
+          max: 200, //最大值
+          min: 0, //最小值
+          interval: 25, //间隔
+          //字体样式
+          axisLabel: {
+            textStyle: {
+              color: "#fff"
+            }
+          },
+          //坐标轴样式
+          axisLine: {
+            lineStyle: {
+              color: "#132e6d",
+              width: 2
+            }
+          },
+          //网格样式
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#132e6d",
+              width: 1
+            }
+          }
+        },
+        orient: "horizontal",
+        yAxis: {
+          data: dPH,
+          axisLabel: {
+            textStyle: {
+              color: "#fff"
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: "#132e6d",
+              width: 2
+            }
+          },
+          //网格样式
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#132e6d",
+              width: 0
+            }
+          }
+        },
+        series: [
+          {
+            type: "bar",
+            barWidth: 10, //柱状图宽度
+            data: dPV,
+            //柱状图颜色
+            itemStyle: {
+              normal: {
+                //判断
+                color: function(params) {
+                  if (params.value >= 75) {
+                    return "#fb497c";
+                  } else {
+                    return "#0162ff";
+                  }
+                }
+                //渐变
+                // color: new this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                //       offset: 0,
+                //       color: "#0162ff" // 0% 处的颜色
+                //     }, {
+                //       offset: 1,
+                //       color: "#00a7fe" // 100% 处的颜色
+                // }], false)
+              }
+            }
+          }
+        ]
+      })
     },
-    temperature() {
-      this.xmid = this.getQueryString("xmid");
-      this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=EnvTemData&xmid=${this.xmid}`)
-        .then(res => {
-          if(res.data.success == 1){
-            this.$router.push('unopen')
-          }else{
-            let data = res.data.data;
-            let hours = [];
-            let values = [];
-            for (let i = 0; i < data.length; i++) {
-              hours.push(data[i].dayhour);
-              values.push(data[i].value);
-            }
-            hours.push("h");
-            let mytemperature = this.$echarts.init(
-              document.getElementById("temperature")
-            );
-            mytemperature.setOption({
-              // backgroundColor: "#FBFBFB",
-              grid: {
-                x: 50,
-                y: 20,
-                x2: 10,
-                y2: 40
-              },
-              tooltip: {
-                trigger: "axis"
-              },
-              calculable: true,
-              xAxis: [
-                {
-                  axisLabel: {
-                    rotate: 0,
-                    interval: 0,
-                    color: "#fff"
-                  },
-                  axisLine: {
-                    lineStyle: {
-                      color: "#132e6d"
-                    }
-                  },
-                  type: "category",
-                  boundaryGap: false,
-                  data: hours
-                }
-              ],
-              yAxis: [
-                {
-                  type: "value",
-                  max: 45,
-                  min: -15,
-                  interval: 15,
-                  axisLabel: {
-                    textStyle: {
-                      color: "#fff"
-                    },
-                    formatter: "{value} 度"
-                  },
-                  axisLine: {
-                    lineStyle: {
-                      color: "#132e6d"
-                    }
-                  },
-                  splitLine: {
-                    show: true,
-                    lineStyle: {
-                      color: ["#132e6d"],
-                      width: 1,
-                      type: "dashed"
-                    }
-                  }
-                }
-              ],
-              series: [
-                {
-                  name: "温度",
-                  type: "line",
-                  symbolSize: 3,
-                  smooth: 0.2,
-                  color: ["#f98d98"],
-                  data: values
-                }
-              ]
-            });
+    // 初始化温度检测数据图
+    temperaturePic(tPH,tPV) {
+      // hours.push("h");
+      let mytemperature = this.$echarts.init(
+        document.getElementById("temperature")
+      );
+      mytemperature.setOption({
+        // backgroundColor: "#FBFBFB",
+        grid: {
+          x: 50,
+          y: 20,
+          x2: 10,
+          y2: 40
+        },
+        tooltip: {
+          trigger: "axis"
+        },
+        calculable: true,
+        xAxis: [
+          {
+            axisLabel: {
+              rotate: 0,
+              interval: 0,
+              color: "#fff"
+            },
+            axisLine: {
+              lineStyle: {
+                color: "#132e6d"
+              }
+            },
+            type: "category",
+            boundaryGap: false,
+            data: tPH
           }
-        });
+        ],
+        yAxis: [
+          {
+            type: "value",
+            max: 45,
+            min: -30,
+            interval: 15,
+            axisLabel: {
+              textStyle: {
+                color: "#fff"
+              },
+              formatter: "{value} ℃"
+            },
+            axisLine: {
+              lineStyle: {
+                color: "#132e6d"
+              }
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: ["#132e6d"],
+                width: 1,
+                type: "dashed"
+              }
+            }
+          }
+        ],
+        series: [
+          {
+            name: "温度",
+            type: "line",
+            symbolSize: 3,
+            smooth: 0.2,
+            color: ["#f98d98"],
+            data: tPV
+          }
+        ]
+      });
     },
     // 工人上工区域
     renderBaifenbi() {
       this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=GetXMKq&xmid=${this.xmid}`)
+        .get(`http://gd.17hr.net:8018/APP/XMPage/XmData.ashx?method=GetXMKq&xmid=${this.xmid}`)
         .then(res => {
           if(res.data.success == 1){
             this.$router.push('unopen')
@@ -459,9 +451,9 @@ export default {
     },
     // 工程概括区域
     getSummary() {
-      this.xmid = this.getQueryString("xmid");
+      this.xmid = this.getQueryString("xmid")
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=GetXMDetail&xmid=${this.xmid}`)
+        .get(`http://gd.17hr.net:8018/APP/XMPage/XmData.ashx?method=GetXMDetail&xmid=${this.xmid}`)
         .then(res => {
           if(res.data.success == 1){
             this.$router.push('unopen')
@@ -478,7 +470,7 @@ export default {
     getCardid() {
       this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=PkData&xmid=${this.xmid}`)
+        .get(`http://gd.17hr.net:8018/APP/XMPage/XmData.ashx?method=PkData&xmid=${this.xmid}`)
         .then(res => {
           if(res.data.success == 1){
             this.$router.push('unopen')
@@ -494,7 +486,7 @@ export default {
     getCrash() {
       this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=TowerData&xmid=${this.xmid}`)
+        .get(`http://gd.17hr.net:8018/APP/XMPage/XmData.ashx?method=TowerData&xmid=${this.xmid}`)
         .then(res => {
           if(res.data.success == 1){
             this.$router.push('unopen')
@@ -507,7 +499,7 @@ export default {
     getLift() {
       this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=LifterData&xmid=${this.xmid}`)
+        .get(`http://gd.17hr.net:8018/APP/XMPage/XmData.ashx?method=LifterData&xmid=${this.xmid}`)
         .then(res => {
           if(res.data.success == 1){
             this.$router.push('unopen')
@@ -520,7 +512,7 @@ export default {
     getCenterInfo() {
       this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`)
+        .get(`http://gd.17hr.net:8018/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`)
         .then(res => {
           if(res.data.success == 1){
             this.$router.push('unopen')
@@ -591,10 +583,11 @@ export default {
         };
       }, 1000);
     },
+    // 用电检测
     getyongdian() {
       this.xmid = this.getQueryString("xmid");
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=ElectricityData&xmid=${this.xmid}`)
+        .get(`http://gd.17hr.net:8018/APP/XMPage/XmData.ashx?method=ElectricityData&xmid=${this.xmid}`)
         .then(res => {
           this.electricity = res.data;
         });
@@ -606,6 +599,56 @@ export default {
         return unescape(r[2]);
       }
       return null;
+    },
+
+    // 获取页面所需数据
+    getProjectData() {
+      this.$axios.get(`/home/get/projectData?pid=${this.pid}`).then(
+        res => {
+          // console.log(res.data.cjaw)
+          this.projectData = res.data
+          let dPH = []
+          let dPV = []
+          let tPH = []
+          let tPV = []
+          for (let i = 0; i < this.projectData.PM25AVG.length; i++) {
+            for (const key in this.projectData.PM25AVG[i]) {
+              dPH.push(key)
+              dPV.push(this.projectData.PM25AVG[i][key])
+            }
+          }
+          for (let i = 0; i < this.projectData.QW.length; i++) {
+            tPH.push(this.projectData.QW[i].time)
+            tPV.push(this.projectData.QW[i].temperature)
+          }
+          tPH.push('h')
+          // 初始化ECharts图
+          this.dustPic(dPH,dPV)
+          this.temperaturePic(tPH,tPV)
+
+          this.timeId = setInterval(() => {
+            // console.log(this.attendanceData.EmpRenShuData[0].bfb)
+            if (this.dh >= this.projectData.grsg[1].bfb || this.dh > 100) {
+              if (this.dh > 100) {
+                this.dh = 100
+              }
+              clearInterval(this.timeId);
+            } else {
+              this.dh++;
+              $(".subjindu").css("width", this.dh + "%");
+            }
+          }, 30)
+          if (res.data.cjaw.length >= 7) {
+            // 调用滚动方法
+            this.scrollText()
+          }
+        }
+      )
+    },
+
+    // 获取项目id
+    getPid() {
+      this.pid = localStorage.getItem('pid')
     }
   }
 };
@@ -809,7 +852,7 @@ export default {
         }
       }
       .notgood {
-        color: #c23864;
+        color: #fb497c;
         margin-left: 0.35rem;
         &::before {
           content: "";
@@ -818,7 +861,7 @@ export default {
           top: 0.06rem;
           width: 0.18rem;
           height: 0.12rem;
-          background-color: #c23864;
+          background-color: #fb497c;
           border-radius: 0.05rem;
         }
       }
@@ -869,7 +912,7 @@ export default {
   }
 }
 .danger {
-  color: #c23864 !important;
+  color: #fb497c !important;
 }
 .noml {
   color: #24e974 !important;
@@ -929,11 +972,11 @@ export default {
   overflow: hidden;
   ul {
     margin-top: -0.1rem;
+    padding: 0 0.35rem;
     li {
       border-bottom: 0.03rem solid #0f1f53;
       line-height: 346%;
       overflow: hidden;
-      padding: 0 0.35rem;
       a {
         text-align: center;
         font-size: 0.16rem;

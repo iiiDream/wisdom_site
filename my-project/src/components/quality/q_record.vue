@@ -30,11 +30,6 @@
                             复查通过
                         </a>
                     </li>
-                    <li>
-                        <a>
-                            合格
-                        </a>
-                    </li>
                 </ul>
             </div>
             <!-- 搜索区域 -->
@@ -214,11 +209,11 @@
                     </li>
                 </ul>
                 <ul class="list-body">
-                    <li>
+                    <li @click="particulars">
                         <div class="issue">
                             <p>此处拉结要用钢管拉结</p>
                             <span class="slight"></span>
-                            <span>南山EPC创新工业园</span>
+                            <span class="padding">南山EPC创新工业园</span>
                         </div>
                         <div class="type">
                             施工用电
@@ -234,7 +229,7 @@
                         <div class="date">
                             <p>2018-01-07</p>
                         </div>
-                        <div class="state">
+                        <div class="state green-color">
                             复查通过
                         </div>
                         <div class="operation">
@@ -247,7 +242,7 @@
                         <div class="issue">
                             <p>此处拉结要用钢管拉结</p>
                             <span class="ordinary"></span>
-                            <span>南山EPC创新工业园</span>
+                            <span class="padding">南山EPC创新工业园</span>
                         </div>
                         <div class="type">
                             施工用电
@@ -263,8 +258,8 @@
                         <div class="date">
                             <p>2018-01-07</p>
                         </div>
-                        <div class="state">
-                            复查通过
+                        <div class="state orange-color">
+                            超期未整改
                         </div>
                         <div class="operation">
                             <a>
@@ -276,7 +271,7 @@
                         <div class="issue">
                             <p>此处拉结要用钢管拉结</p>
                             <span class="severity"></span>
-                            <span>南山EPC创新工业园</span>
+                            <span class="padding">南山EPC创新工业园</span>
                         </div>
                         <div class="type">
                             施工用电
@@ -292,8 +287,8 @@
                         <div class="date">
                             <p>2018-01-07</p>
                         </div>
-                        <div class="state">
-                            复查通过
+                        <div class="state red-color">
+                            复查未通过
                         </div>
                         <div class="operation">
                             <a></a>
@@ -321,7 +316,7 @@
                 border-bottom: .01rem solid #142a6a;
                 ul {
                     float: left;
-                    width: 7.16rem;
+                    width: 6rem;
                     display: flex;
                     justify-content: space-between;
                     li {
@@ -513,12 +508,13 @@
                 }
                 .list-body {
                     height: .3rem;
-                    padding-left: .3rem;
                     // padding-right: .3rem;
                     li {
+                        cursor: pointer;
                         height: .6rem;
                         display: flex;
                         padding-top: .06rem;
+                        padding-left: .3rem;
                         border-bottom: .01rem solid #142a6a;
                         justify-content: space-between;
                         >div {
@@ -535,6 +531,8 @@
                                 width: .36rem;
                                 height: .13rem;
                                 background-image: url('../../../static/images/q_r-slight.png');
+                                // background-image: url('../../../static/images/bb.png');
+                                // background-image: url('../../../static/images/aa.svg');
                                 background-position: center center;
                                 background-repeat: no-repeat;
                                 background-size: contain;
@@ -563,6 +561,9 @@
                             span {
                                 font-size: .12rem;
                             }
+                            .padding {
+                                margin-left: .08rem;
+                            }
                         }
                         .type {
                             line-height: .53rem;
@@ -580,8 +581,16 @@
                         }
                         .state {
                             line-height: .53rem;
-                            color: #20d46c;
                             flex: 2;
+                        }
+                        .green-color {
+                            color: #20d46c;
+                        }
+                        .orange-color {
+                            color: #ff721b;
+                        }
+                        .red-color {
+                            color: #b1335d;
                         }
                         .operation {
                             flex: 1;
@@ -759,6 +768,12 @@ export default {
             value10: '',
             value11: '',
         }
-    }
+    },
+    methods: {
+        particulars() {
+            // window.open('http://localhost:8080/?xmid=DV2mxBGL1Ao%3D#/q_particulars', '_blank');
+            this.$router.push({ path:'/q_particulars'})
+        }
+    },
 }
 </script>

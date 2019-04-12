@@ -7,12 +7,13 @@
           <span v-else class="danger">异常运行</span>
         </div>
         <div class="employee">
-          <span class="bolder">今日工作</span>
+          <span class="bolder">操作员</span>
           <span>{{item.Name}}</span>
           <span class="bolder">上班时间</span>
           <span>{{item.time}}</span>
         </div>
-        <img :src="`${imgUrl}/${item.photo}`" alt class="pic">
+        <!-- <img :src="`${imgUrl}/${item.photo}`" alt class="pic"> -->
+        <img src="../../../static/images/s_pic.png" alt="" class="pic">
       </div>
     </div>
     <div class="buttom">
@@ -76,7 +77,7 @@ export default {
   methods: {
     getInfo(){
       this.xmid = this.getQueryString('xmid')
-      this.$axios.get(`/APP/XMPage/DeviceData.ashx?method=GetShenJianJiData&xmid=${this.xmid}`).then(res=>{
+      this.$axios.get(`http://gd.17hr.net:8018/APP/XMPage/DeviceData.ashx?method=GetShenJianJiData&xmid=${this.xmid}`).then(res=>{
         if(res.data.success == 1){
           this.$router.push('unopen')
         }else{
@@ -103,7 +104,7 @@ export default {
   padding: 0.51rem 0.3rem 0.4rem 0.4rem;
 }
 .danger {
-  color: #c23864 !important;
+  color: #fb497c !important;
 }
 .noml {
   color: #ff731c !important;
@@ -156,6 +157,7 @@ export default {
       }
       .bolder {
         font-weight: bolder;
+        text-align: right;
       }
     }
   }
@@ -243,7 +245,7 @@ export default {
   background-size: cover;
 }
 .anomaly {
-    color: #c23864;
+    color: #fb497c;
 }
 .normal {
     color: #24e974;

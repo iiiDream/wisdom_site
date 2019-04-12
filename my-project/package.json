@@ -11,23 +11,24 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "echarts": "^4.2.0-rc.2",
-    "element-ui": "^2.4.11",
+    "element-ui": "^2.6.1",
+    "js-md5": "^0.7.3",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "moment": "^2.23.0",
-    "vue": "^2.5.21",
+    "moment": "^2.24.0",
+    "vue": "^2.6.9",
     "vue-amap": "^0.5.8",
     "vue-router": "^3.0.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.3.0",
-    "@vue/cli-plugin-eslint": "^3.3.0",
-    "@vue/cli-service": "^3.3.0",
+    "@vue/cli-plugin-babel": "^3.5.1",
+    "@vue/cli-plugin-eslint": "^3.5.1",
+    "@vue/cli-service": "^3.5.1",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0",
+    "eslint": "^5.15.2",
+    "eslint-plugin-vue": "^5.2.2",
     "generate-asset-webpack-plugin": "^0.3.0",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.6.9"
   },
   "eslintConfig": {
     "root": true,

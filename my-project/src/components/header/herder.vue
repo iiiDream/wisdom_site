@@ -29,51 +29,53 @@
             <router-link to="/labour">两制管理</router-link>
           </li>
           <li  v-on:click="isActive('/green')">
-            <div class="Lactive-box" v-show="active=='/green'">
+            <div class="Lactive-box" v-show="active.includes('/green')">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span>绿色施工</span>
             </div>
             <router-link to="/green">绿色施工</router-link>
           </li>
-          <li  v-on:click="isActive('/safety')">
-            <div class="Lactive-box" v-show="active.includes('/safety')" style="left:-.04rem">
-              <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
-              <span style="padding-left:.04rem">安全施工</span>
-            </div>
-            <router-link to="/safety">安全施工</router-link>
-          </li>
           <li  v-on:click="isActive('/monitoring')">
-            <div class="Lactive-box" v-show="active=='/monitoring'" style="left:.04rem">
-              <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
+            <div class="Lactive-box" v-show="active=='/monitoring'" style="left:-.04rem">
+              <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
               <span style="padding-left:.04rem">全景监控</span>
             </div>
             <router-link to="/monitoring">全景监控</router-link>
           </li>
           <li  v-on:click="isActive('/location')">
-            <div class="Lactive-box" v-show="active.includes('/location')">
+            <div class="Lactive-box" v-show="active.includes('/location')" style="left:.04rem">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
               <span>人员定位</span>
             </div>
             <router-link to="/location">人员定位</router-link>
           </li>
-          <li  v-on:click="isActive('/quality')">
-            <div class="Lactive-box" v-show="active=='/quality'">
+          <li  v-on:click="isActive('/safety')">
+            <div class="Lactive-box" v-show="active.includes('/safety')">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span>质量管理</span>
+              <span style="padding-left:.04rem">安全施工</span>
             </div>
-            <router-link to="/quality">质量管理</router-link>
+            <router-link to="/safety">安全施工</router-link>
           </li>
-          <li  v-on:click="isActive('/schedule')">
-            <div class="Lactive-box" v-show="active=='/schedule'">
+          <li  v-on:click="isActive('/quality')">
+            <div class="Lactive-box" v-show="active.includes('/quality')">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span>进度管理</span>
+              <span>安全巡检</span>
             </div>
-            <router-link to="/schedule">进度管理</router-link>
+            <router-link to="/quality">安全巡检</router-link>
+          </li>
+          <li  v-on:click="isActive('/information')">
+            <div class="Lactive-box" v-show="active=='/information'">
+              <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
+              <span>资料管理</span>
+            </div>
+            <router-link to="/information">资料管理</router-link>
           </li>
         </ul>
-        <router-link to="/homePage" v-on:click="isActive('/home')">
-          <h2 class="head-title">{{project}}</h2>
-        </router-link>
+        <span v-on:click="isActive('/home')">
+          <router-link to="/home">
+            <h2 class="head-title">深圳河消除黑臭项目</h2>
+          </router-link>
+        </span>
         <div class="date-time">
           <span class="d-date" v-if="weather.length > 0">{{weather[0].date}}</span>
           <span class="d-time">{{time}}</span>
@@ -108,7 +110,7 @@ export default {
     getName() {
       this.xmid = this.getQueryString('xmid')
       this.$axios
-        .get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`)
+        .get(`http://gd.17hr.net:8018/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`)
         .then(res => {
           if(res.data.success == 1){
             this.$router.push('unopen')
@@ -120,7 +122,7 @@ export default {
     },
     getWeather() {
       this.xmid = this.getQueryString('xmid')
-      this.$axios.get(`/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`).then(res=>{
+      this.$axios.get(`http://gd.17hr.net:8018/APP/XMPage/XmData.ashx?method=XMData&xmid=${this.xmid}`).then(res=>{
         if(res.data.success == 1){
           this.$router.push('unopen')
         }else{
@@ -149,10 +151,17 @@ export default {
     },
     // 测试
     getliuyong() {
-      this.$axios.post('http://192.168.0.193:7878/admin/admins/signIn',{userName:'admin',password:'admin'}).then(res=>{
+      // this.$axios.post('http://192.168.0.110:8989/logins?password=lj123&validateCode=0&username=lj').then(res=>{
+      //   console.log(res.data)
+      // })
+      this.$axios.post('http://192.168.0.110:8989/logins',{
+        password:'lj123',validateCode:0,username:'lj'
+        }).then(
+          res=>{
         console.log(res.data)
       })
     }
+    
   }
 };
 </script>

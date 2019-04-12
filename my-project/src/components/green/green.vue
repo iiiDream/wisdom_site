@@ -1,39 +1,40 @@
 <template>
   <div id="content">
+    <!-- 左边 -->
     <div id="left">
       <div class="leftTop">
         <div class="title">
           <h1>{{time}}</h1>
-          <div>{{weather.currentCity}}环境检测动态显示</div>
+          <div v-for="(item,key,index) in weatherData" :key="index" v-if="key=='city'">{{item}}市天气预报</div>
         </div>
         <div class="content">
-          <div class="one">
-            <span>{{date}}</span>
-            <span>{{zhouji}}</span>
-            <img v-if="weatherInfo1.includes('云')" src="../../../static/images/g_duoyun.png">
-            <img v-else-if="weatherInfo1.includes('晴')" src="../../../static/images/g_qing.png">
-            <img v-else-if="weatherInfo1.includes('雪')" src="../../../static/images/g_xue.png">
-            <img v-else-if="weatherInfo1.includes('雨')" src="../../../static/images/g_dayv.png">
-            <img v-else-if="weatherInfo1.includes('阴')" src="../../../static/images/g_yin.png">
-            <img v-else-if="weatherInfo1.includes('雷')" src="../../../static/images/g_lei.png">
+          <div class="one" v-for="(item,key,index) in weatherData" :key="index" v-if="key=='data'">
+            <span>{{item[0].week}}</span>
+            <!-- <span>{{item[0].week}}</span> -->
+            <img v-if="item[0].wea.includes('云')" src="../../../static/images/g_duoyun.png">
+            <img v-else-if="item[0].wea.includes('晴')" src="../../../static/images/g_qing.png">
+            <img v-else-if="item[0].wea.includes('雪')" src="../../../static/images/g_xue.png">
+            <img v-else-if="item[0].wea.includes('雨')" src="../../../static/images/g_dayv.png">
+            <img v-else-if="item[0].wea.includes('阴')" src="../../../static/images/g_yin.png">
+            <img v-else-if="item[0].wea.includes('雷')" src="../../../static/images/g_lei.png">
             <img v-else src="../../../static/images/g_wan.png">
-            <div class="name">{{weatherInfo1}}</div>
-            <div class="wendu">{{weatherInfo3}}</div>
-            <div class="fengx">{{weatherInfo2}}</div>
+            <div class="name">{{item[0].wea}}</div>
+            <div class="wendu">{{item[0].tem}}~{{item[0].tem2}}</div>
+            <div class="fengx">{{item[0].win[0]}}</div>
           </div>
           <div class="two">
-            <div class="sub" v-for="(item, index) in ortherWeather" :key="index">
-              <span>{{item.date}}</span>
-              <img v-if="item.weather.includes('云')" src="../../../static/images/g_duoyun.png">
-              <img v-else-if="item.weather.includes('晴')" src="../../../static/images/g_qing.png">
-              <img v-else-if="item.weather.includes('雪')" src="../../../static/images/g_xue.png">
-              <img v-else-if="item.weather.includes('雨')" src="../../../static/images/g_dayv.png">
-              <img v-else-if="item.weather.includes('阴')" src="../../../static/images/g_yin.png">
-              <img v-else-if="item.weather.includes('雷')" src="../../../static/images/g_lei.png">
+            <div class="sub" v-for="(item, index) in weatherData.data" :key="index" v-if="index>0&&index<4">
+              <span>{{item.week}}</span>
+              <img v-if="item.wea.includes('云')" src="../../../static/images/g_duoyun.png">
+              <img v-else-if="item.wea.includes('晴')" src="../../../static/images/g_qing.png">
+              <img v-else-if="item.wea.includes('雪')" src="../../../static/images/g_xue.png">
+              <img v-else-if="item.wea.includes('雨')" src="../../../static/images/g_dayv.png">
+              <img v-else-if="item.wea.includes('阴')" src="../../../static/images/g_yin.png">
+              <img v-else-if="item.wea.includes('雷')" src="../../../static/images/g_lei.png">
               <img v-else src="../../../static/images/g_wan.png">
-              <div class="name">{{item.weather}}</div>
-              <div class="wendu">{{item.temperature}}</div>
-              <div class="fengx noml">{{item.wind}}</div>
+              <div class="name">{{item.wea}}</div>
+              <div class="wendu">{{item.tem1}}~{{item.tem2}}</div>
+              <div class="fengx noml">{{item.win[0]}}</div>
             </div>
           </div>
         </div>
@@ -44,57 +45,55 @@
           <div class="top">
             <div class="left">
               <img
-                v-if="manyInfo.pm25IsA==0"
                 src="../../../static/images/g_lv.png"
                 style="width:1.31rem;height:1.2rem"
               >
-              <img
+              <!-- <img
                 v-else
                 src="../../../static/images/g_hong.png"
                 style="width:1.31rem;height:1.2rem"
-              >
+              > -->
               <div>
-                <p class="num" style="font-weight:bolder">{{manyInfo.pm25}}</p>
+                <p class="num" style="font-weight:bolder" v-for="(item,index) in dustEmissionCentreData.newData" :key="index">{{item.PM25}}</p>
                 <!-- <p class="num" style="font-weight:bolder">45</p> -->
                 ug/m3
               </div>
             </div>
-            <div class="right">
+            <div class="right" v-for="(item,key,index) in dustEmissionCentreData" :key="index" v-if="key=='pm25avg'">
               <div class="title">PM2.5</div>
               <div class="day">本日平均浓度：</div>
-              <div v-if="pm25<75" class="daynum noml">{{pm25}}ug/m3</div>
-              <div v-else class="daynum danger">{{pm25}}ug/m3</div>
+              <div v-if="item.day<75" class="daynum noml">{{item.day}}ug/m3</div>
+              <div v-else class="daynum danger">{{item.day}}ug/m3</div>
               <div class="month">本月平均浓度：</div>
-              <div v-if="pmyd25<75" class="monthnum noml">{{pmyd25}}ug/m3</div>
-              <div v-else class="monthnum danger">{{pmyd25}}ug/m3</div>
+              <div v-if="item.month<75" class="monthnum noml">{{item.month}}ug/m3</div>
+              <div v-else class="monthnum danger">{{item.month}}ug/m3</div>
             </div>
           </div>
           <div class="down">
             <div class="left">
               <img
-                v-if="manyInfo.pm10IsA==0"
                 src="../../../static/images/g_lv.png"
                 style="width:1.31rem;height:1.2rem"
               >
-              <img
+              <!-- <img
                 v-else
                 src="../../../static/images/g_hong.png"
                 style="width:1.31rem;height:1.2rem"
-              >
+              > -->
               <div>
-                <p class="num" style="font-weight:bolder">{{manyInfo.pm10}}</p>
+                <p class="num" style="font-weight:bolder" v-for="(item,index) in dustEmissionCentreData.newData" :key="index">{{item.PM10}}</p>
                 <!-- <p class="num" style="font-weight:bolder">45</p> -->
                 ug/m3
               </div>
             </div>
-            <div class="right">
+            <div class="right" v-for="(item,key,index) in dustEmissionCentreData" :key="index" v-if="key=='pm10avg'">
               <div class="title">PM10</div>
               <div class="day">本日平均浓度：</div>
-              <div v-if="pm10<0.15" class="daynum noml">{{pm10}}ug/m3</div>
-              <div v-else class="daynum danger">{{pm10}}ug/m3</div>
+              <div v-if="item.day<75" class="daynum noml">{{item.day}}ug/m3</div>
+              <div v-else class="daynum danger">{{item.day}}ug/m3</div>
               <div class="month">本月平均浓度：</div>
-              <div v-if="pmyd10<0.15" class="monthnum noml">{{pmyd10}}ug/m3</div>
-              <div v-else class="monthnum danger">{{pmyd10}}ug/m3</div>
+              <div v-if="item.month<75" class="monthnum noml">{{item.month}}ug/m3</div>
+              <div v-else class="monthnum danger">{{item.month}}ug/m3</div>
             </div>
           </div>
         </div>
@@ -103,8 +102,8 @@
           <div class="title">
             <div class="subtitle">
               实时数据：
-              <span v-if="manyInfo.zsIsA==0" class="num noml">{{manyInfo.zs}}dB</span>
-              <span v-else class="num danger">{{manyInfo.zs}}dB</span>
+              <span class="num noml" v-for="(item,index) in dustEmissionCentreData.newData" :key="index">{{item.Noise}}dB</span>
+              <!-- <span v-else class="num danger">{{manyInfo.zs}}dB</span> -->
             </div>
             <div class="mintitle">
               <span>最近12小时噪音</span>
@@ -119,36 +118,37 @@
         </div>
       </div>
     </div>
+    <!-- 中间 -->
     <div id="center">
       <div class="main">
         <h1>实时环境检测</h1>
-        <div class="bgc">
+        <div class="bgc" v-for="(item,index) in dustEmissionCentreData.newData" :key="index">
           <img
-            v-if="manyInfo.pm25<50"
+            v-if="item.PM25<50"
             src="../../../static/images/g_lvse.png"
             class="mainImg"
             style="width:2.74rem;height:2.74rem"
           >
           <img
-            v-else-if="manyInfo.pm25<75"
+            v-else-if="item.PM25<75"
             src="../../../static/images/g_huang.png"
             class="mainImg"
             style="width:2.74rem;height:2.74rem"
           >
           <img
-            v-else-if="manyInfo.pm25<150"
+            v-else-if="item.PM25<150"
             src="../../../static/images/g_qingdu.png"
             class="mainImg"
             style="width:2.74rem;height:2.74rem"
           >
           <img
-            v-else-if="manyInfo.pm25<250"
+            v-else-if="item.PM25<250"
             src="../../../static/images/g_zhongdu.png"
             class="mainImg"
             style="width:2.74rem;height:2.74rem"
           >
           <img
-            v-else-if="manyInfo.pm25<300"
+            v-else-if="item.PM25<300"
             src="../../../static/images/g_zdu.png"
             class="mainImg"
             style="width:2.74rem;height:2.74rem"
@@ -160,21 +160,21 @@
             style="width:2.74rem;height:2.74rem"
           >
         </div>
-        <div class="mianInfo">
-          <div class="global">
-            <div class="title">PM2.5</div>
-            <div class="num">{{manyInfo.pm25}}</div>
-            <div class="yuan">
-              <div v-if="manyInfo.pm25<50" class="bor" style="background-color: #24e974;">优</div>
-              <div v-else-if="manyInfo.pm25<75" class="bor" style="background-color: #feb113;">良</div>
-              <div v-else-if="manyInfo.pm25<150" class="bor" style="background-color: #f06743;">轻度污染</div>
-              <div v-else-if="manyInfo.pm25<250" class="bor" style="background-color: #d0021b;">中度污染</div>
-              <div v-else-if="manyInfo.pm25<300" class="bor" style="background-color: #6c00cc;">重度污染</div>
-              <div v-else class="bor" style="background-color: #6d1e06;">严重污染</div>
+        <router-link to="/green/g_particulars" class="mianInfo">
+            <div class="global" v-for="(item,index) in dustEmissionCentreData.newData" :key="index">
+              <div class="title">PM2.5</div>
+              <div class="num">{{item.PM25}}</div>
+              <div class="yuan">
+                <div v-if="item.PM25<50" class="bor" style="background-color: #24e974;">优</div>
+                <div v-else-if="item.PM25<75" class="bor" style="background-color: #feb113;">良</div>
+                <div v-else-if="item.PM25<150" class="bor" style="background-color: #f06743;">轻度污染</div>
+                <div v-else-if="item.PM25<250" class="bor" style="background-color: #d0021b;">中度污染</div>
+                <div v-else-if="item.PM25<300" class="bor" style="background-color: #6c00cc;">重度污染</div>
+                <div v-else class="bor" style="background-color: #6d1e06;">严重污染</div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="leftInfo">
+        </router-link>
+        <div class="leftInfo" v-for="(item,index) in dustEmissionCentreData.newData" :key="index+1">
           <div class="box">
             <img
               src="../../../static/images/g_qiwen.png"
@@ -182,21 +182,21 @@
             >
             <div class="text" style="transform: translate(.12rem);">
               <p style="font-weight: bold;">气温</p>
-              <p class="info">{{manyInfo.wd}}℃</p>
+              <p class="info">{{item.Temperature}}℃</p>
             </div>
           </div>
           <div class="box">
             <img src="../../../static/images/g_wendu.png" style="width:0.45rem;height:0.48rem">
             <div class="text"  style="transform: translate(.17rem);">
               <p style="font-weight: bold;">湿度</p>
-              <p class="info">{{manyInfo.sd}}%</p>
+              <p class="info">{{item.Humidity}}%</p>
             </div>
           </div>
           <div class="box">
             <img src="../../../static/images/g_fengsu.png" style="width:0.48rem;height:0.48rem">
             <div class="text"  style="transform: translate(.2rem);">
               <p style="font-weight: bold;">风速</p>
-              <p class="info">{{manyInfo.fs}}m/s</p>
+              <p class="info">{{item.WindSpeed}}m/s</p>
             </div>
           </div>
         </div>
@@ -266,59 +266,60 @@
         </div>
       </div>
     </div>
+    <!-- 右边 -->
     <div id="right">
-      <div class="up">
+      <router-link to="/green/g_electricity" class="up">
         <h3>用电管理</h3>
         <div class="title">
           <span>
             <img src="../../../static/images/g_shandian.png">
           </span>
           <span class="content">
-            本月用电
-            <span>{{byyd}}</span>
-            <span class="danwei">&nbsp;kw/h</span>
+            电箱运行状态：
+            <span :class="electricBoxData.sb=='正常'?'noml':'danger'">{{electricBoxData.sb}}</span>
+            <!-- <span class="danwei">&nbsp;kw/h</span> -->
           </span>
         </div>
         <div class="imgs">
-          <div class="daydian">
+          <div :class="electricBoxData.kg==0?'loudian':'loudian1'">
             <div class="text">
-              <p>{{yongdianInfo.yd}}</p>
-              <p>kwh</p>
+              <p style="font-size:.2rem; line-height:.45rem">{{electricBoxData.kg==0?'关':'开'}}</p>
+              <!-- <p>kwh</p> -->
             </div>
           </div>
-          <div class="dianxiang">
+          <div :class="electricBoxData.envirwarm<45?'loudian':'loudian1'">
             <div class="text">
-              <p>{{yongdianInfo.wd}}</p>
+              <p>{{electricBoxData.envirwarm}}</p>
               <p>℃</p>
             </div>
           </div>
-          <div v-if="yongdianInfo.ldIsA==0" class="loudian">
+          <div :class="electricBoxData.current<150?'loudian':'loudian1'">
             <div class="text">
-              <p>{{yongdianInfo.ld}}</p>
-              <p>kwh</p>
-            </div>
-          </div>
-          <div v-else class="loudian1">
-            <div class="text">
-              <p>{{yongdianInfo.ld}}</p>
+              <p>{{electricBoxData.current}}</p>
               <p>kwh</p>
             </div>
           </div>
         </div>
         <div class="subtitle">
-          <p class="huang">今日用电</p>
-          <p class="huang">电箱温度</p>
-          <p v-if="yongdianInfo.ldIsA==0" class="huang">电箱漏电</p>
-          <p v-else class="danger">电箱漏电</p>
+          <p :class="electricBoxData.kg==0?'huang':'danger'">箱门开关</p>
+          <p :class="electricBoxData.envirwarm<45?'huang':'danger'">电箱温度</p>
+          <p :class="electricBoxData.current<150?'huang':'danger'">电箱漏电</p>
+          <!-- <p v-else class="danger">电箱漏电</p> -->
         </div>
-        <div class="biao">
-          <div class="mintitle">
-            <span>最近7天用电</span>
-            <span>单位：KWH</span>
+        <div class="door-state">
+          <div class="door-title">电箱开关</div>
+          <div class="door-data" id="doorList">
+            <ul id="doorList1">
+              <li v-for="(item,index) in electricBoxData.kgjl" :key="index">
+                <span>开门时间：{{item.opendoorTime}}</span>
+                <span>关门时间：{{item.closelockTime}}</span>
+                <span>状态：{{item.doorType==0?'关':'开'}}</span>
+              </li>
+            </ul>
+            <ul id="doorList2"></ul>
           </div>
-          <div id="sevendian" style="width: 3.6rem;height:1.8rem;" class="sevendian"></div>
         </div>
-      </div>
+      </router-link>
       <div class="down">
         <h3>用水管理</h3>
         <div class="title">
@@ -374,14 +375,30 @@ export default {
       pm10: "",
       pmyd25: "",
       pmyd10: "",
-      xmid: ""
+      xmid: "",
+      pid: 0, // 项目id
+      dustEmissionCentreData: "", // 扬尘监测器数据
+      weatherData: "", // 天气数据
+      dustPicMax: 60, // 污染度最大值
+      noiseMax: 100, // 噪音最大值
+      electricBoxData: "", // 电箱数据
     };
   },
   created() {
-    this.getWeather(), this.getdatays(), this.gethourData(), this.getManyInfo();
+    this.getPid()
+    // this.getWeather(),
+    // this.getdatays(),
+    // this.gethourData(),
+    // this.getManyInfo(),
+    this.getDustEmissionCentreData()
+    this.getWeatherData()
+    // this.scrollStart('doorList','doorList1','doorList2')
+    this.getElectricBoxData()
   },
   mounted() {
-    this.getTime();
+    this.getTime()
+    this.sevenworter()
+    this.sixworter()
   },
   methods: {
     //   噪音图形
@@ -435,7 +452,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            max: 100,
+            max: this.noiseMax,
             min: 0,
             interval: 20,
             axisLabel: {
@@ -480,7 +497,7 @@ export default {
       }, 60000);
     },
     // 6小时温度图形
-    sixwen(wdH, wdV) {
+    temperaturePic(wdH, wdV) {
       let mysixwen = this.$echarts.init(document.getElementById("sixwen"));
       mysixwen.setOption({
         grid: {
@@ -514,14 +531,14 @@ export default {
         yAxis: [
           {
             type: "value",
-            max: 50,
-            min: 0,
-            interval: 10,
+            max: 45,
+            min: -30,
+            interval: 15,
             axisLabel: {
               textStyle: {
                 color: "#fff"
               },
-              formatter: "{value}"
+              formatter: "{value}℃"
             },
             axisLine: {
               lineStyle: {
@@ -552,7 +569,7 @@ export default {
       });
     },
     // 6小时污染度图形
-    sixwu(pmH, pm2, pm10) {
+    dustPic(pmH, pm2, pm10) {
       let mysixwu = this.$echarts.init(document.getElementById("sixwu"));
       mysixwu.setOption({
         // backgroundColor: "#FBFBFB",
@@ -587,7 +604,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            max: 50,
+            max: this.dustPicMax,
             min: 0,
             interval: 10,
             axisLabel: {
@@ -738,8 +755,8 @@ export default {
             },
             type: "category",
             boundaryGap: false,
-            // data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
-            data: sevenshuiH
+            data: ["04-01", "04-02", "04-03", "04-04", "04-05",  "04-06","04-07"]
+            // data: sevenshuiH
           }
         ],
         yAxis: [
@@ -775,8 +792,8 @@ export default {
             type: "line",
             symbolSize: 4,
             color: ["#508bb8"],
-            // data: [67, 124, 126, 134, 90, 85]
-            data: sevenshuiV
+            data: [67, 124, 126, 134, 90, 85, 70]
+            // data: sevenshuiV
           }
         ]
       });
@@ -812,8 +829,9 @@ export default {
             },
             type: "category",
             boundaryGap: false,
-            // data: ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]
-            data: sixshuiH
+            data: ["11月", "12月", "1月", "2月", "3月", "4月"],
+            // data: sixshuiH
+            // formatter: "{value}月"
           }
         ],
         yAxis: [
@@ -849,8 +867,8 @@ export default {
             type: "line",
             symbolSize: 4,
             color: ["#508bb8"],
-            // data: [67, 124, 126, 134, 90, 85]
-            data: sixshuiV
+            data: [67, 124, 126, 134, 90, 85]
+            // data: sixshuiV
           }
         ]
       });
@@ -929,9 +947,9 @@ export default {
               sixshuiH.push(res.data.data_yd1[i].dayhour);
               sixshuiV.push(res.data.data_yd1[i].value);
             }
-            this.sevendian(sevendianH, sevendianV);
-            this.sevenworter(sevendianH, sevendianV);
-            this.sixworter(sixshuiH, sixshuiV);
+            // this.sevendian(sevendianH, sevendianV);
+            // this.sevenworter(sevendianH, sevendianV);
+            // this.sixworter(sixshuiH, sixshuiV);
           }
         });
     },
@@ -959,7 +977,7 @@ export default {
               pm2.push(res.data.data_pm[i].pm2);
               pm10.push(res.data.data_pm[i].pm10);
             }
-            this.sixwu(pmH, pm2, pm10);
+            // this.sixwu(pmH, pm2, pm10);
 
             let wdH = [];
             let wdV = [];
@@ -967,7 +985,7 @@ export default {
               wdH.push(res.data.data_wd[i].dayhour);
               wdV.push(res.data.data_wd[i].value);
             }
-            this.sixwen(wdH, wdV);
+            // this.sixwen(wdH, wdV);
 
             let zsH = [];
             let zsV = [];
@@ -975,7 +993,7 @@ export default {
               zsH.push(res.data.data_zs[i].dayhour);
               zsV.push(res.data.data_zs[i].value);
             }
-            this.noisePic(zsH, zsV);
+            // this.noisePic(zsH, zsV);
           }
         });
       setInterval(() => {
@@ -1034,6 +1052,8 @@ export default {
         });
       }, 1000);
     },
+
+    // 获取url中的项目id
     getQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
       var r = window.location.search.substr(1).match(reg);
@@ -1041,13 +1061,127 @@ export default {
         return unescape(r[2]);
       }
       return null;
+    },
+
+    // 获取扬尘监测数据
+    getDustEmissionCentreData() {
+      this.$axios.get(`/dustEmission/get/HomeDustEmissionCentre?pid=${this.pid}`).then(
+        res => {
+          // console.log(res.data)
+          this.dustEmissionCentreData = res.data
+          let zsH = []
+          let zsV = []
+          let wdH = []
+          let wdV = []
+          let pmH = []
+          let pm2 = []
+          let pm10 = []
+          for (let i = this.dustEmissionCentreData.ZY.length-1; i >= 0; i--) {
+            zsH.push(this.dustEmissionCentreData.ZY[i].time)
+            zsV.push(this.dustEmissionCentreData.ZY[i].Noise)
+          }
+          for (let i = this.dustEmissionCentreData.QW.length-1; i >= 0; i--) {
+            wdH.push(this.dustEmissionCentreData.QW[i].time)
+            wdV.push(this.dustEmissionCentreData.QW[i].temperature)
+          }
+          for (let i = this.dustEmissionCentreData.PM.length-1; i >= 0 ; i--) {
+            pmH.push(this.dustEmissionCentreData.PM[i].time)
+            pm2.push(this.dustEmissionCentreData.PM[i].PM25)
+            pm10.push(this.dustEmissionCentreData.PM[i].PM10)
+          }
+          // 判断污染度y轴的最大值
+          for (let i = 0; i < pm2.length; i++) {
+            for (let i2 = 0; i2 < pm2.length; i2++) {
+              if (pm2[i]>this.dustPicMax || pm10[i]>this.dustPicMax) {
+                this.dustPicMax += 10
+              }
+            }
+          }
+          // 判断噪音y轴最大值
+          for (let i = 0; i < zsV.length; i++) {
+            for (let i2 = 0; i2 < zsV.length; i2++) {
+              if (zsV[i]>this.noiseMax || zsV[i]>this.noiseMax) {
+                this.noiseMax += 20
+              }
+            }
+          }
+
+
+          this.noisePic(zsH, zsV)
+          this.temperaturePic(wdH, wdV)
+          this.dustPic(pmH, pm2, pm10)
+        }
+      )
+    },
+
+    // 获取天气监测数据
+    getWeatherData() {
+      this.$axios.get(`/lz/get/getWeather?pid=${this.pid}`).then(
+        res => {
+          // console.log(res.data)
+          this.weatherData = res.data
+          // console.log(this.weatherData)
+        }
+      )
+    },
+
+    // 获取电箱设备
+    getElectricBoxData() {
+      this.$axios.get(`/electricityBox/get/getElectricBoxState?pid=${this.pid}`).then(
+        res => {
+          console.log(res.data)
+          this.electricBoxData = res.data
+
+          // 开关记录多于4条时 开启滚动
+          if (res.data.kgjl.length >= 4) {
+            this.scrollStart('doorList','doorList1','doorList2')
+          }
+        }
+      )
+    },
+
+    // 滚动启动函数
+    scrollStart(id,id1,id2) {
+        setTimeout(() => {
+            var speed = 45;
+            var colee2 = document.getElementById(id2);
+            var colee1 = document.getElementById(id1);
+            var colee = document.getElementById(id);
+            colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
+            function Marquee1() {
+                // console.log(colee1.offsetHeight)
+                //当滚动至colee1与colee2交界时
+                if (colee2.offsetTop - colee.scrollTop <= 0) {
+                    colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
+                } else {
+                    colee.scrollTop++;
+                    if (colee.scrollTop == colee1.offsetHeight) {
+                        colee.scrollTop = 0;
+                    }
+                }
+            }   
+            var MyMar1 = setInterval(Marquee1, speed); //设置定时器
+            //鼠标移上时清除定时器达到滚动停止的目的
+            colee.onmouseover = function() {
+                clearInterval(MyMar1);
+            }
+            //鼠标移开时重设定时器
+            colee.onmouseout = function() {
+                MyMar1 = setInterval(Marquee1, speed);
+            }
+        }, 1000);
+    },
+
+    // 获取项目id
+    getPid() {
+      this.pid = localStorage.getItem('pid')
     }
   }
 };
 </script>
 <style lang='less' scoped>
 .danger {
-  color: #c23864 !important;
+  color: #fb497c !important;
 }
 .noml {
   color: #24e974 !important;
@@ -1061,6 +1195,7 @@ export default {
   padding: 0.5rem 0.3rem 0 0.3rem;
   height: 10.3rem;
   overflow: hidden;
+  // background-image: url('./2.5.png');
   h3 {
     font-weight: 900;
   }
@@ -1140,10 +1275,10 @@ export default {
           margin-left: 0.6rem;
           font-size: 0.12rem;
           .sub {
-            width: 0.7rem;
-            margin-left: 0.2rem;
+            width: 0.8rem;
+            margin-left: 0.1rem;
             img {
-              margin-left: 0.08rem;
+              margin-left: 0.13rem;
               width: 0.54rem;
               height: 0.54rem;
               display: block;
@@ -1155,7 +1290,7 @@ export default {
             }
             .fengx {
               margin-top: -0.05rem;
-              margin-left: 0.1rem;
+              margin-left: 0.15rem;
               width: 0.5rem;
               height: 0.2rem;
               border-radius: 0.05rem;
@@ -1335,6 +1470,7 @@ export default {
             transform: translateY(0.4rem);
             padding: 0.03rem;
             .bor {
+              color: #fff;
               width: 100%;
               height: 100%;
               background-color: #24e974;
@@ -1509,6 +1645,7 @@ export default {
     height: 100%;
     margin-left: 1.4%;
     .up {
+      display: block;
       width: 4.14rem;
       height: 4.61rem;
       background: url("../../../static/images/g_youshang.png") no-repeat center
@@ -1576,7 +1713,7 @@ export default {
             center center;
           background-size: 100% 100%;
           .text {
-            color: #c23864;
+            color: #fb497c;
           }
         }
       }
@@ -1590,38 +1727,26 @@ export default {
           width: 0.84rem;
         }
       }
-      .biao {
-        .mintitle {
-          position: absolute;
-          margin-top: 0.4rem;
-          transform: translateX(-0.2rem);
-          color: #fff;
-          span {
-            &:nth-child(1) {
-              float: left;
-              margin-left: 0.5rem;
-              font-size: 0.14rem;
-              transform: translateY(-0.2rem);
-            }
-            &:nth-child(2) {
-              float: right;
-              margin-left: 2.1rem;
-              font-size: 0.12rem;
-              &::before {
-                position: absolute;
-                content: "";
-                width: 0.06rem;
-                height: 0.06rem;
-                border-radius: 50%;
-                background-color: #fff;
-                right: 0.68rem;
-                top: 0.1rem;
-              }
+      .door-state {
+        width: 3.44rem;
+        color: #fff;
+        margin: 0 auto;
+        margin-top: .2rem;
+        .door-title {
+          font-size: .14rem;
+          line-height: .29rem;
+        }
+        .door-data {
+          height: 1.4rem;
+          overflow: hidden;
+          margin-top: .1rem;
+          ul {
+            li {
+              display: flex;
+              justify-content: space-between;
+              line-height: .35rem;
             }
           }
-        }
-        .sevendian {
-          transform: translate(0.15rem, 0.55rem);
         }
       }
     }

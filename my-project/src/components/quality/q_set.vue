@@ -3090,6 +3090,7 @@
                     width: 2rem;
                     margin-bottom: .22rem;
                     input {
+                        color: #fff;
                         width: 2rem;
                         padding-left: .08rem;
                         box-sizing: border-box;

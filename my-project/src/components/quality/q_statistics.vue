@@ -334,7 +334,7 @@ export default {
                         // barMinWidth: 
                         data: [55, 30, 49, 10, 45, 29, 54, 20, 57, 34, 50, 42, 11, 26, 58, 37],
                         itemStyle: {
-                            color: '#21ff6a'
+                            color: '#24e974'
                         }
                     },
                     {
@@ -344,7 +344,7 @@ export default {
                         barCategoryGap: '50%',
                         data: [29, 40, 20, 50, 12, 57, 24, 33, 47, 16, 30, 17, 36, 45, 19, 31],
                         itemStyle: {
-                            color: '#c23864',
+                            color: '#fb497c',
                         }
                     },
                 ],

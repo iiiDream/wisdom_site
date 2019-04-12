@@ -3,7 +3,7 @@
         <!-- 监控选择模块 -->
         <div class="select">
             <div class="select-box">
-                <el-collapse v-model="activeName" accordion>
+                <!-- <el-collapse v-model="activeName" accordion>
                   <el-collapse-item title="一号楼监控" name="1" class="tower">
                         <el-collapse v-model="activeName">
                             <div class="stair2"></div>
@@ -44,34 +44,51 @@
                           </el-collapse-item>
                         </el-collapse>
                   </el-collapse-item>
-                </el-collapse>
+                </el-collapse> -->
+                <ul>
+                    <li v-for="(item,index) in videoData" :key="index">
+                        <a :class="index==selectActive?'active':''" @click="selectActive=index">{{item.areaName}}</a>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- 监控显示模块 -->
-        <div class="main">
-            <div class="main-box">
-                <video id="player1" poster="" controls playsInline webkit-playsinline autoplay>
-                    <source :src="rtmp_url" type="" />
-                    <source :src="http_url" type="application/x-mpegURL" />
-                </video>
+        <div class="main" v-for="(item,index) in videoData" :key="index" v-if="index==selectActive&&videoData[selectActive].url.length>1">
+            <div class="main-box" >
+                <div class="no-data">
+                    <video id="player1" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[0]">
+                        <source :src="videoData[selectActive].url[0].url" type="" />
+                        <source :src="videoData[selectActive].url[0].url" type="application/x-mpegURL" />
+                    </video>
+                    <span v-else>无视频数据</span>
+                </div>
             </div>
             <div class="main-box">
-                <video id="player2" poster="" controls playsInline webkit-playsinline autoplay>
-                    <source :src="rtmp_url2" type="" />
-                    <source :src="http_url2" type="application/x-mpegURL" />
-                </video>
+                <div class="no-data">
+                    <video id="player1" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[1]">
+                        <source :src="videoData[selectActive].url[1].url" type="" />
+                        <source :src="videoData[selectActive].url[1].url" type="application/x-mpegURL" />
+                    </video>
+                    <span v-else>无视频数据</span>
+                </div>
             </div>
-            <div class="main-box">
-                <video id="player3" poster="" controls playsInline webkit-playsinline autoplay>
-                    <source :src="rtmp_url2" type="" />
-                    <source :src="http_url2" type="application/x-mpegURL" />
-                </video>
+            <div class="main-box" style="margin-top:.3rem">
+                <div class="no-data">
+                    <video id="player1" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[2]">
+                        <source :src="videoData[selectActive].url[2].url" type="" />
+                        <source :src="videoData[selectActive].url[2].url" type="application/x-mpegURL" />
+                    </video>
+                    <span v-else>无视频数据</span>
+                </div>
             </div>
-            <div class="main-box">
-                <video id="player4" poster="" controls playsInline webkit-playsinline autoplay>
-                    <source :src="rtmp_url2" type="" />
-                    <source :src="http_url2" type="application/x-mpegURL" />
-                </video>
+            <div class="main-box" style="margin-top:.3rem">
+                <div class="no-data">
+                    <video id="player1" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[3]">
+                        <source :src="videoData[selectActive].url[3].url" type="" />
+                        <source :src="videoData[selectActive].url[3].url" type="application/x-mpegURL" />
+                    </video>
+                    <span v-else>无视频数据</span>
+                </div>
             </div>
             <!-- <div class="main-bottom">
                 <div class="left-button" @click="leftMove">
@@ -101,6 +118,18 @@
                 <div class="right-button" @click="rightMove">
                 </div>
             </div> -->
+        </div>
+        <!-- 监控显示模块单个 -->
+        <div class="main" v-for="(item,index) in videoData" :key="index" v-if="index==selectActive&&videoData[selectActive].url.length==1">
+            <div class="main-one" >
+                <div class="no-data-one">
+                    <video id="player1" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[0]">
+                        <source :src="videoData[selectActive].url[0].url" type="" />
+                        <source :src="videoData[selectActive].url[0].url" type="application/x-mpegURL" />
+                    </video>
+                    <span v-else>无视频数据</span>
+                </div>
+            </div>
         </div>
         <!-- 监控功能模块 -->
         <!-- <div class="control">
@@ -156,15 +185,26 @@ export default {
             player2:"",
             player3:"",
             player4:"",
-            rtmp_url:"",
-            http_url:"",
+            rtmp_url0:"",
+            http_url0:"",
+            rtmp_url1:"",
+            http_url1:"",
             rtmp_url2:"",
             http_url2:"",
+            rtmp_url3:"",
+            http_url3:"",
             message:'加载中...',
+            videoData: '',
+            pid: 0, // 项目id
+            selectActive: 0, // 当前选择的区域
         }
     },
     mounted() {
-        this.GetLiveUrl();
+        this.GetLiveUrl()
+    },
+    created() {
+        this.getPid()
+        this.getProjectVideoAreaData()
     },
     methods: {
         leftMove() {
@@ -188,11 +228,30 @@ export default {
         },
         GetLiveUrl(){
             setInterval(() => {
-                this.rtmp_url = "http://hls.open.ys7.com/openlive/a37272d002f041e3a4da84f218ee63ac.m3u8"
-                this.http_url = "http://hls.open.ys7.com/openlive/a37272d002f041e3a4da84f218ee63ac.m3u8"
-                this.rtmp_url2 = "http://hls.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.m3u8"
-                this.http_url2 = "http://hls.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.m3u8"
+                this.http_url0 = "http://hls.open.ys7.com/openlive/f30dde0c01094f778e46314cf23cf297.m3u8"
+                this.http_url1 = "http://hls.open.ys7.com/openlive/ef412798283f41b383cdde97074f7551.m3u8"
+                this.http_url2 = "http://hls.open.ys7.com/openlive/8021849b1be64c92a9b719af50fed3e3.m3u8"
+                this.http_url3 = "http://hls.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.m3u8"
             },100)
+        },
+
+        // 获取摄像头信息
+        getProjectVideoAreaData() {
+            this.$axios.get(`/lz/video/getProjectVideoArea?pid=${this.pid}`).then(
+                res => {
+                    // console.log(res.data)
+                    // for (let i = 0; i < res.data[0].url.length; i++) {
+                    //     this``
+                    // }
+                    this.videoData = res.data
+                    // console.log(this.videoData)
+                }
+            )
+        },
+
+        // 获取项目id
+        getPid() {
+          this.pid = localStorage.getItem('pid')
         }
     },
     updated() {
@@ -209,7 +268,7 @@ export default {
 
 <style>
     #montoring {
-        padding:  .5rem .4rem 0 .4rem;
+        padding:  .5rem .4rem 0 .38rem;
         display: flex;
     }
     /* 选择模块样式 */
@@ -293,21 +352,63 @@ export default {
     #montoring .el-collapse {
         border: 0;
     }
+    #montoring .select .select-box>ul li {
+        font-size: .2rem;
+        background-color: #020521;
+        border-bottom: 0;
+        height: .56rem;
+        line-height: .56rem;
+        text-align: center;
+        background-image: url('../../../static/images/m_select-border.png');
+        background-size: contain;
+        background-position: center .54rem;
+    }
+    #montoring .select .select-box>ul li a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        color: #3375fe;
+    }
     /* 显示模块样式 */
     #montoring .main {
         flex: 1;
-        height: 9.37rem;
+        /* width: 14rem; */
+        height: 9.4rem;
         margin-left: .25rem;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
+    #montoring .main-one {
+        width: 15rem;
+        height: 9.4rem;
+        background-image: url('../../../static/images/monitoring-bigBg.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    #montoring .main-one video {
+        width: 15rem;
+        height: 9.4rem;
+    }
     #montoring .main-box {
         /* margin: 0 auto; */
-        width: 49%;
-        height: 4.6rem;
+        width: 7.44rem;
+        height: 4.55rem;
         /* background-image: url('../../../static/images/m_main.png');
         background-size: contain; */
+    }
+    #montoring .main-box .no-data {
+        width: 100%;
+        height: 100%;
+        color: #fff;
+        text-align: center;
+        line-height: 4.55rem;
+        font-size: .36rem;
+        background-image: url('../../../static/images/monitoring-bg.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
     }
     #montoring .main-box video {
         width: 100%;
