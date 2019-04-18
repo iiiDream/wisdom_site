@@ -12,10 +12,7 @@
     "babel-polyfill": "^6.26.0",
     "echarts": "^4.2.0-rc.2",
     "element-ui": "^2.6.1",
-<<<<<<< HEAD
     "js-md5": "^0.7.3",
-=======
->>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "moment": "^2.24.0",

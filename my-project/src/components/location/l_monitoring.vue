@@ -216,7 +216,7 @@ export default {
     methods: {
         // 导航栏点击事件
         handleChange(val) {
-            console.log(val)
+            // console.log(val)
             // if (val == '1-1') {
             //     this.polygon.show()
             //     this.text.show()

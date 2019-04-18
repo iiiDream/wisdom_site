@@ -11,7 +11,7 @@ import axios from 'axios'
 // 网络
 // axios.defaults.baseURL = ""
 // 本地
-axios.defaults.baseURL = "http://lz.hj-tec.com"
+axios.defaults.baseURL = "http://39.108.103.150:8989"
 axios.defaults.withCredentials=true //让ajax携带cookie
 Vue.prototype.$axios = axios
 
@@ -45,15 +45,12 @@ import q_statistics from '../components/quality/q_statistics.vue'
 import q_set from '../components/quality/q_set.vue'
 import q_record from '../components/quality/q_record.vue'
 import q_particulars from '../components/quality/q_particulars.vue'
-<<<<<<< HEAD
 import q_infoParticulars from '../components/quality/q_infoParticulars.vue'
 import q_infopath from '../components/quality/q_infopath.vue'
 import g_particulars from '../components/green/g_particulars.vue'
 import g_electricity from '../components/green/g_electricity.vue'
 import information from '../components/information/information.vue'
-=======
-import q_infopath from '../components/quality/q_infopath.vue'
->>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
+import workerHome from '../components/worker/workerHome.vue'
 
 const router = new VueRouter({
 
@@ -98,27 +95,38 @@ const router = new VueRouter({
             {path:"q_set",meta:{needLogin:true},component:q_set},
             {path:"q_record",meta:{needLogin:true},component:q_record},
             {path:"q_infopath",meta:{needLogin:true},component:q_infopath},
-<<<<<<< HEAD
             {path:'q_infoParticulars',meta:{needLogin:true},component:q_infoParticulars},
         ]},
         {path:'/q_particulars',meta:{needLogin:true},component:q_particulars},
-=======
-        ]},
-        {path:'/q_particulars',meta:{needLogin:true},component:q_particulars}
->>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
+        {path:'/workerHome',meta:{needLogin:true},component:workerHome},
     ]
 
     // 不需要路由拦截
     // routes:[
-    //     {path:'/login',component:loginOld},
+    //     {path:'/login',component:login},
+    //     {path:'/loginOld',component:loginOld},
     //     {path:'/',redirect:'/home'},
+    //     {path:'/md',component:mapDemo},
+    //     {path:'/projectManagement',component:projectManagement},
+    //     {path:'/homePage',component:homePage},
     //     {path:'/home',component:home},
     //     {path:'/green',component:green},
     //     {path:'/green/g_particulars',component:g_particulars},
     //     {path:'/green/g_electricity',component:g_electricity},
-    //     {path:'/labour',component:labour},
+    //     {path:'/labour',component:labour},        
     //     {path:'/unopen',component:unopen},
     //     {path:'/monitoring',component:monitoring},
+    //     {path:'/information',component:information},
+    //     // {path:'/quality',component:quality},
+    //     {path:'/schedule',component:schedule},
+    //     {path:'/safety',component:safety,children:[
+    //         {path:"",component:elevator},
+    //         {path:"towerCrane",component:towerCrane},
+    //         {path:"elevator",component:elevator},
+    //         {path:"car",component:car},
+    //         {path:"gantryCrane",component:gantryCrane},
+    //         {path:"gas",component:gas},
+    //     ]},
     //     {path:'/location',component:location,children:[
     //         {path:"",component:l_homePage},
     //         {path:"l_homePage",component:l_homePage},
@@ -128,16 +136,16 @@ const router = new VueRouter({
     //         {path:"l_set",component:l_set},
     //         {path:"l_rail",component:l_rail},
     //     ]},
-    //     // 未开放的功能
-    //     {path:'/quality',component:schedule},
-    //     {path:'/schedule',component:schedule},
-    //     {path:'/safety',component:schedule,children:[
-    //         {path:"",component:elevator},
-    //         {path:"towerCrane",component:towerCrane},
-    //         {path:"elevator",component:elevator},
-    //         {path:"car",component:car},
-    //         {path:"gantryCrane",component:gantryCrane},
+    //     {path:'/quality',component:quality,children:[
+    //         {path:"",component:q_statistics},
+    //         {path:"q_statistics",component:q_statistics},
+    //         {path:"q_set",component:q_set},
+    //         {path:"q_record",component:q_record},
+    //         {path:"q_infopath",component:q_infopath},
+    //         {path:'q_infoParticulars',component:q_infoParticulars},
     //     ]},
+    //     {path:'/q_particulars',component:q_particulars},
+    //     {path:'/workerHome',component:workerHome},
     // ]
 })
 

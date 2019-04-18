@@ -423,7 +423,6 @@
 export default {
   data() {
     return {
-<<<<<<< HEAD
       attendanceData: "", // 出勤数据
       attendanceMax: 600, // 项目出勤统计最大人数
       curveMax: 120, // 今日劳动曲线最大值
@@ -434,14 +433,6 @@ export default {
       staffData: "", // 班组与人员数据
       buildcompanyData: "", // 分包单位考勤情况
       dh: 0, // 百分比
-=======
-      attendanceData: "", //出勤数据
-      contractData: "", //合同签订数据
-      staffData: "", //班组与人员数据
-      attendanceMax: 600, //项目出勤统计最大人数
-      xmid:'',
-      dh: 0,
->>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
       timeId: null,
     };
   },
@@ -697,89 +688,6 @@ export default {
       });
     },
 
-<<<<<<< HEAD
-=======
-            // 判断项目出勤统计表Y轴的最大值
-            for (let i4 = 0; i4 < aMZc.length; i4++) {
-              for (let i5 = 0; i5 < aMZc.length; i5++) {
-                if (aMZc[i4]>this.attendanceMax || aMZcGly[i4]>this.attendanceMax || aMTotal[i4]>this.attendanceMax) {
-                  this.attendanceMax += 100
-                }
-              }
-            }
-
-            // 数据成功返回并且转换成数组以后 调用ECharts的渲染函数 将Echarts图渲染到页面中
-            this.professionMap(pM);
-            this.attendance(aMTotal, aMZc, aMDay, aMZcGly);
-            this.labourCurve(lMZc, lMDay);
-            // 数据条数大于一定值时 才调用初始化滚动函数
-            if (this.attendanceData.EmpPostData.length >= 4) {
-              this.scrollStart('leftBottom','leftBottom1','leftBottom2');
-            }
-            if (this.attendanceData.KqDWData.length >= 4) {
-              this.scrollStart('rightBottom','rightBottom1','rightBottom2');
-            }
-            // 数据渲染完成时 再调用柱状进度条渲染函数
-            // setTimeout(() => {
-            //   this.setLength();
-            // }, 300);
-            this.timeId = setInterval(() => {
-              // console.log(this.attendanceData.EmpRenShuData[0].bfb)
-              if (this.dh >= this.attendanceData.EmpRenShuData[0].bfb || this.dh > 100) {
-                if (this.dh > 100) {
-                  this.dh = 100
-                }
-                clearInterval(this.timeId);
-              } else {
-                this.dh++;
-                $(".la-subjindu").css("width", this.dh + "%");
-              }
-            }, 30);
-          }
-        });
-    },
-    // 获取合同签订数据
-    getContractData() {
-      this.xmid = this.getQueryString('xmid')
-      this.$axios
-        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpDetail&xmid=${this.xmid}`)
-        .then(res => {
-          if(res.data.success == 1){
-            this.$router.push('unopen')
-          }else{
-            console.log(res.data)
-            this.contractData = res.data;
-            // 数据渲染完成时 再调用圆形进度条渲染函数
-            setTimeout(() => {
-              this.setRoate(1);
-              this.setRoate(2);
-              this.setRoate(3);
-              this.setRoate(4);
-            }, 300);
-          }
-        });
-    },
-    // 获取班组与人员数据
-    getStaffData() {
-      this.xmid = this.getQueryString('xmid')
-      this.$axios
-        .get(`/APP/XMPage/EmpData.ashx?method=GetXMEmpRealData&xmid=${this.xmid}`)
-        .then(res => {
-          if(res.data.success == 1){
-            this.$router.push('unopen')
-          }else{
-            this.staffData = res.data;
-            // 数据条数大于一定值时 才调用滚动初始化
-            if (this.staffData.EmpJLData.length >= 7) {
-              this.scrollStart('staff','staff1','staff2')
-            }
-            if (this.staffData.BZRealData.length >= 7) {
-              this.scrollStart('squad','squad1','squad2')
-            }
-          }
-        });
-    },
->>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
     // 根据百分比设置圆形进度条长度
     setRoate(num) {
       let bfb = $(`#roateBfb${num}`).text();

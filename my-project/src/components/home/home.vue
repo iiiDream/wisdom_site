@@ -158,13 +158,47 @@
       </el-col>
       <el-col :span="6" class="wrap-right">
         <div class="code">
-          <h3>虎匠客服</h3>
-          <div class="left">
-            <div></div>
+          <h3>大数据工人库</h3>
+          <div class="search-box">
+            <input type="text" placeholder="搜索工种或公司">
+            <router-link to="/workerHome" class="search-button">搜索</router-link>
           </div>
-          <div class="right">
-            <p>客服电话</p>
-            <p>0755-21017743</p>
+          <div class="hot-search">
+            <ul>
+              <li>
+                热门搜索：
+              </li>
+              <li class="option">
+                <router-link to="/workerHome">木工</router-link>
+              </li>
+              <li class="option">
+                <router-link to="/workerHome">绿化工</router-link>
+              </li>
+              <li class="option">
+                <router-link to="/workerHome">杂工</router-link>
+              </li>
+              <li class="option">
+                <router-link to="/workerHome">水泥工</router-link>
+              </li>
+              <li class="option">
+                <router-link to="/workerHome">电工</router-link>
+              </li>
+              <li class="option">
+                <router-link to="/workerHome">中建一局</router-link>
+              </li>
+              <li class="option">
+                <router-link to="/workerHome">中建二局</router-link>
+              </li>
+              <li class="option">
+                <router-link to="/workerHome">中建三局</router-link>
+              </li>
+              <li class="option">
+                <router-link to="/workerHome">中建四局</router-link>
+              </li>
+              <li class="option">
+                <router-link to="/workerHome">中建五局</router-link>
+              </li>
+            </ul>
           </div>
         </div>
         <div class="ech">
@@ -811,20 +845,53 @@ export default {
     height: 1.96rem;
     background: url("../../../static/images/r_2.png") no-repeat center center;
     background-size: 100% 100%;
-    .left {
-      float: left;
-      padding: 0 0.4rem;
-      div {
-        width: 1rem;
-        height: 1rem;
-        background-image: url(http://gd.17hr.net:8018/APP/DownLoad/barcode.png);
-        background-size: cover;
+    .search-box {
+      margin-top: .12rem;
+      padding-left: .18rem;
+      input {
+        height: .3rem;
+        width: 2rem;
+        border: .01rem solid #2c61d4;
+        border-radius: .03rem;
+        background-color: rgba(0, 0, 0, 0);
+        padding-left: .1rem;
+        color: #fff;
+        vertical-align: top;
+      }
+      .search-button {
+        display: inline-block;
+        width: .7rem;
+        height: .3rem;
+        background-image: url('../../../static/images/home-searchButton.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-left: .15rem;
+        text-align: center;
+        line-height: .3rem;
+        font-size: .16rem;
+        color: #fff;
       }
     }
-    .right {
-      color: #fff;
-      font-size: 0.2rem;
-      line-height: 0.45rem;
+    .hot-search {
+      padding-left: .18rem;
+      margin-top: .16rem;
+      ul {
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        li {
+          color: #fff;
+          font-size: .14rem;
+          a {
+            color: #fff;
+            font-size: .14rem;
+          }
+        }
+        .option {
+          padding-right: .22rem;
+        }
+      }
     }
   }
   .ech {

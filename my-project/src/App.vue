@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     noHeader(){
-      if(this.$route.path=='/unopen' || this.$route.path=='/loginOld' || this.$route.path=='/login' || this.$route.path=='/homePage' || this.$route.path=='/projectManagement' || this.$route.path=='/md'){
+      if(this.$route.path=='/unopen' || this.$route.path=='/loginOld' || this.$route.path=='/login' || this.$route.path=='/homePage' || this.$route.path=='/projectManagement' || this.$route.path=='/md' || this.$route.path.includes('/worker')){
         this.isLogin=false;
       }else{
         this.isLogin=true;

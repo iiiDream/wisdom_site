@@ -5,7 +5,6 @@ import router from './router'
 import './common/font/font.css'
 // import './common/icon/iconfont'
 import echarts from 'echarts'
-<<<<<<< HEAD
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'babel-polyfill'
@@ -60,49 +59,6 @@ Vue.prototype.$md5 = md5
 // Vue.use(Notification);
 
 Vue.use(ElementUI);
-=======
-// import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import 'babel-polyfill';
-import {
-  Carousel,
-  Row,
-  Col,
-  CarouselItem,
-  Collapse,
-  CollapseItem,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Select,
-  Option,
-  Pagination,
-  Button,
-  Input,
-  DatePicker,
-  Timeline,
-  TimelineItem,
-} from 'element-ui'
-
-Vue.prototype.$echarts = echarts
-Vue.use(Carousel);
-Vue.use(Row);
-Vue.use(Col);
-Vue.use(CarouselItem);
-Vue.use(Collapse);
-Vue.use(CollapseItem);
-Vue.use(Dropdown);
-Vue.use(DropdownMenu);
-Vue.use(DropdownItem);
-Vue.use(Select);
-Vue.use(Option);
-Vue.use(Pagination);
-Vue.use(Button);
-Vue.use(Input);
-Vue.use(DatePicker);
-Vue.use(Timeline);
-Vue.use(TimelineItem);
->>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
 
 Vue.use(VueAMap);
 // Vue.config.productionTip = false;

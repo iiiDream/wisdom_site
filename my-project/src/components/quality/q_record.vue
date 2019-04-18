@@ -771,12 +771,8 @@ export default {
     },
     methods: {
         particulars() {
-<<<<<<< HEAD
             // window.open('http://localhost:8080/?xmid=DV2mxBGL1Ao%3D#/q_particulars', '_blank');
             this.$router.push({ path:'/q_particulars'})
-=======
-            window.open('http://localhost:8080/?xmid=DV2mxBGL1Ao%3D#/q_particulars', '_blank');
->>>>>>> dfd29f3a1e1e1fd09e72107eeee24080a3143c95
         }
     },
 }

@@ -65,7 +65,7 @@
             </div>
             <div class="main-box">
                 <div class="no-data">
-                    <video id="player1" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[1]">
+                    <video id="player2" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[1]">
                         <source :src="videoData[selectActive].url[1].url" type="" />
                         <source :src="videoData[selectActive].url[1].url" type="application/x-mpegURL" />
                     </video>
@@ -74,7 +74,7 @@
             </div>
             <div class="main-box" style="margin-top:.3rem">
                 <div class="no-data">
-                    <video id="player1" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[2]">
+                    <video id="player3" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[2]">
                         <source :src="videoData[selectActive].url[2].url" type="" />
                         <source :src="videoData[selectActive].url[2].url" type="application/x-mpegURL" />
                     </video>
@@ -83,7 +83,7 @@
             </div>
             <div class="main-box" style="margin-top:.3rem">
                 <div class="no-data">
-                    <video id="player1" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[3]">
+                    <video id="player4" poster="" controls playsInline webkit-playsinline autoplay v-if="videoData[selectActive].url[3]">
                         <source :src="videoData[selectActive].url[3].url" type="" />
                         <source :src="videoData[selectActive].url[3].url" type="application/x-mpegURL" />
                     </video>

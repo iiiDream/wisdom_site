@@ -3,9 +3,9 @@
         <div class="centent-box">
             <!-- 导航 -->
             <div class="nav">
-                <a>安全巡检</a>
+                <router-link to="/quality/q_statistics">首页</router-link>
                 <span>/</span>
-                <a>检查记录</a>
+                <router-link to="/quality/q_infopath">整改单管理</router-link>
                 <span>/</span>
                 <span class="present">详情</span>
             </div>

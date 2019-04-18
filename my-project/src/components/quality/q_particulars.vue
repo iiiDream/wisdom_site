@@ -4,9 +4,9 @@
         <div class="centent-box">
             <!-- 面包屑导航 -->
             <div class="crumbs-nav">
-                <a>首页</a>
+                <router-link to="/quality/q_statistics">首页</router-link>
                 <span>/</span>
-                <a>检查记录</a>
+                <router-link to="/quality/q_record">检查记录</router-link>
                 <span>/</span>
                 <span class="present">详情</span>
             </div>
