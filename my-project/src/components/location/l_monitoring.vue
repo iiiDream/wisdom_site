@@ -7,7 +7,11 @@
                         <el-collapse @change="handleChange" accordion>
                             <el-collapse-item v-for="(item,index) in monitoringData.areaList" :key="index" :title="item.name" :name="`${item.name}`">
                                 <div v-for="(item2,index2) in item.hireList" :key="index2">
-                                    <a style="color:#fff" @click="$router.push({ path: '/location/l_search', query: { orderId: item2.hname } })">{{item2.hname}}</a>
+                                    <a style="color:#fff" @click="$router.push({ path: '/location/l_search', query: { orderId: item2.hname } })">
+                                    {{item2.hname}}
+                                    <span class="online" v-show="item2.xloc">在线</span>
+                                    <span class="offline" v-show="!item2.xloc">不在线</span>
+                                    </a>
                                 </div>
                             </el-collapse-item>
                         </el-collapse>
@@ -67,7 +71,18 @@
                                 width: 100%;
                                 height: 100%;
                                 font-size: .13rem;
-                                color:#3375fe;
+                                position: relative;
+                                .online {
+                                    color: #24e974;
+                                    position: absolute;
+                                    right: .5rem;
+                                    // top: 0;
+                                }
+                                .offline {
+                                    color: #fb497c;
+                                    position: absolute;
+                                    right: .5rem;
+                                }
                             }
                         }
                     }
@@ -245,7 +260,7 @@ export default {
         getMonitoringData() {
             this.$axios.get(`/lz/project/listzh?id=${this.pid}`).then(
                 res => {
-                    // console.log(res.data)
+                    console.log(res.data)
                     this.monitoringData = res.data
                     // this.circleCenter = [114.007675,22.663599]
                     // this.circleRadius = 200

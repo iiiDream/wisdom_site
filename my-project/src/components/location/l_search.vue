@@ -259,6 +259,7 @@ export default {
                     },
                 }
             }],
+            getNameState: 0, // getName状态只调用一次
         }
     },
     created() {
@@ -270,8 +271,8 @@ export default {
         getLocaltionListData() {
             this.$axios.get(`/lz/hire/localtionList?id=${this.pid}&string=${this.name}&createDate=${this.createDate}`).then(
                 res => {
-                    // console.log(res.data)
-                    if(res.data.length != 0) {
+                    console.log(res.data)
+                    if(res.data[0].localtionList) {
                         this.localtionListData = res.data[0]
                         // 电子围栏渲染
                         let temp = []
@@ -301,9 +302,10 @@ export default {
         // 获取实时监控页面传过来的值
         getName() {
             // console.log(this.$route.query.orderId)
-            if (this.$route.query.orderId != undefined) {
+            if (this.$route.query.orderId != undefined && this.getNameState == 0) {
                 this.name = this.$route.query.orderId
                 this.getLocaltionListData()
+                this.getNameState = 1
             }
         },
 

@@ -25,165 +25,27 @@
         <!-- 页面主体 -->
         <div class="centent-box">
             <ul>
-                <li>
-                    <a>
-                        <div class="picture"></div>
+                <li v-for="(item,index) in foremanData" :key="index" :data-teamId="item.teamId">
+                    <router-link to="/workerParticular">
+                        <div class="picture">
+                            <img :src="imageUrl+item.photoName" alt="">
+                        </div>
                         <div class="name">
-                            戴春永木工班组
+                            {{item.groupName}}
                         </div>
                         <div class="nation">
-                            民族：汉族
+                            民族：{{item.nation}}族
                         </div>
                         <div class="area">
-                            区域：广东省深圳市
+                            区域：{{item.teamName}}
                         </div>
                         <div class="number">
-                            人数：10人
+                            工龄：{{item.isLeader}}年
                         </div>
-                        <div class="working-years">
+                        <!-- <div class="working-years">
                             工龄：3年
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <div class="picture"></div>
-                        <div class="name">
-                            戴春永木工班组
-                        </div>
-                        <div class="nation">
-                            民族：汉族
-                        </div>
-                        <div class="area">
-                            区域：广东省深圳市
-                        </div>
-                        <div class="number">
-                            人数：10人
-                        </div>
-                        <div class="working-years">
-                            工龄：3年
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <div class="picture"></div>
-                        <div class="name">
-                            戴春永木工班组
-                        </div>
-                        <div class="nation">
-                            民族：汉族
-                        </div>
-                        <div class="area">
-                            区域：广东省深圳市
-                        </div>
-                        <div class="number">
-                            人数：10人
-                        </div>
-                        <div class="working-years">
-                            工龄：3年
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <div class="picture"></div>
-                        <div class="name">
-                            戴春永木工班组
-                        </div>
-                        <div class="nation">
-                            民族：汉族
-                        </div>
-                        <div class="area">
-                            区域：广东省深圳市
-                        </div>
-                        <div class="number">
-                            人数：10人
-                        </div>
-                        <div class="working-years">
-                            工龄：3年
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <div class="picture"></div>
-                        <div class="name">
-                            戴春永木工班组
-                        </div>
-                        <div class="nation">
-                            民族：汉族
-                        </div>
-                        <div class="area">
-                            区域：广东省深圳市
-                        </div>
-                        <div class="number">
-                            人数：10人
-                        </div>
-                        <div class="working-years">
-                            工龄：3年
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <div class="picture"></div>
-                        <div class="name">
-                            戴春永木工班组
-                        </div>
-                        <div class="nation">
-                            民族：汉族
-                        </div>
-                        <div class="area">
-                            区域：广东省深圳市
-                        </div>
-                        <div class="number">
-                            人数：10人
-                        </div>
-                        <div class="working-years">
-                            工龄：3年
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <div class="picture"></div>
-                        <div class="name">
-                            戴春永木工班组
-                        </div>
-                        <div class="nation">
-                            民族：汉族
-                        </div>
-                        <div class="area">
-                            区域：广东省深圳市
-                        </div>
-                        <div class="number">
-                            人数：10人
-                        </div>
-                        <div class="working-years">
-                            工龄：3年
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <div class="picture"></div>
-                        <div class="name">
-                            戴春永木工班组
-                        </div>
-                        <div class="nation">
-                            民族：汉族
-                        </div>
-                        <div class="area">
-                            区域：广东省深圳市
-                        </div>
-                        <div class="number">
-                            人数：10人
-                        </div>
-                        <div class="working-years">
-                            工龄：3年
-                        </div>
-                    </a>
+                        </div> -->
+                    </router-link>
                 </li>
             </ul>
         </div>
@@ -305,7 +167,13 @@
                         .picture {
                             width: 260px;
                             height: 157px;
-                            background-color: aquamarine;
+                            // background-color: aquamarine;
+                            overflow: hidden;
+                            text-align: center;
+                            img {
+                                // width: 260px;
+                                height: 157px;
+                            }
                         }
                         .name {
                             padding-left: 22px;
@@ -338,6 +206,7 @@
                             text-align: center;
                             line-height: 22px;
                             border: 1px solid #205198;
+                            border-radius: 3px;
                         }
                     }
                 }
@@ -347,10 +216,49 @@
 </style>
 
 <script>
+import { get } from 'http';
 export default {
     data() {
         return {
+            areaData: '', // 地区数据
+            workTypeData: '', // 工种数据
+            foremanData: '',
+            imageUrl: 'http://hujiang.oss-cn-shenzhen.aliyuncs.com/'
+        }
+    },
+    created() {
+        this.getQueryUtil()
+        this.getqueryWorkTypeData()
+        this.getQueryForemanData()
+    },
+    methods: {
+        // 获取地区
+        getQueryUtil() {
+            this.$axios.post(`http://192.168.0.131:8989/lz/hujiangGroup/queryUtil`).then(
+                res => {
+                    console.log(res.data)
+                    this.areaData = res.data.msg
+                }
+            )
+        },
 
+        // 获取工种
+        getqueryWorkTypeData() {
+            this.$axios.post(`http://192.168.0.131:8989/lz/hujiangGroup/queryWorkType`).then(
+                res => {
+                    console.log(res.data)
+                    this.workTypeData = res.data.msg
+                }
+            )
+        },
+
+        // 获取班组数据
+        getQueryForemanData() {
+            this.$axios.post(`http://192.168.0.131:8989/lz/hujiangGroup/queryForeman`).then(
+                res => {
+                    this.foremanData = res.data.msg
+                }
+            )
         }
     }
 }

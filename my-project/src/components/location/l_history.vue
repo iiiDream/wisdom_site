@@ -324,7 +324,7 @@ export default {
                     let temp = []
                     let temp2 = []
                     let temp3 = []
-                    if(res.data.length != 0) {
+                    if(res.data[0].localtionList) {
                         this.localtionListData = res.data[0]
                         temp.push(this.localtionListData.areaList[0].xloc)
                         temp.push(this.localtionListData.areaList[0].yloc)
