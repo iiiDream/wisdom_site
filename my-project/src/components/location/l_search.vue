@@ -271,28 +271,35 @@ export default {
         getLocaltionListData() {
             this.$axios.get(`/lz/hire/localtionList?id=${this.pid}&string=${this.name}&createDate=${this.createDate}`).then(
                 res => {
-                    console.log(res.data)
-                    if(res.data[0].localtionList) {
-                        this.localtionListData = res.data[0]
-                        // 电子围栏渲染
-                        let temp = []
-                        let temp2 = []
-                        temp.push(this.localtionListData.areaList[0].xloc)
-                        temp.push(this.localtionListData.areaList[0].yloc)
-                        temp2.push(this.localtionListData.localtionList[0].xloc)
-                        temp2.push(this.localtionListData.localtionList[0].yloc)
-                        this.circle.setCenter(temp)
-                        this.circle.setRadius(this.localtionListData.areaList[0].radius)
-                        // 地图中心点设为电子围栏中心点
-                        this.center = temp
-                        this.zoom = 14
-                        // 渲染人员所在位置坐标点
-                        this.marker.setPosition(temp2)
-                        this.marker.show()
+                    // console.log(res.data)
+                    if (res.data.length > 0) {
+                        if(res.data[0].localtionList.length>0) {
+                            this.localtionListData = res.data[0]
+                            // 电子围栏渲染
+                            let temp = []
+                            let temp2 = []
+                            temp.push(this.localtionListData.areaList[0].xloc)
+                            temp.push(this.localtionListData.areaList[0].yloc)
+                            temp2.push(this.localtionListData.localtionList[0].xloc)
+                            temp2.push(this.localtionListData.localtionList[0].yloc)
+                            this.circle.setCenter(temp)
+                            this.circle.setRadius(this.localtionListData.areaList[0].radius)
+                            // 地图中心点设为电子围栏中心点
+                            this.center = temp
+                            this.zoom = 14
+                            // 渲染人员所在位置坐标点
+                            this.marker.setPosition(temp2)
+                            this.marker.show()
+                        } else {
+                            this.$message({
+                                message: '无此人定位数据',
+                                type: 'warning'
+                            })
+                        }
                     } else {
                         this.$message({
-                          message: '无此人定位数据',
-                          type: 'warning'
+                            message: '无此人定位数据',
+                            type: 'warning'
                         })
                     }
                 }

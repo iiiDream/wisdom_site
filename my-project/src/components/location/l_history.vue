@@ -324,27 +324,34 @@ export default {
                     let temp = []
                     let temp2 = []
                     let temp3 = []
-                    if(res.data[0].localtionList) {
-                        this.localtionListData = res.data[0]
-                        temp.push(this.localtionListData.areaList[0].xloc)
-                        temp.push(this.localtionListData.areaList[0].yloc)
-                        // console.log(temp)
-                        
-                        // 遍历历史轨迹记录
-                        for (let i = 0; i < this.localtionListData.localtionList.length; i++) {
-                            temp2 = []
-                            temp2.push(this.localtionListData.localtionList[this.localtionListData.localtionList.length-1-i].xloc)
-                            temp2.push(this.localtionListData.localtionList[this.localtionListData.localtionList.length-1-i].yloc)
-                            temp3.push(temp2)
+                    if (res.data.length > 0) {
+                        if (res.data[0].localtionList.length>0) {
+                            this.localtionListData = res.data[0]
+                            temp.push(this.localtionListData.areaList[0].xloc)
+                            temp.push(this.localtionListData.areaList[0].yloc)
+                            // console.log(temp)
+
+                            // 遍历历史轨迹记录
+                            for (let i = 0; i < this.localtionListData.localtionList.length; i++) {
+                                temp2 = []
+                                temp2.push(this.localtionListData.localtionList[this.localtionListData.localtionList.length-1-i].xloc)
+                                temp2.push(this.localtionListData.localtionList[this.localtionListData.localtionList.length-1-i].yloc)
+                                temp3.push(temp2)
+                            }
+                            this.circle.setCenter(temp)
+                            this.circle.setRadius(this.localtionListData.areaList[0].radius)
+                            // 地图中心点设为电子围栏中心点
+                            this.center = temp
+                            this.zoom = 14
+                            // 渲染历史轨迹
+                            this.polyline.setPath(temp3)
+                            this.polyline.show()
+                        } else {
+                            this.$message({
+                              message: '无此人定位数据',
+                              type: 'warning'
+                            })
                         }
-                        this.circle.setCenter(temp)
-                        this.circle.setRadius(this.localtionListData.areaList[0].radius)
-                        // 地图中心点设为电子围栏中心点
-                        this.center = temp
-                        this.zoom = 14
-                        // 渲染历史轨迹
-                        this.polyline.setPath(temp3)
-                        this.polyline.show()
                     } else {
                         this.$message({
                           message: '无此人定位数据',

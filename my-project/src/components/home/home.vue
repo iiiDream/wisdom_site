@@ -158,7 +158,7 @@
       </el-col>
       <el-col :span="6" class="wrap-right">
         <div class="code">
-          <h3>大数据工人库</h3>
+          <h3>产业工人库</h3>
           <div class="search-box">
             <input type="text" placeholder="搜索工种或公司">
             <router-link to="/workerHome" class="search-button">搜索</router-link>

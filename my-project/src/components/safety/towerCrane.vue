@@ -96,7 +96,7 @@
                         <span class="bolder">操作员</span>
                         <span>{{item.name}}</span>
                         <span class="bolder">上班时间</span>
-                        <span>{{item.startTime.split(' ')[1]}}</span>
+                        <span>{{item.startTime!=null?item.startTime.split(' ')[1]:''}}</span>
                     </div>
                     <img :src="item.image" alt="" class="pic">
                     <!-- <img src="../../../static/images/s_pic.png" alt="" class="pic"> -->
@@ -170,7 +170,7 @@
                     </div>
                     <div class="day">
                         <span class="bolder">检修倒计时： </span>
-                        <!-- <span class="bolder" :class="val.jxdate>=10?'normal':val.jxdate>=1?'warning':'anomaly'">{{val.jxdate}}天</span> -->
+                        <span class="bolder" :class="item.ts>=10?'normal':item.ts>=1?'warning':'anomaly'">{{item.ts}}天</span>
                     </div>
                 </div>
             </div>
@@ -223,9 +223,9 @@ export default {
 
         // 获取塔吊数据
         getCraneData() {
-            this.$axios.get(`http://192.168.0.104:8989/lz/deye/getCraneData?pid=${this.pid}`).then(
+            this.$axios.get(`/lz/deye/getCraneData?pid=${this.pid}`).then(
                 res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     this.craneData = res.data
                 }
             )
@@ -251,13 +251,20 @@ export default {
         /* width: 30.5%; */
         /* margin-left: .4rem; */
         /* margin-top: .51rem; */
-        display: flex;
-        justify-content: space-between;
+        /* display: flex; */
+        /* justify-content: space-between; */
         /* overflow-x:scroll;
         overflow-y: hidden;
         width: 16.63rem;
         height: 9.41rem; */
-        flex-wrap: wrap;
+        /* flex-wrap: wrap; */
+        height: 9.41rem;
+        width: 19.2rem;
+        overflow: hidden;
+    }
+    .content-box {
+        float: left;
+        margin-right: .35rem;
     }
     .bolder {
         font-weight: bolder;

@@ -10,12 +10,14 @@
         <div class="title-box">
             <div class="title-centent">
                 <div class="left-box">
-                    <div class="picture"></div>
+                    <div class="picture">
+                        <img :src="imageUrl+foremanData.photoName" alt="">
+                    </div>
                 </div>
                 <div class="right-box">
                     <div class="name">
                         <div class="name-box">
-                            戴春永
+                            {{foremanData.userName}}
                         </div>
                         <div class="authentication">
                             <i class="el-icon-check" style="font-weight:bolder"></i>
@@ -23,12 +25,12 @@
                         </div>
                     </div>
                     <div class="company">
-                        班组长-深圳创新劳务有限公司
+                        班组长-{{foremanData.buildCompanyName}}
                     </div>
                     <div class="location">
                         <i class="location-icon"></i>
                         <span>
-                            中国 广东 深圳
+                            中国 广东 深圳 {{foremanData.teamName}}
                         </span>
                     </div>
                 </div>
@@ -42,20 +44,12 @@
                         项目经验
                     </div>
                     <ul>
-                        <li>
+                        <li v-for="(item,index) in flowData.teamList" :key="index">
                             <p>
-                                中建二局深圳创新科技园项目
+                                {{item.projectTitle}}
                             </p>
                             <span>
-                                木工班&nbsp;&nbsp;&nbsp;2016/12——2018/03
-                            </span>
-                        </li>
-                        <li>
-                            <p>
-                                中建二局深圳创新科技园项目
-                            </p>
-                            <span>
-                                木工班&nbsp;&nbsp;&nbsp;2016/12——2018/03
+                                {{item.groupTitle}}&nbsp;&nbsp;&nbsp;{{item.entranceDate}}——{{item.retreatDate}}
                             </span>
                         </li>
                     </ul>
@@ -66,16 +60,16 @@
                     </div>
                     <div class="phone">
                         <i class="phone-icon"></i>
-                        <span>电话：171********</span>
+                        <span>电话：{{foremanData.phone!=null?foremanData.phone.substring(0,3):''}}********</span>
                         <a>点击获取号码</a>
                     </div>
                     <div class="amount">
                         <i class="people-icon"></i>
-                        <span>人数：17人</span>
+                        <span>人数：{{flowData.count}}人</span>
                     </div>
                     <div class="nation">
                         <i class="people-icon"></i>
-                        <span>民族：汉</span>
+                        <span>民族：{{foremanData.nation}}</span>
                     </div>
                 </div>
             </div>
@@ -121,7 +115,12 @@
                     .picture {
                         width: 215px;
                         height: 207px;
-                        background-color: aquamarine;
+                        // background-color: aquamarine;
+                        overflow: hidden;
+                        text-align: center;
+                        img {
+                            height: 207px;
+                        }
                     }
                 }
                 .right-box {
@@ -236,6 +235,10 @@
                             border-radius: 29px;
                             border: 1px solid #205198;
                         }
+                        a:hover {
+                            color: #fff;
+                            background-color: #205198;
+                        }
                     }
                     .amount {
                         font-size: 18px;
@@ -261,8 +264,51 @@
 export default {
     data() {
         return {
-
+            teamId: '', // 班组ID
+            flowData: '', // 班组人数与项目经验
+            foremanData: '', // 班组信息
+            imageUrl: 'http://hujiang.oss-cn-shenzhen.aliyuncs.com/', // 图片地址
         }
+    },
+    created() {
+        this.getTeamId()
+        this.getQueryFlowData()
+        this.getQueryForemanData()
+    },
+    methods: {
+        // 获取产业工人首页传过来的值
+        getTeamId() {
+            // console.log(this.$route.query.orderId)
+            if (this.$route.query.teamId != undefined) {
+                this.teamId = this.$route.query.teamId
+                // console.log(this.teamId)
+            }
+        },
+
+        // 获取班组人数与项目经验
+        getQueryFlowData() {
+            this.$axios.post(`/lz/hujiangGroup/queryFlow?teamId=${this.teamId}`).then(
+                res => {
+                    // console.log(res.data)
+                    this.flowData = res.data
+                }
+            )
+        },
+
+        // 获取班组的基础信息
+        getQueryForemanData() {
+            this.$axios.post(`/lz/hujiangGroup/queryForeman`).then(
+                res => {
+                    // console.log(res.data.msg.length)
+                    for (let i = 0; i < res.data.msg.length; i++) {
+                        if (res.data.msg[i].teamId == this.teamId) {
+                            this.foremanData = res.data.msg[i]
+                            return
+                        }
+                    }
+                }
+            )
+        },
     }
 }
 </script>

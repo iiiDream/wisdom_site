@@ -25,8 +25,8 @@
         <!-- 页面主体 -->
         <div class="centent-box">
             <ul>
-                <li v-for="(item,index) in foremanData" :key="index" :data-teamId="item.teamId">
-                    <router-link to="/workerParticular">
+                <li v-for="(item,index) in foremanData" :key="index">
+                    <a @click="$router.push({ path: '/workerParticular', query: { teamId: item.teamId } })">
                         <div class="picture">
                             <img :src="imageUrl+item.photoName" alt="">
                         </div>
@@ -40,12 +40,12 @@
                             区域：{{item.teamName}}
                         </div>
                         <div class="number">
-                            工龄：{{item.isLeader}}年
+                            工龄：{{item.worKing==0?'1':item.worKing}}年
                         </div>
                         <!-- <div class="working-years">
                             工龄：3年
                         </div> -->
-                    </router-link>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -223,7 +223,7 @@ export default {
             areaData: '', // 地区数据
             workTypeData: '', // 工种数据
             foremanData: '',
-            imageUrl: 'http://hujiang.oss-cn-shenzhen.aliyuncs.com/'
+            imageUrl: 'http://hujiang.oss-cn-shenzhen.aliyuncs.com/', // 图片地址
         }
     },
     created() {
@@ -234,9 +234,9 @@ export default {
     methods: {
         // 获取地区
         getQueryUtil() {
-            this.$axios.post(`http://192.168.0.131:8989/lz/hujiangGroup/queryUtil`).then(
+            this.$axios.post(`/lz/hujiangGroup/queryUtil`).then(
                 res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     this.areaData = res.data.msg
                 }
             )
@@ -244,9 +244,9 @@ export default {
 
         // 获取工种
         getqueryWorkTypeData() {
-            this.$axios.post(`http://192.168.0.131:8989/lz/hujiangGroup/queryWorkType`).then(
+            this.$axios.post(`/lz/hujiangGroup/queryWorkType`).then(
                 res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     this.workTypeData = res.data.msg
                 }
             )
@@ -254,7 +254,7 @@ export default {
 
         // 获取班组数据
         getQueryForemanData() {
-            this.$axios.post(`http://192.168.0.131:8989/lz/hujiangGroup/queryForeman`).then(
+            this.$axios.post(`/lz/hujiangGroup/queryForeman`).then(
                 res => {
                     this.foremanData = res.data.msg
                 }

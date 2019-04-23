@@ -7,7 +7,7 @@
                 <div class="logo-img"></div>
                 <div class="logo-URL">
                     <p>工地系统云平台</p>
-                    <span>www.baidu.com</span>
+                    <span>lz.hj-tec.com</span>
                 </div>
                 <span>智慧工地第一品牌</span>
             </div>
