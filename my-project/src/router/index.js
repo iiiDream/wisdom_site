@@ -52,6 +52,7 @@ import g_electricity from '../components/green/g_electricity.vue'
 import information from '../components/information/information.vue'
 import workerHome from '../components/worker/workerHome.vue'
 import workerParticular from '../components/worker/workerParticular.vue'
+import dormitory from '../components/dormitory/dormitory.vue'
 
 const router = new VueRouter({
 
@@ -101,6 +102,7 @@ const router = new VueRouter({
         {path:'/q_particulars',meta:{needLogin:true},component:q_particulars},
         {path:'/workerHome',meta:{needLogin:true},component:workerHome},
         {path:'/workerParticular',meta:{needLogin:true},component:workerParticular},
+        {path:'/dormitory',meta:{needLogin:true},component:dormitory},
     ]
 
     // 不需要路由拦截
@@ -149,6 +151,7 @@ const router = new VueRouter({
     //     {path:'/q_particulars',component:q_particulars},
     //     {path:'/workerHome',component:workerHome},
     //     {path:'/workerParticular',component:workerParticular},
+    //     {path:'/dormitory',component:dormitory},
     // ]
 })
 

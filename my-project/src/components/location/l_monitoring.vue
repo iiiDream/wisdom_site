@@ -260,7 +260,7 @@ export default {
         getMonitoringData() {
             this.$axios.get(`/lz/project/listzh?id=${this.pid}`).then(
                 res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     this.monitoringData = res.data
                     // this.circleCenter = [114.007675,22.663599]
                     // this.circleRadius = 200

@@ -106,17 +106,17 @@
                         <span class="bolder">{{item.dname}}</span>
                     </div>
                     <div class="top-data">
-                        <div class="top-left">
-                            <p class="warning">安全起重</p>
-                            <span>{{item.ratedWeight}}t</span>
+                        <div class="top-left" v-show="item.moment!=null">
+                            <p class="warning">力矩</p>
+                            <span>{{item.moment}}%</span>
                         </div>
                         <div class="middle">
                             <div class="middle-img">
-                                <span style="font-size:.24rem">{{item.moment}}%</span>
+                                <span style="font-size:.24rem">{{item.weight}}t</span>
                             </div>
-                            <span>力距</span>
+                            <span>重量</span>
                         </div>
-                        <div class="top-right">
+                        <div class="top-right" v-show="item.multiple!=null">
                             <p class="warning">倍率</p>
                             <span>{{item.multiple}}倍</span>
                         </div>
@@ -126,8 +126,8 @@
                             <li>
                                 <img src="../../../static/images/s_weight.png" alt="">
                                 <div>
-                                    <p class="warning">重量</p>
-                                    <p>{{item.weight}}t</p>
+                                    <p class="warning">安全起重</p>
+                                    <p>{{item.ratedWeight}}t</p>
                                 </div>
                             </li>
                             <li>
@@ -223,7 +223,7 @@ export default {
 
         // 获取塔吊数据
         getCraneData() {
-            this.$axios.get(`/lz/deye/getCraneData?pid=${this.pid}`).then(
+            this.$axios.get(`http://192.168.0.101:8989/lz/deye/getCraneData?pid=${this.pid}`).then(
                 res => {
                     // console.log(res.data)
                     this.craneData = res.data

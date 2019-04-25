@@ -22,9 +22,9 @@
 
                 <!-- 多层 -->
                 <el-collapse v-model="activeName" accordion @change="handleChange">
-                  <el-collapse-item :title="item.folderName" :name="item.folderId" v-for="item in folderDataList" :key="item.folderId" v-if="item.parentId==0">
+                    <el-collapse-item :title="item.folderName" :name="item.folderId" v-for="item in folderDataList" :key="item.folderId" v-if="item.parentId==0">
                         <el-collapse v-model="activeName" @change="handleChange">
-                          <el-collapse-item :title="item2.folderName" :name="item2.folderId" v-for="item2 in item.children" :key="item2.folderId" v-if="item2.parentId==item.folderId">
+                            <el-collapse-item :title="item2.folderName" :name="item2.folderId" v-for="item2 in item.children" :key="item2.folderId" v-if="item2.parentId==item.folderId">
                                 <el-collapse v-model="activeName" @change="handleChange">
                                     <el-collapse-item :title="item3.folderName" :name="item3.folderId" v-for="item3 in item2.children" :key="item3.folderId" v-if="item3.parentId==item2.folderId">
                                         <el-collapse v-model="activeName" @change="handleChange">
@@ -41,9 +41,9 @@
                                         </el-collapse>
                                     </el-collapse-item>
                                 </el-collapse>
-                          </el-collapse-item>
+                            </el-collapse-item>
                         </el-collapse>
-                  </el-collapse-item>
+                    </el-collapse-item>
                 </el-collapse>
             </div>
             <div class="memory-box">

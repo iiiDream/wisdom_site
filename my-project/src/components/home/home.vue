@@ -33,7 +33,7 @@
         <div class="summarize">
           <h3>工程概括</h3>
           <ul>
-            <li v-for="(item,index) in projectData.gcgk" :key="item.title">
+            <li v-for="item in projectData.gcgk" :key="item.title">
               <a href="javascript:;">
                 <span class="summarizeName">{{item.type}}：</span>
                 <span class="summarizeContent">{{item.title}}</span>
@@ -99,6 +99,7 @@
             安全文明施工天数:
             <span class="day">636</span>天
           </span>
+          <router-link to="/dormitory" class="dormitory">智慧宿舍</router-link>
         </div>
         <div class="videoInfo">
           <el-carousel trigger="click" height="6.14rem">
@@ -713,6 +714,7 @@ export default {
     color: #fff;
     text-align: center;
     line-height: 0.83rem;
+    position: relative;
     .title {
       font-size: 0.26rem;
       font-weight: 600;
@@ -725,6 +727,18 @@ export default {
       font-weight: normal;
       display: inline-block;
       vertical-align: middle;
+    }
+    .dormitory {
+      width: 1rem;
+      height: .3rem;
+      background-color: rgb(0, 168, 254);
+      position: absolute;
+      line-height: .3rem;
+      color: #fff;
+      right: .1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: .05rem;
     }
   }
   .videoInfo {

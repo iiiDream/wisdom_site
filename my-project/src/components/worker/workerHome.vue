@@ -146,12 +146,11 @@
             padding-top: 36px;
             min-height: 533px;
             ul {
-                width: 1200px;
+                width: 1220px;
                 margin: 0 auto;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
                 li {
+                    margin-right: 19px;
+                    display: inline-block;
                     background-color: #fff;
                     width: 286px;
                     height: 340px;
