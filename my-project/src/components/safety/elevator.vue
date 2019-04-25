@@ -1,44 +1,45 @@
 <template>
   <div class="content">
     <div class="top">
-      <div class="top-box" v-for="(item, index) in mainInfo" :key="index">
+      <div class="top-box" v-for="(item,index) in elevatorData" :key="index">
         <div class="status">
-          <span v-if="item.State==0" class="green">正常运行</span>
-          <span v-else class="danger">异常运行</span>
+          <span class="green">正常运行</span>
+          <!-- <span v-else class="danger">异常运行</span> -->
         </div>
         <div class="employee">
-          <span class="bolder">今日工作</span>
-          <span>{{item.Name}}</span>
+          <span class="bolder">操作员</span>
+          <span>{{item.name}}</span>
           <span class="bolder">上班时间</span>
-          <span>{{item.time}}</span>
+          <span>{{item.startTime!=null?item.startTime.split(' ')[1]:''}}</span>
         </div>
-        <img :src="`${imgUrl}/${item.photo}`" alt class="pic">
+        <!-- <img :src="`${imgUrl}/${item.photo}`" alt class="pic"> -->
+        <img :src="item.image" alt="" class="pic">
       </div>
     </div>
     <div class="buttom">
-      <div class="main" v-for="(item, index) in mainInfo" :key="index">
-        <div class="title">{{item.DevName}}</div>
+      <div class="main" v-for="(item,index) in elevatorData" :key="index">
+        <div class="title">{{item.dname}}</div>
         <div class="info" >
           <div class="manyInfo">
-            <div class="num" v-if="item.yx_zzIsA==0">
-              <p class="noml small noml-border">{{item.yx_zz}}t</p>
+            <div class="num">
+              <p class="noml small noml-border">{{item.weight}}t</p>
             </div>
-            <div class="t_num" v-else>
+            <!-- <div class="t_num" v-else>
               <p class="danger small danger-border">{{item.yx_zz}}t</p>
-            </div>
+            </div> -->
             <div class="subtitle">载重</div>
           </div>
           <div class="manyInfo">
-            <div class="num" v-if="item.yx_gdIsA==0">
-              <p class="noml small noml-border">{{item.yx_gd}}m</p>
+            <div class="num">
+              <p class="noml small noml-border">{{item.height}}m</p>
             </div>
-            <div class="t_num" v-else>
+            <!-- <div class="t_num" v-else>
               <p class="danger small danger-border">{{item.yx_gd}}m</p>
-            </div>
+            </div> -->
             <div class="subtitle">高度</div>
           </div>
           <div class="manyInfo">
-            <div class="num" v-if="item.yx_fzIsA==0">
+            <div class="num" v-if="item.fallAlarm==0">
               <p class="noml noml-border">正常</p>
             </div>
             <div class="t_num" v-else>
@@ -47,7 +48,7 @@
             <div class="subtitle">防坠在位监测</div>
           </div>
           <div class="manyInfo">
-            <div class="num" v-if="item.yx_sxIsA==0">
+            <div class="num" v-if="item.bottomAlarm==0">
               <p class="noml noml-border">正常</p>
             </div>
             <div class="t_num" v-else>
@@ -58,7 +59,7 @@
         </div>
         <div class="subtitle">
           <h1 style="display:inline-block">检修倒计时:</h1>
-          <h1 :class="item.jxdate>=10?'normal':item.jxdate>=1?'warning':'anomaly'" style="display:inline-block">&nbsp;&nbsp;{{item.jxdate}}天</h1>
+          <h1 :class="item.ts>=10?'normal':item.ts>=1?'warning':'anomaly'" style="display:inline-block">&nbsp;&nbsp;{{item.ts}}天</h1>
         </div>
       </div>
     </div>
@@ -71,12 +72,14 @@ export default {
       mainInfo:{},
       imgUrl:'http://gd.17hr.net:8018',
       xmid:'',
+      elevatorData: [], // 升降机数据
+      pid: '', // 项目id
     }
   },
   methods: {
     getInfo(){
       this.xmid = this.getQueryString('xmid')
-      this.$axios.get(`/APP/XMPage/DeviceData.ashx?method=GetShenJianJiData&xmid=${this.xmid}`).then(res=>{
+      this.$axios.get(`http://gd.17hr.net:8018/APP/XMPage/DeviceData.ashx?method=GetShenJianJiData&xmid=${this.xmid}`).then(res=>{
         if(res.data.success == 1){
           this.$router.push('unopen')
         }else{
@@ -84,6 +87,8 @@ export default {
         }
       })
     },
+
+    // 获取url中的xmid
     getQueryString(name) {
       var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
       var r = window.location.search.substr(1).match(reg);
@@ -92,9 +97,30 @@ export default {
       }
       return null;
     },
+
+    // 获取升降机数据
+    getElevatorData() {
+      this.$axios.get(`/lz/deye/getElevatorData?pid=${this.pid}`).then(
+        res => {
+          // console.log(res.data)
+          // for (let i = 0; i < 3; i++) {
+          //   this.elevatorData.push(res.data)
+          // }
+          this.elevatorData = res.data
+          // console.log(this.elevatorData)
+        }
+      )
+    },
+
+    // 获取项目id
+    getPid() {
+        this.pid = localStorage.getItem('pid')
+    },
   },
   created() {
-    this.getInfo()
+    // this.getInfo()
+    this.getPid()
+    this.getElevatorData()
   },
 };
 </script>
@@ -103,7 +129,7 @@ export default {
   padding: 0.51rem 0.3rem 0.4rem 0.4rem;
 }
 .danger {
-  color: #c23864 !important;
+  color: #fb497c !important;
 }
 .noml {
   color: #ff731c !important;
@@ -113,9 +139,14 @@ export default {
 }
 
 .top {
-  display: flex;
-  justify-content: space-between;
+  // display: flex;
+  // justify-content: space-between;
+  height: 1.61rem;
+  width: 19.2rem;
+  overflow: hidden;
   .top-box {
+    float: left;
+    margin-right: .35rem;
     height: 1.61rem;
     width: 5.3rem;
     background-image: url("../../../static/images/s_top-box.png");
@@ -156,15 +187,21 @@ export default {
       }
       .bolder {
         font-weight: bolder;
+        text-align: right;
       }
     }
   }
 }
 .buttom {
   margin-top: 0.4rem;
-  display: flex;
-  justify-content: space-between;
+  // display: flex;
+  // justify-content: space-between;
+  height: 7.4rem;
+  width: 19.2rem;
+  overflow: hidden;
   .main {
+    float: left;
+    margin-right: .35rem;
     width: 5.3rem;
     height: 7.4rem;
     background: url("../../../static/images/s_bottom-box.png") no-repeat center
@@ -243,7 +280,7 @@ export default {
   background-size: cover;
 }
 .anomaly {
-    color: #c23864;
+    color: #fb497c;
 }
 .normal {
     color: #24e974;

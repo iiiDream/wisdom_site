@@ -7,7 +7,7 @@
                         <span class="normal">正常运行</span>
                     </div>
                     <div class="employee">
-                        <span class="bolder">今日工作</span>
+                        <span class="bolder">操作员</span>
                         <span>某某某</span>
                         <span class="bolder">上班时间</span>
                         <span>07:30</span>
@@ -164,7 +164,7 @@
                         <span class="normal">正常运行</span>
                     </div>
                     <div class="employee">
-                        <span class="bolder">今日工作</span>
+                        <span class="bolder">操作员</span>
                         <span>某某某</span>
                         <span class="bolder">上班时间</span>
                         <span>07:30</span>
@@ -321,7 +321,7 @@
                         <span class="normal">正常运行</span>
                     </div>
                     <div class="employee">
-                        <span class="bolder">今日工作</span>
+                        <span class="bolder">操作员</span>
                         <span>某某某</span>
                         <span class="bolder">上班时间</span>
                         <span>07:30</span>
@@ -510,7 +510,7 @@
         font-weight: bolder;
     }
     .anomaly {
-        color: #c23864;
+        color: #fb497c;
     }
     .normal {
         color: #24e974;
@@ -558,6 +558,9 @@
         color: #fff;
         font-size: .2rem;
         line-height: .5rem;
+    }
+    .employee .bolder {
+        text-align: right;
     }
     /* 下部盒子样式 */
     .bottom-box {

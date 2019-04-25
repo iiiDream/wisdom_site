@@ -100,7 +100,8 @@
 </template>
 
 <script>
-import { amapManager } from 'vue-amap';
+// import { amapManager } from 'vue-amap';
+let amapManager = new VueAMap.AMapManager();
 export default {
     data() {
         return {
@@ -111,11 +112,21 @@ export default {
             center: [114.083372,22.544146],
             events: {
               init: (o) => {
-                    console.log(o.getCenter())
-                    console.log(this.$refs.map.$$getInstance())
-                    // o.getCity(result => {
-                    //     console.log(result)
-                    // })
+                console.log(o.getCenter())
+                console.log(this.$refs.map.$$getInstance())
+                // o.getCity(result => {
+                //     console.log(result)
+                // })
+                let marker = new AMap.Marker({
+                    position: [113.983372,22.644146],
+                    title: '深圳湾创新科技中心',
+                    label: {
+                            content: '深圳湾创新科技中心',
+                            offset: new AMap.Pixel(-45, -24),
+                            },
+                    // content: ' ',
+                });
+                marker.setMap(o);
               },
               'moveend': () => {
               },
@@ -266,7 +277,7 @@ export default {
         background-image: url('../../../static/images/homePage-inputBg.png');
         background-size: contain;
         top: .15rem;
-        left: .6rem;
+        left: .7rem;
         padding-left: .17rem;
     }
     .main .search-bar input {

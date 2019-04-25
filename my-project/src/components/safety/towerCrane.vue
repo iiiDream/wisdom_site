@@ -1,18 +1,18 @@
 <template>
     <div id="towerCrane">
         <div class="content">
-            <div class="content-box" v-for="(val,key,index) in towerCraneData" :key="index">
+            <!-- <div class="content-box" v-for="(val,key,index) in towerCraneData" :key="index">
                 <div class="top-box">
                     <div class="status">
                         <span :class="val.State==0?'normal':'anomaly'">{{val.State==0?'正常运行':'异常运行'}}</span>
                     </div>
                     <div class="employee">
-                        <span class="bolder">今日工作</span>
+                        <span class="bolder">操作员</span>
                         <span>{{val.Name}}</span>
                         <span class="bolder">上班时间</span>
                         <span>{{val.time}}</span>
                     </div>
-                    <img :src="imgUrl+val.photo" alt="" class="pic">
+                    <img src="../../../static/images/s_pic.png" alt="" class="pic">
                 </div>
                 <div class="bottom-box">
                     <div class="name">
@@ -86,6 +86,93 @@
                         <span class="bolder" :class="val.jxdate>=10?'normal':val.jxdate>=1?'warning':'anomaly'">{{val.jxdate}}天</span>
                     </div>
                 </div>
+            </div> -->
+            <div class="content-box" v-for="(item,index) in craneData" :key="index">
+                <div class="top-box">
+                    <div class="status">
+                        <span :class="item.MotorStatus!=0?'normal':'anomaly'">{{item.MotorStatus!=0?'正常运行':'异常运行'}}</span>
+                    </div>
+                    <div class="employee">
+                        <span class="bolder">操作员</span>
+                        <span>{{item.name}}</span>
+                        <span class="bolder">上班时间</span>
+                        <span>{{item.startTime!=null?item.startTime.split(' ')[1]:''}}</span>
+                    </div>
+                    <img :src="item.image" alt="" class="pic">
+                    <!-- <img src="../../../static/images/s_pic.png" alt="" class="pic"> -->
+                </div>
+                <div class="bottom-box">
+                    <div class="name">
+                        <span class="bolder">{{item.dname}}</span>
+                    </div>
+                    <div class="top-data">
+                        <div class="top-left" v-show="item.moment!=null">
+                            <p class="warning">力矩</p>
+                            <span>{{item.moment}}%</span>
+                        </div>
+                        <div class="middle">
+                            <div class="middle-img">
+                                <span style="font-size:.24rem">{{item.weight}}t</span>
+                            </div>
+                            <span>重量</span>
+                        </div>
+                        <div class="top-right" v-show="item.multiple!=null">
+                            <p class="warning">倍率</p>
+                            <span>{{item.multiple}}倍</span>
+                        </div>
+                    </div>
+                    <div class="bottom-data">
+                        <ul>
+                            <li>
+                                <img src="../../../static/images/s_weight.png" alt="">
+                                <div>
+                                    <p class="warning">安全起重</p>
+                                    <p>{{item.ratedWeight}}t</p>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../../../static/images/s_range.png" alt="">
+                                <div>
+                                    <p class="warning">幅度</p>
+                                    <p>{{item.rrange}}m</p>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../../../static/images/s_altitude.png" alt="">
+                                <div>
+                                    <p class="warning">高度</p>
+                                    <p>{{item.height}}m</p>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../../../static/images/s_rotation.png" alt="">
+                                <div>
+                                    <p class="warning">回转</p>
+                                    <p>{{item.angle}}°</p>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../../../static/images/s_wind-speed.png" alt="">
+                                <div>
+                                    <p class="warning">风速</p>
+                                    <p>{{item.windSpeed}}m</p>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../../../static/images/s_dip-angle.png" alt="">
+                                <div>
+                                    <p class="warning">倾角</p>
+                                    <!--  <p>X{{val.yx_qjX}}°</p> -->
+                                    <p>{{item.obliguity}}°</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="day">
+                        <span class="bolder">检修倒计时： </span>
+                        <span class="bolder" :class="item.ts>=10?'normal':item.ts>=1?'warning':'anomaly'">{{item.ts}}天</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -95,20 +182,24 @@
 export default {
     data() {
         return {
-            towerCraneData: '', //塔吊数据
-            imgUrl:'http://gd.17hr.net:8018/', //图片地址
+            towerCraneData: '', // 塔吊数据
+            craneData: '', // 塔吊数据
+            imgUrl:'http://gd.17hr.net:8018/', // 图片地址
             xmid:'',
+            pid: '', // 项目id
         }
     },
     created() {
         // 发送请求
-        this.getTowerCraneData()
+        // this.getTowerCraneData()
+        this.getPid()
+        this.getCraneData()
     },
     methods: {
         // 请求塔吊数据
         getTowerCraneData(){
             this.xmid = this.getQueryString('xmid')
-            this.$axios.get(`/APP/XMPage/DeviceData.ashx?method=GetTaJiData&xmid=${this.xmid}`).then(res=>{
+            this.$axios.get(`http://gd.17hr.net:8018/APP/XMPage/DeviceData.ashx?method=GetTaJiData&xmid=${this.xmid}`).then(res=>{
                 if(res.data.success == 1){
                     this.$router.push('unopen')
                 }else{
@@ -119,6 +210,8 @@ export default {
                 }
             })
         },
+
+        // 获取url中的xmid
         getQueryString(name) {
           var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
           var r = window.location.search.substr(1).match(reg);
@@ -126,6 +219,21 @@ export default {
             return unescape(r[2]);
           }
           return null;
+        },
+
+        // 获取塔吊数据
+        getCraneData() {
+            this.$axios.get(`http://192.168.0.101:8989/lz/deye/getCraneData?pid=${this.pid}`).then(
+                res => {
+                    // console.log(res.data)
+                    this.craneData = res.data
+                }
+            )
+        },
+        
+        // 获取项目id
+        getPid() {
+            this.pid = localStorage.getItem('pid')
         },
     },
 }
@@ -143,13 +251,20 @@ export default {
         /* width: 30.5%; */
         /* margin-left: .4rem; */
         /* margin-top: .51rem; */
-        display: flex;
-        justify-content: space-between;
+        /* display: flex; */
+        /* justify-content: space-between; */
         /* overflow-x:scroll;
         overflow-y: hidden;
         width: 16.63rem;
         height: 9.41rem; */
-        flex-wrap: wrap;
+        /* flex-wrap: wrap; */
+        height: 9.41rem;
+        width: 19.2rem;
+        overflow: hidden;
+    }
+    .content-box {
+        float: left;
+        margin-right: .35rem;
     }
     .bolder {
         font-weight: bolder;
@@ -204,6 +319,9 @@ export default {
         font-size: .2rem;
         line-height: .5rem;
     }
+    .employee .bolder {
+        text-align: right;
+    }
     /* 下部盒子样式 */
     .bottom-box {
         height: 7.4rem;
@@ -257,6 +375,8 @@ export default {
         width: 50%;
     }
     .bottom-box .bottom-data li img {
+        height: .46rem;
+        width: .46rem;
         display: inline-block;
         line-height: 1.22rem;
         margin-left: .92rem;

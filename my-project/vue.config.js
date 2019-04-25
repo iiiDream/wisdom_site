@@ -15,4 +15,9 @@ module.exports = {
     //         'v-distpicker': 'VDistpicker'
     //     }
     // }
+    // resolve: {
+    //     alias: {
+    //         'vue$': 'vue/dist/vue.esm.js',
+    //     }
+    // }
 }

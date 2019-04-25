@@ -7,37 +7,37 @@
                 <div class="logo-img"></div>
                 <div class="logo-URL">
                     <p>工地系统云平台</p>
-                    <span>www.baidu.com</span>
+                    <span>lz.hj-tec.com</span>
                 </div>
                 <span>智慧工地第一品牌</span>
             </div>
             <ul>
                 <li>
-                    <a href="#">企业邮箱</a>
+                    <a>企业邮箱</a>
                 </li>
                 <li>
-                    <a href="#">VIP邮箱</a>
+                    <a>VIP邮箱</a>
                 </li>
                 <li>
-                    <a href="#">国外用户登录</a>
+                    <a>国外用户登录</a>
                 </li>
                 <li>
-                    <a href="#">手机版</a>
+                    <a>手机版</a>
                 </li>
                 <li>
-                    <a href="#">电脑版</a>
+                    <a>电脑版</a>
                 </li>
                 <li>
-                    <a href="#">帮助</a>
+                    <a>帮助</a>
                 </li>
                 <li>
-                    <a href="#">常见问题</a>
+                    <a>常见问题</a>
                 </li>
                 <li>
-                    <a href="#">私人助理</a>
+                    <a>私人助理</a>
                 </li>
                 <li>
-                    <a href="#">登录反馈</a>
+                    <a>登录反馈</a>
                 </li>
             </ul>
         </div>
@@ -77,14 +77,29 @@ export default {
     },
     methods: {
         logined(){
-            if(this.user_name == '123' && this.pwd=='123'){
-                localStorage.setItem('islogin','true');
-                this.$router.push({path:'/homePage'})
-            }else{
-                alert('账号或密码错误！请重新输入')
-                this.user_name = ''
-                this.pwd = ''
-            }
+            // if(this.user_name == '123' && this.pwd=='123'){
+            //     localStorage.setItem('islogin','true');
+            //     this.$router.push({path:'/home'})
+            // }else{
+            //     alert('账号或密码错误！请重新输入')
+            //     this.user_name = ''
+            //     this.pwd = ''
+            // }
+            // console.log(this.$md5(this.pwd))
+            this.$axios.post('/lz/wisdom/wisdomLogin',{account:this.user_name,password:this.$md5(this.pwd)}).then(
+                res => {
+                    console.log(res.data)
+                    if (res.data.msg != '账户或密码错误') {
+                        localStorage.setItem('islogin','true')
+                        localStorage.setItem('pid',res.data.pid)
+                         this.$router.push({path:'/home'})
+                    } else {
+                        alert('账号或密码错误！请重新输入')
+                        this.user_name = ''
+                        this.pwd = ''
+                    }
+                }
+            )
         }
     },
 }
