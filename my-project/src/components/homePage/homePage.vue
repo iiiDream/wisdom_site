@@ -15,6 +15,12 @@
           <li>
             <router-link to="/projectManagement">项目管理</router-link>
           </li>
+          <li>
+            <router-link to="/gongsiManagement">公司管理</router-link>
+          </li>
+          <li>
+            <router-link to="/projectManagement2">项目管理</router-link>
+          </li>
         </ul>
       </div>
       <div class="user">
@@ -30,6 +36,7 @@
         </el-dropdown>
       </div>
     </div>
+    
     <!-- 内容 -->
     <div class="main">
       <!-- 地图 -->
@@ -257,7 +264,7 @@ export default {
     width: 19.2rem;
     height: 0.8rem;
     background-image: url("../../../static/images/homePage_nav.png");
-    background-size: contain;
+    background-size: cover;
     padding-top: 0.24rem;
   }
   .top > div {

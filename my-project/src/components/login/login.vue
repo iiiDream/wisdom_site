@@ -151,6 +151,7 @@ export default {
     height: 1.65rem;
     padding-top: 0.19rem;
   }
+  
   .bottom {
     height: 2.65rem;
     ul{

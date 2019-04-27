@@ -53,6 +53,10 @@ import information from '../components/information/information.vue'
 import workerHome from '../components/worker/workerHome.vue'
 import workerParticular from '../components/worker/workerParticular.vue'
 import dormitory from '../components/dormitory/dormitory.vue'
+import gongsiManagement from '../components/gongsiManagement/gongsiManagement.vue'
+import gongsiShouquan from '../components/gongsiManagement/gongsiShouquan.vue'
+import projectShezhi from '../components/projectManagement/projectShezhi.vue'
+import projectShouquan from '../components/projectManagement/projectShouquan.vue'
 
 const router = new VueRouter({
 
@@ -103,6 +107,10 @@ const router = new VueRouter({
         {path:'/workerHome',meta:{needLogin:true},component:workerHome},
         {path:'/workerParticular',meta:{needLogin:true},component:workerParticular},
         {path:'/dormitory',meta:{needLogin:true},component:dormitory},
+        {path:'/gongsiManagement',meta:{needLogin:true},component:gongsiManagement},
+        {path:'/gongsiShouquan',meta:{needLogin:true},component:gongsiShouquan},
+        {path:'/projectShezhi',meta:{needLogin:true},component:projectShezhi},
+        {path:'/projectShouquan',meta:{needLogin:true},component:projectShouquan},
     ]
 
     // 不需要路由拦截
@@ -152,6 +160,10 @@ const router = new VueRouter({
     //     {path:'/workerHome',component:workerHome},
     //     {path:'/workerParticular',component:workerParticular},
     //     {path:'/dormitory',component:dormitory},
+    //     {path:'/gongsiManagement',component:gongsiManagement},
+    //     {path:'/gongsiShouquan',component:gongsiShouquan},
+    //     {path:'/projectShezhi',component:projectShezhi},
+    //     {path:'/projectShouquan',component:projectShouquan},
     // ]
 })
 
