@@ -4,29 +4,29 @@
         <div class="top-box">
             <div>
                 <div class="left-box">
-                    <p>0</p>
-                    <span>超期未整改</span>
+                    <p>{{accomplish}}</p>
+                    <span>已完成</span>
                 </div>
                 <div class="right-box plaint1"></div>
             </div>
             <div>
                 <div class="left-box">
-                    <p>0</p>
+                    <p>{{rectify}}</p>
                     <span>未整改</span>
                 </div>
                 <div class="right-box plaint1"></div>
             </div>
             <div>
                 <div class="left-box">
-                    <p>0</p>
-                    <span>严重隐患超期未整改</span>
+                    <p>{{review}}</p>
+                    <span>待复查</span>
                 </div>
                 <div class="right-box plaint2"></div>
             </div>
             <div>
                 <div class="left-box">
-                    <p>0</p>
-                    <span>严重隐患未整改</span>
+                    <p>{{overtime}}</p>
+                    <span>超期未整改</span>
                 </div>
                 <div class="right-box plaint2"></div>
             </div>
@@ -81,28 +81,28 @@
                 </div>
                 <div class="generalize-main">
                     <div class="generalize-left">
-                        0%
+                        {{Math.floor(accomplish/sum*100)}}%
                         <br>
-                        合格率
+                        完成率
                     </div>
                     <div class="generalize-right">
                         <ul>
                             <li>
                                 检查总数
                                 <br>
-                                <span>0</span>
+                                <span>{{sum}}</span>
                                 项
                             </li>
                             <li>
-                                合格
+                                已完成
                                 <br>
-                                <span>0</span>
+                                <span>{{accomplish}}</span>
                                 项
                             </li>
                             <li>
-                                不合格
+                                未完成
                                 <br>
-                                <span>0</span>
+                                <span>{{sum-accomplish}}</span>
                                 项
                             </li>
                         </ul>
@@ -260,15 +260,25 @@ export default {
             value3: '',
             value4: '',
             value5: '',
-            value6: ''
+            value6: '',
+            pid: '', // 项目id
+            sum: 0, // 检查总数
+            accomplish: 0, // 已完成数量
+            rectify: 0, // 未整改数量
+            review: 0, // 待复查数量
+            overtime: 0, // 超期未整改数量
         }
     },
     mounted() {
-        this.temp()
+        // this.temp()
+    },
+    created() {
+        this.getPid()
+        this.getSelectPolling()
     },
     methods: {
         // 柱状图初始化
-        temp() {
+        temp(date,accomplish,unfinished) {
             let myChart = this.$echarts.init(document.getElementById('histogram'));
             myChart.setOption({
                 title: {
@@ -297,7 +307,8 @@ export default {
                     //     width: 1
                     //   }
                     // },
-                    data: ['03-01', '03-02', '03-03', '03-04', '03-05', '03-06', '03-07', '03-08', '03-09', '03-10', '03-11', '03-12', '03-13', '03-14', '03-15', '03-16']
+                    // data: ['03-01', '03-02', '03-03', '03-04', '03-05', '03-06', '03-07', '03-08', '03-09', '03-10', '03-11', '03-12', '03-13', '03-14', '03-15', '03-16']
+                    data: date
                 },
                 yAxis: {
                     max: 60, //最大值
@@ -332,7 +343,8 @@ export default {
                         // barGap: 10,
                         barMaxWidth: 30,
                         // barMinWidth: 
-                        data: [55, 30, 49, 10, 45, 29, 54, 20, 57, 34, 50, 42, 11, 26, 58, 37],
+                        // data: [55, 30, 49, 10, 45, 29, 54, 20, 57, 34, 50, 42, 11, 26, 58, 37],
+                        data: accomplish,
                         itemStyle: {
                             color: '#24e974'
                         }
@@ -342,7 +354,8 @@ export default {
                         type: 'bar',
                         barMaxWidth: 30,
                         barCategoryGap: '50%',
-                        data: [29, 40, 20, 50, 12, 57, 24, 33, 47, 16, 30, 17, 36, 45, 19, 31],
+                        // data: [29, 40, 20, 50, 12, 57, 24, 33, 47, 16, 30, 17, 36, 45, 19, 31],
+                        data: unfinished,
                         itemStyle: {
                             color: '#fb497c',
                         }
@@ -360,7 +373,64 @@ export default {
                     showDetail: false,
                 },
             });
+        },
+
+        // 获取项目id
+        getPid() {
+            this.pid = localStorage.getItem('pid')
+        },
+
+        // 获取数据统计信息
+        getSelectPolling() {
+            this.$axios.post(`/lz/polling/selectPolling?projectId=${this.pid}`).then(
+                res => {
+                    let date = []
+                    let accomplish = []
+                    let unfinished = []
+                    // console.log(res.data.msg)
+                    this.sum = res.data.msg.length
+                    date.push(res.data.msg[0].deadlineTime.split(' ')[0])
+                    for (let i = 0; i < res.data.msg.length; i++) {
+                        // for (let j = 0; j < date.length; j++) {
+                        //     console.log(date[j]+':'+res.data.msg[i].deadlineTime.split(' ')[0])
+                        //     if (date[j] != res.data.msg[i].deadlineTime.split(' ')[0]) {
+                        //         date.push(res.data.msg[i].deadlineTime.split(' ')[0])
+                        //     }
+                        // }
+                        
+                        if (date.indexOf(res.data.msg[i].deadlineTime.split(' ')[0]) == -1) {
+                            date.push(res.data.msg[i].deadlineTime.split(' ')[0])
+                        }
+
+                        if (res.data.msg[i].isAvailable == 5) {
+                            this.accomplish++
+                        } else if (res.data.msg[i].isAvailable == 0) {
+                            this.rectify++
+                        } else if (res.data.msg[i].isAvailable == 7) {
+                            this.review++
+                        } else if (res.data.msg[i].isAvailable == 3) {
+                            this.overtime
+                        }
+                    }
+                    console.log(date)
+                    for (let i2 = 0; i2 < date.length; i2++) {
+                        let accomplishNumber = 0
+                        let unfinishedNumber = 0
+                        for (let j2 = 0; j2 < res.data.msg.length; j2++) {
+                            if (date[i2] == res.data.msg[j2].deadlineTime.split(' ')[0]) {
+                                res.data.msg[j2].isAvailable==5?accomplishNumber++:unfinishedNumber++
+                            }
+                        }
+                        // console.log(`123`)
+                        accomplish.push(accomplishNumber)
+                        unfinished.push(unfinishedNumber)
+                        // console.log(accomplish,unfinished)
+                    }
+                    this.temp(date,accomplish,unfinished)
+                }
+            )
         }
+
     },
 }
 </script>

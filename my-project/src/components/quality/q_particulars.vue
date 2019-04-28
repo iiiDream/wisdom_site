@@ -13,16 +13,23 @@
             <!-- 表标题 -->
             <div class="list-title">
                 <div class="title-left">
-                    <div class="state green-color">
-                        复查通过
+                    <div class="state green-color" :class="pollingDetail[pollingDetail.length-1].isAvailable==3?'red-color':pollingDetail[pollingDetail.length-1].isAvailable==5?'green-color':'orange-color'">
+                        {{pollingDetail[pollingDetail.length-1].isAvailable==7?'待复查'
+                        :pollingDetail[pollingDetail.length-1].isAvailable==6?'复查未通过'
+                        :pollingDetail[pollingDetail.length-1].isAvailable==5?'复查通过'
+                        :pollingDetail[pollingDetail.length-1].isAvailable==4?'待整改'
+                        :pollingDetail[pollingDetail.length-1].isAvailable==3?'超期未整改'
+                        :pollingDetail[pollingDetail.length-1].isAvailable==2?'复查未通过'
+                        :pollingDetail[pollingDetail.length-1].isAvailable==1?'待复查'
+                        :pollingDetail[pollingDetail.length-1].isAvailable==0?'待整改':''}}
                     </div>
                     <div class="creation-time">
-                        创建时间：2019-03-16 21：36
+                        创建时间：{{pollingList.createTime}}
                     </div>
                 </div>
                 <div class="title-right">
                     <div class="number">
-                        编号:1947
+                        编号:{{pollingList.pollingId}}
                     </div>
                     <div class="QRcode-box">
 
@@ -37,32 +44,32 @@
                         安全检查
                     </div>
                     <div class="issue">
-                        此处拉结要用钢管拉结
+                        {{pollingList.describex}}
                         <i class="slight"></i>
                     </div>
                     <ul>
                         <li>
                             <span class="align">检查区域：</span>
-                            <span>创新科技园项目东侧</span>    
+                            <span>{{pollingList.place}}</span>    
                         </li>
-                        <li>
+                        <!-- <li>
                             <span class="align">隐患类型：</span>
                             <span>其他</span>
-                        </li>
+                        </li> -->
                         <li>
                             <span class="align">分包单位：</span>
-                            <span>深圳市伟业建筑劳务有限公司</span>
+                            <span>{{pollingList.unitTitle}}</span>
                         </li>
                         <li>
                             <span class="align">检查人：</span>
-                            <span>某某某</span>
+                            <span>检查人</span>
                         </li>
                         <li>
                             <span class="align">检查时间：</span>
-                            2019-01-01 21：36
+                            {{pollingList.createTime}}
                         </li>
                     </ul>
-                    <div class="pic-box">
+                    <div class="pic-box" :style="`background-image:url(${pollingList.fileUrl})`">
 
                     </div>
                 </div>
@@ -74,65 +81,68 @@
                     <ul>
                         <li>
                             <span class="align">整改人：</span>
-                            伟业-张东方
+                            整改人
                         </li>
                         <li>
                             <span class="align">整改时限：</span>
-                            2019-01-07
+                            {{pollingList.deadlineTime}}
                         </li>
                         <li>
                             <span class="align">整改要求：</span>
-                            操作架高于作业面1米2
+                            {{pollingList.rectification}}
                         </li>
                         <li>
-                            表单创造时间：2019-01-01 21：36
+                            表单创造时间：{{pollingList.createTime}}
                         </li>
                     </ul>
                 </div>
-                <!-- 整改情况 -->
-                <div class="dispose">
-                    <div class="title">
-                        第一次整改
+                <!-- 详情 -->
+                <div class="ergodic-box" v-for="(item,index) in pollingDetail" :key="index">
+                    <!-- 整改情况 -->
+                    <div class="dispose" v-if="item.isAvailable<3">
+                        <div class="title">
+                            第{{index/2+1}}次整改
+                        </div>
+                        <div class="name">
+                            <span class="algin">整改人：</span>
+                            <span>整改人</span>
+                        </div>
+                        <div class="situation">
+                            <span>处理情况</span>
+                            <br>
+                            {{item.describex}}
+                        </div>
+                        <div class="pic-box" :style="`background-image:url(${item.fileUrl})`">
+
+                        </div>
+                        <div class="time">
+                            <span class="align">整改时间：</span>
+                            {{item.deadlineTime}}
+                        </div>
                     </div>
-                    <div class="name">
-                        <span class="algin">整改人：</span>
-                        <span>创新科技园项目东侧</span>
+                    <!-- 复查情况 -->
+                    <div class="review" v-if="item.isAvailable==5||item.isAvailable==6">
+                        <div class="opinion">
+                            复查意见
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            {{item.isAvailable==5?'通过':'不通过'}}
+                            <br>
+                            {{item.describex}}
+                        </div>
+                        <div class="person">
+                            复查人：复查人
+                        </div>
+                        <div class="pic-box" :style="`background-image:url(${item.fileUrl})`"></div>
+                        <div class="time">复查时间：{{item.deadlineTime}}</div>
                     </div>
-                    <div class="situation">
-                        <span>处理情况</span>
-                        <br>
-                        已把操作架高于操作面1米2
-                    </div>
-                    <div class="pic-box">
-                        
-                    </div>
-                    <div class="time">
-                        <span class="align">整改时间：</span>
-                        2019-01-01 21：36
-                    </div>
-                </div>
-                <!-- 复查情况 -->
-                <div class="review">
-                    <div class="opinion">
-                        复查意见
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        通过
-                        <br>
-                        整改合格确认通过
-                    </div>
-                    <div class="person">
-                        复查人：王佳兴
-                    </div>
-                    <div class="pic-box"></div>
-                    <div class="time">复查时间：2018-7-19 20：50</div>
                 </div>
                 <!-- 表单创建时间 -->
                 <div class="establish-time">
-                    表单创建时间：2018-07-19 20：50
+                    表单创建时间：{{pollingList.createTime}}
                 </div>
             </div>
             <!-- 流程进度 -->
-            <div class="schedule">
+            <!-- <div class="schedule">
                 <div class="left-box">
                     <div class="top-title">流程</div>
                     <el-timeline :reverse="reverse">
@@ -157,7 +167,7 @@
                         <li>复查通过</li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
         </div> 
     </div>
 </template>
@@ -443,8 +453,61 @@ export default {
               content: '安全工程师王家兴',
               timestamp: '2018-04-11',
               color: '#24e874',
-            }]
+            }],
+            getNameState: 0, // getName状态只调用一次
+            pollingId: '', // 整改id
+            pollingDetail: '', // 整改单详情
+            pollingList: '', // 整改单基础信息
+            pid: '', // 项目id
+            number: 0, // 整改次数
         }
+    },
+    created() {
+        this.getPid()
+        this.getName()
+        this.getPollingDetail()
+        this.getQueryPollingInFo()
+    },
+    methods: {
+        // 获取实时监控页面传过来的值
+        getName() {
+            // console.log(this.$route.query.orderId)
+            if (this.$route.query.pollingId != undefined && this.getNameState == 0) {
+                this.pollingId = this.$route.query.pollingId
+                this.getNameState = 1
+            }
+            // console.log(this.pollingId)
+        },
+
+        // 根据整改id获取整改单详情
+        getPollingDetail() {
+            this.$axios.post(`/lz/polling/selectPollingDetail?pollingId=${this.pollingId}`).then(
+                res => {
+                    console.log(res.data)
+                    this.pollingDetail = res.data.msg
+                }
+            )
+        },
+
+        // 获取整改单的基础信息
+        getQueryPollingInFo() {
+            this.$axios.post(`/lz/polling/queryPollingInFo?projectId=${this.pid}`).then(
+                res => {
+                    // console.log(res.data)
+                    for (let i = 0; i < res.data.msg.length; i++) {
+                        if (res.data.msg[i].pollingId == this.pollingId) {
+                            this.pollingList = res.data.msg[i]
+                        }
+                    }
+                    // console.log(this.pollingList)
+                }
+            )
+        },
+
+        // 获取项目id
+        getPid() {
+            this.pid = localStorage.getItem('pid')
+        },
     }
 }
 </script>

@@ -19,7 +19,7 @@
             <router-link to="/gongsiManagement">公司管理</router-link>
           </li>
           <li>
-            <router-link to="/projectManagement2">项目管理</router-link>
+            <router-link to="/projectShouquan">项目管理</router-link>
           </li>
         </ul>
       </div>
