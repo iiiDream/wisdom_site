@@ -4,7 +4,7 @@
         <div class="header-bar">
             <ul>
                 <li>
-                    <a>系统</a>
+                    <a class="aaaa">系统</a>
                 </li>
                 <li>
                     <a>发卡中心管理</a>
@@ -766,7 +766,7 @@ export default {
         }
     },
     mounted() {
-
+        this.unopenClick()
     },
     methods: {
         // 用水量折线图
@@ -914,6 +914,17 @@ export default {
                         data: [67, 40, 96, 56, 90, 85, 60]
                     }
                 ]
+            })
+        },
+
+        // 功能暂未开放提示
+        unopenClick() {
+            let that=this
+            $('a').on('click',function(){
+                that.$message({
+                    message: '该功能暂未开放',
+                    type: 'warning'
+                })
             })
         }
     }

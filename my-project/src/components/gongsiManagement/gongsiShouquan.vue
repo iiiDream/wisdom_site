@@ -1,5 +1,5 @@
 <template>
-  <div id="gongsiManagement">
+  <div id="gongsiShouquan">
     <!-- 顶部通栏 -->
     <div class="top">
       <div class="nav-logo">
@@ -81,7 +81,7 @@
             <el-breadcrumb-item v-for="(item, index) in currentpath" :key="index">{{item}}</el-breadcrumb-item>
           </el-breadcrumb>
           <div class="addgongsi">
-            <div class="btn">新增公司</div>
+            <div class="btn" @click="newRole=true">新增角色</div>
           </div>
         </div>
         <div class="table_info">
@@ -106,6 +106,82 @@
               </template>
             </el-table-column>
           </el-table>
+          <!-- 新增角色 -->
+          <el-dialog title="新增角色" :visible.sync="newRole" width="30%">
+            <div class="audit">
+              <ul class="left">
+                <li>
+                  <span class="align">账号</span>
+                  <span style="color:red">*</span>
+                </li>
+                <li>
+                  <span class="align">名称</span>
+                  <span style="color:red">*</span>
+                </li>
+                <li>
+                  <span class="align">密码</span>
+                  <!-- <span style="color:red">*</span> -->
+                </li>
+                <li>
+                  <span class="align">手机</span>
+                  <span style="color:red">*</span>
+                </li>
+                <li>
+                  <span class="align">角色设置</span>
+                  <span style="color:red">*</span>
+                </li>
+                <li>
+                  <span class="align">公司权限</span>
+                  <span>：</span>
+                </li>
+                <li>
+                  <span class="align">项目权限</span>
+                  <span>：</span>
+                </li>
+              </ul>
+              <ul class="right">
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <el-select v-model="role" placeholder="设置角色">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </li>
+                <li>
+                  <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+                  <el-checkbox v-model="checked1" disabled>查看</el-checkbox>
+                  <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                    <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
+                  </el-checkbox-group>
+                </li>
+                <li>
+                  <el-checkbox :indeterminate="isIndeterminate2" v-model="checkAll2" @change="handleCheckAllChange2">全选</el-checkbox>
+                  <el-checkbox v-model="checked1" disabled>查看</el-checkbox>
+                  <el-checkbox-group v-model="checkedCities2" @change="handleCheckedCitiesChange2">
+                    <el-checkbox v-for="city in cities2" :label="city" :key="city">{{city}}</el-checkbox>
+                  </el-checkbox-group>
+                </li>
+              </ul>
+            </div>
+            <span slot="footer" class="dialog-footer">
+              <div class="audit_btn" @click="affirmClick">确 认 提 交</div>
+            </span>
+          </el-dialog>
         </div>
         <div class="fenye">
           <el-pagination background layout="prev, pager, next" :total="50"></el-pagination>
@@ -132,8 +208,26 @@ export default {
           name: "河湾项目管理员",
           status: "无效"
         }
-      ]
-    };
+      ],
+      newRole: false, // 新增角色输入框
+      options: [
+        {
+          value: "项目管理员",
+          label: "项目管理员"
+        }
+      ], // 角色设置
+      checked1: true, // 查看权限默认为选中且不可更改
+      role: '', // 角色
+      checkAll: false, // 是否全选
+      checkedCities: [], // 当前选中的权限
+      cities: ['新增', '编辑', '删除'], // 可以选择的权限
+      isIndeterminate: false, // 是否全选
+      role2: '', // 角色
+      checkAll2: false, // 是否全选
+      checkedCities2: [], // 当前选中的权限
+      cities2: ['新增', '编辑', '删除'], // 可以选择的权限
+      isIndeterminate2: false, // 是否全选
+    }
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -144,13 +238,40 @@ export default {
     },
     handleMenuSelect(key, keyPath) {
       this.currentpath = keyPath;
+    },
+
+    // 公司权限多选框
+    handleCheckAllChange(val) {
+      this.checkedCities = val ? this.cities : [];
+      this.isIndeterminate = false;
+    },
+    handleCheckedCitiesChange(value) {
+      let checkedCount = value.length;
+      this.checkAll = checkedCount === this.cities.length;
+      this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+    },
+
+    // 项目权限多选框
+    handleCheckAllChange2(val) {
+      this.checkedCities2 = val ? this.cities2 : [];
+      this.isIndeterminate2 = false;
+    },
+    handleCheckedCitiesChange2(value) {
+      let checkedCount = value.length;
+      this.checkAll2 = checkedCount === this.cities2.length;
+      this.isIndeterminate2= checkedCount > 0 && checkedCount < this.cities2.length;
+    },
+
+    // 确认提交点击事件
+    affirmClick() {
+      this.newRole = false
     }
   }
 };
 </script>
 
 <style lang="less">
-#gongsiManagement {
+#gongsiShouquan {
   .green{
       color:#5be4a5;
   }
@@ -223,6 +344,7 @@ export default {
     width: 1.77rem;
     background-color: #fff;
     position: absolute;
+    height: 9.6rem;
     top: 0.8rem;
     bottom: 0;
     z-index: 1;
@@ -247,20 +369,17 @@ export default {
       }
     }
   }
-
   .main {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0.8rem;
-    bottom: 0;
+    position: relative;
+    min-height: 10rem;
     padding: 0.4rem;
+    height: auto;
     background-color: #f7f7f7;
     .gongsi_list {
       float: left;
       width: 4.5rem;
       background-color: #fff;
-      height: 100%;
+      height: 9.2rem;      
       margin-left: 1.77rem;
       .title {
         margin-top: 0.3rem;
@@ -280,13 +399,21 @@ export default {
           color: #6cbbff;
           font-weight: bolder;
           font-size: 0.18rem;
+          transform: rotate(-90deg);
+        }
+        .is-opened {
+          >.el-submenu__title {
+            .el-submenu__icon-arrow {
+              transform: rotate(0deg) !important;
+            }
+          }
         }
       }
     }
     .gongsi_info {
       width: 12.15rem;
       background-color: #fff;
-      height: 100%;
+      height: 9.2rem;
       margin-left: 6.3rem;
       padding: 0.3rem 0.2rem 0.2rem 0.2rem;
       .title {
@@ -334,12 +461,80 @@ export default {
             }
           }
         }
+        .el-dialog {
+          border-radius: .1rem;
+          .el-dialog__body {
+            padding-bottom: 0;
+            padding-top: .1rem;
+            .audit {
+              display: flex;
+              .left {
+                width: 1.2rem;
+                text-align: right;
+                padding-right: .2rem;
+                li {
+                  height: .4rem;
+                  line-height: .4rem;
+                  position: relative;
+                  margin-bottom: .2rem;
+                  .align {
+                    width: auto;
+                    right: .1rem;;
+                    position: absolute;
+                  }
+                }
+              }
+              .right {
+                flex: 1;
+                li {
+                  height: .4rem;
+                  line-height: .4rem;
+                  margin-bottom: .2rem;
+                  input {
+                    height: .4rem;
+                    width: 3.74rem;
+                    padding-left: .1rem;
+                    border-radius: .03rem;
+                    border: .01rem solid #acabab;
+                  }
+                  .el-checkbox {
+                    display: inline-block;
+                  }
+                  .el-checkbox-group {
+                    display: inline-block;
+                  }
+                }
+              }
+            }
+          }
+          .audit_btn {
+            position: absolute;
+            width: 100%;
+            bottom: -0.5rem;
+            font-size: 0.22rem;
+            font-weight: bolder;
+            color: #cac9c9;
+            text-align: center;
+            line-height: 0.8rem;
+            cursor: pointer;
+            background-color: #f7f7f7;
+            height: 0.8rem;
+            left: 0;
+            border-bottom-right-radius: 0.1rem;
+            border-bottom-left-radius: 0.1rem;
+            border-top: 1px solid #c2c0c0;
+            transition: .5s all;
+            &:hover {
+              color: #409eff;
+            }
+          }
+        }
       }
       .fenye {
         .el-pagination {
           position: absolute;
           right: 0.6rem;
-          bottom: 0.5rem;
+          bottom: 1rem;
           .number {
             background-color: #fff;
           }
