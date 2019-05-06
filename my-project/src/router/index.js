@@ -8,9 +8,9 @@ import axios from 'axios'
 // axios.defaults.baseURL = "http://gd.17hr.net:8018"
 // axios.defaults.baseURL = "http://192.168.1.225:808"
 
-// 网络
-// axios.defaults.baseURL = ""
 // 本地
+// axios.defaults.baseURL = "http://192.168.0.142:8989"
+// 网络
 axios.defaults.baseURL = "http://39.108.103.150:8989"
 axios.defaults.withCredentials=true //让ajax携带cookie
 Vue.prototype.$axios = axios

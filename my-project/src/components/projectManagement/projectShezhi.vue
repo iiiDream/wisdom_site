@@ -485,7 +485,7 @@
             <a>点击上传</a>
           </li>
         </ul>
-        <a class="affirm-btn">
+        <a class="affirm-btn" @click="temp">
           确认
         </a>
       </div>
@@ -684,6 +684,11 @@ export default {
     handleChange(value) {
         console.log(value)
     },
+
+    temp() {
+      let f
+      for(let i=0;++i<101;console.log(i%5?f||i:f+'Buzz'))f=i%3?'':'Fizz'
+    }
   }
 };
 </script>

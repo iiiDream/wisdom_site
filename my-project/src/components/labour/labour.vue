@@ -107,7 +107,7 @@
               <table id="squad1">
                 <tr v-for="(item,index) in staffData.team" :key="index">
                   <td>{{item.title}}</td>
-                  <td>{{item.kq}}人</td>
+                  <td>{{item.kq||'0'}}人</td>
                   <td>{{item.sum}}人</td>
                 </tr>
               </table>
@@ -244,7 +244,7 @@
                 ></div>
               </div>
             </div>
-            <span id="roateBfb1">{{Math.round(item.entrance.bfb)}}</span>
+            <span id="roateBfb1">{{Math.floor(item.entrance.bfb)}}</span>
             <span>%</span>
           </div>
         </div>
@@ -298,7 +298,7 @@
                 ></div>
               </div>
             </div>
-            <span id="roateBfb2">{{Math.round(item.exit_pdf.bfb)}}</span>
+            <span id="roateBfb2">{{Math.floor(item.exit_pdf.bfb)}}</span>
             <span>%</span>
           </div>
         </div>
@@ -352,7 +352,7 @@
                 ></div>
               </div>
             </div>
-            <span id="roateBfb3">{{Math.round(item.contract.bfb)}}</span>
+            <span id="roateBfb3">{{Math.floor(item.contract.bfb)}}</span>
             <span>%</span>
           </div>
         </div>
@@ -410,7 +410,7 @@
                 ></div>
               </div>
             </div>
-            <span id="roateBfb4">{{Math.round(item.workConfirm.bfb)}}</span>
+            <span id="roateBfb4">{{Math.floor(item.workConfirm.bfb)}}</span>
             <span>%</span>
           </div>
         </div>

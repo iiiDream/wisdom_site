@@ -223,7 +223,7 @@ export default {
 
         // 获取塔吊数据
         getCraneData() {
-            this.$axios.get(`http://192.168.0.101:8989/lz/deye/getCraneData?pid=${this.pid}`).then(
+            this.$axios.get(`/lz/deye/getCraneData?pid=${this.pid}`).then(
                 res => {
                     // console.log(res.data)
                     this.craneData = res.data

@@ -19,7 +19,7 @@
             <router-link to="/gongsiManagement">公司管理</router-link>
           </li>
           <li>
-            <router-link to="/projectShouquan">项目管理</router-link>
+            <router-link to="/projectShezhi">项目管理</router-link>
           </li>
         </ul>
       </div>
@@ -136,7 +136,7 @@
               </template>
               <el-submenu index="1-1-1" style="pandding-left: 1rem;" class="project">
                 <template slot="title" style="pandding-left: 1rem">
-                  <a>
+                  <router-link to="/home">
                     <div class="img">
                       <div class="subImg"></div>
                     </div>
@@ -146,7 +146,7 @@
                       <p>中建二局第三建筑工程有限公司</p>
                     </div>
                     <div class="state yellow-color">待审核</div>
-                  </a>
+                  </router-link>
                 </template>
               </el-submenu>
             </el-submenu>

@@ -99,10 +99,10 @@
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <div class="return" @click="$router.go(-1)">
                         <img src="../../../static/images/dormitory-close.png" alt="">
-                        <span>关闭</span>
-                    </a>
+                        <span>返回</span>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -498,6 +498,7 @@
                         padding-top: .28rem;
                         transition: all .5s;
                         img {
+                            width: 1.26rem;
                             display: block;
                             padding-left: .45rem;
                             padding-right: .45rem;
@@ -511,6 +512,29 @@
                         }
                     }
                     a:hover {
+                        background-color: #e5e5e5;
+                    }
+                    .return {
+                        cursor: pointer;
+                        display: block;
+                        height: 1.2rem;
+                        padding-top: .28rem;
+                        transition: all .5s;
+                        img {
+                            width: 1.26rem;
+                            display: block;
+                            padding-left: .45rem;
+                            padding-right: .45rem;
+                        }
+                        span {
+                            margin-top: .15rem;
+                            display: block; 
+                            color: #4a4a4a;
+                            font-size: .17rem;
+                            text-align: center;
+                        }
+                    }
+                    .return:hover {
                         background-color: #e5e5e5;
                     }
                 }
@@ -581,7 +605,7 @@
                 }
             }
             .particulars {
-                width: 15.93rem;
+                width: 15.8rem;
                 display: inline-block;
                 .top-box {
                     .search-box {
@@ -675,6 +699,7 @@
                                     padding-bottom: .32rem;
                                     transition: all .5s;
                                     img {
+                                        width: .71rem;
                                         display: block;
                                         margin: 0 auto;
                                         margin-bottom: .14rem;
@@ -920,13 +945,21 @@ export default {
         // 功能暂未开放提示
         unopenClick() {
             let that=this
-            $('a').on('click',function(){
+            $('#dormitory a').on('click',function(){
                 that.$message({
                     message: '该功能暂未开放',
                     type: 'warning'
                 })
             })
-        }
+            // $('#dormitory .return').on('click',function(){
+            //     console.log('我是返回按钮')
+            // })
+        },
+
+        // 返回
+        // returnClick() {
+        //     this.$router.push({path:'/home'})
+        // },
     }
 }
 </script>

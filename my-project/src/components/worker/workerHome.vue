@@ -4,6 +4,7 @@
         <div class="top-nav">
             <div class="top-nav-box">
                 <div class="logo-box"></div>
+                <a class="return" @click="returnClick">返回</a>
             </div>
         </div>
         <!-- 搜索栏 -->
@@ -49,11 +50,16 @@
                 </li>
             </ul>
         </div>
+        <!-- 回到顶部 -->
+        <a class="to-top" @click="topClick">
+            <i class="el-icon-upload2"></i>
+        </a>
     </div>
 </template>
 
 <style lang="less">
     #workerHome {
+        position: relative;
         .top-nav {
             height: 54px;
             background-color: #fff;
@@ -61,6 +67,7 @@
                 width: 1240px;
                 height: 54px;
                 margin: 0 auto;
+                position: relative;
                 .logo-box {
                     width: 120px;
                     height: 54px;
@@ -68,6 +75,26 @@
                     background-position: center center;
                     background-repeat: no-repeat;
                     background-size: contain;
+                }
+                .return {
+                    width: 50px;
+                    font-size: 18px;
+                    color: #205198;
+                    border-radius: 5px;
+                    display: inline-block;
+                    border: 1px solid #205198;
+                    vertical-align: top;
+                    line-height: 26px;
+                    text-align: center;
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    transition: all .5s;
+                }
+                .return:hover {
+                    color: #fff;
+                    background-color: #205198;
                 }
             }
         }
@@ -211,6 +238,26 @@
                 }
             }
         }
+        .to-top {
+            right: 60px;
+            width: 35px;
+            height: 35px;
+            bottom: 60px;
+            position: fixed;
+            line-height: 35px;
+            text-align: center;
+            transition: all .5s;
+            border-radius: 35px;
+            border: 1px solid #333;
+            i {
+                font-size: 28px;
+            }
+            &:hover {
+                color: #fff;
+                border-color: #205198;
+                background-color: #205198;
+            }
+        }
     }
 </style>
 
@@ -258,7 +305,21 @@ export default {
                     this.foremanData = res.data.msg
                 }
             )
-        }
+        },
+
+        // 返回
+        returnClick() {
+            // console.log(this.$router)
+            this.$router.go(-1)
+        },
+
+        // 回到顶部
+        topClick() {
+            // console.log($('html').scrollTop()+':'+$('body').scrollTop())
+            $('html').animate({
+                scrollTop:'0'
+            },500)
+        },
     }
 }
 </script>

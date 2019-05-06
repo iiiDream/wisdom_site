@@ -100,7 +100,7 @@ export default {
 
     // 获取升降机数据
     getElevatorData() {
-      this.$axios.get(`/lz/deye/getElevatorData?pid=${this.pid}`).then(
+      this.$axios.get(`/lz/deye/getElevatorData?pid=37348`).then(
         res => {
           // console.log(res.data)
           // for (let i = 0; i < 3; i++) {

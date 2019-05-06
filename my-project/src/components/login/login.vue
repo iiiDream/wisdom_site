@@ -135,7 +135,7 @@ export default {
           } else {
             alert("账号或密码错误！请重新输入");
             this.user_name = "";
-            this.pwd = "";
+            // this.pwd = "";
           }
         });
     }
