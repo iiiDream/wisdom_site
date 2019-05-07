@@ -3,7 +3,7 @@
     <!-- 顶部通栏 -->
     <div class="top">
       <div class="nav-logo">
-        <a href="#" class="logo-box"></a>
+        <a class="logo-box"></a>
         <i class="line"></i>
       </div>
       <div class="company">深圳市市政总公司</div>

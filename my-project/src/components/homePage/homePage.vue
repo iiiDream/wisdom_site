@@ -3,7 +3,7 @@
     <!-- 顶部通栏 -->
     <div class="top">
       <div class="nav-logo">
-        <a href="#" class="logo-box"></a>
+        <a class="logo-box"></a>
         <i class="line"></i>
       </div>
       <div class="company">深圳市市政总公司</div>
@@ -24,7 +24,7 @@
         </ul>
       </div>
       <div class="user">
-        <el-dropdown>
+        <el-dropdown trigger="click">
           <a class="el-dropdown-link">
             用户名
             <i class="el-icon-arrow-down el-icon--right"></i>

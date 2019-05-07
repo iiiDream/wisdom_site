@@ -57,11 +57,13 @@ import gongsiManagement from '../components/gongsiManagement/gongsiManagement.vu
 import gongsiShouquan from '../components/gongsiManagement/gongsiShouquan.vue'
 import projectShezhi from '../components/projectManagement/projectShezhi.vue'
 import projectShouquan from '../components/projectManagement/projectShouquan.vue'
+import systemHome from '../components/system/systemHome.vue'
 
 const router = new VueRouter({
 
     // 需要路由拦截
     routes:[
+        // 看板页面
         {path:'/login',component:login},
         {path:'/loginOld',component:loginOld},
         {path:'/',redirect:'/login'},
@@ -111,6 +113,9 @@ const router = new VueRouter({
         {path:'/gongsiShouquan',meta:{needLogin:true},component:gongsiShouquan},
         {path:'/projectShezhi',meta:{needLogin:true},component:projectShezhi},
         {path:'/projectShouquan',meta:{needLogin:true},component:projectShouquan},
+
+        // 后台管理系统页面
+        {path:'/systemHome',meta:{needLogin:true},component:systemHome},
     ]
 
     // 不需要路由拦截

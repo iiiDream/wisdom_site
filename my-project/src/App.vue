@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <!-- 头部 -->
+    <!-- 看板导航栏 -->
     <baseHeader v-show="isLogin"></baseHeader>
+
+    <!-- 后台管理系统导航栏 -->
+    <systemHeader v-show="systemShow"></systemHeader>
 
     <!-- 主题其他模块 -->
     <router-view></router-view>
@@ -9,16 +12,19 @@
 </template>
 
 <script>
-import baseHeader from "./components/header/herder.vue";
+import baseHeader from "./components/header/herder.vue"
+import systemHeader from "./components/system/systemHeader.vue"
 
 export default {
   name: "app",
   components: {
-    baseHeader
+    baseHeader,
+    systemHeader
   },
   data() {
     return {
-      isLogin: true
+      isLogin: true, // 看板导航栏显示状态
+      systemShow: false, // 后台管理系统导航栏显示状态
     };
   },
   methods: {
@@ -35,11 +41,18 @@ export default {
         this.$route.path.includes("/gongsiManagement") ||
         this.$route.path.includes("/gongsiShouquan") ||
         this.$route.path.includes("/projectShezhi") ||
-        this.$route.path.includes("/projectShouquan")
+        this.$route.path.includes("/projectShouquan") ||
+        this.$route.path.includes("/system")
       ) {
-        this.isLogin = false;
+        this.isLogin = false
       } else {
-        this.isLogin = true;
+        this.isLogin = true
+      }
+
+      if (this.$route.path.includes("/system")) {
+        this.systemShow = true
+      } else {
+        this.systemShow = false
       }
     }
   },
