@@ -9,9 +9,9 @@
             <a class="message">
                 消息
             </a>
-            <a class="home">
+            <router-link to="/systemHome" class="home">
                 首页
-            </a>
+            </router-link>
             <a class="user">
                 <el-dropdown>
                     <a class="el-dropdown-link">
@@ -32,7 +32,7 @@
     #systemHeader {
         width: 100%;
         height: .8rem;
-        background: linear-gradient(to right, #98e2fb, #5db4f8);
+        background: linear-gradient(to right, #6cc4ff, #489cff);
         .float-left {
             float: left;
             height: .8rem;

@@ -12,9 +12,9 @@
           <li>
             <router-link to="/homePage" class="active">首页</router-link>
           </li>
-          <li>
+          <!-- <li>
             <router-link to="/projectManagement">项目管理</router-link>
-          </li>
+          </li> -->
           <li>
             <router-link to="/gongsiManagement">公司管理</router-link>
           </li>
@@ -115,7 +115,7 @@
                   <div class="subImg"></div>
                 </div>
                 <div class="datum">
-                  <div class="title">深圳路桥有限公司</div>
+                  <div class="title">深圳市市政总有限公司</div>
                   <p>深圳市 南山区</p>
                   <p>中建二局第三建筑工程有限公司</p>
                 </div>
@@ -128,7 +128,7 @@
                     <div class="subImg"></div>
                   </div>
                   <div class="datum">
-                    <div class="title">深圳隧道公司</div>
+                    <div class="title">深圳市市政总隧道分公司</div>
                     <p>深圳市 南山区</p>
                     <p>中建二局第三建筑工程有限公司</p>
                   </div>
@@ -141,7 +141,7 @@
                       <div class="subImg"></div>
                     </div>
                     <div class="datum">
-                      <div class="title">某某项目</div>
+                      <div class="title">试点项目</div>
                       <p>深圳市 南山区</p>
                       <p>中建二局第三建筑工程有限公司</p>
                     </div>

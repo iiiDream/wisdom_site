@@ -99,7 +99,7 @@
             安全文明施工天数:
             <span class="day">636</span>天
           </span>
-          <!-- <router-link to="/dormitory" class="dormitory">智慧宿舍</router-link> -->
+          <router-link to="/dormitory" class="dormitory">智慧宿舍</router-link>
         </div>
         <div class="videoInfo">
           <el-carousel trigger="click" height="6.14rem">

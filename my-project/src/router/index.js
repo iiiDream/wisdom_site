@@ -58,6 +58,8 @@ import gongsiShouquan from '../components/gongsiManagement/gongsiShouquan.vue'
 import projectShezhi from '../components/projectManagement/projectShezhi.vue'
 import projectShouquan from '../components/projectManagement/projectShouquan.vue'
 import systemHome from '../components/system/systemHome.vue'
+import systemLiangZhi from '../components/system/systemLiangZhi/systemLiangZhi.vue'
+import systemLiangZhi_home from '../components/system/systemLiangZhi/systemLiangZhi_home.vue'
 
 const router = new VueRouter({
 
@@ -116,6 +118,10 @@ const router = new VueRouter({
 
         // 后台管理系统页面
         {path:'/systemHome',meta:{needLogin:true},component:systemHome},
+        {path:'/systemLiangZhi',meta:{needLogin:true},component:systemLiangZhi,children:[
+            {path:'',meta:{needLogin:true},component:systemLiangZhi_home},
+            {path:'/systemLiangZhi_home',meta:{needLogin:true},component:systemLiangZhi_home},
+        ]},
     ]
 
     // 不需要路由拦截

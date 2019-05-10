@@ -131,7 +131,7 @@ export default {
           if (res.data.msg != "账户或密码错误") {
             localStorage.setItem("islogin", "true");
             localStorage.setItem("pid", res.data.pid);
-            this.$router.push({ path: "/home" });
+            this.$router.push({ path: "/homePage" });
           } else {
             alert("账号或密码错误！请重新输入");
             this.user_name = "";

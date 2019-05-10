@@ -12,9 +12,9 @@
           <li>
             <router-link to="/homePage">首页</router-link>
           </li>
-          <li>
+          <!-- <li>
             <router-link to="/projectManagement">项目管理</router-link>
-          </li>
+          </li> -->
           <li>
             <router-link to="/gongsiManagement" class="active">公司管理</router-link>
           </li>
