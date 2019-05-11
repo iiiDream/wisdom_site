@@ -13,7 +13,7 @@
                         <a>
                             待整改
                         </a>
-                        <i>4</i>
+                        <!-- <i>4</i> -->
                     </li>
                     <li>
                         <a>
@@ -169,11 +169,11 @@
                 </div>
                 <div class="search-bottom">
                     共
-                    <span>30</span>
-                    条记录，待整改
-                    <span>4</span>
-                    条，待复查
-                    <span>0</span>
+                    <span>{{sum}}</span>
+                    条记录，已完成
+                    <span>{{accomplish}}</span>
+                    条，未完成
+                    <span>{{unfinished}}</span>
                     条
                     <div class="search-bar">
                         <input type="text" placeholder="输入问题搜索">
@@ -188,9 +188,9 @@
                         <div class="issue">
                             问题
                         </div>
-                        <div class="type">
+                        <!-- <div class="type">
                             隐患类型 
-                        </div>
+                        </div> -->
                         <div class="examine">
                             检查人|检查时间
                         </div>
@@ -209,28 +209,28 @@
                     </li>
                 </ul>
                 <ul class="list-body">
-                    <li @click="particulars">
+                    <li v-for="(item,index) in queryPollingInFoData" :key="index" @click="$router.push({ path: '/q_particulars', query: { pollingId: item.pollingId } })">
                         <div class="issue">
-                            <p>此处拉结要用钢管拉结</p>
-                            <span class="slight"></span>
-                            <span class="padding">南山EPC创新工业园</span>
+                            <p>{{item.describex}}</p>
+                            <span :class="item.rank==1?'slight':item.rank==2?'ordinary':'severity'"></span>
+                            <span class="padding">{{item.place}}</span>
                         </div>
-                        <div class="type">
+                        <!-- <div class="type">
                             施工用电
-                        </div>
+                        </div> -->
                         <div class="examine">
-                            <p>王佳佳</p>
-                            <span>2019-01-01 20:11</span>
+                            <p>检查人</p>
+                            <span>{{item.createTime}}</span>
                         </div>
                         <div class="duty">
-                            <p>伟业-张东方</p>
-                            <span>深圳市伟业建筑劳务有限公司</span>
+                            <p>整改人</p>
+                            <span>{{item.unitTitle}}</span>
                         </div>
                         <div class="date">
-                            <p>2018-01-07</p>
+                            <p>{{item.deadlineTime}}</p>
                         </div>
-                        <div class="state green-color">
-                            复查通过
+                        <div class="state green-color" :class="item.isAvailable==0?'orange-color':'green-color'">
+                            {{item.isAvailable==0?'未完成':'已完成'}}
                         </div>
                         <div class="operation">
                             <a>
@@ -238,7 +238,7 @@
                             </a>
                         </div>
                     </li>
-                    <li>
+                    <!-- <li>
                         <div class="issue">
                             <p>此处拉结要用钢管拉结</p>
                             <span class="ordinary"></span>
@@ -293,7 +293,7 @@
                         <div class="operation">
                             <a></a>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -767,9 +767,42 @@ export default {
             value9: '',
             value10: '',
             value11: '',
+            pid: 0, // 项目id
+            queryPollingInFoData: '', // 检查记录列表
+            sum: 0, // 检查总数
+            accomplish: 0, // 已完成数量
+            unfinished: 0, // 未完成数量
         }
     },
+    created() {
+        this.getPid()
+        this.getQueryPollingInFo()
+    },
     methods: {
+        // 获取项目id
+        getPid() {
+            this.pid = localStorage.getItem('pid')
+        },
+
+        // 获取检查记录列表
+        getQueryPollingInFo() {
+            this.$axios.post(`/lz/polling/queryPollingInFo?projectId=${this.pid}`).then(
+                res => {
+                    // console.log(res.data.msg.length)
+                    this.queryPollingInFoData = res.data.msg
+                    this.sum = res.data.msg.length
+                    for (let i = 0; i < res.data.msg.length; i++) {
+                        if (res.data.msg[i].isAvailable==0) {
+                            this.accomplish++
+                        } else {
+                            this.unfinished++
+                        }
+                    }
+                }
+            )
+        },
+
+        // 进入整改单详情页
         particulars() {
             // window.open('http://localhost:8080/?xmid=DV2mxBGL1Ao%3D#/q_particulars', '_blank');
             this.$router.push({ path:'/q_particulars'})

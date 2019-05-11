@@ -3,7 +3,7 @@
     <!-- 顶部通栏 -->
     <div class="top">
       <div class="nav-logo">
-        <a href="#" class="logo-box"></a>
+        <a class="logo-box"></a>
         <i class="line"></i>
       </div>
       <div class="company">深圳市市政总公司</div>
@@ -12,19 +12,19 @@
           <li>
             <router-link to="/homePage" class="active">首页</router-link>
           </li>
-          <li>
+          <!-- <li>
             <router-link to="/projectManagement">项目管理</router-link>
-          </li>
+          </li> -->
           <li>
             <router-link to="/gongsiManagement">公司管理</router-link>
           </li>
           <li>
-            <router-link to="/projectManagement2">项目管理</router-link>
+            <router-link to="/projectShezhi">项目管理</router-link>
           </li>
         </ul>
       </div>
       <div class="user">
-        <el-dropdown>
+        <el-dropdown trigger="click">
           <a class="el-dropdown-link">
             用户名
             <i class="el-icon-arrow-down el-icon--right"></i>
@@ -35,8 +35,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-    </div>
-    
+    </div> 
     <!-- 内容 -->
     <div class="main">
       <!-- 地图 -->
@@ -60,7 +59,7 @@
         </a>
       </div>
       <!-- 公司名称/地区 -->
-      <div class="menu">
+      <!-- <div class="menu">
         <div class="company">
           <el-select v-model="companyValue" placeholder="请选择">
             <el-option
@@ -81,7 +80,7 @@
             ></el-option>
           </el-select>
         </div>
-      </div>
+      </div> -->
       <!-- 侧拉框 -->
       <div class="side-nav" :class="sidNavClass">
         <a href="javascript:void(0);" @click="sideNavState"></a>
@@ -116,26 +115,40 @@
                   <div class="subImg"></div>
                 </div>
                 <div class="datum">
-                  <div class="title">深圳湾创新科技中心</div>
+                  <div class="title">深圳市市政总有限公司</div>
                   <p>深圳市 南山区</p>
                   <p>中建二局第三建筑工程有限公司</p>
                 </div>
               </a>
             </template>
-            <el-submenu index="1-4" style="pandding-left: 100px;">
-              <template slot="title" style="pandding-left: 100px">
+            <el-submenu index="1-1" style="pandding-left: 1rem;">
+              <template slot="title" style="pandding-left: 1rem">
                 <a>
                   <div class="img">
                     <div class="subImg"></div>
                   </div>
                   <div class="datum">
-                    <div class="title">深圳湾创新科技中心</div>
+                    <div class="title">深圳市市政总隧道分公司</div>
                     <p>深圳市 南山区</p>
                     <p>中建二局第三建筑工程有限公司</p>
                   </div>
                 </a>
               </template>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
+              <el-submenu index="1-1-1" style="pandding-left: 1rem;" class="project">
+                <template slot="title" style="pandding-left: 1rem">
+                  <router-link to="/home">
+                    <div class="img">
+                      <div class="subImg"></div>
+                    </div>
+                    <div class="datum">
+                      <div class="title">试点项目</div>
+                      <p>深圳市 南山区</p>
+                      <p>中建二局第三建筑工程有限公司</p>
+                    </div>
+                    <div class="state yellow-color">待审核</div>
+                  </router-link>
+                </template>
+              </el-submenu>
             </el-submenu>
           </el-submenu>
         </el-menu>
@@ -225,41 +238,40 @@ export default {
   },
   methods: {
     enter() {
-      this.sidNavClass = "come";
+      this.sidNavClass = "come"
       $(".side-nav").animate({
-        right: "-4.28rem"
-      });
-      $(".menu").animate({
-        right: ".17rem"
-      });
-      this.sideNavState = this.come;
+        right: "-5.8rem"
+      },1000)
+      this.sideNavState = this.come
     },
     come() {
-      this.sidNavClass = "enter";
+      this.sidNavClass = "enter"
       $(".side-nav").animate({
         right: "0"
-      });
-      $(".menu").animate({
-        right: "4.37rem"
-      });
-      this.sideNavState = this.enter;
+      },1000)
+      this.sideNavState = this.enter
     },
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      console.log(key, keyPath)
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      console.log(key, keyPath)
     }
   }
 };
 </script>
 
 <style lang="less">
-/* 顶部样式 */
-// .el-submenu__icon-arrow {
-//   right: 5.1rem !important;
-// }
 #homePage {
+  .green-color {
+    color: #5be4a5;
+  }
+  .yellow-color {
+    color: #f5c98d;
+  }
+  .red-color {
+    color: #f00;
+  }
   .top {
     width: 19.2rem;
     height: 0.8rem;
@@ -325,6 +337,8 @@ export default {
   /* 主体区域样式 */
   .main {
     position: relative;
+    height: 10rem;
+    overflow: hidden;
   }
   .amap-demo {
     height: 10rem;
@@ -383,8 +397,8 @@ export default {
   }
   .main .side-nav {
     position: absolute;
-    width: 4.47rem;
-    height: 10rem;
+    width: 6.07rem;
+    height: 10.2rem;
     background-position: right center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -393,12 +407,11 @@ export default {
     padding-left: 0.27rem;
   }
   .enter {
-    background-image: url("../../../static/images/homePage-enter.png");
-    width: 5.83rem !important;
+    background-image: url("../../../static/images/homePage-come.png");
   }
 
   .come {
-    background-image: url("../../../static/images/homePage-come.png");
+    background-image: url("../../../static/images/homePage-enter.png");
   }
   .main .side-nav > a {
     width: 0.2rem;
@@ -426,12 +439,19 @@ export default {
     height: 1rem;
     .el-submenu__title {
       height: 100%;
-              border-bottom: 0.01rem solid #d4d4d4;
+      border-bottom: 0.01rem solid #d4d4d4;
+      .el-submenu__icon-arrow {
+        color: #6cbbff;
+        font-weight: bolder;
+        font-size: 0.18rem;
+        transform: rotate(-90deg);
+      }
       a {
         display: block;
         width: 100%;
         height: 1rem;
-        padding-top: 0.25rem;
+        position: relative;
+        padding-top: 0.11rem;
         // padding-left: 0.8rem;
         .img {
           display: inline-block;
@@ -442,7 +462,7 @@ export default {
           background-repeat: no-repeat;
           background-size: cover;
           position: relative;
-          transform: translateY(-0.3rem);
+          // transform: translateY(-0.3rem);
           .subImg {
             position: absolute;
             width: 0.29rem;
@@ -456,47 +476,32 @@ export default {
         }
         .datum {
           display: inline-block;
-          padding-left: 0.32rem;
-          transform: translateY(-0.3rem);
-          line-height: 0.35rem;
+          padding-left: 0.2rem;
+          // transform: translateY(-0.3rem);
+          line-height: 0.25rem;
+        }
+        .state {
+          top: 50%;
+          right: .32rem;
+          font-size: .12rem;
+          position: absolute;
+          transform: translateY(-50%);
         }
       }
     }
   }
-
-  //   ---------------------------------------------
-  //   .main .side-nav li a {
-  //     display: block;
-  //     width: 4.2rem;
-  //     height: 1.31rem;
-  //     padding-top: 0.1rem;
-  //     padding-left: 0.32rem;
-  //     border-bottom: 0.01rem solid #d4d4d4;
-  //   }
-  //   .main .side-nav li a .img {
-  //     display: inline-block;
-  //     width: 1.11rem;
-  //     height: 1.11rem;
-  //     background-image: url("../../../static/images/homePage-temp.jpg");
-  //     background-position: center center;
-  //     background-repeat: no-repeat;
-  //     background-size: cover;
-  //     position: relative;
-  //   }
-  //   .main .side-nav li a .subImg {
-  //     position: absolute;
-  //     width: 0.51rem;
-  //     height: 0.51rem;
-  //     left: 0;
-  //     top: 0;
-  //     background-image: url("../../../static/images/homePage-emphasis.png");
-  //     z-index: 10;
-  //   }
-  //   .main .side-nav li a .datum {
-  //     display: inline-block;
-  //     padding-left: 0.32rem;
-  //     transform: translateY(-0.3rem);
-  //   }
+  .project {
+    .el-submenu__icon-arrow {
+      display: none;
+    }
+  }
+  .is-opened {
+    >.el-submenu__title {
+      .el-submenu__icon-arrow {
+        transform: rotate(0deg) !important;
+      }
+    }
+  }
   .main .side-nav li a .datum .title {
     color: #4a4a4a;
     font-size: 0.14rem;

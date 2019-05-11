@@ -5,7 +5,7 @@
       <div class="leftTop">
         <div class="title">
           <h1>{{time}}</h1>
-          <div v-for="(item,key,index) in weatherData" :key="index" v-if="key=='city'">{{item}}市天气预报</div>
+          <div v-for="(item,key,index) in weatherData" :key="index" v-if="key=='city'">{{item}}天气预报</div>
         </div>
         <div class="content">
           <div class="one" v-for="(item,key,index) in weatherData" :key="index" v-if="key=='data'">

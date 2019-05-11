@@ -3,7 +3,7 @@
     <!-- 顶部通栏 -->
     <div class="top">
       <div class="nav-logo">
-        <a href="#" class="logo-box"></a>
+        <a class="logo-box"></a>
         <i class="line"></i>
       </div>
       <div class="company">深圳市市政总公司</div>
@@ -19,7 +19,7 @@
             <router-link to="/gongsiManagement">公司管理</router-link>
           </li>
           <li>
-            <router-link to="/projectManagement2">项目管理</router-link>
+            <router-link to="/projectShezhi">项目管理</router-link>
           </li>
         </ul>
       </div>

@@ -96,7 +96,7 @@
 </style>
 
 <script>
-let amapManager = new VueAMap.AMapManager();
+let amapManager = new VueAMap.AMapManager()
 export default {
     data() {
         return {

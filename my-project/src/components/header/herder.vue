@@ -21,47 +21,91 @@
             </div>
             <router-link to="/home">项目总况</router-link>
           </li>
-          <li v-on:click="isActive('/labour')">
-            <div class="Lactive-box" v-show="active=='/labour'">
+          <li @click="personnelClick">
+            <div class="Lactive-box" v-show="active.includes('/location')||active=='/labour'">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
-              <span>两制管理</span>
+              <span>人员管理</span>
             </div>
-            <router-link to="/labour">两制管理</router-link>
+            <a>人员管理</a>
+            <div class="drop-down1">
+              <ul>
+                <li @click="isActive('/labour')">
+                  <router-link to="/labour">两制管理</router-link>
+                </li>
+                <li @click="isActive('/location')">
+                  <router-link to="/location">人员定位</router-link>
+                </li>
+                <li>
+                  <router-link to="/workerHome">产业工人</router-link>
+                </li>
+                <li>
+                  <a @click="unopenClick">危区检测</a>
+                </li>
+              </ul>
+            </div>
           </li>
-          <li  v-on:click="isActive('/green')">
-            <div class="Lactive-box" v-show="active.includes('/green')">
+          <li  v-on:click="isActive('/safety')">
+            <div class="Lactive-box" v-show="active.includes('/safety')">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
-              <span>绿色施工</span>
+              <span>设备管理</span>
             </div>
-            <router-link to="/green">绿色施工</router-link>
+            <router-link to="/safety">设备管理</router-link>
           </li>
           <li  v-on:click="isActive('/monitoring')">
             <div class="Lactive-box" v-show="active=='/monitoring'" style="left:-.04rem">
               <img src="../../../static/images/Lactive.png" alt="" class="Lactive-img">
-              <span style="padding-left:.04rem">全景监控</span>
+              <span>视频监控</span>
             </div>
-            <router-link to="/monitoring">全景监控</router-link>
+            <router-link to="/monitoring">视频监控</router-link>
           </li>
-          <li  v-on:click="isActive('/location')">
-            <div class="Lactive-box" v-show="active.includes('/location')" style="left:.04rem">
+          <li @click="personnelClick2">
+            <div class="Lactive-box" v-show="active.includes('/quality')" style="left:.04rem">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span>人员定位</span>
+              <span>安全管理</span>
             </div>
-            <router-link to="/location">人员定位</router-link>
+            <a>安全管理</a>
+            <div class="drop-down2">
+              <ul>
+                <li v-on:click="isActive('/quality')">
+                  <router-link to="/quality">安全巡检</router-link>
+                </li>
+                <li>
+                  <a @click="unopenClick">高支模检测</a>
+                </li>
+                <li>
+                  <a @click="unopenClick">基坑监测</a>
+                </li>
+                <li>
+                  <a @click="unopenClick">施工周边监测</a>
+                </li>
+                <li>
+                  <a @click="unopenClick">智能安全教育</a>
+                </li>
+              </ul>
+            </div>
           </li>
-          <li  v-on:click="isActive('/safety')">
-            <div class="Lactive-box" v-show="active.includes('/safety')">
+          <li @click="personnelClick4">
+            <div class="Lactive-box" v-show="active.includes('/green')">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span style="padding-left:.04rem">安全施工</span>
+              <span>绿色施工</span>
             </div>
-            <router-link to="/safety">安全施工</router-link>
-          </li>
-          <li  v-on:click="isActive('/quality')">
-            <div class="Lactive-box" v-show="active.includes('/quality')">
-              <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
-              <span>安全巡检</span>
+            <a>绿色施工</a>
+            <div class="drop-down4">
+              <ul>
+                <li v-on:click="isActive('/green')">
+                  <router-link to="/green">TSP检测</router-link>
+                </li>
+                <li>
+                  <a @click="unopenClick">废弃物监管</a>
+                </li>
+                <li>
+                  <a @click="unopenClick">雨水回收</a>
+                </li>
+                <li>
+                  <a @click="unopenClick">喷淋系统</a>
+                </li>
+              </ul>
             </div>
-            <router-link to="/quality">安全巡检</router-link>
           </li>
           <li  v-on:click="isActive('/information')">
             <div class="Lactive-box" v-show="active=='/information'">
@@ -69,6 +113,32 @@
               <span>资料管理</span>
             </div>
             <router-link to="/information">资料管理</router-link>
+          </li>
+          <li @click="personnelClick3">
+            <div class="Lactive-box" v-show="active.includes('/unopen')">
+              <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
+              <span>智能应用</span>
+            </div>
+            <a>智能应用</a>
+            <div class="drop-down3">
+              <ul>
+                <li>
+                  <a @click="unopenClick">无人机应用</a>
+                </li>
+                <li>
+                  <a @click="unopenClick">BIM技术应用</a>
+                </li>
+                <li>
+                  <a @click="unopenClick">VR应用</a>
+                </li>
+                <li>
+                  <a @click="unopenClick">视频会议</a>
+                </li>
+                <li>
+                  <a @click="unopenClick">3D打印应用</a>
+                </li>
+              </ul>
+            </div>
           </li>
         </ul>
         <span v-on:click="isActive('/home')">
@@ -97,6 +167,10 @@ export default {
       active: "/home",
       nowWeather:'',
       xmid:'',
+      dropDownState: true, // 人员管理下拉框状态
+      dropDownState2: true, // 安全管理下拉框状态
+      dropDownState3: true, // 智能应用下拉框状态
+      dropDownState4: true, // 绿色施工下拉框状态
     };
   },
   created() {
@@ -139,7 +213,8 @@ export default {
       this.active = this.$route.path
     },
     isActive(path){
-      this.active =path;
+      this.active =path
+      // console.log(this.active)
     },
     getQueryString(name) {
       var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
@@ -149,6 +224,7 @@ export default {
       }
       return null;
     },
+
     // 测试
     getliuyong() {
       // this.$axios.post('http://192.168.0.110:8989/logins?password=lj123&validateCode=0&username=lj').then(res=>{
@@ -160,30 +236,102 @@ export default {
           res=>{
         console.log(res.data)
       })
-    }
+    },
     
+    // 人员管理下拉事件
+    personnelClick() {
+      // console.log(`123`)
+      if (this.dropDownState) {
+        $('.drop-down1').animate({
+          height:'1.92rem'
+        },500)
+        this.dropDownState = !this.dropDownState
+      } else {
+        $('.drop-down1').animate({
+          height:'0'
+        },500)
+        this.dropDownState = !this.dropDownState
+      }
+    },
+
+    // 安全管理下拉事件
+    personnelClick2() {
+      // console.log(`123`)
+      if (this.dropDownState2) {
+        $('.drop-down2').animate({
+          height:'2.4rem'
+        },500)
+        this.dropDownState2 = !this.dropDownState2
+      } else {
+        $('.drop-down2').animate({
+          height:'0'
+        },500)
+        this.dropDownState2 = !this.dropDownState2
+      }
+    },
+
+    // 智能应用下拉事件
+    personnelClick3() {
+      // console.log(`123`)
+      if (this.dropDownState3) {
+        $('.drop-down3').animate({
+          height:'2.4rem'
+        },500)
+        this.dropDownState3 = !this.dropDownState3
+      } else {
+        $('.drop-down3').animate({
+          height:'0'
+        },500)
+        this.dropDownState3 = !this.dropDownState3
+      }
+    },
+
+    // 绿色施工下拉事件
+    personnelClick4() {
+      // console.log(`123`)
+      if (this.dropDownState4) {
+        $('.drop-down4').animate({
+          height:'2.4rem'
+        },500)
+        this.dropDownState4 = !this.dropDownState4
+      } else {
+        $('.drop-down4').animate({
+          height:'0'
+        },500)
+        this.dropDownState4 = !this.dropDownState4
+      }
+    },
+
+    // 功能未开发
+    unopenClick() {
+      this.$message({
+        message: '该功能暂未开放',
+        type: 'warning'
+      })
+    }
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .indexBody {
      position: relative;
      top: 0;
+     z-index: 1000;
 }
- .header {
+.header {
      height: 0.48rem;
      line-height: 0.48rem;
 }
- .header-main {
+.header-main {
      position: relative;
 }
- .header .city {
+.header .city {
      float: left;
      font-size: 0.14rem;
      color: #3375fe;
 }
- .header .city span {
+.header .city span {
      font-size: 0.14rem;
      color: #3375fe;
      padding-left: 0.1rem;
@@ -194,7 +342,7 @@ export default {
   margin-left: .2rem;
   margin-top: -0.05rem;
 }
- .header .nav {
+.header .nav {
      position: absolute;
      width: 14.78rem;
      height: .56rem;
@@ -204,7 +352,7 @@ export default {
      background-image: url('../../../static/images/title-bg.png');
      background-size: contain;
 }
- .header .head-title {
+.header .head-title {
      position: absolute;
      display: _none;
      left: 50%;
@@ -219,26 +367,26 @@ export default {
      color: #ffffff;
      font-weight: bold;
 }
- .header .date-time {
+.header .date-time {
      float: right;
      font-size: 0.14rem;
      color: #3375fe;
      font-weight: bold;
 }
- .header .d-date {
+.header .d-date {
      padding-right: 0.3rem;
 }
- .header .nav {
-     overflow: hidden;
+.header .nav {
+     /* overflow: hidden; */
      background-size: 100% 100%;
 }
- .header .nav li {
+.header .nav li {
      position: relative;
      float: left;
      width: 1.32rem;
      text-align: center;
 }
- .header .nav li a {
+.header .nav li a {
      display: block;
      width: 100%;
      height: 0.44rem;
@@ -248,11 +396,11 @@ export default {
      color: #3375fe;
      padding-left: .19rem;
 }
- .header .nav li:nth-child(4) {
+.header .nav li:nth-child(4) {
      margin-right: 4.02rem;
      background: none;
 }
- .header .nav li:last-child {
+.header .nav li:last-child {
      background: none;
 }
 .Lactive-box {
@@ -277,4 +425,110 @@ export default {
   width: 1.51rem;
   vertical-align: top;  
 } 
+.indexBody {
+  .header {
+    .header-main {
+      .nav {
+        li {
+          .drop-down1 {
+            position: absolute;
+            right: -.19rem;
+            top: .48rem;
+            height: 0;
+            overflow: hidden;
+            ul {
+              width: 1.28rem;
+              height: 1.92rem;              
+              overflow: hidden;
+              border: .01rem solid #0f1f53;
+              background-color: #020521;
+              li {
+                a {
+                  color: #fff;
+                  width: 1.28rem;
+                  height: .48rem;
+                  margin: 0;
+                  padding: 0;
+                  border-bottom: .01rem solid #0f1f53;
+                }
+              }
+            }
+          }
+          .drop-down2 {
+            position: absolute;
+            right: .01rem;
+            top: .48rem;
+            height: 0;
+            overflow: hidden;
+            ul {
+              width: 1.28rem;
+              height: 2.4rem;              
+              overflow: hidden;
+              border: .01rem solid #0f1f53;
+              background-color: #020521;
+              li {
+                a {
+                  color: #fff;
+                  width: 1.28rem;
+                  height: .48rem;
+                  margin: 0;
+                  padding: 0;
+                  border-bottom: .01rem solid #0f1f53;
+                }
+              }
+            }
+          }
+          .drop-down3 {
+            position: absolute;
+            right: .01rem;
+            top: .48rem;
+            height: 0;
+            overflow: hidden;
+            ul {
+              width: 1.28rem;
+              height: 2.4rem;              
+              overflow: hidden;
+              border: .01rem solid #0f1f53;
+              background-color: #020521;
+              li {
+                a {
+                  color: #fff;
+                  width: 1.28rem;
+                  height: .48rem;
+                  margin: 0;
+                  padding: 0;
+                  border-bottom: .01rem solid #0f1f53;
+                }
+              }
+            }
+          }
+          .drop-down4 {
+            position: absolute;
+            right: .01rem;
+            top: .48rem;
+            height: 0;
+            overflow: hidden;
+            ul {
+              width: 1.28rem;
+              height: 1.92rem;              
+              overflow: hidden;
+              border: .01rem solid #0f1f53;
+              background-color: #020521;
+              li {
+                a {
+                  color: #fff;
+                  width: 1.28rem;
+                  height: .48rem;
+                  margin: 0;
+                  padding: 0;
+                  border-bottom: .01rem solid #0f1f53;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>

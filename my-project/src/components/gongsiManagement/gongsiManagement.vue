@@ -3,7 +3,7 @@
     <!-- 顶部通栏 -->
     <div class="top">
       <div class="nav-logo">
-        <a href="#" class="logo-box"></a>
+        <a class="logo-box"></a>
         <i class="line"></i>
       </div>
       <div class="company">深圳市市政总公司</div>
@@ -12,9 +12,9 @@
           <li>
             <router-link to="/homePage">首页</router-link>
           </li>
-          <li>
+          <!-- <li>
             <router-link to="/projectManagement">项目管理</router-link>
-          </li>
+          </li> -->
           <li>
             <router-link to="/gongsiManagement" class="active">公司管理</router-link>
           </li>
@@ -47,7 +47,6 @@
         </li>
       </ul>
     </div>
-
     <!-- 主体 -->
     <div class="main">
       <div class="gongsi_list">
@@ -74,14 +73,14 @@
           </el-menu>
         </div>
       </div>
-      <div class="gongsi_info">
+      <div class="gongsi_info" v-show="companyShow">
         <div class="title">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/gongsiManagement' }">公司列表</el-breadcrumb-item>
             <el-breadcrumb-item v-for="(item, index) in currentpath" :key="index">{{item}}</el-breadcrumb-item>
           </el-breadcrumb>
           <div class="addgongsi">
-            <div class="btn">新增公司</div>
+            <div class="btn" @click="addCompany">新增公司</div>
           </div>
         </div>
         <div class="table_info">
@@ -105,6 +104,114 @@
           <el-pagination background layout="prev, pager, next" :total="50"></el-pagination>
         </div>
       </div>
+      <div class="add-company" v-show="!companyShow">
+        <!-- 头部 -->
+        <div class="title">
+          <a @click="addCompany">返回</a>
+          <div class="text">新增公司</div>
+        </div>
+        <!-- 输入区域 -->
+        <ul>
+          <li>
+            <div class="text-box">
+              企业名称
+              <span class="required">*</span>
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              简称
+              <span class="required">*</span>
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              注册资金
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              单位类型
+              <span class="required">*</span>
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              法人代表
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              社会统一信用代码
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              组织机构代码
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              基本账户开户银行
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              基本账户银行账号
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              开户地址
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              单位详细地址
+              <span class="required">*</span>
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              负责人
+              <span class="required">*</span>
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              电话
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              电子邮箱
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              备注
+            </div>
+            <input type="text">
+          </li>
+        </ul>
+        <a class="affirm-btn">
+          确认
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -122,8 +229,12 @@ export default {
           date: "1226",
           name: "东明大道（南光高速～东长路）市政工程2标段"
         }
-      ]
+      ],
+      companyShow: true, // 显示公司列表或新增公司表
     };
+  },
+  created() {
+    // this.synchronizationHeight()
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -134,7 +245,17 @@ export default {
     },
     handleMenuSelect(key, keyPath) {
       this.currentpath = keyPath;
-    }
+    },
+
+    // 切换新增公司页面与列表页面
+    addCompany() {
+      this.companyShow = !this.companyShow
+      if (!this.companyShow) {
+        $('.gongsi_list').css('height',$('.add-company').css('height'))
+      } else {
+        $('.gongsi_list').css('height',$('.gongsi_info').css('height'))
+      }
+    },
   }
 };
 </script>
@@ -207,6 +328,7 @@ export default {
     width: 1.77rem;
     background-color: #fff;
     position: absolute;
+    height: 9.6rem;
     top: 0.8rem;
     bottom: 0;
     z-index: 1;
@@ -231,20 +353,17 @@ export default {
       }
     }
   }
-
   .main {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0.8rem;
-    bottom: 0;
+    position: relative;
+    min-height: 10rem;
     padding: 0.4rem;
+    height: auto;
     background-color: #f7f7f7;
     .gongsi_list {
       float: left;
       width: 4.5rem;
       background-color: #fff;
-      height: 100%;
+      height: 9.2rem;      
       margin-left: 1.77rem;
       .title {
         margin-top: 0.3rem;
@@ -264,13 +383,21 @@ export default {
           color: #6cbbff;
           font-weight: bolder;
           font-size: 0.18rem;
+          transform: rotate(-90deg);
+        }
+        .is-opened {
+          >.el-submenu__title {
+            .el-submenu__icon-arrow {
+              transform: rotate(0deg) !important;
+            }
+          }
         }
       }
     }
     .gongsi_info {
       width: 12.15rem;
       background-color: #fff;
-      height: 100%;
+      height: 9.2rem;
       margin-left: 6.3rem;
       padding: 0.3rem 0.2rem 0.2rem 0.2rem;
       .title {
@@ -323,7 +450,7 @@ export default {
         .el-pagination {
           position: absolute;
           right: 0.6rem;
-          bottom: 0.5rem;
+          bottom: 1rem;
           .number {
             background-color: #fff;
           }
@@ -331,6 +458,85 @@ export default {
             background-color: #6cbbff;
           }
         }
+      }
+    }
+    .add-company {
+      width: 12.15rem;
+      background-color: #fff;
+      margin-left: 6.3rem;
+      padding-bottom: .35rem;
+      .title {
+        width: 10.4rem;
+        height: .51rem;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: .01rem solid #ededed;
+        a {
+          color: #333;
+          width: .6rem;
+          height: .3rem;
+          font-size: .15rem;
+          text-align: center;
+          margin-top: .1rem;
+          border-radius: .05rem;
+          line-height: .28rem;
+          border: .01rem solid #d0d0d0;
+        }
+        a:hover {
+          color: #fff;
+          border: none;
+          line-height: .3rem;
+          background: linear-gradient(to right, #479bff, #6cc4ff);
+        }
+        .text {
+          color: #4a4a4a;
+          font-size: .2rem;
+          line-height: .5rem;
+          font-weight: bolder;
+        }
+      }
+      ul {
+        padding-top: .35rem;
+        li {
+          height: .5rem;
+          margin-bottom: .35rem;
+          .text-box {
+            width: 3.3rem;
+            color: #4a4a4a;
+            font-size: .18rem;
+            text-align: right;
+            line-height: .5rem;
+            padding-right: .3rem;
+            display: inline-block;
+            .required {
+              color: #f00;
+            }
+          }
+          input {
+            width: 6rem;
+            height: .5rem;
+            padding-left: .1rem;
+            border-radius: .05rem;
+            border: .01rem solid #acabab;
+          }
+        }
+      }
+      .affirm-btn {
+        width: 2rem;
+        height: .6rem;
+        color: #fff;
+        display: block;
+        margin: 0 auto;
+        font-size: .23rem;
+        line-height: .6rem;
+        text-align: center;
+        transition: all .5s;
+        border-radius: .05rem;
+        background: linear-gradient(to right, #5cb3f8, #98e2fb);
+      }
+      .affirm-btn:hover {
+        background: linear-gradient(to right, #479bff, #6cc4ff);
       }
     }
   }

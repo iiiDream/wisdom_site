@@ -779,7 +779,7 @@ export default {
           width: 0.01rem;
           height: 0.8rem;
           background-color: #b7b8c7;
-          -webkit-animation: xuanzhuan 10s linear infinite;
+          animation: xuanzhuan 10s linear infinite;
           transform-origin: 0 0;
         }
         .dian {
@@ -833,21 +833,21 @@ export default {
     }
   }
 }
-@-webkit-keyframes xuanzhuan {
+@keyframes xuanzhuan {
   0% {
-    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   25% {
-    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
   }
   50% {
-    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
   }
   75% {
-    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
   }
   100% {
-    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 .wrap-right {

@@ -8,9 +8,9 @@ import axios from 'axios'
 // axios.defaults.baseURL = "http://gd.17hr.net:8018"
 // axios.defaults.baseURL = "http://192.168.1.225:808"
 
-// 网络
-// axios.defaults.baseURL = ""
 // 本地
+// axios.defaults.baseURL = "http://192.168.0.142:8989"
+// 网络
 axios.defaults.baseURL = "http://39.108.103.150:8989"
 axios.defaults.withCredentials=true //让ajax携带cookie
 Vue.prototype.$axios = axios
@@ -57,11 +57,15 @@ import gongsiManagement from '../components/gongsiManagement/gongsiManagement.vu
 import gongsiShouquan from '../components/gongsiManagement/gongsiShouquan.vue'
 import projectShezhi from '../components/projectManagement/projectShezhi.vue'
 import projectShouquan from '../components/projectManagement/projectShouquan.vue'
+import systemHome from '../components/system/systemHome.vue'
+import systemLiangZhi from '../components/system/systemLiangZhi/systemLiangZhi.vue'
+import systemLiangZhi_home from '../components/system/systemLiangZhi/systemLiangZhi_home.vue'
 
 const router = new VueRouter({
 
     // 需要路由拦截
     routes:[
+        // 看板页面
         {path:'/login',component:login},
         {path:'/loginOld',component:loginOld},
         {path:'/',redirect:'/login'},
@@ -111,6 +115,13 @@ const router = new VueRouter({
         {path:'/gongsiShouquan',meta:{needLogin:true},component:gongsiShouquan},
         {path:'/projectShezhi',meta:{needLogin:true},component:projectShezhi},
         {path:'/projectShouquan',meta:{needLogin:true},component:projectShouquan},
+
+        // 后台管理系统页面
+        {path:'/systemHome',meta:{needLogin:true},component:systemHome},
+        {path:'/systemLiangZhi',meta:{needLogin:true},component:systemLiangZhi,children:[
+            {path:'',meta:{needLogin:true},component:systemLiangZhi_home},
+            {path:'/systemLiangZhi_home',meta:{needLogin:true},component:systemLiangZhi_home},
+        ]},
     ]
 
     // 不需要路由拦截

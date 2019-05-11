@@ -4,6 +4,7 @@
         <div class="top-nav">
             <div class="top-nav-box">
                 <div class="logo-box"></div>
+                <a class="return" @click="$router.go(-1)">返回</a>
             </div>
         </div>
         <!-- 页面头部 -->
@@ -86,6 +87,7 @@
                 width: 1240px;
                 height: 54px;
                 margin: 0 auto;
+                position: relative;
                 .logo-box {
                     width: 120px;
                     height: 54px;
@@ -93,6 +95,26 @@
                     background-position: center center;
                     background-repeat: no-repeat;
                     background-size: contain;
+                }
+                .return {
+                    width: 50px;
+                    font-size: 18px;
+                    color: #205198;
+                    border-radius: 5px;
+                    display: inline-block;
+                    border: 1px solid #205198;
+                    vertical-align: top;
+                    line-height: 26px;
+                    text-align: center;
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    transition: all .5s;
+                }
+                .return:hover {
+                    color: #fff;
+                    background-color: #205198;
                 }
             }
         }

@@ -1,9 +1,9 @@
 <template>
-  <div id="gongsiManagement">
+  <div id="projectShezhi">
     <!-- 顶部通栏 -->
     <div class="top">
       <div class="nav-logo">
-        <a href="#" class="logo-box"></a>
+        <a class="logo-box"></a>
         <i class="line"></i>
       </div>
       <div class="company">深圳市市政总公司</div>
@@ -12,9 +12,9 @@
           <li>
             <router-link to="/homePage">首页</router-link>
           </li>
-          <li>
+          <!-- <li>
             <router-link to="/projectManagement">项目管理</router-link>
-          </li>
+          </li> -->
           <li>
             <router-link to="/gongsiManagement">公司管理</router-link>
           </li>
@@ -47,7 +47,6 @@
         </li>
       </ul>
     </div>
-
     <!-- 主体 -->
     <div class="main">
       <div class="gongsi_list">
@@ -74,14 +73,14 @@
           </el-menu>
         </div>
       </div>
-      <div class="gongsi_info">
+      <div class="gongsi_info" v-show="!projectShow">
         <div class="title">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/gongsiManagement' }">公司列表</el-breadcrumb-item>
             <el-breadcrumb-item v-for="(item, index) in currentpath" :key="index">{{item}}</el-breadcrumb-item>
           </el-breadcrumb>
           <div class="addgongsi">
-            <div class="btn">新增公司</div>
+            <div class="btn" @click="addProject">新增项目</div>
           </div>
         </div>
         <div class="table_info">
@@ -244,14 +243,262 @@
           <el-pagination background layout="prev, pager, next" :total="50"></el-pagination>
         </div>
       </div>
+      <div class="add-project" v-show="projectShow">
+        <!-- 头部 -->
+        <div class="title">
+          <a @click="addProject">返回</a>
+          <div class="text">新增项目</div>
+        </div>
+        <!-- 输入区域 -->
+        <ul>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                项目名称
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                项目简称
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+          </li>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                项目类别
+                <span class="required">*</span>
+              </div>
+              <el-select v-model="type" placeholder="请选择">
+                <el-option
+                  v-for="item in typeOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                项目状态
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+          </li>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                管理人数
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+            <div class="right-box time">
+              <div class="text-box">
+                开工时间
+                <span class="required">*</span>
+              </div>
+              <el-date-picker
+                v-model="startWorkTime"
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
+            </div>
+          </li>
+          <li>
+            <div class="left-box time">
+              <div class="text-box">
+                合同竣工时间
+                <span class="required">*</span>
+              </div>
+              <el-date-picker
+                v-model="completedTime"
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                施工许可证
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+          </li>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                施工企业
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                监理企业
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+          </li>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                建筑面积
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                工程造价
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+          </li>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                结构类型
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                负责人
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+          </li>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                联系电话
+                <span class="required">*</span>
+              </div>
+              <input type="text">
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                项目位置
+                <span class="required">*</span>
+              </div>
+              <el-cascader
+                :options="regionOptions"
+                v-model="selectedRegion"
+                @change="handleChange">
+              </el-cascader>
+            </div>
+          </li>
+          <li>
+            <div class="text-box">
+              详细地址
+              <span class="required">*</span>
+            </div>
+            <input type="text">
+          </li>
+          <li>
+            <div class="text-box">
+              地图定位
+              <span class="required">*</span>
+            </div>
+            <div class="location-text">你选择的经纬度为：{{longitude}}，{{latitude}}</div>
+          </li>
+          <li class="map-box">
+            <el-amap ref="map" vid="amapDemo" :amap-manager="amapManager" :center="center" :zoom="zoom" :events="events" class="amap-demo">
+            </el-amap>
+          </li>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                安全报检编号
+              </div>
+              <input type="text">
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                质量报检编号
+              </div>
+              <input type="text">
+            </div>
+          </li>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                施工机构代码
+              </div>
+              <input type="text">
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                监理机构代码
+              </div>
+              <input type="text">
+            </div>
+          </li>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                监督机构
+              </div>
+              <input type="text">
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                建设单位
+              </div>
+              <input type="text">
+            </div>
+          </li>
+          <li>
+            <div class="left-box">
+              <div class="text-box">
+                设计单位
+              </div>
+              <input type="text">
+            </div>
+            <div class="right-box">
+              <div class="text-box">
+                勘察单位
+              </div>
+              <input type="text">
+            </div>
+          </li>
+          <li>
+            <div class="text-box">
+              备注
+            </div>
+            <input type="text">
+          </li>
+          <li class="upload-pic">
+            <div class="text-box">
+              项目效果图
+            </div>
+            <a>点击上传</a>
+          </li>
+        </ul>
+        <a class="affirm-btn" @click="temp">
+          确认
+        </a>
+      </div>
     </div>
   </div>
 </template>
+
 <script>
+let amapManager = new VueAMap.AMapManager()
 export default {
   data() {
     return {
-      // 面包靴
+      // 面包屑
       currentpath: [],
       // 弹框判断条件
       audit: false,
@@ -297,11 +544,78 @@ export default {
           name: "河湾项目管理员",
           status: "审核未通过"
         }
-      ]
-    };
+      ],
+      projectShow: false, // 显示项目列表或新增项目表
+      amapManager,
+      zoom: 12,
+      center: [114.014129,22.571492],
+      events: {
+          init: (o) => {
+          },
+          'moveend': () => {
+          },
+          'zoomchange': () => {
+          },
+          'click': (e) => {
+              // console.log(e.lnglat)
+              this.longitude = e.lnglat.lng
+              this.latitude = e.lnglat.lat
+              // console.log(this.longitude+':'+this.latitude)
+          }
+      },
+      longitude: '', // 经度
+      latitude: '', // 纬度
+      typeOptions: [{
+          value: '选项1',
+          label: '类型1'
+        }, {
+          value: '选项2',
+          label: '类型2'
+        }, {
+          value: '选项3',
+          label: '类型3'
+        }, {
+          value: '选项4',
+          label: '类型4'
+        }, {
+          value: '选项5',
+          label: '类型5'
+        }], // 项目类别选项
+      type: '', // 项目类别当前选中
+      startWorkTime: '', // 开工时间
+      completedTime: '', // 竣工时间
+      regionOptions: [{
+        value: '广东省',
+        label: '广东省',
+        children: [{
+          value: '深圳市',
+          label: '深圳市',
+          children: [{
+            value: '罗湖区',
+            label: '罗湖区'
+          },{
+            value: '南山区',
+            label: '南山区'
+          },{
+            value: '福田区',
+            label: '福田区'
+          },{
+            value: '龙岗区',
+            label: '龙岗区'
+          },{
+            value: '龙华区',
+            label: '龙华区'
+          },{
+            value: '宝安区',
+            label: '宝安区'
+          }]
+        }]
+      }], // 地区列表
+      selectedRegion: [], // 当前选中地区
+    }
   },
   methods: {
-    // 三个面包靴
+    // 三个面包屑
     handleOpen(key, keyPath) {
       this.currentpath = keyPath;
     },
@@ -334,6 +648,7 @@ export default {
         // this.xvlieNum = "";
       }
     },
+
     // 移除事件
     remove() {
       this.$confirm("此操作将永久移除该项目 是否继续?", "提示", {
@@ -354,12 +669,32 @@ export default {
           });
         });
     },
+
+    // 切换新增公司页面与列表页面
+    addProject() {
+      this.projectShow = !this.projectShow
+      if (this.projectShow) {
+        $('.gongsi_list').css('height',$('.add-project').css('height'))
+      } else {
+        $('.gongsi_list').css('height',$('.gongsi_info').css('height'))
+      }
+    },
+
+    // 地区选择框监听事件
+    handleChange(value) {
+        console.log(value)
+    },
+
+    temp() {
+      let f
+      for(let i=0;++i<101;console.log(i%5?f||i:f+'Buzz'))f=i%3?'':'Fizz'
+    }
   }
 };
 </script>
 
 <style lang="less">
-#gongsiManagement {
+#projectShezhi {
   .green {
     color: #5be4a5;
   }
@@ -435,6 +770,7 @@ export default {
     width: 1.77rem;
     background-color: #fff;
     position: absolute;
+    height: 9.6rem;
     top: 0.8rem;
     bottom: 0;
     z-index: 1;
@@ -461,18 +797,16 @@ export default {
   }
 
   .main {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0.8rem;
-    bottom: 0;
+    position: relative;
+    min-height: 10rem;
     padding: 0.4rem;
+    height: auto;
     background-color: #f7f7f7;
     .gongsi_list {
       float: left;
       width: 4.5rem;
       background-color: #fff;
-      height: 100%;
+      height: 9.2rem;      
       margin-left: 1.77rem;
       .title {
         margin-top: 0.3rem;
@@ -492,6 +826,14 @@ export default {
           color: #6cbbff;
           font-weight: bolder;
           font-size: 0.18rem;
+          transform: rotate(-90deg);
+        }
+        .is-opened {
+          >.el-submenu__title {
+            .el-submenu__icon-arrow {
+              transform: rotate(0deg) !important;
+            }
+          }
         }
       }
     }
@@ -510,7 +852,7 @@ export default {
     .gongsi_info {
       width: 12.15rem;
       background-color: #fff;
-      height: 100%;
+      height: 9.2rem;
       margin-left: 6.3rem;
       padding: 0.3rem 0.2rem 0.2rem 0.2rem;
       .title {
@@ -563,7 +905,7 @@ export default {
         .el-pagination {
           position: absolute;
           right: 0.6rem;
-          bottom: 0.5rem;
+          bottom: 1rem;
           .number {
             background-color: #fff;
           }
@@ -621,10 +963,166 @@ export default {
       border-bottom-right-radius: 0.1rem;
       border-bottom-left-radius: 0.1rem;
       border-top: 1px solid #c2c0c0;
-      transition: 1s all;
+      transition: .5s all;
       &:hover {
         color: #409eff;
-        transition: 1s all;
+      }
+    }
+    .add-project {
+      width: 12.15rem;
+      background-color: #fff;
+      margin-left: 6.3rem;
+      padding-bottom: .35rem;
+      .title {
+        width: 10.4rem;
+        height: .51rem;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: .01rem solid #ededed;
+        a {
+          color: #333;
+          width: .6rem;
+          height: .3rem;
+          font-size: .15rem;
+          text-align: center;
+          margin-top: .1rem;
+          border-radius: .05rem;
+          line-height: .28rem;
+          border: .01rem solid #d0d0d0;
+        }
+        a:hover {
+          color: #fff;
+          border: none;
+          line-height: .3rem;
+          background: linear-gradient(to right, #479bff, #6cc4ff);
+        }
+        .text {
+          color: #4a4a4a;
+          font-size: .2rem;
+          line-height: .5rem;
+          font-weight: bolder;
+        }
+      }
+      ul {
+        padding-top: .26rem;
+        li {
+          height: .4rem;
+          padding-left: .5rem;
+          margin-bottom: .3rem;
+          .left-box {
+            float: left;
+            width: 5.38rem;
+            .text-box {
+              width: 1.7rem;
+              color: #4a4a4a;
+              font-size: .16rem;
+              text-align: right;
+              line-height: .4rem;
+              padding-right: .3rem;
+              display: inline-block;
+              .required {
+                color: #f00;
+              }
+            }
+            input {
+              width: 3.68rem;
+              height: .4rem;
+              padding-left: .1rem;
+              border-radius: .05rem;
+              border: .01rem solid #acabab;
+            }
+          }
+          .right-box {
+            float: left;
+            width: 5.38rem;
+            .text-box {
+              width: 1.7rem;
+              color: #4a4a4a;
+              font-size: .16rem;
+              text-align: right;
+              line-height: .4rem;
+              padding-right: .3rem;
+              display: inline-block;
+              .required {
+                color: #f00;
+              }
+            }
+            input {
+              width: 3.68rem;
+              height: .4rem;
+              padding-left: .1rem;
+              border-radius: .05rem;
+              border: .01rem solid #acabab;
+            }
+          }
+          .text-box {
+            width: 1.7rem;
+            color: #4a4a4a;
+            font-size: .16rem;
+            text-align: right;
+            line-height: .4rem;
+            padding-right: .3rem;
+            display: inline-block;
+            .required {
+              color: #f00;
+            }
+          }
+          input {
+            width: 9.09rem;
+            height: .4rem;
+            padding-left: .1rem;
+            border-radius: .05rem;
+            border: .01rem solid #acabab;
+          }
+          .location-text {
+            font-size: .16rem;
+            display: inline-block;
+          }
+          .time {
+            .el-input__icon {
+              display: none;
+            }
+          }
+        }
+        .map-box {
+          padding: 0;
+          width: 9.08rem;
+          height: 5.32rem;
+          margin-left: 2.2rem;
+        }
+        .upload-pic {
+          height: 1.31rem;
+          a {
+            width: 1.31rem;
+            height: 1.31rem;
+            color: #acabab;
+            font-size: .18rem;
+            text-align: center;
+            line-height: 1.31rem;
+            display: inline-block;
+            background-image: url('../../../static/images/imaginary-line.png');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+          }
+        }
+      }
+      .affirm-btn {
+        width: 2rem;
+        height: .6rem;
+        color: #fff;
+        display: block;
+        margin: 0 auto;
+        font-size: .23rem;
+        line-height: .6rem;
+        text-align: center;
+        transition: all .5s;
+        border-radius: .05rem;
+        background: linear-gradient(to right, #5cb3f8, #98e2fb);
+      }
+      .affirm-btn:hover {
+        background: linear-gradient(to right, #479bff, #6cc4ff);
       }
     }
   }
