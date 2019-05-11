@@ -70,7 +70,7 @@
                   <router-link to="/quality">安全巡检</router-link>
                 </li>
                 <li>
-                  <a @click="unopenClick">高支模检测</a>
+                  <router-link to="/gaozhimo">高支模检测</router-link>
                 </li>
                 <li>
                   <a @click="unopenClick">基坑监测</a>

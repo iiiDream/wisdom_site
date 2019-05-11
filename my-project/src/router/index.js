@@ -60,6 +60,7 @@ import projectShouquan from '../components/projectManagement/projectShouquan.vue
 import systemHome from '../components/system/systemHome.vue'
 import systemLiangZhi from '../components/system/systemLiangZhi/systemLiangZhi.vue'
 import systemLiangZhi_home from '../components/system/systemLiangZhi/systemLiangZhi_home.vue'
+import gaozhimo from '../components/gaozhimo/gaozhimo.vue'
 
 const router = new VueRouter({
 
@@ -122,6 +123,8 @@ const router = new VueRouter({
             {path:'',meta:{needLogin:true},component:systemLiangZhi_home},
             {path:'/systemLiangZhi_home',meta:{needLogin:true},component:systemLiangZhi_home},
         ]},
+        {path:'/gaozhimo',meta:{needLogin:true},component:gaozhimo},
+
     ]
 
     // 不需要路由拦截
@@ -175,6 +178,7 @@ const router = new VueRouter({
     //     {path:'/gongsiShouquan',component:gongsiShouquan},
     //     {path:'/projectShezhi',component:projectShezhi},
     //     {path:'/projectShouquan',component:projectShouquan},
+    //     {path:'/gaozhimo',component:gaozhimo},
     // ]
 })
 

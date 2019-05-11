@@ -677,6 +677,9 @@ export default {
             // 调用滚动方法
             this.scrollText()
           }
+          console.log(tPH);
+          console.log(tPV);
+          
         }
       )
     },
