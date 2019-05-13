@@ -60,6 +60,8 @@ import projectShouquan from '../components/projectManagement/projectShouquan.vue
 import systemHome from '../components/system/systemHome.vue'
 import systemLiangZhi from '../components/system/systemLiangZhi/systemLiangZhi.vue'
 import systemLiangZhi_home from '../components/system/systemLiangZhi/systemLiangZhi_home.vue'
+import systemLiangZhi_contractors from '../components/system/systemLiangZhi/systemLiangZhi_contractors.vue'
+import gaoZhiMo from '../components/gaoZhiMo/gaoZhiMo.vue'
 
 const router = new VueRouter({
 
@@ -115,12 +117,14 @@ const router = new VueRouter({
         {path:'/gongsiShouquan',meta:{needLogin:true},component:gongsiShouquan},
         {path:'/projectShezhi',meta:{needLogin:true},component:projectShezhi},
         {path:'/projectShouquan',meta:{needLogin:true},component:projectShouquan},
+        {path:'/gaoZhiMo',meta:{needLogin:true},component:gaoZhiMo},
 
         // 后台管理系统页面
         {path:'/systemHome',meta:{needLogin:true},component:systemHome},
         {path:'/systemLiangZhi',meta:{needLogin:true},component:systemLiangZhi,children:[
             {path:'',meta:{needLogin:true},component:systemLiangZhi_home},
             {path:'/systemLiangZhi_home',meta:{needLogin:true},component:systemLiangZhi_home},
+            {path:'/systemLiangZhi_contractors',meta:{needLogin:true},component:systemLiangZhi_contractors},
         ]},
     ]
 

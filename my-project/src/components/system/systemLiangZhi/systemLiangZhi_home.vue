@@ -65,22 +65,34 @@
                     <div class="title">
                         <span>最近10天考勤统计</span>
                         <div class="select-box">
-                            劳务工人
+                            <el-select v-model="attendanceValue" placeholder="请选择" size="mini">
+                                <el-option
+                                v-for="item in attendanceOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                                >
+                                </el-option>
+                            </el-select>
                         </div>
                         <div class="label-box">
                             <ul>
                                 <li>
-                                    <i></i>
-                                    <span>考勤总人数</span>
+                                    <i class="orange-color">
+                                        <i class="dot"></i>
+                                    </i>
+                                    <span>当前在场人数</span>
                                 </li>
                                 <li>
-                                    <i></i>
-                                    <span>当前在场人数</span>
+                                    <i class="blue-color">
+                                        <i class="dot"></i>
+                                    </i>
+                                    <span>考勤总人数</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="attendance"></div>
+                    <div class="attendance" id="attendance"></div>
                 </div>
                 <div class="right-box">
                     <!-- 分账情况 -->
@@ -125,8 +137,42 @@
             <!-- 底部盒子 -->
             <div class="bottom-box">
                 <!-- 工资发放统计 -->
-                <div class="title"></div>
-                <div class="grant"></div>
+                <div class="title">
+                    <span>工资发放统计</span>
+                    <div class="select-box">
+                        <el-select v-model="grantValue" placeholder="请选择" size="mini">
+                            <el-option
+                            v-for="item in grantOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                            >
+                            </el-option>
+                        </el-select>
+                    </div>
+                    <div class="year-box">
+                        <a class="last" @click="lastYear">
+                            <i class="el-icon-arrow-left"></i>
+                        </a>
+                        <div class="year">{{year}}年</div>
+                        <a class="next" @click="nextYear">
+                            <i class="el-icon-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="label-box">
+                        <ul>
+                            <li>
+                                <i class="orange-color"></i>
+                                <span>发工资人数</span>
+                            </li>
+                            <li>
+                                <i class="blue-color"></i>
+                                <span>考勤人数</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="grant" id="grant"></div>
             </div>
         </div>
     </div>
@@ -249,6 +295,79 @@
                     border-radius: .04rem;
                     background-color: #fff;
                     box-shadow: 0 0 .5rem -.3rem #666;
+                    .title {
+                        height: .47rem;
+                        position: relative;
+                        line-height: .3rem;
+                        padding-top: .17rem;
+                        padding-left: .2rem;
+                        >span {
+                            float: left;
+                            height: .16rem;
+                            font-size: .14rem;
+                            line-height: .3rem;
+                        }
+                        .select-box {
+                            float: left;
+                            margin-left: .3rem;
+                            input {
+                                height: .3rem;
+                                width: 1.05rem;
+                                border-radius: .02rem;
+                                border: .01rem solid #f1f1f1;
+                            }
+                        }
+                        .label-box {
+                            right: .3rem;
+                            position: absolute;
+                            ul {
+                                li {
+                                    float: right;
+                                    height: .3rem;
+                                    line-height: .3rem;
+                                    span {
+                                        font-size: .12rem;
+                                    }
+                                    &:first-child {
+                                        margin-left: .3rem;
+                                    }
+                                    >i {
+                                        width: .26rem;
+                                        height: .01rem;
+                                        position: relative;
+                                        display: inline-block;
+                                        vertical-align: middle;
+                                        .dot {
+                                            top: 50%;
+                                            left: 50%;
+                                            width: .13rem;
+                                            height: .13rem;
+                                            position: absolute;
+                                            border-radius: .13rem;
+                                            background-color: #fff;
+                                            transform: translate(-50%,-50%);
+                                        }
+                                    }
+                                    .blue-color {
+                                        background-color: #0090ff;
+                                        .dot {
+                                            border: .01rem solid #0090ff;
+                                        }
+                                    }
+                                    .orange-color {
+                                        background-color: #fd5101;
+                                        .dot {
+                                            border: .01rem solid #fd5101;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .attendance {
+                        width: 100%;
+                        height: 2.32rem;
+                    }
                 }
                 .right-box {
                     width: 48.1%;
@@ -313,6 +432,90 @@
                 border-radius: .04rem;
                 background-color: #fff;
                 box-shadow: 0 0 .5rem -.3rem #666;
+                .title {
+                    height: .41rem;
+                    position: relative;
+                    line-height: .3rem;
+                    padding-top: .11rem;
+                    padding-left: .2rem;
+                    >span {
+                        float: left;
+                        height: .16rem;
+                        font-size: .14rem;
+                        line-height: .3rem;
+                    }
+                    .select-box {
+                        float: left;
+                        margin-left: .3rem;
+                        input {
+                            height: .3rem;
+                            width: 1.05rem;
+                            border-radius: .02rem;
+                            border: .01rem solid #f1f1f1;
+                        }
+                    }
+                    .year-box {
+                        top: .11rem;
+                        left: 50%;
+                        display: flex;
+                        position: absolute;
+                        transform: translate(-50%);
+                        >a {
+                            float: left;
+                            width: .3rem;
+                            height: .3rem;
+                            color: #0090ff;
+                            font-size: .16rem;
+                            line-height: .3rem;
+                            text-align: center;
+                            transition: all .5s;
+                            border-radius: .02rem;
+                            &:hover {
+                                background-color: #f7f7f7;
+                            }
+                        }
+                        >div {
+                            float: left;
+                            font-size: .2rem;
+                            font-weight: bolder;
+                            padding: 0 .1rem;
+                        }
+                    }
+                    .label-box {
+                        right: .3rem;
+                        position: absolute;
+                        ul {
+                            li {
+                                float: right;
+                                height: .3rem;
+                                line-height: .3rem;
+                                span {
+                                    font-size: .12rem;
+                                }
+                                &:first-child {
+                                    margin-left: .3rem;
+                                }
+                                >i {
+                                    width: .12rem;
+                                    height: .12rem;
+                                    margin-right: .12rem;
+                                    display: inline-block;
+                                    vertical-align: middle;
+                                }
+                                .blue-color {
+                                    background-color: #0090ff;
+                                }
+                                .orange-color {
+                                    background-color: #fd5101;
+                                }
+                            }
+                        }
+                    }
+                }
+                .grant {
+                    width: 100%;
+                    height: 2.39rem;
+                }
             }
         }
     }
@@ -322,7 +525,194 @@
 export default {
     data() {
         return {
-            
+            attendanceOptions: [{
+                value: '选项1',
+                label: '劳务工人'
+            }, {
+                value: '选项2',
+                label: '管理人员'
+            }], // 考勤统计选项
+            attendanceValue: '劳务工人', // 考勤统计显示的人员类型
+            grantOptions: [{
+                value: '选项1',
+                label: '劳务工人'
+            }, {
+                value: '选项2',
+                label: '管理人员'
+            }], // 工资发放统计选项
+            grantValue: '劳务工人', // 工资发放统计显示的人员类型
+            year: 2019, // 工资发放统计年份
+        }
+    },
+    mounted() {
+        this.attendance()
+        this.grant()
+    },
+    methods: {
+        // 考勤统计统计模块：ECharts图渲染
+        attendance(aMTotal, aMZc, aMDay, aMZcGly) {
+            let attendance = this.$echarts.init(
+              document.getElementById("attendance")
+            )
+            attendance.setOption({
+                // backgroundColor: "#FBFBFB",
+                grid: {
+                    x: 60,
+                    y: 30,
+                    x2: 50,
+                    y2: 50,
+                    containLabel: true
+                },
+                tooltip: {
+                    trigger: "axis"
+                },
+                calculable: true,
+                xAxis: [
+                    {
+                        axisLabel: {
+                            rotate: 0,
+                            interval: 0,
+                            color: "#000"
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: "#132e6d"
+                            }
+                        },
+                        type: "category",
+                        boundaryGap: false,
+                        data: [
+                          "05-02",
+                          "05-03",
+                          "05-04",
+                          "05-05",
+                          "05-06",
+                          "05-07",
+                          "05-08",
+                          "05-09",
+                          "05-10",
+                          "05-11"
+                        ]
+                        // data: aMDay
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: "value",
+                        max: 1000,
+                        min: 0,
+                        interval: 200,
+                        axisLabel: {
+                            textStyle: {
+                                color: "#000"
+                            }
+                            //   formatter: "{value} 度"
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: "#132e6d"
+                            }
+                        },
+                        splitLine: {
+                            show: true,
+                            lineStyle: {
+                                color: ["#132e6d"],
+                                width: 1,
+                                type: "dashed"
+                            }
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: "当日在场人数",
+                        type: "line",
+                        symbolSize: 10,
+                        smooth: 0.2,
+                        color: ["#fd5101"],
+                        data: [600, 500, 500, 500, 400, 500, 500, 400, 400, 500]
+                        // data: aMTotal
+                    },
+                    {
+                        name: "考勤总人数",
+                        type: "line",
+                        symbolSize: 10,
+                        smooth: 0.2,
+                        color: ["#0090ff"],
+                        data: [300, 200, 100, 500, 300, 300, 400, 300, 100, 300],
+                        // data: aMZc
+                    },
+                    // {
+                    //     name: "管理人员出勤人数",
+                    //     type: "line",
+                    //     symbolSize: 4,
+                    //     smooth: 0.2,
+                    //     color: ["#33577c"],
+                    //     data: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+                    //     // data: aMZcGly
+                    // }
+                ]
+            });
+        },
+
+        // 工资发放统计模块：ECharts图渲染
+        grant() {
+            let grant = this.$echarts.init(
+              document.getElementById("grant")
+            )
+            grant.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'line'
+                    }
+                },
+                grid: {
+                    x: 20,
+                    y: 20,
+                    x2: 20,
+                    y2: 20,
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+                        interval: 50,
+                    }
+                ],
+                series : [
+                    {
+                        color: ["#0090ff"],
+                        name:'考勤人数',
+                        type:'bar',
+                        barWidth: 20,
+                        data:[20, 49, 70, 23, 25, 76, 135, 162, 32, 20, 64, 33],
+                    },
+                    {
+                        color: ["#fd5101"],
+                        name:'发放工资人数',
+                        type:'bar',
+                        barWidth: 20,
+                        data:[16, 29, 39, 16, 18, 70, 75, 152, 28, 18, 60, 23],
+                    }
+                ]
+            })
+        },
+
+        // 上一年
+        lastYear() {
+            this.year = this.year-1
+        },
+
+        // 下一年 
+        nextYear() {
+            this.year = this.year+1
         }
     }
 }
