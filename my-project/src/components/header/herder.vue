@@ -69,8 +69,10 @@
                 <li v-on:click="isActive('/quality')">
                   <router-link to="/quality">安全巡检</router-link>
                 </li>
+
                 <li v-on:click="isActive('/gaoZhiMo')">
                   <router-link to="/gaoZhiMo">高支模检测</router-link>
+
                 </li>
                 <li>
                   <a @click="unopenClick">基坑监测</a>

@@ -31,18 +31,17 @@
         </div>
         <div class="summarize">
           <h3>工程概括</h3>
-           <div id="colee" style="overflow:hidden;height:253px;width:410px;">
-      <ul id="colee1">
-         <li v-for="(item, index) in summary.data" :key="index" :class="item.id">
+          <div id="colee" style="overflow:hidden;height:253px;width:410px;">
+            <ul id="colee1">
+              <li v-for="(item, index) in summary.data" :key="index" :class="item.id">
                 <a href="javascript:;">
                   <span class="summarizeName">{{item.type}}</span>
                   <span class="summarizeContent">{{item.name}}</span>
                 </a>
               </li>
-      </ul>
-      <ul id="colee2"></ul>
-  </div>
-          
+            </ul>
+            <ul id="colee2"></ul>
+          </div>
         </div>
         <div class="plate">
           <h3>车牌识别系统</h3>
@@ -129,7 +128,7 @@
             </ul>
             <div class="runtime">
               <div>已正常运行</div>
-              <img src="../../../static/images/shizhong.png" alt="">
+              <img src="../../../static/images/shizhong.png" alt>
               <div class="noml runtimeBg">{{lift.time}}小时</div>
             </div>
           </div>
@@ -188,7 +187,7 @@
   </div>
 </template>
 <script>
-import '../../common/scroll/scroll.js'
+import "../../common/scroll/scroll.js";
 export default {
   data() {
     return {
@@ -213,8 +212,7 @@ export default {
   mounted() {
     this.dust();
     this.temperature();
-    this.aaa("colee2","colee1","colee");
-    
+    this.aaa("colee2", "colee1", "colee");
   },
   created() {
     this.getSummary(),
@@ -225,27 +223,29 @@ export default {
     this.getCenterInfo();
   },
   methods: {
-    aaa (a,b,c) {
-       var speed=30;
-        var colee2=document.getElementById(a);
-        var colee1=document.getElementById(b);
-        var colee=document.getElementById(c);
-        colee2.innerHTML=colee1.innerHTML; //克隆colee1为colee2
-        function Marquee1(){
+    aaa(a, b, c) {
+      var speed = 30;
+      var colee2 = document.getElementById(a);
+      var colee1 = document.getElementById(b);
+      var colee = document.getElementById(c);
+      colee2.innerHTML = colee1.innerHTML; //克隆colee1为colee2
+      function Marquee1() {
         //当滚动至colee1与colee2交界时
-        if(colee2.offsetTop-colee.scrollTop<=0){
-         colee.scrollTop-=colee1.offsetHeight; //colee跳到最顶端
-         }else{
-         colee.scrollTop++
+        if (colee2.offsetTop - colee.scrollTop <= 0) {
+          colee.scrollTop -= colee1.offsetHeight; //colee跳到最顶端
+        } else {
+          colee.scrollTop++;
         }
-        }
-        var MyMar1=setInterval(Marquee1,speed)//设置定时器
-        //鼠标移上时清除定时器达到滚动停止的目的
-        colee.onmouseover=function() {clearInterval(MyMar1)}
-        //鼠标移开时重设定时器
-        colee.onmouseout=function(){MyMar1=setInterval(Marquee1,speed)}
-  
-
+      }
+      var MyMar1 = setInterval(Marquee1, speed); //设置定时器
+      //鼠标移上时清除定时器达到滚动停止的目的
+      colee.onmouseover = function() {
+        clearInterval(MyMar1);
+      };
+      //鼠标移开时重设定时器
+      colee.onmouseout = function() {
+        MyMar1 = setInterval(Marquee1, speed);
+      };
     },
     dust() {
       // 基于准备好的dom，初始化echarts实例
@@ -462,7 +462,6 @@ export default {
         .get(`/APP/XMPage/XmData.ashx?method=GetXMDetail&xmid=281`)
         .then(res => {
           this.summary = res.data;
-
         });
     },
     // 车牌识别
@@ -525,15 +524,12 @@ export default {
         };
       }, 1000);
     },
-    // 来自jq22的插件初始化
-    scroll(){
+    scroll() {
       setTimeout(() => {
-       
-        console.log(33333333333)
-        $('.myscroll').myScroll({
-		      speed: 40, //数值越大，速度越慢
-		      rowHeight: 26 //li的高度
-	      });
+        $(".myscroll").myScroll({
+          speed: 40, //数值越大，速度越慢
+          rowHeight: 26 //li的高度
+        });
       }, 1000);
     }
   }
@@ -627,7 +623,7 @@ export default {
           height: 0.08rem;
           background-color: #fff;
           border-radius: 50%;
-          transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%); 
         }
       }
     }
@@ -644,14 +640,14 @@ export default {
         color: #fff;
         transform: translateX(-1rem) translateY(-1.3rem);
         text-align: center;
-        img{
+        img {
           transform: translateY(14px);
           width: 83px;
           height: 83px;
         }
-        .runtimeBg{
+        .runtimeBg {
           position: absolute;
-          top:60%;
+          top: 60%;
           margin-left: 14px;
         }
       }
