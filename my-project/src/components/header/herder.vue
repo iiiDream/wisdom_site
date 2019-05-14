@@ -59,7 +59,7 @@
             <router-link to="/monitoring">视频监控</router-link>
           </li>
           <li @click="personnelClick2">
-            <div class="Lactive-box" v-show="active.includes('/quality')" style="left:.04rem">
+            <div class="Lactive-box" v-show="active.includes('/quality')||active.includes('/gaoZhiMo')" style="left:.04rem">
               <img src="../../../static/images/Ractive.png" alt="" class="Lactive-img">
               <span>安全管理</span>
             </div>
@@ -69,8 +69,10 @@
                 <li v-on:click="isActive('/quality')">
                   <router-link to="/quality">安全巡检</router-link>
                 </li>
-                <li>
-                  <router-link to="/gaozhimo">高支模检测</router-link>
+
+                <li v-on:click="isActive('/gaoZhiMo')">
+                  <router-link to="/gaoZhiMo">高支模检测</router-link>
+
                 </li>
                 <li>
                   <a @click="unopenClick">基坑监测</a>

@@ -4,7 +4,7 @@
         <div class="side-nav">
             <ul>
                 <li class="button">
-                    <a></a>
+                    <a class="retract" @click="retractClick"></a>
                 </li>
                 <li>
                     <a class="active">
@@ -124,8 +124,30 @@
 export default {
     data() {
         return {
-
+            retractState: true, // 侧导航栏状态
         }
+    },
+    methods: {
+        // 侧导航栏缩进
+        retractClick() {
+            if (this.retractState) {
+                $('.side-nav').animate({
+                    width:'.6rem'
+                },500)
+                $('.retract').animate({
+                    left:'.3rem'
+                })
+                this.retractState = !this.retractState
+            } else {
+                $('.side-nav').animate({
+                    width:'1.75rem'
+                },500)
+                $('.retract').animate({
+                    left:'50%'
+                })
+                this.retractState = !this.retractState
+            }
+        },
     }
 }
 </script>

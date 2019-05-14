@@ -9,29 +9,29 @@
                     <router-link to="/systemHome" class="return" v-show="retractState"></router-link>
                     <a class="retract" @click="retractClick"></a>
                 </li>
-                <li>
-                    <a class="active">
+                <li @click="isActiveShow('/systemLiangZhi_home')">
+                    <router-link to="/systemLiangZhi_home" :class="activeShow=='/systemLiangZhi_home'||activeShow=='/systemLiangZhi'?'active':''">
                         <div class="icon"></div>
                         <span>首页</span>
-                    </a>
+                    </router-link>
                 </li>
-                <li>
-                    <a>
+                <li @click="isActiveShow('/systemLiangZhi_contractors')">
+                    <router-link to="/systemLiangZhi_contractors" :class="activeShow=='/systemLiangZhi_contractors'?'active':''">
                         <div class="icon"></div>
                         <span>参建单位</span>
-                    </a>
+                    </router-link>
                 </li>
-                <li>
-                    <a>
+                <li @click="isActiveShow('/systemLiangZhi_team')">
+                    <router-link to="/systemLiangZhi_team" :class="activeShow=='/systemLiangZhi_team'?'active':''">
                         <div class="icon"></div>
                         <span>参建班组</span>
-                    </a>
+                    </router-link>
                 </li>
-                <li>
-                    <a>
+                <li @click="isActiveShow('/systemLiangZhi_personnel')">
+                    <router-link to="systemLiangZhi_personnel" :class="activeShow=='/systemLiangZhi_personnel'?'active':''">
                         <div class="icon"></div>
                         <span>项目人员</span>
-                    </a>
+                    </router-link>
                 </li>
                 <li>
                     <a>
@@ -175,9 +175,14 @@ export default {
     data() {
         return {
             retractState: true, // 侧导航栏缩进状态
+            activeShow: '/systemLiangZhi_home' // 当前选中的模块
         }
     },
+    created() {
+        this.getPath()
+    },
     methods: {
+        // 侧导航栏缩进
         retractClick() {
             if (this.retractState) {
                 $('.side-nav').animate({
@@ -196,6 +201,16 @@ export default {
                 })
                 this.retractState = !this.retractState
             }
+        },
+
+        // 选择模块
+        isActiveShow(i) {
+            this.activeShow=i;
+        },
+
+        // 页面刷新时重新赋值
+        getPath(){
+            this.activeShow=this.$route.path;
         }
     }
 }
