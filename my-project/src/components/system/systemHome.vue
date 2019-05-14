@@ -135,7 +135,7 @@ export default {
                     width:'.6rem'
                 },500)
                 $('.retract').animate({
-                    left:'.2rem'
+                    left:'.3rem'
                 })
                 this.retractState = !this.retractState
             } else {

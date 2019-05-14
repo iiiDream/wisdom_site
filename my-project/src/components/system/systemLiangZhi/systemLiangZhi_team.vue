@@ -1,5 +1,5 @@
 <template>
-    <div id="systemLiangZhi_contractors">
+    <div id="systemLiangZhi_team">
         <div class="centent-box">
             <!-- 搜索栏 -->
             <div class="search-box">
@@ -10,7 +10,7 @@
                             <input type="text">
                         </li>
                         <li>
-                            <span class="margin">社会统一信用代码：</span>
+                            <span class="margin">班组名称：</span>
                             <input type="text">
                         </li>
                     </ul>
@@ -65,13 +65,13 @@
                         </el-table-column>
                         <el-table-column
                         prop="name"
-                        label="参建单位名称"
-                        width="200">
+                        label="班组名称"
+                        width="150">
                         </el-table-column>
                         <el-table-column
-                        prop="abbreviation"
-                        label="简称"
-                        width="80">
+                        prop="groupLeader"
+                        label="班组长"
+                        width="100">
                         </el-table-column>
                         <el-table-column
                         prop="people"
@@ -79,18 +79,18 @@
                         width="100">
                         </el-table-column>
                         <el-table-column
-                        prop="type"
-                        label="单位类型"
-                        width="100">
+                        prop="contractorNumber"
+                        label="参建单位编号"
+                        width="150">
                         </el-table-column>
                         <el-table-column
-                        prop="principal"
-                        label="负责人"
-                        width="100">
+                        prop="contractorName"
+                        label="参建单位名称"
+                        width="200">
                         </el-table-column>
                         <el-table-column
-                        prop="phone"
-                        label="联系电话">
+                        prop="startDate"
+                        label="入场日期">
                         </el-table-column>
                     </el-table>
                 </div>
@@ -107,10 +107,10 @@
                     </el-pagination>
                 </div>
             </div>
-            <!-- 新增单位 -->
+            <!-- 新增班组 -->
             <div class="dialog-box" v-show="dialogShow">
                 <div class="title">
-                    新增单位
+                    新增班组
                     <a class="close" @click="dialogClick">
                         <i class="el-icon-close"></i>
                     </a>
@@ -118,152 +118,40 @@
                 <div class="form">
                     <ul>
                         <li>
-                            <div>
-                                <span>
-                                    单位名称
-                                    <div class="required">*</div>
-                                </span>
-                                <input type="text">
-                            </div>
-                            <div>
-                                <span>
-                                    简称
-                                    <div class="required">*</div>
-                                </span>
-                                <input type="text">
-                            </div>
+                            <span>
+                                所属参建单位
+                                <div class="required">*</div>
+                            </span>
+                            <el-select v-model="contractorValue" placeholder="请选择">
+                                <el-option
+                                v-for="item in contractor"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                                </el-option>
+                            </el-select>
                         </li>
                         <li>
-                            <div>
-                                <span>
-                                    入场日期
-                                    <div class="required">*</div>
-                                </span>
-                                <el-date-picker
-                                v-model="startDate"
-                                type="date"
-                                placeholder="选择日期">
-                                </el-date-picker>
-                            </div>
-                            <div>
-                                <span>
-                                    单位类型
-                                    <div class="required">*</div>
-                                </span>
-                                <el-select v-model="contractorTypeValue" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in contractorType"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </div>
+                            <span>
+                                班组名称
+                                <div class="required">*</div>
+                            </span>
+                            <input type="text">
                         </li>
                         <li>
-                            <div>
-                                <span>
-                                    单位信用代码
-                                    <div class="required">*</div>
-                                </span>
-                                <input type="text">
-                            </div>
-                            <div>
-                                <span>
-                                    组织机构代码
-                                    <div class="required">*</div>
-                                </span>
-                                <input type="text">
-                            </div>
+                            <span>
+                                入场日期
+                                <div class="required">*</div>
+                            </span>
+                            <el-date-picker
+                            v-model="startDate"
+                            type="date"
+                            placeholder="选择日期">
+                            </el-date-picker>
                         </li>
                         <li>
-                            <div>
-                                <span>
-                                    营业执照
-                                    <div class="required">*</div>
-                                </span>
-                                <input type="text">
-                            </div>
-                            <div>
-                                <span>
-                                    法人名称
-                                    <div class="required">*</div>
-                                </span>
-                                <input type="text">
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span>
-                                    负责人
-                                    <div class="required">*</div>
-                                </span>
-                                <input type="text">
-                            </div>
-                            <div>
-                                <span>
-                                    法人证件号
-                                    <div class="required">*</div>
-                                </span>
-                                <input type="text">
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span>
-                                    注册地址
-                                    <div class="required">*</div>
-                                </span>
-                                <input type="text">
-                            </div>
-                            <div>
-                                <span>联系电话</span>
-                                <input type="text">
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span>开户银行</span>
-                                <input type="text">
-                            </div>
-                            <div>
-                                <span>注册资金</span>
-                                <input type="text">
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span>开户地址</span>
-                                <input type="text">
-                            </div>
-                            <div>
-                                <span>电子邮箱</span>
-                                <input type="text">
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span>开户账号</span>
-                                <input type="text">
-                            </div>
-                            <div>
-                                <span>单位详细地址</span>
-                                <input type="text">
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span>退场日期</span>
-                                <el-date-picker
-                                v-model="finishDate"
-                                type="date"
-                                placeholder="选择日期">
-                                </el-date-picker>
-                            </div>
-                            <div>
-                                <span>备注说明</span>
-                                <input type="text">
-                            </div>
+                            <span>备注</span>
+                            <input type="text">
                         </li>
                     </ul>
                 </div>
@@ -278,7 +166,7 @@
 </template>
 
 <style lang="less">
-    #systemLiangZhi_contractors{
+    #systemLiangZhi_team {
         width: 100%;
         .centent-box {
             border-radius: .04rem;
@@ -396,10 +284,10 @@
             }
             .dialog-box {
                 left: 50%;
-                top: .22rem;
+                top: 2.14rem;
                 z-index: 200;
-                width: 12.02rem;
-                height: 8.78rem;
+                width: 6.84rem;
+                height: 4.92rem;
                 overflow: hidden;
                 position: absolute;
                 border-radius: .1rem;
@@ -423,44 +311,40 @@
                     }
                 }
                 .form {
-                    height: 7.38rem;
-                    padding-left: .43rem;
+                    height: 3.52rem;
                     ul{
                         li {
                             display: flex;
                             height: .71rem;
                             padding-top: .3rem;
-                            >div {
-                                width: 5.38rem;
-                                >span {
-                                    width: 1.72rem;
-                                    height: .41rem;
-                                    font-size: .16rem;
-                                    text-align: right;
-                                    position: relative;
-                                    line-height: .41rem;
-                                    padding-right: .32rem;
-                                    display: inline-block;
-                                    .required {
-                                        top: -0.01rem;
-                                        right: .22rem;
-                                        color: #f00;
-                                        position: absolute;
-                                    }
+                            >span {
+                                width: 1.85rem;
+                                height: .41rem;
+                                font-size: .16rem;
+                                text-align: right;
+                                position: relative;
+                                line-height: .41rem;
+                                padding-right: .32rem;
+                                display: inline-block;
+                                .required {
+                                    top: -0.01rem;
+                                    right: .22rem;
+                                    color: #f00;
+                                    position: absolute;
                                 }
+                            }
+                            input {
+                                width: 3.66rem;
+                                height: .41rem;
+                                padding-left: .1rem;
+                                border-radius: .02rem;
+                                border: .01rem solid #b1b1b1;
+                            }
+                            .el-date-editor {
+                                width: 3.66rem;
+                                height: .41rem;
                                 input {
-                                    width: 3.66rem;
-                                    height: .41rem;
-                                    padding-left: .1rem;
-                                    border-radius: .02rem;
-                                    border: .01rem solid #b1b1b1;
-                                }
-                                .el-date-editor {
-                                    width: 3.66rem;
-                                    height: .41rem;
-                                    input {
-                                        padding-left: .3rem;
-                                    }
+                                    padding-left: .3rem;
                                 }
                             }
                         }
@@ -511,56 +395,52 @@ export default {
                 number: 1, // 序号
                 project: '福田区易涝风险区整改', // 所属项目
                 licence: '123456', // 施工许可证
-                name: '深圳市市政工程总公司', // 参建单位名称
-                abbreviation: '市政总', // 简称
+                name: '粤帽一班', // 班组名称
+                groupLeader: '某某某', // 班组长
                 people: 21, // 人数
-                type: '管理单位', // 单位类型
-                principal: '某某某', // 负责人
-                phone: '15835460311', // 联系电话
+                contractorNumber: '9527', // 参建单位编号
+                contractorName: '深圳市市政工程总公司', // 参建单位名称
+                startDate: '2019-05-13', // 入场日期
             },{
                 number: 2, // 序号
                 project: '福田区易涝风险区整改', // 所属项目
                 licence: '123456', // 施工许可证
-                name: '深圳市市政工程总公司', // 参建单位名称
-                abbreviation: '市政总', // 简称
+                name: '粤帽一班', // 班组名称
+                groupLeader: '某某某', // 班组长
                 people: 21, // 人数
-                type: '管理单位', // 单位类型
-                principal: '某某某', // 负责人
-                phone: '15835460311', // 联系电话
+                contractorNumber: '9527', // 参建单位编号
+                contractorName: '深圳市市政工程总公司', // 参建单位名称
+                startDate: '2019-05-13', // 入场日期
             },{
                 number: 3, // 序号
                 project: '福田区易涝风险区整改', // 所属项目
                 licence: '123456', // 施工许可证
-                name: '深圳市市政工程总公司', // 参建单位名称
-                abbreviation: '市政总', // 简称
+                name: '粤帽一班', // 班组名称
+                groupLeader: '某某某', // 班组长
                 people: 21, // 人数
-                type: '管理单位', // 单位类型
-                principal: '某某某', // 负责人
-                phone: '15835460311', // 联系电话
+                contractorNumber: '9527', // 参建单位编号
+                contractorName: '深圳市市政工程总公司', // 参建单位名称
+                startDate: '2019-05-13', // 入场日期
             }], // 表格数据
             currentPage: 1, // 当前页码
             dialogShow: false, // 新增单位对话框状态
-            contractorType: [{
+            contractor: [{
                 value: '选项1',
-                label: '参建单位'
-            }, {
-                value: '选项2',
-                label: '管理单位'
-            }], // 单位类型选项
-            contractorTypeValue: '', // 单位类型
+                label: '深圳市市政工程总公司'
+            }], // 所属参建单位选项
+            contractorValue: '', // 所属参建单位
             startDate: '', // 入场日期
-            finishDate: '', // 退场日期
         }
     },
     methods: {
         handleSizeChange(val) {
-            console.log(`每页 ${val} 条`)
+            console.log(`每页${val}条`)
         },
         handleCurrentChange(val) {
-            console.log(`当前页: ${val}`)
+            console.log(`当前页：${val}`)
         },
 
-        // 新增单位对话框状态切换
+        // 新增对话框状态切换
         dialogClick() {
             this.dialogShow = !this.dialogShow
         },

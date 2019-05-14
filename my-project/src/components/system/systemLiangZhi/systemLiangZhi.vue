@@ -10,7 +10,7 @@
                     <a class="retract" @click="retractClick"></a>
                 </li>
                 <li @click="isActiveShow('/systemLiangZhi_home')">
-                    <router-link to="/systemLiangZhi_home" :class="activeShow=='/systemLiangZhi_home'?'active':''">
+                    <router-link to="/systemLiangZhi_home" :class="activeShow=='/systemLiangZhi_home'||activeShow=='/systemLiangZhi'?'active':''">
                         <div class="icon"></div>
                         <span>首页</span>
                     </router-link>
@@ -21,17 +21,17 @@
                         <span>参建单位</span>
                     </router-link>
                 </li>
-                <li>
-                    <a>
+                <li @click="isActiveShow('/systemLiangZhi_team')">
+                    <router-link to="/systemLiangZhi_team" :class="activeShow=='/systemLiangZhi_team'?'active':''">
                         <div class="icon"></div>
                         <span>参建班组</span>
-                    </a>
+                    </router-link>
                 </li>
-                <li>
-                    <a>
+                <li @click="isActiveShow('/systemLiangZhi_personnel')">
+                    <router-link to="systemLiangZhi_personnel" :class="activeShow=='/systemLiangZhi_personnel'?'active':''">
                         <div class="icon"></div>
                         <span>项目人员</span>
-                    </a>
+                    </router-link>
                 </li>
                 <li>
                     <a>
