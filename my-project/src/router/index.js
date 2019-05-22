@@ -65,6 +65,15 @@ import systemLiangZhi_contractors from '../components/system/systemLiangZhi/syst
 import gaoZhiMo from '../components/gaoZhiMo/gaoZhiMo.vue'
 import systemLiangZhi_team from '../components/system/systemLiangZhi/systemLiangZhi_team.vue'
 import systemLiangZhi_personnel from '../components/system/systemLiangZhi/systemLiangZhi_personnel.vue'
+import systemLiangZhi_fw_one from '../components/system/systemLiangZhi/systemLiangZhi_fw_one.vue'
+import systemLiangZhi_fw_two from '../components/system/systemLiangZhi/systemLiangZhi_fw_two.vue'
+import systemLiangZhi_fw_three from '../components/system/systemLiangZhi/systemLiangZhi_fw_three.vue'
+import systemLiangZhi_fw_four from '../components/system/systemLiangZhi/systemLiangZhi_fw_four.vue'
+
+import systemZhiHui from '../components/system/systemZhiHui/systemZhiHui.vue'
+import systemZhiHui_taDiao from '../components/system/systemZhiHui/systemZhiHui_taDiao.vue'
+
+
 
 const router = new VueRouter({
 
@@ -130,8 +139,15 @@ const router = new VueRouter({
             {path:'/systemLiangZhi_contractors',meta:{needLogin:true},component:systemLiangZhi_contractors},
             {path:'/systemLiangZhi_team',meta:{needLogin:true},component:systemLiangZhi_team},
             {path:'/systemLiangZhi_personnel',meta:{needLogin:true},component:systemLiangZhi_personnel},
+            {path:'/systemLiangZhi_fw_one',meta:{needLogin:true},component:systemLiangZhi_fw_one},
+            {path:'/systemLiangZhi_fw_two',meta:{needLogin:true},component:systemLiangZhi_fw_two},
+            {path:'/systemLiangZhi_fw_three',meta:{needLogin:true},component:systemLiangZhi_fw_three},
+            {path:'/systemLiangZhi_fw_four',meta:{needLogin:true},component:systemLiangZhi_fw_four},
         ]},
-        {path:'/gaozhimo',meta:{needLogin:true},component:gaozhimo},
+        {path:'/systemZhiHui',meta:{needLogin:true},component:systemZhiHui,children:[
+            {path:'',meta:{needLogin:true},component:systemZhiHui_taDiao},
+            {path:'/systemZhiHui_taDiao',meta:{needLogin:true},component:systemZhiHui_taDiao},
+        ]},
 
     ]
 

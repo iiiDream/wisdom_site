@@ -9,6 +9,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'babel-polyfill'
 import md5 from 'js-md5'
+Vue.directive('focus', function (el) {
+  // console.log(el.querySelector('input'));
+  
+  el.querySelector('input').focus()
+})
 // import {
 //   Carousel,
 //   Row,
