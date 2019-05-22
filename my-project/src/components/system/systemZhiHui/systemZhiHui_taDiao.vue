@@ -321,7 +321,7 @@ export default {
         },
         {
           number: "2", //序号
-          load: 99, //载重
+          load: 98, //载重
           momental: "87", //力矩
           wind: "10", //风速
           height: "60", //高度
