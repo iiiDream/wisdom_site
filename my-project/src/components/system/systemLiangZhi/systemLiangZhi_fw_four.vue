@@ -35,7 +35,7 @@
         <div class="button-box">
           <a class="new" @click="dialogClick">
             <i class="icon"></i>
-            新增
+            生产报表
           </a>
           <a class="delete">
             <i class="icon"></i>
@@ -43,7 +43,7 @@
           </a>
           <a class="derive">
             <i class="icon"></i>
-            导出Excel
+            导出
           </a>
         </div>
         <!-- 列表 -->
@@ -260,7 +260,7 @@ export default {
             }
           }
           .date {
-              margin-left: -0.1rem;
+            margin-left: -0.1rem;
             .el-date-editor {
               vertical-align: middle;
               margin-top: 0.2rem;
@@ -464,6 +464,7 @@ export default {
         .wenti {
           position: relative;
           margin-top: 0.22rem;
+          height: 2.53rem;
           img {
             position: absolute;
             left: 49%;
@@ -483,12 +484,16 @@ export default {
               padding-right: 0.32rem;
             }
             textarea {
+              padding-left: 0.1rem;
               margin-top: 0.05rem;
               width: 4.3rem;
               height: 2rem;
               border: 1px solid #acabab;
               margin-left: 0.35rem;
               border-radius: 0.04rem;
+              &::placeholder {
+                color: #ccc;
+              }
             }
           }
           .right {
@@ -505,12 +510,16 @@ export default {
               padding-right: 0.32rem;
             }
             textarea {
+              padding-left: 0.1rem;
               margin-top: 0.05rem;
               width: 4.3rem;
               height: 2rem;
               border: 1px solid #acabab;
               margin-left: 0.35rem;
               border-radius: 0.04rem;
+              &::placeholder {
+                color: #ccc;
+              }
             }
           }
         }
@@ -527,12 +536,15 @@ export default {
             padding-right: 0.62rem;
           }
           textarea {
-            margin-top: 0.5rem;
+            padding-left: 0.1rem;
             width: 9rem;
             height: 2rem;
             border: 1px solid #acabab;
             margin-left: 0.35rem;
             border-radius: 0.04rem;
+            &::placeholder {
+              color: #ccc;
+            }
           }
         }
       }

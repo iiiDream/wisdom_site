@@ -19,10 +19,10 @@
                     </router-link>
                 </li>
                 <li>
-                    <a>
+                    <router-link to="/systemZhiHui">
                         <div class="icon"></div>
                         <span>智慧工地</span>
-                    </a>
+                    </router-link>
                 </li>
                 <li>
                     <a>

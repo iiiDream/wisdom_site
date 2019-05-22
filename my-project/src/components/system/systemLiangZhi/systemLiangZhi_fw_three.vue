@@ -670,6 +670,10 @@ export default {
       dwValue: "", // 所属参建单位
       statusOptions: [
         {
+          value: "选项0",
+          label: "全部"
+        },
+        {
           value: "选项1",
           label: "在场"
         },
@@ -936,11 +940,11 @@ export default {
           }
           .red-color {
             color: #fd5101;
-            font-size: 0.3rem;
+            font-size: 0.26rem;
           }
           .green-color {
             color: #04c366;
-            font-size: 0.3rem;
+            font-size: 0.26rem;
           }
           .red-text {
             color: #fd5101;
@@ -1194,6 +1198,11 @@ export default {
             .bz {
               border: 1px solid #7b7b7b;
               border-radius: 0.05rem;
+              padding-left: .1rem;
+                          &::placeholder {
+              color: #ccc;
+            }
+
             }
           }
         }
@@ -1364,7 +1373,7 @@ export default {
             border-radius: 50%;
             text-align: center;
             font-size: 0.16rem;
-            box-shadow: 0px 0px 0px 8px #f7f7f7 inset;
+            box-shadow: 0px 0px 0px 4px #f7f7f7 inset;
             transform: translate(-0.03rem,-0.03rem);
             .biaoti {
               margin-top: 0.32rem;

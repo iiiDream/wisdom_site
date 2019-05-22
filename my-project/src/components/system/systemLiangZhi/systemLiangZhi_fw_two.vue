@@ -534,6 +534,10 @@ export default {
             .bz {
               border: 1px solid #7b7b7b;
               border-radius: 0.05rem;
+              padding-left: 0.1rem;
+              &::placeholder {
+                color: #ccc;
+              }
             }
           }
         }

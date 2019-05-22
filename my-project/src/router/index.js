@@ -70,6 +70,10 @@ import systemLiangZhi_fw_two from '../components/system/systemLiangZhi/systemLia
 import systemLiangZhi_fw_three from '../components/system/systemLiangZhi/systemLiangZhi_fw_three.vue'
 import systemLiangZhi_fw_four from '../components/system/systemLiangZhi/systemLiangZhi_fw_four.vue'
 
+import systemZhiHui from '../components/system/systemZhiHui/systemZhiHui.vue'
+import systemZhiHui_taDiao from '../components/system/systemZhiHui/systemZhiHui_taDiao.vue'
+
+
 
 const router = new VueRouter({
 
@@ -140,6 +144,11 @@ const router = new VueRouter({
             {path:'/systemLiangZhi_fw_three',meta:{needLogin:true},component:systemLiangZhi_fw_three},
             {path:'/systemLiangZhi_fw_four',meta:{needLogin:true},component:systemLiangZhi_fw_four},
         ]},
+        {path:'/systemZhiHui',meta:{needLogin:true},component:systemZhiHui,children:[
+            {path:'',meta:{needLogin:true},component:systemZhiHui_taDiao},
+            {path:'/systemZhiHui_taDiao',meta:{needLogin:true},component:systemZhiHui_taDiao},
+        ]},
+
     ]
 
     // 不需要路由拦截
