@@ -17,7 +17,8 @@
                 </div>
                 <div class="condition">
                     <div class="worker">
-                        <div class="icon"></div>
+                        <div class="icon green-color">
+                        </div>
                         <div class="text">
                             <div class="title">劳务工人情况</div>
                             <ul>
@@ -37,7 +38,7 @@
                         </div>
                     </div>
                     <div class="manage">
-                        <div class="icon"></div>
+                        <div class="icon yellow-color"></div>
                         <div class="text">
                             <div class="title">管理人员情况</div>
                             <ul>
@@ -208,7 +209,7 @@
                     }
                     .state {
                         color: #fff;
-                        width: 1.08rem;
+                        width: 1.12rem;
                         height: .22rem;
                         font-size: .15rem;
                         text-align: center;
@@ -216,15 +217,18 @@
                         margin-left: .18rem;
                         border-radius: .04rem;
                         transform: translateY(.08rem);
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center center;
                     }
                     .accomplish {
-                        background-color: #fd5101;
+                        background-image: url('../../../../static/images/system-complete.png');
                     }
                     .normal {
-                        background-color: #04c366;
+                        background-image: url('../../../../static/images/system-normal.png');
                     }
                     .lockout {
-                        background-color: #ffd14f
+                        background-image: url('../../../../static/images/system-lockout.png');
                     }
                 }
                 .condition {
@@ -238,7 +242,15 @@
                             width: .6rem;
                             height: .6rem;
                             border-radius: .04rem;
+                            background-repeat: no-repeat;
+                            background-position: center center;
+                            background-image: url('../../../../static/images/system-helmet.png');
+                        }
+                        .green-color {
                             background-color: #04c366;
+                        }
+                        .yellow-color {
+                            background-color: #ffd14f;
                         }
                         .text {
                             float: left;
