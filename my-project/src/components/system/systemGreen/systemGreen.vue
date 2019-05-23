@@ -1,102 +1,59 @@
 <template>
-    <div id="systemHome">
+    <div id="systemGreen">
+        <!-- 阴影框 -->
+        <div class="shadow-box"></div>
         <!-- 侧导航栏 -->
         <div class="side-nav">
             <ul>
                 <li class="button">
+                    <router-link to="/systemHome" class="return" v-show="retractState"></router-link>
                     <a class="retract" @click="retractClick"></a>
                 </li>
-                <li>
-                    <a class="active">
-                        <div class="icon home"></div>
-                        <span>首页</span>
-                    </a>
-                </li>
-                <li>
-                    <router-link to="/systemLiangZhi">
+                <li @click="isActiveShow('/systemGreen_TSP')">
+                    <router-link to="/systemGreen_TSP" :class="activeShow=='/systemGreen_TSP'||activeShow=='/systemGreen'?'active':''">
                         <div class="icon"></div>
-                        <span>两制管理</span>
-                    </router-link>
-                </li>
-                 <li>
-                    <a>
-                        <div class="icon"></div>
-                        <span>人员管理</span>
-                    </a>
-                </li>
-                <li>
-                    <router-link to="/systemZhiHui">
-                        <div class="icon"></div>
-                        <span>设备管理</span>
+                        <span>TSP检测</span>
                     </router-link>
                 </li>
                 <li>
                     <a>
                         <div class="icon"></div>
-                        <span>视频监控</span>
+                        <span>废弃监管</span>
                     </a>
                 </li>
                 <li>
                     <a>
                         <div class="icon"></div>
-                        <span>质量监督</span>
+                        <span>雨水回收</span>
                     </a>
-                </li>
-                <li>
-                    <a>
-                        <div class="icon"></div>
-                        <span>安全管理</span>
-                    </a>
-                </li>
-                <li>
-                    <router-link to="/systemGreen">
-                        <div class="icon"></div>
-                        <span>绿色施工</span>
-                    </router-link>
-                </li>
-                <li>
-                    <a>
-                        <div class="icon"></div>
-                        <span>资料管理</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <div class="icon"></div>
-                        <span>智慧宿舍</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <div class="icon"></div>
-                        <span>智能应用</span>
-                    </a>
-                </li>
-                <li>
-                    <router-link to="/systemSet">
-                        <div class="icon"></div>
-                        <span>平台设置</span>
-                    </router-link>
                 </li>
             </ul>
         </div>
         <!-- 内容 -->
-        <div class="centent">
-            <div class="centent-box"></div>
-        </div>
+        <router-view class="router-box"></router-view>
     </div>
 </template>
 
 <style lang="less">
-    #systemHome {
+    #systemGreen {
         width: 100%;
+        height: 100%;
         display: flex;
+        position: relative;
         background-color: #f7f7f7;
+        .shadow-box {
+            width: 100%;
+            height: .15rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+            box-shadow: 0 .07rem .14rem -0.1rem #666 inset;
+        }
         .side-nav {
             width: 1.75rem;
             height: 10rem;
             overflow: hidden;
-            // display: inline-block;
             background-color: #54a4d7;
             ul {
                 width: 1.75rem;
@@ -125,11 +82,8 @@
                             width: .8rem;
                             vertical-align: top;
                             text-align: justify;
-                            text-align-last:justify;
                             display: inline-block;
-                        }
-                        .home {
-                            background-image: url('../../../static/images/system-home.png');
+                            text-align-last:justify;
                         }
                     }
                     a:hover {
@@ -151,35 +105,35 @@
                     border-bottom: .01rem solid #98c8e7;
                     a {
                         top: 50%;
-                        left: 50%;
                         border: 0;
                         padding: 0;
                         width: .22rem;
                         height: .22rem;
                         position: absolute;
+                        // background-color: #fff;
+                        transform: translateY(-50%);
                         background-repeat: no-repeat;
-                        transform: translate(-50%,-50%);
                         background-position: center center;
-                        background-image: url('../../../static/images/system-retract.png');
                     }
                     a:hover {
                         background-color: #2d83bb;
                     }
+                    .return {
+                        left: .4rem;
+                        background-image: url('../../../../static/images/system-return.png');
+                    }
+                    .retract {
+                        right: .4rem;
+                        background-image: url('../../../../static/images/system-retract.png');
+                    }
                 }
             }
         }
-        .centent {
+        .router-box {
             flex: 1;
-            height: 5rem;
-            padding-top: .4rem;
+            padding-top: .3rem;
             padding-left: .3rem;
-            padding-right: .3rem;
-            // display: inline-block;
-            .centent-box {
-                height: 100%;
-                border-radius: .1rem;
-                background-color: #fff;
-            }
+            padding-right: .2rem;
         }
     }
 </style>
@@ -188,9 +142,12 @@
 export default {
     data() {
         return {
-            retractState: true, // 侧导航栏状态
-            // lzShow: true,
+            retractState: true, // 侧导航栏缩进状态
+            activeShow: '/systemGreen_TSP' // 当前选中的模块
         }
+    },
+    created() {
+        this.getPath()
     },
     methods: {
         // 侧导航栏缩进
@@ -200,7 +157,7 @@ export default {
                     width:'.6rem'
                 },500)
                 $('.retract').animate({
-                    left:'.3rem'
+                    right:'1.35rem'
                 })
                 this.retractState = !this.retractState
             } else {
@@ -208,11 +165,21 @@ export default {
                     width:'1.75rem'
                 },500)
                 $('.retract').animate({
-                    left:'50%'
+                    right:'.4rem'
                 })
                 this.retractState = !this.retractState
             }
         },
+
+        // 选择模块
+        isActiveShow(i) {
+            this.activeShow=i;
+        },
+
+        // 页面刷新时重新赋值
+        getPath(){
+            this.activeShow=this.$route.path;
+        }
     }
 }
 </script>

@@ -1,18 +1,58 @@
 <template>
-    <div id="systemLiangZhi_team">
+    <div id="systemLiangZhi_blacklist">
         <div class="centent-box">
             <!-- 搜索栏 -->
             <div class="search-box">
                 <div class="left-box">
-                    <ul>
+                    <ul class="top-input">
                         <li>
-                            <span>参建单位名称：</span>
+                            <span>&#12288;&#12288;姓名：</span>
                             <input type="text">
                         </li>
                         <li>
-                            <span class="margin">班组名称：</span>
+                            <span>&#12288;证件号：</span>
                             <input type="text">
                         </li>
+                        <li>
+                            <span>&#12288;&#12288;工种：</span>
+                            <el-select v-model="professionValue" placeholder="请选择">
+                                <el-option
+                                v-for="item in professionOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </li>
+                        <li>
+                            <span>&#12288;&#12288;班组：</span>
+                            <input type="text">
+                        </li>
+                    </ul>
+                    <ul class="bottom-input">
+                        <li>
+                            <span>所属单位：</span>
+                            <el-select v-model="contractorValue" placeholder="请选择">
+                                <el-option
+                                v-for="item in contractorOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </li>
+                        <li class="date">
+                            <span>&#12288;&#12288;日期：</span>
+                            <el-date-picker
+                                v-model="dateValue"
+                                type="daterange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期">
+                            </el-date-picker>
+                        </li>
+                        <li style="width:3.5rem"></li>
+                        <li style="width:3.5rem"></li>
                     </ul>
                 </div>
                 <a class="search-button">搜索</a>
@@ -21,21 +61,9 @@
             <div class="main-box">
                 <!-- 功能栏 -->
                 <div class="button-box">
-                    <a class="new" @click="dialogClick">
+                    <a class="blacklist">
                         <i class="icon"></i>
-                        新增
-                    </a>
-                    <a class="compile">
-                        <i class="icon"></i>
-                        编辑
-                    </a>
-                    <a class="delete">
-                        <i class="icon"></i>
-                        删除
-                    </a>
-                    <a class="derive">
-                        <i class="icon"></i>
-                        导出Excel
+                        拉入黑名单
                     </a>
                 </div>
                 <!-- 列表 -->
@@ -51,46 +79,46 @@
                         <el-table-column
                         prop="number"
                         label="序号"
-                        width="50">
-                        </el-table-column>
-                        <el-table-column
-                        prop="project"
-                        label="所属项目"
-                        width="200">
-                        </el-table-column>
-                        <el-table-column
-                        prop="licence"
-                        label="施工许可证"
-                        width="150">
+                        width="100">
                         </el-table-column>
                         <el-table-column
                         prop="name"
-                        label="班组名称"
-                        width="150">
-                        </el-table-column>
-                        <el-table-column
-                        prop="groupLeader"
-                        label="班组长"
+                        label="姓名"
                         width="100">
                         </el-table-column>
                         <el-table-column
-                        prop="people"
-                        label="人数"
+                        prop="jobNumber"
+                        label="工号"
                         width="100">
                         </el-table-column>
                         <el-table-column
-                        prop="contractorNumber"
-                        label="参建单位编号"
-                        width="150">
-                        </el-table-column>
-                        <el-table-column
-                        prop="contractorName"
-                        label="参建单位名称"
+                        prop="contractor"
+                        label="所属参建单位"
                         width="200">
                         </el-table-column>
                         <el-table-column
-                        prop="startDate"
-                        label="入场日期">
+                        prop="team"
+                        label="所属班组"
+                        width="180">
+                        </el-table-column>
+                        <el-table-column
+                        prop="profession"
+                        label="工种"
+                        width="100">
+                        </el-table-column>
+                        <el-table-column
+                        prop="groupLeaderState"
+                        label="是否班组长"
+                        width="100">
+                        </el-table-column>
+                        <el-table-column
+                        prop="time"
+                        label="时间"
+                        width="250">
+                        </el-table-column>
+                        <el-table-column
+                        prop="cause"
+                        label="原因">
                         </el-table-column>
                     </el-table>
                 </div>
@@ -103,7 +131,7 @@
                         :page-sizes="[15, 30, 45]"
                         :page-size="15"
                         layout="total, sizes, prev, pager, next, jumper"
-                        :total="3">
+                        :total="1">
                     </el-pagination>
                 </div>
             </div>
@@ -166,50 +194,79 @@
 </template>
 
 <style lang="less">
-    #systemLiangZhi_team {
+    #systemLiangZhi_blacklist {
         width: 100%;
         .centent-box {
             border-radius: .04rem;
             background-color: #fff;
             box-shadow: 0 0 .5rem -.3rem #666;
             .search-box {
-                height: .9rem;
+                height: 1.5rem;
                 padding: 0 .2rem;
+                position: relative;
                 border-bottom: .1rem solid #f7f7f7;
                 .left-box {
                     float: left;
-                    height: .8rem;
+                    width: 100%;
+                    height: 1.4rem;
+                    padding-top: .2rem;
                     ul {
+                        width: 100%;
+                        height: .4rem;
+                        display: flex;
+                        justify-content: space-between;
                         li {
-                            float: left;
-                            margin-right: .35rem;
+                            height: .4rem;
+                            div {
+                                height: .4rem;
+                            }
                             span {
                                 float: left;
-                                height: .8rem;
+                                height: .4rem;
                                 font-size: .18rem;
-                                line-height: .8rem;
+                                line-height: .4rem;
                             }
                             input {
                                 float: left;
                                 width: 2.6rem;
                                 height: .4rem;
-                                margin-top: .2rem;
                                 padding-left: .1rem;
                                 border-radius: .02rem;
                                 vertical-align: middle;
                                 border: .01rem solid #b6b6b6;
                             }
                         }
+                        .date {
+                            .el-date-editor {
+                                width: 2.6rem;
+                                height: .4rem;
+                                overflow: hidden;
+                                border: .01rem solid #b6b6b6;
+                                span {
+                                    padding: 0;
+                                    width: .28rem;
+                                    padding-left: .1rem;
+                                }
+                                input {
+                                    border: 0;
+                                    width: .95rem;
+                                }
+                            }
+                        }
+                    }
+                    .bottom-input {
+                        margin-top: .2rem;
                     }
                 }
                 .search-button {
-                    float: right;
+                    top: .8rem;
+                    right: .2rem;
                     color: #fff;
                     height: .4rem;
                     width: 1.63rem;
                     font-size: .2rem;
-                    margin-top: .2rem;
                     text-align: center;
+                    position: absolute;
                     transition: all .5s;
                     line-height: .38rem;
                     border-radius: .02rem;
@@ -249,43 +306,13 @@
                             background-position: center center;
                         }
                     }
-                    .new {
+                    .blacklist {
                         .icon {
-                            background-image: url('../../../../static/images/system-new.png');
+                            background-image: url('../../../../static/images/system-blacklist.png');
                         }
                         &:hover {
                             .icon {
-                                background-image: url('../../../../static/images/system-newHover.png');
-                            }
-                        }
-                    }
-                    .compile {
-                        .icon {
-                            background-image: url('../../../../static/images/system-compile.png');
-                        }
-                        &:hover {
-                            .icon {
-                                background-image: url('../../../../static/images/system-compileHover.png');
-                            }
-                        }
-                    }
-                    .delete {
-                        .icon {
-                            background-image: url('../../../../static/images/system-delete.png');
-                        }
-                        &:hover {
-                            .icon {
-                                background-image: url('../../../../static/images/system-deleteHover.png');
-                            }
-                        }
-                    }
-                    .derive {
-                        .icon {
-                            background-image: url('../../../../static/images/system-derive.png');
-                        }
-                        &:hover {
-                            .icon {
-                                background-image: url('../../../../static/images/system-deriveHover.png');
+                                background-image: url('../../../../static/images/system-blacklistHover.png');
                             }
                         }
                     }
@@ -313,6 +340,12 @@
                                 color: #646464;
                                 line-height: .35rem;
                             }
+                        }
+                        .red-color {
+                            color: #fd5101;
+                        }
+                        .yellow-color {
+                            color: #ffd14f;
                         }
                     }
                 }
@@ -436,34 +469,14 @@ export default {
         return {
             tableData: [{
                 number: 1, // 序号
-                project: '福田区易涝风险区整改', // 所属项目
-                licence: '123456', // 施工许可证
-                name: '粤帽一班', // 班组名称
-                groupLeader: '某某某', // 班组长
-                people: 21, // 人数
-                contractorNumber: '9527', // 参建单位编号
-                contractorName: '深圳市市政工程总公司', // 参建单位名称
-                startDate: '2019-05-13', // 入场日期
-            },{
-                number: 2, // 序号
-                project: '福田区易涝风险区整改', // 所属项目
-                licence: '123456', // 施工许可证
-                name: '粤帽一班', // 班组名称
-                groupLeader: '某某某', // 班组长
-                people: 21, // 人数
-                contractorNumber: '9527', // 参建单位编号
-                contractorName: '深圳市市政工程总公司', // 参建单位名称
-                startDate: '2019-05-13', // 入场日期
-            },{
-                number: 3, // 序号
-                project: '福田区易涝风险区整改', // 所属项目
-                licence: '123456', // 施工许可证
-                name: '粤帽一班', // 班组名称
-                groupLeader: '某某某', // 班组长
-                people: 21, // 人数
-                contractorNumber: '9527', // 参建单位编号
-                contractorName: '深圳市市政工程总公司', // 参建单位名称
-                startDate: '2019-05-13', // 入场日期
+                name: '某某某', // 姓名
+                jobNumber: '123456', // 工号
+                contractor: '深圳市市政工程总公司', // 所属参建单位
+                team: '永恒信一班', // 所属班组
+                profession: '普工', // 工种
+                groupLeaderState: '是', // 是否班组长
+                time: '2019-04-29 10：51：43', // 时间
+                cause: '闹事', // 原因
             }], // 表格数据
             currentPage: 1, // 当前页码
             dialogShow: false, // 新增单位对话框状态
@@ -473,6 +486,11 @@ export default {
             }], // 所属参建单位选项
             contractorValue: '', // 所属参建单位
             startDate: '', // 入场日期
+            professionOptions: [], // 工种选项
+            professionValue: '', // 工种值
+            contractorOptions: [], // 所属参建单位选项
+            contractorValue: '', // 所属参建单位值
+            dateValue: '', // 日期
         }
     },
     methods: {

@@ -4,7 +4,7 @@
             <!-- 搜索栏 -->
             <div class="search-box">
                 <div class="left-box">
-                    <ul>
+                    <ul class="top-input">
                         <li>
                             <span>&#12288;&#12288;姓名：</span>
                             <input type="text">
@@ -15,24 +15,48 @@
                         </li>
                         <li>
                             <span>&#12288;&#12288;工种：</span>
-                            <input type="text">
+                            <el-select v-model="professionValue" placeholder="请选择">
+                                <el-option
+                                v-for="item in professionOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                                </el-option>
+                            </el-select>
                         </li>
                         <li>
                             <span>&#12288;&#12288;班组：</span>
                             <input type="text">
                         </li>
+                    </ul>
+                    <ul class="bottom-input">
                         <li>
                             <span>手机号码：</span>
                             <input type="text">
                         </li>
                         <li>
                             <span>所属单位：</span>
-                            <input type="text">
+                            <el-select v-model="contractorValue" placeholder="请选择">
+                                <el-option
+                                v-for="item in contractorOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                                </el-option>
+                            </el-select>
                         </li>
                         <li>
                             <span>在场状态：</span>
-                            <input type="text">
+                            <el-select v-model="typeValue" placeholder="请选择">
+                                <el-option
+                                v-for="item in typeOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                                </el-option>
+                            </el-select>
                         </li>
+                        <li style="width:3.5rem"></li>
                     </ul>
                 </div>
                 <a class="search-button">搜索</a>
@@ -41,7 +65,7 @@
             <div class="main-box">
                 <!-- 功能栏 -->
                 <div class="button-box">
-                    <a class="new">
+                    <a class="new" @click="dialogClick">
                         <i class="icon"></i>
                         新增
                     </a>
@@ -49,7 +73,7 @@
                         <i class="icon"></i>
                         编辑
                     </a>
-                    <a class="delete">
+                    <a class="synchronization">
                         <i class="icon"></i>
                         同步信息
                     </a>
@@ -57,15 +81,15 @@
                         <i class="icon"></i>
                         导出人员
                     </a>
-                    <a class="derive">
+                    <a class="contract">
                         <i class="icon"></i>
                         生成合同
                     </a>
-                    <a class="derive">
+                    <a class="last">
                         <i class="icon"></i>
                         返场
                     </a>
-                    <a class="derive">
+                    <a class="next">
                         <i class="icon"></i>
                         退场
                     </a>
@@ -139,51 +163,280 @@
                     </el-pagination>
                 </div>
             </div>
-            <!-- 新增班组 -->
+            <!-- 新增人员 -->
             <div class="dialog-box" v-show="dialogShow">
                 <div class="title">
-                    新增班组
+                    新增人员
                     <a class="close" @click="dialogClick">
                         <i class="el-icon-close"></i>
                     </a>
                 </div>
                 <div class="form">
+                    <div class="picture-box">
+                        <ul>
+                            <li class="picture">
+                                <div>
+                                    <span>
+                                        实时图片
+                                        <div class="required">*</div>
+                                    </span>
+                                    <a>+</a>
+                                </div>
+                            </li>
+                            <li class="picture">
+                                <div>
+                                    <span>
+                                        身份证人脸
+                                        <div class="required">*</div>
+                                    </span>
+                                    <a>+</a>
+                                </div>
+                            </li>
+                            <li class="picture">
+                                <div>
+                                    <span>
+                                        身份证正面
+                                        <div class="required">*</div>
+                                    </span>
+                                    <a>+</a>
+                                </div>
+                            </li>
+                            <li class="picture">
+                                <div>
+                                    <span>
+                                        身份证反面
+                                        <div class="required">*</div>
+                                    </span>
+                                    <a>+</a>
+                                </div>
+                            </li>
+                            <li class="picture">
+                                <div>
+                                    <span>
+                                        银行卡正面
+                                    </span>
+                                    <a>+</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                     <ul>
                         <li>
-                            <span>
-                                所属参建单位
-                                <div class="required">*</div>
-                            </span>
-                            <el-select v-model="contractorValue" placeholder="请选择">
-                                <el-option
-                                v-for="item in contractor"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                                </el-option>
-                            </el-select>
+                            <div>
+                                <span>
+                                    姓名
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    身份证号
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
                         </li>
                         <li>
-                            <span>
-                                班组名称
-                                <div class="required">*</div>
-                            </span>
-                            <input type="text">
+                            <div>
+                                <span>
+                                    性别
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    民族
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+                        <li class="all">
+                            <div>
+                                <span>
+                                    身份证地址
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
                         </li>
                         <li>
-                            <span>
-                                入场日期
-                                <div class="required">*</div>
-                            </span>
-                            <el-date-picker
-                            v-model="startDate"
-                            type="date"
-                            placeholder="选择日期">
-                            </el-date-picker>
+                            <div>
+                                <span>
+                                    签发机关
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    有效期限
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
                         </li>
                         <li>
-                            <span>备注</span>
-                            <input type="text">
+                            <div>
+                                <span>
+                                    出生日期
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    籍贯
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span>
+                                    进场日期
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    退场日期
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span>
+                                    所属班组
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    是否班组长
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span>
+                                    重要人员
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    人员类别
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span>
+                                    工种名称
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    人员类型
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span>
+                                    手机号
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    合同办理
+                                    <div class="required">*</div>
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span>
+                                    所属工作部门
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    现工作部门
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span>
+                                    开户行
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    银行账号
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span>
+                                    账户类型
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    开户地址
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span>
+                                    获得证书
+                                </span>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <span>
+                                    备注
+                                </span>
+                                <input type="text">
+                            </div>
+                        </li>
+
+                        <!-- 合同部分 -->
+                        <li class="line"></li>
+                        <li class="check-box">
+                            <el-checkbox-group 
+                              v-model="checkedCities"
+                              :min="0"
+                              :max="6">
+                              <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
+                            </el-checkbox-group>
                         </li>
                     </ul>
                 </div>
@@ -211,13 +464,19 @@
                 border-bottom: .1rem solid #f7f7f7;
                 .left-box {
                     float: left;
+                    width: 100%;
                     height: 1.4rem;
                     padding-top: .2rem;
                     ul {
+                        width: 100%;
+                        height: .4rem;
+                        display: flex;
+                        justify-content: space-between;
                         li {
-                            float: left;
-                            margin-right: .5rem;
-                            margin-bottom: .2rem;
+                            height: .4rem;
+                            div {
+                                height: .4rem;
+                            }
                             span {
                                 float: left;
                                 height: .4rem;
@@ -234,6 +493,9 @@
                                 border: .01rem solid #b6b6b6;
                             }
                         }
+                    }
+                    .bottom-input {
+                        margin-top: .2rem;
                     }
                 }
                 .search-button {
@@ -277,8 +539,81 @@
                         .icon {
                             width: .37rem;
                             height: .28rem;
+                            transition: all .5s;
                             display: inline-block;
                             vertical-align: middle;
+                            background-repeat: no-repeat;
+                            background-position: center center;
+                        }
+                    }
+                    .new {
+                        .icon {
+                            background-image: url('../../../../static/images/system-new.png');
+                        }
+                        &:hover {
+                            .icon {
+                                background-image: url('../../../../static/images/system-newHover.png');
+                            }
+                        }
+                    }
+                    .compile {
+                        .icon {
+                            background-image: url('../../../../static/images/system-compile.png');
+                        }
+                        &:hover {
+                            .icon {
+                                background-image: url('../../../../static/images/system-compileHover.png');
+                            }
+                        }
+                    }
+                    .synchronization {
+                        .icon {
+                            background-image: url('../../../../static/images/system-synchronization.png');
+                        }
+                        &:hover {
+                            .icon {
+                                background-image: url('../../../../static/images/system-synchronizationHover.png');
+                            }
+                        }
+                    }
+                    .derive {
+                        .icon {
+                            background-image: url('../../../../static/images/system-derive.png');
+                        }
+                        &:hover {
+                            .icon {
+                                background-image: url('../../../../static/images/system-deriveHover.png');
+                            }
+                        }
+                    }
+                    .contract {
+                        .icon {
+                            background-image: url('../../../../static/images/system-contract.png');
+                        }
+                        &:hover {
+                            .icon {
+                                background-image: url('../../../../static/images/system-contractHover.png');
+                            }
+                        }
+                    }
+                    .last {
+                        .icon {
+                            background-image: url('../../../../static/images/system-last.png');
+                        }
+                        &:hover {
+                            .icon {
+                                background-image: url('../../../../static/images/system-lastHover.png');
+                            }
+                        }
+                    }
+                    .next {
+                        .icon {
+                            background-image: url('../../../../static/images/system-next.png');
+                        }
+                        &:hover {
+                            .icon {
+                                background-image: url('../../../../static/images/system-nextHover.png');
+                            }
                         }
                     }
                 }
@@ -325,10 +660,10 @@
             }
             .dialog-box {
                 left: 50%;
-                top: 2.14rem;
+                top: .22rem;
                 z-index: 200;
-                width: 6.84rem;
-                height: 4.92rem;
+                width: 12.02rem;
+                height: 7rem;
                 overflow: hidden;
                 position: absolute;
                 border-radius: .1rem;
@@ -352,40 +687,108 @@
                     }
                 }
                 .form {
-                    height: 3.52rem;
+                    width: 100%;
+                    display: flex;
+                    height: 5.6rem;
+                    overflow: auto;
+                    overflow-x: hidden;
+                    // padding-left: .43rem;
+                    padding-bottom: .3rem;
+                    justify-content: space-between;
+                    .picture-box {
+                        height: 5rem;
+                        width: 2.5rem;
+                        ul {
+                            width: 2.5rem;
+                        }
+                    }
                     ul{
+                        flex: 1;
+                        position: relative;
                         li {
                             display: flex;
                             height: .71rem;
                             padding-top: .3rem;
-                            >span {
-                                width: 1.85rem;
-                                height: .41rem;
-                                font-size: .16rem;
-                                text-align: right;
-                                position: relative;
-                                line-height: .41rem;
-                                padding-right: .32rem;
-                                display: inline-block;
-                                .required {
-                                    top: -0.01rem;
-                                    right: .22rem;
-                                    color: #f00;
-                                    position: absolute;
+                            >div {
+                                width: 4.52rem;
+                                >span {
+                                    width: 1.72rem;
+                                    height: .41rem;
+                                    font-size: .16rem;
+                                    text-align: right;
+                                    position: relative;
+                                    line-height: .41rem;
+                                    padding-right: .32rem;
+                                    display: inline-block;
+                                    .required {
+                                        top: -0.01rem;
+                                        right: .22rem;
+                                        color: #f00;
+                                        position: absolute;
+                                    }
+                                }
+                                input {
+                                    width: 2.8rem;
+                                    height: .41rem;
+                                    padding-left: .1rem;
+                                    border-radius: .02rem;
+                                    border: .01rem solid #b1b1b1;
+                                }
+                                .el-date-editor {
+                                    width: 3.66rem;
+                                    height: .41rem;
+                                    input {
+                                        padding-left: .3rem;
+                                    }
                                 }
                             }
-                            input {
-                                width: 3.66rem;
-                                height: .41rem;
-                                padding-left: .1rem;
-                                border-radius: .02rem;
-                                border: .01rem solid #b1b1b1;
+                        }
+                        .picture {
+                            width: 2.5rem;
+                            height: 1.49rem;
+                            span {
+                                width: 1.3rem;
+                                vertical-align: top;
                             }
-                            .el-date-editor {
-                                width: 3.66rem;
-                                height: .41rem;
+                            a {
+                                width: 1.19rem;
+                                height: 1.19rem;
+                                font-size: .2rem;
+                                color: #b6b5b5;
+                                text-align: center;
+                                line-height: 1.17rem;
+                                display: inline-block;
+                                border: .01rem dashed #b6b5b5;
+                            }
+                        }
+                        .check-box {
+                            width: 9.52rem;
+                            height: .78rem;
+                            .el-checkbox-group {
+                                width: 100%;
+                                display: flex;
+                                flex-wrap: wrap;
+                                >label {
+                                    margin: 0;
+                                    width: 3.15rem;
+                                    height: .48rem;
+                                    font-size: .16rem;
+                                    padding-left: .6rem;
+                                    // text-align: center;
+                                }
+                            }
+                        }
+                        .line {
+                            height: .31rem;
+                            width: 12.02rem;
+                            transform: translateX(-2.5rem);
+                            border-bottom: .01rem dashed #b6b5b5;
+                        }
+                        .all {
+                            >div {
+                                width: 9.04rem;
                                 input {
-                                    padding-left: .3rem;
+                                    width: 7.32rem;
                                 }
                             }
                         }
@@ -468,6 +871,23 @@ export default {
             }], // 所属参建单位选项
             contractorValue: '', // 所属参建单位
             startDate: '', // 入场日期
+            typeOptions: [{
+                value: '选项1',
+                label: '在场'
+            }, {
+                value: '选项2',
+                label: '离场'
+            }, {
+                value: '选项3',
+                label: '待进场'
+            }], // 在场状态选项
+            typeValue: '', // 在场状态值
+            professionOptions: [], // 工种选项
+            professionValue: '', // 工种值
+            contractorOptions: [], // 所属参建单位选项
+            contractorValue: '', // 所属参建单位值
+            checkedCities: [],
+            cities: ['简易劳动合同', '两制确认书', '进场承诺书', '退场承诺书','身份证复印件','安全教育培训'],
         }
     },
     methods: {

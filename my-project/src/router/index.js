@@ -62,18 +62,23 @@ import systemLiangZhi from '../components/system/systemLiangZhi/systemLiangZhi.v
 import systemLiangZhi_home from '../components/system/systemLiangZhi/systemLiangZhi_home.vue'
 
 import systemLiangZhi_contractors from '../components/system/systemLiangZhi/systemLiangZhi_contractors.vue'
-import gaoZhiMo from '../components/gaoZhiMo/gaoZhiMo.vue'
+import gaoZhiMo from '../components/gaoZhiMo/gaozhimo.vue'
 import systemLiangZhi_team from '../components/system/systemLiangZhi/systemLiangZhi_team.vue'
 import systemLiangZhi_personnel from '../components/system/systemLiangZhi/systemLiangZhi_personnel.vue'
 import systemLiangZhi_fw_one from '../components/system/systemLiangZhi/systemLiangZhi_fw_one.vue'
 import systemLiangZhi_fw_two from '../components/system/systemLiangZhi/systemLiangZhi_fw_two.vue'
 import systemLiangZhi_fw_three from '../components/system/systemLiangZhi/systemLiangZhi_fw_three.vue'
 import systemLiangZhi_fw_four from '../components/system/systemLiangZhi/systemLiangZhi_fw_four.vue'
-
 import systemZhiHui from '../components/system/systemZhiHui/systemZhiHui.vue'
 import systemZhiHui_taDiao from '../components/system/systemZhiHui/systemZhiHui_taDiao.vue'
-
-
+import systemLiangZhi_attendance from '../components/system/systemLiangZhi/systemLiangZhi_attendance.vue'
+import systemLiangZhi_exception from '../components/system/systemLiangZhi/systemLiangZhi_exception'
+import systemLiangZhi_blacklist from '../components/system/systemLiangZhi/systemLiangZhi_blacklist'
+import systemLiangZhi_equipment from '../components/system/systemLiangZhi/systemLiangZhi_equipment'
+import systemGreen from '../components/system/systemGreen/systemGreen.vue'
+import systemGreen_TSP from '../components/system/systemGreen/systemGreen_TSP.vue'
+import systemSet from '../components/system/systemSet/systemSet.vue'
+import system_projectSet from '../components/system/systemSet/system_projectSet.vue'
 
 const router = new VueRouter({
 
@@ -139,6 +144,10 @@ const router = new VueRouter({
             {path:'/systemLiangZhi_contractors',meta:{needLogin:true},component:systemLiangZhi_contractors},
             {path:'/systemLiangZhi_team',meta:{needLogin:true},component:systemLiangZhi_team},
             {path:'/systemLiangZhi_personnel',meta:{needLogin:true},component:systemLiangZhi_personnel},
+            {path:'/systemLiangZhi_attendance',meta:{needLogin:true},component:systemLiangZhi_attendance},
+            {path:'/systemLiangZhi_exception',meta:{needLogin:true},component:systemLiangZhi_exception},
+            {path:'/systemLiangZhi_blacklist',meta:{needLogin:true},component:systemLiangZhi_blacklist},
+            {path:'/systemLiangZhi_equipment',meta:{needLogin:true},component:systemLiangZhi_equipment},
             {path:'/systemLiangZhi_fw_one',meta:{needLogin:true},component:systemLiangZhi_fw_one},
             {path:'/systemLiangZhi_fw_two',meta:{needLogin:true},component:systemLiangZhi_fw_two},
             {path:'/systemLiangZhi_fw_three',meta:{needLogin:true},component:systemLiangZhi_fw_three},
@@ -147,6 +156,14 @@ const router = new VueRouter({
         {path:'/systemZhiHui',meta:{needLogin:true},component:systemZhiHui,children:[
             {path:'',meta:{needLogin:true},component:systemZhiHui_taDiao},
             {path:'/systemZhiHui_taDiao',meta:{needLogin:true},component:systemZhiHui_taDiao},
+        ]},
+        {path:'/systemGreen',meta:{needLogin:true},component:systemGreen,children:[
+            {path:'',meta:{needLogin:true},component:systemGreen_TSP},
+            {path:'/systemGreen_TSP',meta:{needLogin:true},component:systemGreen_TSP},
+        ]},
+        {path:'/systemSet',meta:{needLogin:true},component:systemSet,children:[
+            {path:'',meta:{needLogin:true},component:system_projectSet},
+            {path:'/system_projectSet',meta:{needLogin:true},component:system_projectSet},
         ]},
 
     ]
@@ -208,7 +225,7 @@ const router = new VueRouter({
 
 router.beforeEach((to,from,next)=>{
     if (to.meta.needLogin) {
-        const islogin = localStorage.getItem('islogin')
+        const islogin = sessionStorage.getItem('islogin')
         if (islogin) {
             next()
         }else{
