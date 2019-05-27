@@ -79,6 +79,14 @@ import systemGreen from '../components/system/systemGreen/systemGreen.vue'
 import systemGreen_TSP from '../components/system/systemGreen/systemGreen_TSP.vue'
 import systemSet from '../components/system/systemSet/systemSet.vue'
 import system_projectSet from '../components/system/systemSet/system_projectSet.vue'
+import systemMonitoring from '../components/system/systemMonitoring/systemMonitoring.vue'
+import companyGuanLi from '../components/company/companyGuanLi/companyGuanLi.vue'
+import companyGuanLi_set from '../components/company/companyGuanLi/companyGuanLi_set.vue'
+import companyGuanLi_user from '../components/company/companyGuanLi/companyGuanLi_user.vue'
+import companyGuanLi_role from '../components/company/companyGuanLi/companyGuanLi_role.vue'
+import projectGuanLi from '../components/company/projectGuanLi/projectGuanLi.vue'
+import projectGuanLi_set from '../components/company/projectGuanLi/projectGuanLi_set.vue'
+import projectGuanLi_user from '../components/company/projectGuanLi/projectGuanLi_user.vue'
 
 const router = new VueRouter({
 
@@ -135,6 +143,17 @@ const router = new VueRouter({
         {path:'/projectShezhi',meta:{needLogin:true},component:projectShezhi},
         {path:'/projectShouquan',meta:{needLogin:true},component:projectShouquan},
         {path:'/gaoZhiMo',meta:{needLogin:true},component:gaoZhiMo},
+        {path:'/companyGuanLi',meta:{needLogin:true},component:companyGuanLi,children:[
+            {path:'',meta:{needLogin:true},component:companyGuanLi_set},
+            {path:'/companyGuanLi_set',meta:{needLogin:true},component:companyGuanLi_set},
+            {path:'/companyGuanLi_user',meta:{needLogin:true},component:companyGuanLi_user},
+            {path:'/companyGuanLi_role',meta:{needLogin:true},component:companyGuanLi_role}
+        ]},
+        {path:'/projectGuanLi',meta:{needLogin:true},component:projectGuanLi,children:[
+            {path:'',meta:{needLogin:true},component:projectGuanLi_set},
+            {path:'/projectGuanLi_set',meta:{needLogin:true},component:projectGuanLi_set},
+            {path:'/projectGuanLi_user',meta:{needLogin:true},component:projectGuanLi_user}
+        ]},
 
         // 后台管理系统页面
         {path:'/systemHome',meta:{needLogin:true},component:systemHome},
@@ -165,7 +184,7 @@ const router = new VueRouter({
             {path:'',meta:{needLogin:true},component:system_projectSet},
             {path:'/system_projectSet',meta:{needLogin:true},component:system_projectSet},
         ]},
-
+        {path:'/systemMonitoring',meta:{needLogin:true},component:systemMonitoring}
     ]
 
     // 不需要路由拦截
@@ -225,7 +244,7 @@ const router = new VueRouter({
 
 router.beforeEach((to,from,next)=>{
     if (to.meta.needLogin) {
-        const islogin = sessionStorage.getItem('islogin')
+        const islogin = localStorage.getItem('islogin')
         if (islogin) {
             next()
         }else{

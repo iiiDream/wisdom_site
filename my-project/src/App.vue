@@ -42,7 +42,9 @@ export default {
         this.$route.path.includes("/gongsiShouquan") ||
         this.$route.path.includes("/projectShezhi") ||
         this.$route.path.includes("/projectShouquan") ||
-        this.$route.path.includes("/system") 
+        this.$route.path.includes("/system") ||
+        this.$route.path.includes("/companyGuanLi") ||
+        this.$route.path.includes("/projectGuanLi")
       ) {
         this.isLogin = false
       } else {

@@ -31,10 +31,10 @@
                     </router-link>
                 </li>
                 <li>
-                    <a>
+                    <router-link to="/systemMonitoring">
                         <div class="icon"></div>
                         <span>视频监控</span>
-                    </a>
+                    </router-link>
                 </li>
                 <li>
                     <a>

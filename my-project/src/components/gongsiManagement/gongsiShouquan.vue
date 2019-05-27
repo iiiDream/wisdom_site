@@ -296,15 +296,17 @@ export default {
         margin-left: 0.16rem;
         margin-bottom: 0.03rem;
         background-color: #fff;
+        vertical-align: text-top;
       }
     }
     .logo-box {
       display: inline-block;
-      height: 0.24rem;
+      height: 0.45rem;
       width: 1.24rem;
-      background-image: url("../../../static/images/login_logo.png");
+      background-image: url("../../../static/images/yzt-whiteLogo.png");
       background-size: contain;
       margin-left: 0.24rem;
+      vertical-align: top;
     }
     .company {
       margin-left: 0.16rem;

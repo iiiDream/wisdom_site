@@ -91,10 +91,10 @@
                 .logo-box {
                     width: 120px;
                     height: 54px;
-                    background-image: url('../../../static/images/workerHome-logo.png');
+                    background-image: url('../../../static/images/yzt-redLogo.png');
                     background-position: center center;
                     background-repeat: no-repeat;
-                    background-size: contain;
+                    background-size: 120px 35px;
                 }
                 .return {
                     width: 50px;

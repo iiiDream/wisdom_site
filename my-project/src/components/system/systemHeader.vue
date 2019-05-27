@@ -40,13 +40,13 @@
             padding-left: .24rem;
             a {
                 width: 1.22rem;
-                height: .22rem;
+                height: .45rem;
                 display: inline-block;
                 vertical-align: middle;
                 background-size: contain;
                 background-repeat: no-repeat;
                 background-position: center center;
-                background-image: url('../../../static/images/login_logo.png');
+                background-image: url('../../../static/images/yzt-whiteLogo.png');
             }
             div {
                 color: #fff;

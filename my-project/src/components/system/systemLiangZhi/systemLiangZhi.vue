@@ -257,24 +257,23 @@
         }
       }
     }
-  .sanjiao {
-    position: absolute;
-    top: 6.78rem;
-    left: 1.65rem;
-    width: 25px;
-    height: 0.25rem;
-    background-color: #1872ad;
-    transform: rotate(45deg);
-    z-index: 999;
-    display: none;
-  }
-
-  .router-box {
-    flex: 1;
-    padding-top: 0.4rem;
-    padding-left: 0.3rem;
-    padding-right: 0.3rem;
-  }
+    .sanjiao {
+        position: absolute;
+        top: 6.78rem;
+        left: 1.65rem;
+        width: 25px;
+        height: 0.25rem;
+        background-color: #1872ad;
+        transform: rotate(45deg);
+        z-index: 999;
+        display: none;
+    }
+    .router-box {
+        flex: 1;
+        padding-top: 0.4rem;
+        padding-left: 0.3rem;
+        padding-right: 0.3rem;
+    }
 }
 </style>
 
@@ -332,19 +331,19 @@ export default {
     },
     // 选择模块
     isActiveShow(i) {
-      this.activeShow = i;
-      $(".sanjiao").hide();
-      $(".subnav").hide();
+        this.activeShow = i;
+        $(".sanjiao").hide();
+        $(".subnav").hide();
     },
     // 页面刷新时重新赋值
     getPath() {
-      this.activeShow = this.$route.path;
+        this.activeShow = this.$route.path;
     },
     // 两制服务选项弹出
     fw(i) {
-      $(".sanjiao").show();
-      $(".subnav").show();
-      this.activeShow = i;
+        $(".sanjiao").show();
+        $(".subnav").show();
+        this.activeShow = i;
     }
   }
 };

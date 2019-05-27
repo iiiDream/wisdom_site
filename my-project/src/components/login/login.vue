@@ -48,13 +48,13 @@
         <div class="login-title">用户登录</div>
         <div class="from">
           <i class="user"></i>
-          <input type="text" placeholder="请输入账号" v-model="user_name" @keyup.enter="login">
+          <input type="text" placeholder="请输入账号" v-model="user_name" @keyup.enter="logined">
           <i class="password"></i>
-          <input type="password" placeholder="请输入密码" v-model="pwd" @keyup.enter="login">
-          <a @click="login"></a>
+          <input type="password" placeholder="请输入密码" v-model="pwd" @keyup.enter="logined">
+          <a @click="logined"></a>
         </div>
         <div class="logo"></div>
-        <div class="copyright">虎匠公司版权所有©1997-2019</div>
+        <!-- <div class="copyright">虎匠公司版权所有©1997-2019</div> -->
         <div class="light"></div>
       </div>
     </div>
@@ -121,39 +121,39 @@ export default {
         .then(res => {
           console.log(res.data);
           if (res.data.msg != "账户或密码错误") {
-            sessionStorage.setItem("islogin", "true");
-            sessionStorage.setItem("pid", res.data.pid);
+            localStorage.setItem("islogin", "true");
+            localStorage.setItem("pid", res.data.pid);
             this.$router.push({ path: "/homePage" });
           } else {
-            alert("账号或密码错误！请重新输入")
+            alert("账号或密码错误！请重新输入");
             // this.user_name = "";
             this.pwd = "";
           }
         });
-    },
+    }
 
     // 2.0登录
-    login() {
-      this.$axios.post(`http://192.168.1.36:8080/api/system/computer/login?userAccount=${this.user_name}&userPassword=${this.$md5(this.pwd)}&entry=1`).then(res => {
-        // console.log(res.data.data.userType)
-        if (this.user_name==''||this.pwd=='') {
-          alert("账号或密码不得为空")
-        } else {
-          if (res.data.code == -1) {
-            alert("账号或密码错误！请重新输入");
-            this.pwd = "";
-          } else {
-            sessionStorage.setItem("islogin", "true");
-            sessionStorage.setItem("pid", res.data.data.projectId);
-            if (res.data.data.userType == 2) {
-              this.$router.push({ path: "/systemHome" })
-            } else {
-              this.$router.push({ path: "/homePage" })
-            }
-          }
-        }
-      })
-    }
+    // login() {
+    //   this.$axios.post(`http://192.168.1.36:8080/api/system/computer/login?userAccount=${this.user_name}&userPassword=${this.$md5(this.pwd)}&entry=1`).then(res => {
+    //     // console.log(res.data.data.userType)
+    //     if (this.user_name==''||this.pwd=='') {
+    //       alert("账号或密码不得为空")
+    //     } else {
+    //       if (res.data.code == -1) {
+    //         alert("账号或密码错误！请重新输入");
+    //         this.pwd = "";
+    //       } else {
+    //         sessionStorage.setItem("islogin", "true");
+    //         sessionStorage.setItem("pid", res.data.data.projectId);
+    //         if (res.data.data.userType == 2) {
+    //           this.$router.push({ path: "/systemHome" })
+    //         } else {
+    //           this.$router.push({ path: "/homePage" })
+    //         }
+    //       }
+    //     }
+    //   })
+    // }
   }
 };
 </script>
@@ -271,10 +271,10 @@ export default {
     z-index: 99;
   }
   .content .logo {
-    width: 1.07rem;
-    height: 0.19rem;
-    margin-top: 2.17rem;
-    background-image: url("../../../static/images/login_logo.png");
+    width: 1.5rem;
+    height: 0.6rem;
+    margin-top: 1.9rem;
+    background-image: url("../../../static/images/yzt-whiteLogo.png");
     background-size: contain;
     position: absolute;
     z-index: 10;

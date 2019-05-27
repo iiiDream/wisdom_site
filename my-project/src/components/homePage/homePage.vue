@@ -15,12 +15,20 @@
           <!-- <li>
             <router-link to="/projectManagement">项目管理</router-link>
           </li> -->
+
           <li>
+            <router-link to="/companyGuanLi">公司管理</router-link>
+          </li>
+          <li>
+            <router-link to="/projectGuanLi">项目管理</router-link>
+          </li>
+
+          <!-- <li>
             <router-link to="/gongsiManagement">公司管理</router-link>
           </li>
           <li>
             <router-link to="/projectShezhi">项目管理</router-link>
-          </li>
+          </li> -->
         </ul>
       </div>
       <div class="user">
@@ -275,9 +283,9 @@ export default {
   .top {
     width: 19.2rem;
     height: 0.8rem;
-    background-image: url("../../../static/images/homePage_nav.png");
-    background-size: cover;
     padding-top: 0.24rem;
+    background-size: cover;
+    background: linear-gradient(to right, #6cc4ff, #489cff);
   }
   .top > div {
     float: left;
@@ -287,11 +295,12 @@ export default {
   }
   .top .logo-box {
     display: inline-block;
-    height: 0.24rem;
+    height: 0.45rem;
     width: 1.24rem;
-    background-image: url("../../../static/images/login_logo.png");
+    background-image: url("../../../static/images/yzt-whiteLogo.png");
     background-size: contain;
     margin-left: 0.24rem;
+    vertical-align: top;
   }
   .top .nav-logo .line {
     display: inline-block;
@@ -300,6 +309,7 @@ export default {
     margin-left: 0.16rem;
     margin-bottom: 0.03rem;
     background-color: #fff;
+    vertical-align: text-top;
   }
   .top .company {
     margin-left: 0.16rem;
@@ -307,6 +317,7 @@ export default {
     color: #fff;
     line-height: 0.24rem;
     vertical-align: text-top;
+    text-shadow: .02rem .02rem .02rem #666;
   }
   .top .nav {
     margin-left: 0.99rem;
