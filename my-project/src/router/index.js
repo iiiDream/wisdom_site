@@ -62,7 +62,7 @@ import systemLiangZhi from '../components/system/systemLiangZhi/systemLiangZhi.v
 import systemLiangZhi_home from '../components/system/systemLiangZhi/systemLiangZhi_home.vue'
 
 import systemLiangZhi_contractors from '../components/system/systemLiangZhi/systemLiangZhi_contractors.vue'
-import gaoZhiMo from '../components/gaoZhiMo/gaozhimo.vue'
+import gaoZhiMo from '../components/gaoZhiMo/gaoZhiMo.vue'
 import systemLiangZhi_team from '../components/system/systemLiangZhi/systemLiangZhi_team.vue'
 import systemLiangZhi_personnel from '../components/system/systemLiangZhi/systemLiangZhi_personnel.vue'
 import systemLiangZhi_fw_one from '../components/system/systemLiangZhi/systemLiangZhi_fw_one.vue'
@@ -71,6 +71,8 @@ import systemLiangZhi_fw_three from '../components/system/systemLiangZhi/systemL
 import systemLiangZhi_fw_four from '../components/system/systemLiangZhi/systemLiangZhi_fw_four.vue'
 import systemZhiHui from '../components/system/systemZhiHui/systemZhiHui.vue'
 import systemZhiHui_taDiao from '../components/system/systemZhiHui/systemZhiHui_taDiao.vue'
+import systemZhiHui_shengJiangJi from '../components/system/systemZhiHui/systemZhiHui_shengJiangJi.vue'
+import systemZhiHui_dianXiang from '../components/system/systemZhiHui/systemZhiHui_dianXiang.vue'
 import systemLiangZhi_attendance from '../components/system/systemLiangZhi/systemLiangZhi_attendance.vue'
 import systemLiangZhi_exception from '../components/system/systemLiangZhi/systemLiangZhi_exception'
 import systemLiangZhi_blacklist from '../components/system/systemLiangZhi/systemLiangZhi_blacklist'
@@ -79,6 +81,9 @@ import systemGreen from '../components/system/systemGreen/systemGreen.vue'
 import systemGreen_TSP from '../components/system/systemGreen/systemGreen_TSP.vue'
 import systemSet from '../components/system/systemSet/systemSet.vue'
 import system_projectSet from '../components/system/systemSet/system_projectSet.vue'
+import systemSet_qx_one from '../components/system/systemSet/systemSet_qx_one.vue'
+import systemSet_qx_two from '../components/system/systemSet/systemSet_qx_two.vue'
+import systemSet_qx_three from '../components/system/systemSet/systemSet_qx_three.vue'
 
 const router = new VueRouter({
 
@@ -156,6 +161,8 @@ const router = new VueRouter({
         {path:'/systemZhiHui',meta:{needLogin:true},component:systemZhiHui,children:[
             {path:'',meta:{needLogin:true},component:systemZhiHui_taDiao},
             {path:'/systemZhiHui_taDiao',meta:{needLogin:true},component:systemZhiHui_taDiao},
+            {path:'/systemZhiHui_shengJiangJi',meta:{needLogin:true},component:systemZhiHui_shengJiangJi},
+            {path:'/systemZhiHui_dianXiang',meta:{needLogin:true},component:systemZhiHui_dianXiang},
         ]},
         {path:'/systemGreen',meta:{needLogin:true},component:systemGreen,children:[
             {path:'',meta:{needLogin:true},component:systemGreen_TSP},
@@ -164,6 +171,9 @@ const router = new VueRouter({
         {path:'/systemSet',meta:{needLogin:true},component:systemSet,children:[
             {path:'',meta:{needLogin:true},component:system_projectSet},
             {path:'/system_projectSet',meta:{needLogin:true},component:system_projectSet},
+            {path:'/systemSet_qx_two',meta:{needLogin:true},component:systemSet_qx_two},
+            {path:'/systemSet_qx_one',meta:{needLogin:true},component:systemSet_qx_one},
+            {path:'/systemSet_qx_three',meta:{needLogin:true},component:systemSet_qx_three},
         ]},
 
     ]

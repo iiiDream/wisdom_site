@@ -1,5 +1,5 @@
 <template>
-  <div id="taDiao">
+  <div id="shengjiangji">
     <div class="content">
       <div id="top">
         <div class="box">
@@ -8,7 +8,7 @@
               <img>
             </div>
             <div class="right">
-              <p style="font-size:0.18rem;">在线塔机</p>
+              <p style="font-size:0.18rem;">在线升降机</p>
               <p style="font-size:0.26rem;margin-top:0.05rem">10</p>
             </div>
           </div>
@@ -19,7 +19,7 @@
               <img>
             </div>
             <div class="right">
-              <p style="font-size:0.18rem;">离线塔机</p>
+              <p style="font-size:0.18rem;">离线升降机</p>
               <p style="font-size:0.26rem;margin-top:0.05rem">0</p>
             </div>
           </div>
@@ -59,7 +59,7 @@
             </div>
           </div>
           <div class="person">
-            <div class="title">创新工业园东侧塔吊设备</div>
+            <div class="title">创新工业园东侧升降机设备</div>
             <img
               class="gongren"
               src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=122221422,432504913&fm=26&gp=0.jpg"
@@ -79,7 +79,7 @@
               <ss-calendar/>
             </div>
             <div class="status">
-              塔吊状体：
+              升降机状体：
               <span>在线</span>
             </div>
           </div>
@@ -94,11 +94,11 @@
             <div class="six">
               <div class="box">
                 <div class="one">
-                  力矩
+                  速度
                   <img>
                 </div>
                 <div class="two"></div>
-                <div class="three">87%</div>
+                <div class="three">20m/s</div>
                 <div class="four" style="background-color:#feb37f;"></div>
               </div>
               <div class="box">
@@ -121,16 +121,16 @@
               </div>
               <div class="box">
                 <div class="one">
-                  幅度
+                  楼层
                   <img>
                 </div>
                 <div class="two"></div>
-                <div class="three">26.58m</div>
+                <div class="three">10楼</div>
                 <div class="four" style="background-color:#3ada76;"></div>
               </div>
               <div class="box">
                 <div class="one">
-                  角度
+                  倾角
                   <img>
                 </div>
                 <div class="two"></div>
@@ -139,11 +139,11 @@
               </div>
               <div class="box">
                 <div class="one">
-                  倍率
+                  人数
                   <img>
                 </div>
                 <div class="two"></div>
-                <div class="three">x2</div>
+                <div class="three">3人</div>
                 <div class="four" style="background-color:#3ada76;"></div>
               </div>
             </div>
@@ -153,52 +153,52 @@
             </div>
           </div>
           <div class="all">
-            <div class="title">塔吊预警汇总统计</div>
+            <div class="title">升降机预警汇总统计</div>
             <ul>
               <li style="background-color: #0090ff;">
-                <p class="name">限位报警</p>
+                <p class="name">载重报警</p>
                 <p class="times">
                   <span class="num">0</span>次
                 </p>
               </li>
               <li style="background-color: #3ada76;">
+                <p class="name">人数报警</p>
+                <p class="times">
+                  <span class="num">0</span>次
+                </p> 
+              </li>
+              <li style="background-color: #ffb079;">
+                <p class="name">速度报警</p>
+                <p class="times">
+                  <span class="num">0</span>次
+                </p>
+              </li>
+              <li style="background-color: #ff7a81;">
                 <p class="name">倾斜报警</p>
                 <p class="times">
                   <span class="num">0</span>次
                 </p>
               </li>
               <li style="background-color: #ffb079;">
-                <p class="name">吊重报警</p>
-                <p class="times">
-                  <span class="num">0</span>次
-                </p>
-              </li>
-              <li style="background-color: #ff7a81;">
-                <p class="name">风速报警</p>
-                <p class="times">
-                  <span class="num">0</span>次
-                </p>
-              </li>
-              <li style="background-color: #ffb079;">
-                <p class="name">障碍物碰撞</p>
+                <p class="name">上限位警报</p>
                 <p class="times">
                   <span class="num">0</span>次
                 </p>
               </li>
               <li style="background-color: #0090ff;">
-                <p class="name">塔吊碰撞</p>
+                <p class="name">下限位警报</p>
                 <p class="times">
                   <span class="num">0</span>次
                 </p>
               </li>
               <li style="background-color: #ff7a81;">
-                <p class="name">传感器故障</p>
+                <p class="name">冲顶警报</p>
                 <p class="times">
                   <span class="num">0</span>次
                 </p>
               </li>
               <li style="background-color: #3ada76;">
-                <p class="name">进入禁行区</p>
+                <p class="name">其他警报</p>
                 <p class="times">
                   <span class="num">0</span>次
                 </p>
@@ -206,7 +206,7 @@
             </ul>
           </div>
           <div class="zhanbitu">
-            <div class="title">塔吊预警占比图</div>
+            <div class="title">升降机预警占比图</div>
             <div id="proportion" style="width: 5.5rem;height:3.1rem;"></div>
           </div>
         </div>
@@ -239,9 +239,9 @@
                   >{{ scope.row.load}}t</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="momental" label="力矩" width="100">
+              <el-table-column prop="sudu" label="速度" width="100">
                 <template slot-scope="scope">
-                  <div>{{ scope.row.momental}}%</div>
+                  <div>{{ scope.row.sudu}}m/s</div>
                 </template>
               </el-table-column>
               <el-table-column prop="wind" label="风速" width="110">
@@ -254,19 +254,19 @@
                   <div>{{ scope.row.height}}m</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="range" label="幅度" width="110">
+              <el-table-column prop="flow" label="楼层" width="110">
                 <template slot-scope="scope">
-                  <div>{{ scope.row.range}}m</div>
+                  <div>{{ scope.row.flow}}楼</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="angle" label="角度" width="110">
+              <el-table-column prop="angle" label="倾角" width="110">
                 <template slot-scope="scope">
                   <div>{{ scope.row.angle}}°</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="power" label="倍率" width="110">
+              <el-table-column prop="person" label="人数" width="110">
                 <template slot-scope="scope">
-                  <div>x{{ scope.row.power}}</div>
+                  <div>{{ scope.row.person}}人</div>
                 </template>
               </el-table-column>
               <el-table-column prop="status" label="状态" width="120" sortable="custom">
@@ -323,24 +323,24 @@ export default {
         {
           number: "1", //序号
           load: 100, //载重
-          momental: "87", //力矩
+          sudu: "87", //速度
           wind: "10", //风速
           height: "60", //高度
-          range: "26.57", //幅度
-          angle: "30", //角度
-          power: "2", //倍率
+          flow: "26.57", //楼层
+          angle: "30", //倾角
+          person: "2", //人数
           status: "合格", //状态
           time: "2019-10-10 19:19:19" //时间
         },
         {
           number: "2", //序号
           load: 98, //载重
-          momental: "87", //力矩
+          sudu: "87", //速度
           wind: "10", //风速
           height: "60", //高度
-          range: "26.57", //幅度
-          angle: "30", //角度
-          power: "2", //倍率
+          flow: "26.57", //楼层
+          angle: "30", //倾角
+          person: "2", //人数
           status: "不合格", //状态
           time: "2019-10-10 19:19:19" //时间
         }
@@ -375,7 +375,7 @@ export default {
             fontSize: "16",
             color: "#000"
           },
-          data: ["载重", "倾斜", "传感器故障", "风速", "限位", "其他"]
+          data: ["载重", "人数", "上限位", "下限位", "速度", "其他"]
         },
         series: [
           {
@@ -403,10 +403,10 @@ export default {
             },
             data: [
               { value: 0, name: "载重" },
-              { value: 0, name: "倾斜" },
-              { value: 0, name: "传感器故障" },
-              { value: 0, name: "风速" },
-              { value: 0, name: "限位" },
+              { value: 0, name: "人数" },
+              { value: 0, name: "上限位" },
+              { value: 0, name: "下限位" },
+              { value: 0, name: "速度" },
               { value: 0, name: "其他" }
             ]
           }
@@ -424,7 +424,7 @@ export default {
 };
 </script>
 <style lang="less">
-#taDiao {
+#shengjiangji {
   background-color: #f7f7f7;
   width: 100%;
   .content {

@@ -18,11 +18,11 @@
             <span>塔吊监控</span>
           </router-link>
         </li>
-        <li>
-          <a style="font-size:0.16rem">
+        <li  @click="isActiveShow('/systemZhiHui_shengJiangJi')">
+          <router-link to="/systemZhiHui_shengJiangJi" style="font-size:0.16rem" :class="activeShow=='/systemZhiHui_shengJiangJi'?'active':''">
             <div class="icon"></div>
             <span>升降机监控</span>
-          </a>
+          </router-link> 
         </li>
         <li>
           <a>
@@ -42,11 +42,11 @@
             <span>车辆管理</span>
           </a>
         </li>
-        <li>
-          <a>
+        <li  @click="isActiveShow('/systemZhiHui_dianXiang')">
+          <router-link to="/systemZhiHui_dianXiang" :class="activeShow=='/systemZhiHui_dianXiang'?'active':''">
             <div class="icon"></div>
             <span>智能电箱</span>
-          </a>
+         </router-link>
         </li>
         <li>
           <a>
