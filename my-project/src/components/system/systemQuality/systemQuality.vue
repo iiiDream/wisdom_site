@@ -1,5 +1,5 @@
 <template>
-  <div id="systemLiangZhi">
+  <div id="systemQuality">
     <!-- 阴影框 -->
     <div class="shadow-box"></div>
     <!-- 侧导航栏 -->
@@ -9,57 +9,32 @@
           <router-link to="/systemHome" class="return" v-show="retractState"></router-link>
           <a class="retract" @click="retractClick"></a>
         </li>
-        <li @click="isActiveShow('/systemZhiHui_taDiao')">
+        <li @click="isActiveShow('/systemQuality_home')">
           <router-link
-            to="/systemZhiHui_taDiao"
-            :class="activeShow=='/systemZhiHui_taDiao'||activeShow=='/systemZhiHui'?'active':''"
+            to="/systemQuality_home"
+            :class="activeShow=='/systemQuality_home'||activeShow=='/systemQuality'?'active':''"
           >
             <div class="icon"></div>
-            <span>塔吊监控</span>
+            <span>数据统计</span>
           </router-link>
         </li>
-        <li @click="isActiveShow('/systemZhiHui_shengJiangJi')">
+        <li @click="isActiveShow('/systemQuality_record')">
           <router-link
-            to="/systemZhiHui_shengJiangJi"
-            style="font-size:0.16rem"
-            :class="activeShow=='/systemZhiHui_shengJiangJi'?'active':''"
+            to="/systemQuality_record"
+            :class="activeShow=='/systemQuality_record'?'active':''"
           >
             <div class="icon"></div>
-            <span>升降机监控</span>
+            <span>检查记录</span>
           </router-link>
         </li>
-        <li>
-          <a>
-            <div class="icon"></div>
-            <span>卸料监控</span>
-          </a>
-        </li>
-        <li>
-          <a style="font-size:0.16rem">
-            <div class="icon"></div>
-            <span>龙门吊监控</span>
-          </a>
-        </li>
-        <li @click="isActiveShow('/systemZhiHui_car')">
-          <router-link to="/systemZhiHui_car" :class="activeShow=='/systemZhiHui_car'?'active':''">
-            <div class="icon"></div>
-            <span>车辆管理</span>
-          </router-link>
-        </li>
-        <li @click="isActiveShow('/systemZhiHui_dianXiang')">
+        <li @click="isActiveShow('/systemQuality_manage')">
           <router-link
-            to="/systemZhiHui_dianXiang"
-            :class="activeShow=='/systemZhiHui_dianXiang'?'active':''"
+            to="/systemQuality_manage"
+            :class="activeShow=='/systemQuality_manage'?'active':''"
           >
             <div class="icon"></div>
-            <span>智能电箱</span>
+            <span style="font-size:0.16rem">整改单管理</span>
           </router-link>
-        </li>
-        <li>
-          <a>
-            <div class="icon"></div>
-            <span>气体检测</span>
-          </a>
         </li>
       </ul>
     </div>
@@ -69,8 +44,9 @@
 </template>
 
 <style lang="less">
-#systemLiangZhi {
+#systemQuality {
   width: 100%;
+  height: 100%;
   display: flex;
   position: relative;
   background-color: #f7f7f7;
@@ -88,7 +64,6 @@
     height: 10rem;
     overflow: hidden;
     background-color: #54a4d7;
-    position: relative;
     ul {
       width: 1.75rem;
       li {
@@ -104,9 +79,13 @@
           transition: all 0.5s;
           border-bottom: 0.01rem solid #98c8e7;
           .icon {
+            opacity: 0.5;
             width: 0.6rem;
             height: 0.59rem;
+            transition: all 0.5s;
             display: inline-block;
+            background-repeat: no-repeat;
+            background-position: center center;
           }
           span {
             width: 0.8rem;
@@ -118,10 +97,16 @@
         }
         a:hover {
           background-color: #2d83bb;
+          .icon {
+            opacity: 1;
+          }
         }
         .active {
           z-index: 10;
           background-color: #378dc5;
+          .icon {
+            opacity: 1;
+          }
         }
       }
       .button {
@@ -134,14 +119,14 @@
           width: 0.22rem;
           height: 0.22rem;
           position: absolute;
+          // background-color: #fff;
           transform: translateY(-50%);
           background-repeat: no-repeat;
           background-position: center center;
-          &:hover {
-            background-color: #2d83bb;
-          }
         }
-
+        a:hover {
+          background-color: #2d83bb;
+        }
         .return {
           left: 0.4rem;
           background-image: url("../../../../static/images/system-return.png");
@@ -157,7 +142,8 @@
     flex: 1;
     padding-top: 0.3rem;
     padding-left: 0.3rem;
-    padding-right: 0.3rem;
+    padding-right: 0.2rem;
+    padding-bottom: 0.2rem;
   }
 }
 </style>
@@ -167,7 +153,7 @@ export default {
   data() {
     return {
       retractState: true, // 侧导航栏缩进状态
-      activeShow: "/systemZhiHui_taDiao" // 当前选中的模块
+      activeShow: "/systemGreen_TSP" // 当前选中的模块
     };
   },
   created() {
@@ -186,13 +172,6 @@ export default {
         $(".retract").animate({
           right: "1.35rem"
         });
-        $(".sanjiao").animate({
-          left: "0.5rem"
-        });
-        $(".subnav").animate({
-          left: "0.6rem"
-        });
-
         this.retractState = !this.retractState;
       } else {
         $(".side-nav").animate(
@@ -204,20 +183,15 @@ export default {
         $(".retract").animate({
           right: ".4rem"
         });
-        $(".sanjiao").animate({
-          left: "1.65rem"
-        });
-        $(".subnav").animate({
-          left: "1.75rem"
-        });
-
         this.retractState = !this.retractState;
       }
     },
+
     // 选择模块
     isActiveShow(i) {
       this.activeShow = i;
     },
+
     // 页面刷新时重新赋值
     getPath() {
       this.activeShow = this.$route.path;

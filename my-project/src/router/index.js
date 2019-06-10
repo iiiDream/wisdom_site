@@ -73,6 +73,14 @@ import systemZhiHui from '../components/system/systemZhiHui/systemZhiHui.vue'
 import systemZhiHui_taDiao from '../components/system/systemZhiHui/systemZhiHui_taDiao.vue'
 import systemZhiHui_shengJiangJi from '../components/system/systemZhiHui/systemZhiHui_shengJiangJi.vue'
 import systemZhiHui_dianXiang from '../components/system/systemZhiHui/systemZhiHui_dianXiang.vue'
+import systemZhiHui_car from '../components/system/systemZhiHui/systemZhiHui_car.vue'
+import systemZhiHui_car_sub from '../components/system/systemZhiHui/systemZhiHui_car_sub.vue'
+import systemQuality from '../components/system/systemQuality/systemQuality.vue'
+import systemQuality_home from '../components/system/systemQuality/systemQuality_home.vue'
+import systemQuality_record from '../components/system/systemQuality/systemQuality_record.vue'
+import systemQuality_recordInfo from '../components/system/systemQuality/systemQuality_recordInfo.vue'
+import systemQuality_manage from '../components/system/systemQuality/systemQuality_manage.vue'
+import systemQuality_manageInfo from '../components/system/systemQuality/systemQuality_manageInfo.vue'
 import systemLiangZhi_attendance from '../components/system/systemLiangZhi/systemLiangZhi_attendance.vue'
 import systemLiangZhi_exception from '../components/system/systemLiangZhi/systemLiangZhi_exception'
 import systemLiangZhi_blacklist from '../components/system/systemLiangZhi/systemLiangZhi_blacklist'
@@ -163,10 +171,20 @@ const router = new VueRouter({
             {path:'/systemZhiHui_taDiao',meta:{needLogin:true},component:systemZhiHui_taDiao},
             {path:'/systemZhiHui_shengJiangJi',meta:{needLogin:true},component:systemZhiHui_shengJiangJi},
             {path:'/systemZhiHui_dianXiang',meta:{needLogin:true},component:systemZhiHui_dianXiang},
+            {path:'/systemZhiHui_car',meta:{needLogin:true},component:systemZhiHui_car},
+            {path:'/systemZhiHui_car_sub',meta:{needLogin:true},component:systemZhiHui_car_sub},
         ]},
         {path:'/systemGreen',meta:{needLogin:true},component:systemGreen,children:[
             {path:'',meta:{needLogin:true},component:systemGreen_TSP},
             {path:'/systemGreen_TSP',meta:{needLogin:true},component:systemGreen_TSP},
+        ]},
+        {path:'/systemQuality',meta:{needLogin:true},component:systemQuality,children:[
+            {path:'',meta:{needLogin:true},component:systemQuality_home},
+            {path:'/systemQuality_home',meta:{needLogin:true},component:systemQuality_home},
+            {path:'/systemQuality_record',meta:{needLogin:true},component:systemQuality_record},
+            {path:'/systemQuality_recordInfo',meta:{needLogin:true},component:systemQuality_recordInfo},
+            {path:'/systemQuality_manage',meta:{needLogin:true},component:systemQuality_manage},
+            {path:'/systemQuality_manageInfo',meta:{needLogin:true},component:systemQuality_manageInfo},
         ]},
         {path:'/systemSet',meta:{needLogin:true},component:systemSet,children:[
             {path:'',meta:{needLogin:true},component:system_projectSet},

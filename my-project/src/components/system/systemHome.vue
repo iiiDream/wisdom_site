@@ -37,10 +37,10 @@
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <router-link to="/systemQuality">
                         <div class="icon"></div>
                         <span>质量监督</span>
-                    </a>
+                    </router-link>
                 </li>
                 <li>
                     <a>
